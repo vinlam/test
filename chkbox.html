@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: '微软雅黑'
+			}
+			
+			.box {
+				width: 400px;
+				overflow: hidden;
+				padding: 20px;
+			}
+			
+			input,
+			label {
+				vertical-align: middle;
+			}
+			
+			.check {
+				width: 18px;
+				height: 18px;
+			}
+			
+			label {
+				font-size: 18px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="ff">
+			<!--<form id="ff">-->
+				<!--第一种:文字必须是label标签内,checkbox的id和<label>标签内的for=""中的名字必须相同.  -->
+				<input type="checkbox" id="check1" value="123" name="name">
+				<label for="check1">姓名</label>
+				<br>
+				<input type="checkbox" id="check2" value="456" name="name">
+				<label for="check2">密码</label>
+				<br>
+				<!-- 第二种:把文字和checkbox包含在<label>标签内   -->
+				<label><input type="checkbox" id="11" /> 测试</label>
+				<br>
+				<input type="button" id="backbtn" value="backb" />
+			<!--</form>-->
+		</div>
+	</body>
+	<script>
+		$(function(){
+			$(document).ready(function(){
+				var s = '<input type="checkbox" id="check3" value="1323" name="name"><label for="check3">aa</label><br><input type="checkbox" id="check4" value="4f56" name="name"><label for="check4">sdfa</label>'
+				$("#ff").append(s);
+				
+				$("#backbtn").off().on("click",goback);
+			})
+			
+			function goback(){
+				//alert(ws+"goback")
+				//window.history.back();
+				window.location.href = "http://172.20.10.2:8020/test/chkbox.html?back=true&parm=12333"
+				//window.close();
+			}
+		})
+	</script>
+</html>

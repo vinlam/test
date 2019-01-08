@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Deferred - promise - ERROR!</title>
+</head>
+<body>
+
+<h2>Error on purpose to demonstrate the use of promise()</h2>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.myStaticPlugin = function() {
+    return $.Deferred().promise();
+  };
+  
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+  
+  var deferred = $.myStaticPlugin().done(function(msg) {
+      alert('Plugin came back with ' + msg);
+  });
+  
+  window.setTimeout(
+      function () {
+          // ERROR! (on purpose)
+          deferred.resolve('This is impossible!');
+      }, 5000
+  );
+  
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>queryselector</title>
+	</head>
+
+	<body>
+
+		<p id="demo">id="demo" 的 p 元素</p>
+		<p> 点击按钮修改 id="demo" 的 p 元素内容
+			<input type="radio" name="medical_history" value="yes" />是
+			<input type="radio" name="medical_history" value="no" />否
+		</p>
+		<button onclick="myFunction()">点我</button>
+		<script>
+			function myFunction() {
+				document.querySelector("#demo").innerHTML = "Hello World!";
+				alert(document.querySelector('input[name="medical_history"]:checked').value);
+				document.querySelector('input[name="medical_history"][value="no"]').checked = true;
+			}
+		</script>
+
+	</body>
+
+</html>

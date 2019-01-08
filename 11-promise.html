@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Deferred - promises</title>
+</head>
+<body>
+
+<h2>Please wait 5 sec for a popup</h2>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.myStaticPlugin = function() {
+    var deferred = $.Deferred();
+    window.setTimeout(
+        function () {
+            deferred.resolve('Ready!');
+        }, 5000
+    );
+    return deferred.promise();
+  };
+
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+  
+  $.myStaticPlugin().done(function(msg) {
+      alert('Plugin came back with ' + msg);
+  });
+  
+});
+</script>
+</body>
+</html>

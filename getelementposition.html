@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+		<title>获取当前元素所在页面坐标</title>
+		<style>
+			.link-m1{
+			 width:200px;
+			}
+			.link-m1 
+			ul li{display:block;line-height:24px;height:auto;word-break:break-all;word-wrap:break-word;list-style: none;}
+		</style>
+		<script>
+			function GetScreenPosition(object) {
+			            var position = {};
+			            position.x = object.offsetLeft;
+			            position.y = object.offsetTop;
+			
+			            while (object.offsetParent) {
+			                position.x = position.x + object.offsetParent.offsetLeft;
+			                position.y = position.y + object.offsetParent.offsetTop;
+			
+			                if (object == document.getElementsByTagName("body")[0]) {
+			                    break;
+			                }
+			                else {
+			                    object = object.offsetParent;
+			                }
+			            }
+			            return position;
+			        }
+					function getposition(obj){
+						var p = GetScreenPosition(obj);
+						var bh = document.body.clientHeight;//网页可见区域高度
+						var bhline = document.body.offsetHeight;//网页可见区域高度包括边线
+						var bhcontent = document.body.scrollHeight;//网页正文全文高度
+						var wh = window.screen.height;//屏幕分辨率高度
+						var wah = window.screen.availHeight;//屏幕可用工作区高度
+						//alert("网页可见区域高度：" + bh + " 网页可见区域高度包括边线:" + bhline + " 网页正文全文高度:" + bhcontent + " 屏幕分辨率高度:" + wh + " 屏幕可用工作区高度:" + wah); 
+						//alert(window.height+"x:" +p.x + " y:" + p.y);
+						
+					}
+		</script>
+	</head>
+
+	<body>
+		<div class="link-m1">
+			<ul>
+				<li>武汉晚报</li>
+				<li>。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</li>
+				<li>..............</li>
+				<li>1231231231231231</li>
+				<li>asdfasdfasdf123123123............。。。。。。</li>
+				<li>武汉晨报</li>
+				<li>车主之友</li>
+				<li>湖北日报</li>
+				<li>楚天金报</li>
+				<li>荆楚网</li>
+				<li>长江商报</li>
+				<li>武汉晚报</li>
+				<li>汽车大世界</li>
+				<li>武汉晨报</li>
+				<li>车主之友</li>
+				<li>湖北日报</li>
+				<li>楚天金报</li>
+				<li>荆楚网</li>
+				<li>长江商报</li>
+				<li>楚天金报</li>
+				<li>荆楚网</li>
+				<li>长江商报</li>
+				<li>武汉晚报</li>
+				<li>汽车大世界</li>
+				<li>武汉晨报</li>
+				<li>车主之友</li>
+				<li>湖北日报</li>
+				<li>楚天金报</li>
+				<li>荆楚网</li>
+				<li>长江商报</li>
+			</ul>
+			请输入：
+			<input type="text" id="t" onclick="getposition(this)" readonly="readonly">
+		</div>
+	</body>
+</html>

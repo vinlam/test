@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>动态绑定</title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<input type="button" name="ttt" value="btninp" onclick="showOut(this.name)" />
+		<button id="btn" name="aaa" bid="123123">add</button>
+		<button id="btn1" name="btnnnn" bid="sdasda" onclick="showOut(this.getAttribute('bid'))">add2</button>
+		<!--showFun(默认属性可以通过this.获取，自定义属性则通过this.getAttribute("bid"))-->
+		<div id="testdiv">
+			<ul></ul>
+		</div>
+		<div>
+			<ul id="one" class="level-1">
+				<li class="item-i">I</li>
+				<li id="ii" class="item-ii">II
+					<ul class="level-2">
+						<li class="item-a">A</li>
+						<li class="item-b">B
+							<ul class="level-3">
+								<li class="item-1">1</li>
+								<li class="item-2">2</li>
+								<li class="item-3">3</li>
+							</ul>
+						</li>
+						<li class="item-c">C</li>
+					</ul>
+				</li>
+				<li class="item-iii">III</li>
+			</ul>
+			<p class="pp">aaa
+				<h class="hh">1231</h>
+			</p>
+			<p class="pp">bbb
+				<h1 class="hh">234234</h1></p>
+			<p class="pp">bbb
+				<h2 class="hh">234234</h2></p>
+		</div>
+		<button id="add-event-more">叠加绑定SayHello事件</button>
+		<button id="add-event-one">先移除再绑定SayHello事件</button>
+		<button id="say-hello">Say Hello</button>
+	</body>
+	<script>
+		(function() {
+			$(document).ready(function() {
+				//$("#testdiv").off("click").on("click",".tt", function() {
+				//	console.log(this.id + $(this).attr("name"));
+				//});
+				//注意用全局时，off要指定事件类型
+				//$(document).off().on("click",".tt", function() {
+				//	alert(this.id);
+				//});
+				//				//addChild();
+				$("#btn1").on("mousedown", function() {
+					alert("add mousedown")
+				});
+				//如果前面有$(document).off().on("click","selector", function() {});off没有指事件的，下面的监听不会生效
+				$("#btn1").on("click", function() {
+					alert("add click")
+				});
+				//此处自行加上off()则事件生效
+				$("#btn1").off().on("click", function() {
+					alert("add click")
+				});
+
+				//$(".tt").off("click").on("click", function(){
+				//	alert("动态生成元素点击事件");
+				//});
+				$(document).off("click").on("click", function() {
+					console.log("documnet click");
+				})
+				$("#btn").off("click").on("click", addChild);
+
+				var iCount = 0;
+
+				function sayHello() {
+					alert("Hello!");
+				}
+				//  每Click1次，多响应事件一次（叠加了）
+				$('#add-event-more').on('click', function() {
+					iCount = iCount + 1;
+					$("#say-hello").html("Say Hello" + iCount + "次");
+					$("#say-hello").off('click')
+					$("#say-hello").on("click", sayHello); //  绑定事件（事件叠加了）
+				});
+				//  永远只响应1次事件
+				$('#add-event-one').on("click", function() {
+					$('#say-hello').html("Say Hello 1次");
+					$("#say-hello").off('click').on('click', sayHello); //  先移除事件（避免事件叠加），在绑定事件
+				});
+				
+				$(document).off("click").on("click","#lab",function(){
+					alert($(this).html());
+				});
+				$(document).off("click").on("click",".tt,#lab",function(){
+					//console.log("documentclick bind li:"+$(this).html());
+					console.log($(this));
+					
+				});
+				addelem();
+			});
+			
+			function addelem(){
+				var html = "";
+
+				html += "<label class=\"lb\" name=\"labname\"  id=\"lab\">label</label>";
+				console.log(html);
+				$("#testdiv").append(html);
+			}
+
+			function addChild() {
+				var html = "";
+
+				for(var i = 1; i < 5; i++) {
+					//html += "<li class=\"tt\" name=\"liname" + i + "\" id=\"" + i + "\" onclick=\"show(this.getAttribute('name'))\">" + i + "<input type=\"button\" name=\"ttt\" value=\"btninp\" onclick=\"showName(this.name)\"/></li>";
+					html += "<li class=\"tt\" name=\"liname" + i + "\" id=\"" + i + "\">" + i + "<input type=\"button\" name=\"liinputname" + i + "\" value=\"btninp\" /></li>";
+				}
+				//console.log(html);
+				$("#testdiv ul").append(html);
+//				$(".tt").off("click").on("click", function(event) {
+//					event.preventDefault();
+//					event.stopPropagation();
+//					alert(this.id + $(this).attr("name"));
+//					return false;
+//				});
+			}
+			$("div").on("click", ".item-a", function() {
+				$('li.item-a').closest('ul').css('background-color', 'red');
+
+			})
+			$("div").on("click", ".hh", function() {
+				console.log($(this).closest('.pp').text());
+
+			})
+			//假设我们执行一个从项目 A 开始的对 <ul> 元素的搜索：
+
+		})();
+
+		//写在匿名函数里面不执行 提示is not define
+		function show(data) {
+			alert(data);
+		}
+
+		function showName(data) {
+			event.preventDefault();
+			event.stopPropagation();
+			alert(data);
+			//return;
+		}
+
+		function showFun(data) {
+			alert(data.getAttribute("bid"));
+		}
+
+		function showOut(data) {
+			alert(data);
+		}
+	</script>
+
+</html>

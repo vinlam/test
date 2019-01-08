@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--<meta http-equiv="Access-Control-Allow-Origin" content="http://127.0.0.1:8020">-->
+		<title>ajax</title>
+		<script src="js/jquery.min.js"></script>
+		<script>
+			$(function(){
+				$(document).ready(function(){
+					var u = navigator.userAgent, app = navigator.appVersion;
+					var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+					var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+					document.getElementById("openbtn").addEventListener("click",function(){
+						if(isAndroid){
+						         /***打开app的协议，有安卓同事提供***/
+						        window.setTimeout(function(){
+						        	//window.location.href = "app://com.android.browser";
+						        	alert("browser");
+						           	window.location.href = "http://www.jd.com"; /***打开app的协议，有安卓同事提供***/
+						        },2000);
+					    }else{
+					    	alert("is not android");
+					    	if(isiOS){
+							    var ifr = document.createElement("iframe");
+							    ifr.src = "ucbrowser://"; /***打开app的协议，有ios同事提供***/
+							    ifr.style.display = "none"; 
+							    document.body.appendChild(ifr);
+							    window.setTimeout(function(){
+							        document.body.removeChild(ifr);
+							        window.location.href = "http://www.baidu.com"; /***下载app的地址***/
+							    },10000)
+							}
+					    }
+					})
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<input type="button" id="openbtn" value="send"/>
+		<a href="http://www.baidu.com">打开我的app</a>
+	</body>
+</html>

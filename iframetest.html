@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<iframe id="myframe" name="myframe" src="child.html" frameborder="3" style="width:300;height:200;border-width:1;border-color:red;border-style:solid"></iframe>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		function changeFrameHeight() {
+			var ifm = document.getElementById("myframe");
+			ifm.height = document.documentElement.clientHeight - 56;
+		}
+		window.onresize = function() {
+			changeFrameHeight();
+		}
+//		$(function() {
+//			changeFrameHeight();
+//		});
+	</script>
+
+</html>

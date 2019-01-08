@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<title>Before After</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<style>
+		.content {
+			margin-top: 100px;
+		}
+		
+		.content:before {
+			content: 'target-before';
+			color: #33B5E5;
+			position: relative;
+			top: -10px;
+		}
+		
+		.content:after {
+			content: 'target-after';
+			color: #33B5E5;
+			position: relative;
+			top: 10px;
+		}
+		/****新增伪元素样式,用来覆盖原有的样式**********/
+		
+		.content.red:before {
+			color: #f00;
+		}
+		
+		.content.red:after {
+			color: #f00;
+		}
+		
+		.content.green:before {
+			color: #0f0;
+		}
+		
+		.content.green:after {
+			color: #0f0;
+		}
+		
+		.content.blue:before {
+			color: #00f;
+		}
+		
+		.content.blue:after {
+			color: #00f;
+		}
+	</style>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		$(function() {
+				$("button").click(function() {
+					var cls = $(this).text();
+					$('.content').removeClass().addClass('content ' + cls);
+				});
+			}
+
+		)
+	</script>
+	</head>
+
+	<body>
+
+		<button style="width:50px;height:25px;background-color:#f00;color:#fff;">red</button>
+		<button style="width:50px;height:25px;background-color:#0f0;color:#fff;">green</button>
+		<button style="width:50px;height:25px;background-color:#00f;color:#fff;">blue</button>
+
+		<div class="content">
+			I am a programmer.
+		</div>
+	</body>
+
+</html>

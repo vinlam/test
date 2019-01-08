@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+		<style>
+			.blur {
+				-webkit-filter: blur(10px);
+				/* Chrome, Opera */
+				-moz-filter: blur(10px);
+				-ms-filter: blur(10px);
+				filter: blur(10px);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="width:100%;">
+			<div id="touchArea" style="width:90%; height:200px; background-color:#CCC;font-size:100px">长按我
+				<img id="imgA" src="img/qrcode.png" class="barcode" />
+				<img id="imgB" src="img/qrcode1.png" class="barcode" />
+			</div>
+		</div>
+		<script>
+			var timeOutEvent = 0;
+			$(function() {
+				$(".barcode").on({
+					touchstart: function(e) {
+						var _id = e.currentTarget.id;
+						timeOutEvent = setTimeout(function(){
+							longPress(_id);
+						}, 500);
+						e.preventDefault();
+					},
+					touchmove: function() {
+						clearTimeout(timeOutEvent);
+						timeOutEvent = 0;
+					},
+					touchend: function() {
+						$("#imgA").removeClass("blur");
+						$("#imgB").removeClass("blur");
+						clearTimeout(timeOutEvent);
+						if(timeOutEvent != 0) {
+							alert("你这是点击，不是长按");
+						}
+						return false;
+					}
+				})
+			});
+
+			function longPress(id) {
+				timeOutEvent = 0;
+				if(id == "imgA")
+					$("#imgB").addClass("blur");
+				else
+					$("#imgA").addClass("blur");
+				//alert("长按事件触发发"); 
+			}
+		</script>
+	</body>
+
+</html>

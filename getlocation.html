@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<title>地理位置</title>
+		<style type="text/css">
+			body,
+			html,
+			#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+		</style>
+
+		<!--<script type="text/javascript" src="http://ip.chinaz.com/getip.aspx"></script>-->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer&qterm"></script>
+		<title>地图展示</title>
+		<script async src="http://c.cnzz.com/core.php"></script>
+		<script type="text/javascript">
+			var ip = "";
+			$(function() {
+				//getIpAddress();
+				getlatlng();
+			});
+
+			function getIpAddress() {
+				$.ajax({
+					type: 'POST',
+					url: "http://ip.chinaz.com/getip.aspx",
+					async: true,
+					dataType: "jsonp",
+					success: function(o) {
+						ip = o.ip;
+						getlatlng();
+					}
+				});
+			}
+
+			function getlatlng() {
+				ip = "117.136.79.50";
+				//var url = "http://api.map.baidu.com/highacciploc/api?v=2.0&qcip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&qterm=pc&coord=bd09ll&callback_type=jsonp";
+				var url = "";
+				//url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=GCJ02";
+				url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=WGS84";
+				url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=bd09ll";
+				//coor = BD09ll：百度经纬度坐标，在国测局坐标基础之上二次加密而来
+				//coor = GCJ02：国测局02坐标，在原始GPS坐标基础上，按照国家测绘行业统一要求，加密后的坐标
+//				{  
+//				    address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息  
+//				    content:    #结构信息  
+//				    {  
+//				        address: "北京市",    #简要地址信息  
+//				        address_detail:    #结构化地址信息  
+//				        {  
+//				            city: "北京市",    #城市  
+//				            city_code: 131,    #百度城市代码  
+//				            district: "",    #区县  
+//				            province: "北京市",    #省份  
+//				            street: "",    #街道  
+//				            street_number: ""    #门牌号  
+//				        },  
+//				        point:    #当前城市中心点  
+//				        {  
+//				            x: "116.39564504",    #当前城市中心点经度
+//				            y: "39.92998578"    #当前城市中心点纬度
+//				        }  
+//				    },  
+//				    status: 0    #结果状态返回码  
+//				}
+				$.ajax({
+					type: 'POST',
+					url: url,
+					dataType: "jsonp",
+					success: function(o) {
+						console.log(o);
+						//alert(o.content.location.lng + "," + o.content.location.lat);
+						alert(o.content.point.x + "," + o.content.point.y);
+						//map.setCenter(new BMap.Point(o.content.location.lng, o.content.location.lat));
+						map.setCenter(new BMap.Point(o.content.point.x,o.content.point.y));
+						var marker = new BMap.Marker(new BMap.Point(o.content.point.x,o.content.point.y)); // 创建标注
+						map.addOverlay(marker); // 将标注添加到地图中
+						marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+					}
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="allmap"></div>
+	</body>
+	<script type="text/javascript">
+		// 百度地图API功能
+		var map = new BMap.Map("allmap"); // 创建Map实例
+		map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
+		map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
+		map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
+		map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+	</script>
+	<!--<script type="text/javascript">
+    // 百度地图API功能
+    //GPS坐标
+    var x = 116.32715863448607;
+    var y = 39.990912172420714;
+    var ggPoint = new BMap.Point(x,y);
+
+    //地图初始化
+    var bm = new BMap.Map("allmap");
+    bm.centerAndZoom(ggPoint, 15);
+    bm.addControl(new BMap.NavigationControl());
+
+    //添加gps marker和label
+    var markergg = new BMap.Marker(ggPoint);
+    bm.addOverlay(markergg); //添加GPS marker
+    var labelgg = new BMap.Label("未转换的GPS坐标（错误）",{offset:new BMap.Size(20,-10)});
+    markergg.setLabel(labelgg); //添加GPS label
+
+    //坐标转换完之后的回调函数
+    translateCallback = function (data){
+      if(data.status === 0) {
+        var marker = new BMap.Marker(data.points[0]);
+        bm.addOverlay(marker);
+        var label = new BMap.Label("转换后的百度坐标（正确）",{offset:new BMap.Size(20,-10)});
+        marker.setLabel(label); //添加百度label
+        bm.setCenter(data.points[0]);
+      }
+    }
+
+    setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        var pointArr = [];
+        pointArr.push(ggPoint);
+        convertor.translate(pointArr, 1, 5, translateCallback)
+    }, 1000);
+</script>-->
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<script type="text/javascript">
+		console.log(returnCitySN.cip);
+	</script>
+
+</html>

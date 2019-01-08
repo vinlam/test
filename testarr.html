@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>高效率去掉js数组中重复项的特效 - 何问起</title>
+		<base target="_blank" />
+		<meta charset="utf-8" />
+		<style>
+			a {
+				color: deeppink;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div><a href="http://hovertree.com/">首页</a> <a href="http://hovertree.com/texiao/">特效</a> <a href="http://hovertree.com/h/bjaf/ovjl4eus.htm">原文</a>
+		</div>
+		<div>
+			<script>
+				var h_hewenqiArray = new Array();
+				h_hewenqiArray[0] = "hovertree";
+				h_hewenqiArray[1] = "easysector";
+				h_hewenqiArray[2] = "hovertree";
+				h_hewenqiArray[3] = "keleyi";
+				h_hewenqiArray[4] = "keleyi";
+				h_hewenqiArray[5] = "何问起";
+				h_hewenqiArray[6] = "hovertree";
+				h_hewenqiArray[7] = "hoverclock";
+				h_hewenqiArray[8] = "yestop";
+				h_hewenqiArray[9] = 163;
+				h_hewenqiArray[10] = "何问起";
+				h_hewenqiArray[11] = 163;
+				h_hewenqiArray[12] = "hoverclock";
+				h_hewenqiArray[13] = "何问起";
+				var h_arrayLength = h_hewenqiArray.length;
+				document.write("原始数组元素个数：" + h_arrayLength + "<br />");
+				for (var i = 0; i < h_arrayLength; i++) {
+					document.write(h_hewenqiArray[i] + "<br />");
+				}
+
+				function hovercUnique(arr) {
+					var result = [],
+						hash = {};
+					for (var i = 0, elem;(elem = arr[i]) != null; i++) {
+						if (!hash[elem]) {
+							result.push(elem);
+							hash[elem] = true;
+						}
+					}
+					return result;
+				}
+				var h_hewenqiResult = hovercUnique(h_hewenqiArray);
+				var h_resultLength = h_hewenqiResult.length;
+				document.write("<br />去重复后数组元素个数：" + h_resultLength + "<br />");
+				for (var i = 0; i < h_resultLength; i++) {
+					document.write(h_hewenqiResult[i] + "<br />");
+				}
+			</script>
+		</div>
+		<div style="border:solid 1px silver">
+			<p>何问起 hovertree.com</p>
+		</div>
+	</body>
+
+</html>

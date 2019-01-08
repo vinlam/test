@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>css3环形进度条</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.box {
+				width: 200px;
+				height: 200px;
+				margin: 10px auto;
+				position: relative;
+			}
+			.box div {
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: 50%;
+				height: 160px;
+				width: 160px;
+				-webkit-transition: all .2s ease-in-out;
+				-moz-transition: all .2s ease-in-out;
+			}
+			.box .bg {
+				border: silver 20px solid
+			}
+			.box .bg2 {
+				border: silver 20px solid;
+				clip: rect(0, 100px, 200px, 0);
+			}
+			.box .rount {
+				border: green 20px solid;
+				clip: rect(0, 100px, 200px, 0);
+				-webkit-transform: rotate(0deg);
+			}
+			.box .rount2 {
+				border: green 20px solid;
+				clip: rect(0, 200px, 200px, 100px);
+				-webkit-transform: rotate(0deg);
+				display: none
+			}
+			.box .num {
+				font: bold 24px/160px tahoma;
+				text-align: center;
+				color: green;
+				top: 20px;
+				left: 20px;
+				z-index: 9;
+			}
+			.points {
+				width: 200px;
+				margin: 10px auto;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<div class="bg"></div>
+			<div id="rount" class="rount"></div>
+			<div class="bg2"></div>
+			<div id="rount2" class="rount2"></div>
+			<div id="num" class="num">0</div>
+		</div>
+		<div class="points">
+			<span>0</span>
+			<input type="range" id="points" min="0" max="100" step="1" value="0" />
+			<span>100</span>
+		</div>
+
+		<script>
+			function round() {
+				var points = document.getElementById('points'),
+					rount = document.getElementById('rount'),
+					rount2 = document.getElementById('rount2'),
+					num = document.getElementById('num');
+				points.onchange = function() {
+					var n = points.value;
+					num.innerHTML = n + "%";
+					if (n <= 50) {
+						rount.style.webkitTransform = "rotate(" + 3.6 * n + "deg)";
+						rount2.style.display = "none";
+					} else {
+						rount.style.webkitTransform = "rotate(180deg)";
+						rount2.style.display = "block";
+						rount2.style.webkitTransform = "rotate(" + 3.6 * (n - 50) + "deg)";
+					}
+				};
+			}
+			round();
+		</script>
+	</body>
+
+</html>

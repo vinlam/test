@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>console</title>
+	</head>
+
+	<body>
+		<div class="t" title=""><span style="color: red;">color</span>asdfadsf</div>
+		<input class="t" type="text" value="aaa" id="inp" title="aaa"/>
+		<input class="t" type="button" value="click" id="btn" title="click"/>
+		<div>
+			<button id="butt">test</button>
+		</div>
+	</body>
+	<!--<script src="js/jquery.min.js"></script>-->
+	<!--<script src="js/common/jquery-1.8.2.min.js"></script>-->
+	<!--<script src="js/common/jquery-1.9.1.min.js"></script>-->
+	<script src="js/common/jquery-1.8.3.js"></script>
+	<script>
+		console.time("start");
+		console.log('执行我花费了一点时间');
+		console.log('又花费了一点时间');
+		console.timeEnd("start");
+		
+		console.log(document.querySelector(".t").getAttribute("title"));
+		var elems  = document.querySelectorAll(".t");
+		for(var i=0,len=elems.length;i<len;i++){
+			var curelem = elems[i];
+			var txt =  curelem.innerText;
+			if(txt)
+				curelem.setAttribute("title",txt);
+			//console.log(JSON.stringify(curelem));
+		}
+//		var a = "aaa";
+//		var b = null;
+//		if(a && b){
+//			alert(a+b);
+//		}else if(a !=null ){
+//			alert("a:"+a+b);
+//		}else if(b !=null){
+//			alert("b:"+a+b);
+//		}
+		
+		var inp = document.getElementById("inp")
+		inp.onpropertychange = function(){//该事件IE专有10,9,8,7
+			fun();
+		};
+		inp.onchange = function(){
+			func();
+		};
+		inp.oninput = function(){
+			funinput();
+		};
+		//document.getElementById("inp").addEventListener("change",fun)
+		//document.getElementById("inp").addEventListener("click",fun)
+		
+		function fun(){
+			document.getElementById("inp").value = "pppppppppppp";
+		}
+		function func(){
+			document.getElementById("inp").value = "cccccc";
+		}
+		function funinput(){
+			document.getElementById("inp").value = "oninput";
+		}
+		
+		var val = 1.11;
+		console.log(parseFloat(val));
+		$("#butt").live("click",function(){
+			console.log("aaaaa")
+			alert("click")
+		})
+	</script>
+
+</html>

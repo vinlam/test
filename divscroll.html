@@ -1,0 +1,73 @@
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>jQuery.mobile.activePage demo</title>
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<script type="text/javascript">
+			
+			$(document).ready(function(){
+			  $("#divt").scroll(function() {
+			    alert(9)
+			  });
+			});
+		</script>
+	</head>
+
+	<body>
+		<p>请试着滚动 DIV 中的文本：</p>
+		<div data-role="page" id="page2">
+			<div data-role="header">
+				<h1>Page 2</h1>
+			</div>
+			<div data-role="content">
+				<a href="#page1" data-role="button" data-inline="true">Go to Page 1</a>
+				<input type="button" value="Which Page is this?" class="myButton" data-inline="true" />
+				<br>
+				<div id="divt"  class="myResult" style="height:300px;overflow-y: auto;">
+					<ul id="list">
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+					</ul>
+					The result will be displayed here</div>
+			</div>
+		</div>
+		<div id="d" style="width:200px;height:100px;overflow:scroll;">text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text.
+			<br />
+			<br /> text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text. text.</div>
+		<p>滚动了 <span>0</span> 次。</p>
+	</body>
+
+</html>

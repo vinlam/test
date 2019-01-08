@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>iScroll demo: simple</title>
+		<script type="text/javascript">
+			function initData() {
+				var el = document.getElementById('thelist');
+				var liNodes = document.getElementsByTagName("li");
+				alert(liNodes.length);
+				for (var i = liNodes.length - 1; i >= 0; i--) {
+					alert("删除" + i + " liNodes[i]=" + liNodes[i]);
+					el.removeChild(liNodes[i]);
+					//<-- el.removeChild(liNodes[i]);
+				}
+			}
+		</script>
+		<style type="text/css" media="all">
+			body,
+			ul,
+			li {
+				padding: 0;
+				margin: 0;
+				border: 0;
+			}
+			body {
+				font-size: 12px;
+				-webkit-user-select: none;
+				-webkit-text-size-adjust: none;
+				font-family: helvetica;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<input type="submit" name="button" id="button" value="删除li节点" class="button gray" onclick="initData()" /> </div>
+		<div>
+			<ul id="thelist">
+				<li>Pretty row 1</li>
+				<li>Pretty row 2</li>
+				<li>Pretty row 3</li>
+				<li>Pretty row 4</li>
+				<li>Pretty row 5</li>
+				<li>Pretty row 6</li>
+				<li>Pretty row 7</li>
+				<li>Pretty row 8</li>
+				<li>Pretty row 9</li>
+				<li>Pretty row 10</li>
+				<li>Pretty row 40</li>
+			</ul>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>js平滑滚动到顶部、底部、指定地方</title>
+		<!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
+		<script type="text/javascript" src="js/common/jquery-1.12.4.js"></script>
+		<style>
+			.box {
+				height: 200px;
+				width: 100%;
+				background: #ccc;
+				margin: 10px 0;
+			}
+			
+			.location {
+				position: fixed;
+				right: 0;
+				bottom: 10px;
+				width: 20px;
+				background: #FFC;
+				padding: 5px;
+				cursor: pointer;
+				color: #003
+			}
+			
+			;
+		</style>
+	</head>
+
+	<body>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box a">产品介绍产品介绍 http://www.daixiaorui.com 产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		<div id="botdiv" class="box bottom"></div>
+
+		<div class="location">
+			<p class="scroll_top">返回顶部</p>
+			<p class="scroll_a">产品介绍</p>
+			<p class="scroll_bottom">滑到底部</p>
+		</div>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('.scroll_top').click(function() {
+					$('html,body').animate({
+						scrollTop: '0px'
+					}, 800);
+				});
+				$('.scroll_a').click(function() {
+					$('html,body').animate({
+						scrollTop: $('.a').offset().top
+					}, 800);
+				});
+				$('.scroll_bottom').click(function() {
+					$('html,body').animate({
+						scrollTop: $('.bottom').offset().top
+					}, 800);
+				});
+				window.onbeforeunload = function() {
+					//				var lab = document.createElement("label");
+					//				lab.style.background = "red";
+					//				lab.innerText = "lab:"+Math.random(100);
+					//				$(".location").append(lab);
+					//				$("#botdiv").append("<p>onbeforeunload Text.</p>");
+					//				document.body.appendChild(lab);
+					//setTimeout(function(){
+					//	 gofun();
+					//	 console.log(9999)
+					//},3000)
+					//sleep(2000);
+					gofun();
+					//要提交的内容
+					//alert(Math.random(100));
+					//console.log("ding ding ding"+Math.random(100));
+					return "false"; //必须有return ，不然只有ie有效，chrome无效
+				}
+
+				//参数n为休眠时间，单位为毫秒:
+				function sleep(n) {
+					var start = new Date().getTime();
+					//  console.log('休眠前：' + start);
+					while(true) {
+						if(new Date().getTime() - start > n) {
+							break;
+						}
+					}
+
+					// console.log('休眠后：' + new Date().getTime());
+				}
+
+				function gofun() {
+					$.get("http://localhost:9090/hello", {}, function(res) {
+						console.log(res);
+					})
+				}
+				
+//				if(window.event.clientY < 0 && window.event.clientY < -80)
+//				{
+//				     alert(999);
+//				}
+			});
+		</script>
+	</body>
+
+</html>

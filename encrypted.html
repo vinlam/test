@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/ecmascript" src="js/sha1.js"></script>
+		<script type="text/javascript">
+			var sha = b64_hmac_sha1('abcd','mima123465');
+			alert(sha)
+			var s = hex_sha1('abc')
+    		console.log(s)  
+
+			function test() {
+				var key = 0110110010;
+				var number = "0x116";
+				var encrypted = number ^ key; // ㊉ => 密文 164
+				console.log(encrypted + "---" + (encrypted ^ key)); // ㊉ => 明文 22
+			}
+			test();
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

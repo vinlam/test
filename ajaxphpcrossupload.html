@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<!--<meta http-equiv="x-ua-compatible" content="IE=9;IE=8" />-->
+		<title>跨域上传</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	</head>
+
+	<body>
+		<form id="uploadform" enctype="multipart/form-data" name="uploadform" method="post">
+			<input  type="file" name="files" class="uploadinput">
+			<input  type="file" name="files" class="uploadinput">
+			<!--<input  type="file" name="pic[]" class="uploadinput">
+			<input  type="file" name="pic[]" class="uploadinput">-->
+			<input id="addfile" type="button" value="提交">
+		</form>
+
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script>
+		(function() {//alert("aaa")
+			$(document).ready(function() {
+				
+				$("#addfile").off().on("click", function() {
+					var formdata = new FormData($("#uploadform")[0]);
+					//上传文件
+					$.ajax({
+						//url: 'http://img.test.com:81/fileupload.php', //处理图片脚本
+						url: 'http://172.20.10.5:8091/SpringAop/upload/filesUpload', //处理图片脚本
+						type: "post",
+						data: formdata,
+						async: false,
+						cache: false,
+						contentType: false,
+						processData: false,
+						corssDomain: true,
+						success: function(data, status) {
+							console.log(data)
+							if(typeof(data.error) != 'undefined') {
+								if(data.error != '') {
+									alert(data.error);
+								} else {
+									alert(data.msg);
+								}
+							}
+						},
+						error: function(data, status, e) {
+							alert(e);
+						}
+					})
+				})
+
+			})
+		})()
+	</script>
+
+</html>

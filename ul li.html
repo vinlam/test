@@ -1,0 +1,112 @@
+<!DOCTYPE>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>jQuery插入,复制、替换和删除节点</title>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//几种添加节点的方法   
+				//$("p").append("<b>你好吗？</b>");//向p元素中追加《b》   
+				//$("<b>你好吗？</b>").appendTo("p");//将《b》追加到p元素中   
+				//$("p").prepend("<b>你好吗？</b>");//向p中前置《b》   
+				//$("<b>你好吗？</b>").prependTo("p");//将《b》前置到p元素中   
+				//$("p").after("<b>你好吗？</b>");//向p元素后插入《b》   
+				//$("<b>你好吗？</b>").insertAfter("p");//将《b》插入到p元素后边   
+				//$("p").before("<b>你好吗？</b>");//在p元素之前添加《b》   
+				//$("<b>你好吗？</b>").insertBefore("p");//将《b》插入到p元素前面   
+				//几种删除节点的方法   
+				//var $li=$("ul li:eq(1)").remove();//删除ul节点中第2个元素节点   
+				//$("ul").append($li);//把刚删除的元素节点从新添加到ul元素中去   
+				//$("ul li").remove("li[title!=菠萝]");//将ul元素下title属性不等于"菠萝"的li元素删除   
+				//$("ul li:eq(1)").empty();//清空ul节点下第2个li元素的内容   
+				//复制节点   
+				/* $("ul li").click(function(){  
+				  $(this).clone(true).appendTo("ul");//复制当前点击的节点，并将它追加到《ul》元素中，当添加参数时复制它的事件  
+				 
+				 });  
+				 */
+				//替换节点   
+				//$("p").replaceWith("<strong>你最不喜欢的水果是？</Strong>");   
+				$("[name='rp']").replaceWith("<tr><td>gg</td><td>gg</td><td>gg</td><td>gg</td></tr><tr><td>gg</td><td>gg</td><td>gg</td><td>gg</td></tr>");
+			});
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				$(".shanchu").click(function() {
+					$(this).parent().remove();
+				})
+			})
+		</script>
+	</head>
+
+	<body>
+		<p>你好！</p>
+		你最喜欢的水果是？
+		<ul>
+			<li title="苹果">苹果</li>
+			<li title="橘子">橘子</li>
+			<li title="菠萝">菠萝</li>
+		</ul>
+
+		<table border="1">
+			<tr>
+				<td>开始时间</td>
+				<td>
+					<input type="text" value="1">
+				</td>
+				<td>结束时间</td>
+				<td>
+					<input type="text">
+				</td>
+				<td class="shanchu">删除</td>
+			</tr>
+			<tr>
+				<td>开始时间</td>
+				<td>
+					<input type="text" value="2">
+				</td>
+				<td>结束时间</td>
+				<td>
+					<input type="text">
+				</td>
+				<td class="shanchu">删除</td>
+			</tr>
+			<tr>
+				<td>开始时间</td>
+				<td>
+					<input type="text" value="3">
+				</td>
+				<td>结束时间</td>
+				<td>
+					<input type="text">
+				</td>
+				<td class="shanchu">删除</td>
+			</tr>
+			<tr>
+				<td>开始时间</td>
+				<td>
+					<input type="text" value="4">
+				</td>
+				<td>结束时间</td>
+				<td>
+					<input type="text">
+				</td>
+				<td class="shanchu">删除</td>
+			</tr>
+			<tr>
+				<td>开始时间</td>
+				<td>
+					<input type="text" value="5">
+				</td>
+				<td>结束时间</td>
+				<td>
+					<input type="text">
+				</td>
+				<td class="shanchu">删除</td>
+			</tr>
+		</table>
+	</body>
+
+</html>

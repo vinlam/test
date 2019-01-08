@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>JS打印页面上浮动的div层</title>
+		<SCRIPT language=javascript>
+			function setVariables() { //根据<a href='http://www.daimajiayuan.com/sitejs-5791-1.html' target='_blank'><u>浏览器</u></a>不同来预设需要改变的属性
+//				if(navigator.appName == "Netscape") //如果是NS
+//				{
+//					v = ".top=";
+//					dS = "document.";
+//					sD = "";
+//					y = "window.pageYOffset";
+//				} else { //如果是IE
+//					v = ".pixelTop=";
+//					dS = "";
+//					sD = ".style";
+//					y = "document.body.scrollTop";
+//				}
+			}
+
+			function keepLocation() { //这个函数用来保持浮动层的位置
+//				object = "object1"; //这里定义需要保持层的名称(ID)
+//				yy = eval(y); //取页面顶部到窗口顶部的距离
+//				eval(dS + object + sD + v + yy); //调整层的位置
+//				setTimeout("keepLocation()", 10); //设定下一次调整的延时
+			}
+		</SCRIPT>
+		<style type="text/css">
+			A {
+				text-decoration: NONE;
+				color: 808080;
+				font-size: 11pt
+			}
+			
+			A:hover {
+				color: ff0000
+			}
+		</style>
+	</head>
+
+	<body OnLoad="setVariables();keepLocation()">
+		<!--<div id="object1" style="position:absolute; visibility:show; left:0px; top:0px; z-index:2">
+			<table width=128 border=0 cellspacing=20 cellpadding=0>
+				<tr>
+					<td height="97">
+						<a href=#><img src="img/album-af.jpg" border="0"></a>
+						<p>
+							<a href=# target="_blank">
+								<marquee scrollamount="2">还可以加滚动链接</marquee>
+							</a><br>
+					</td>
+				</tr>
+			</table>
+		</div>-->
+		
+		<div id="name_list_p" class="layer_bj_detail" style="display:block;width: 100%;">
+			<div id="printBody">
+				
+			</div>
+			<div class="layer_btn_top" id="buttonSure" style="display: block;position: fixed;bottom: 0;">
+				<button id="print">打印</button>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		function printDiv(){
+			var $seal = $('<div style="height:10px;">'+
+									'<div style="top:75px; left:450px;position:relative;">'+
+									'<img src="img/orientationc.png" style="width:100px;"/>'+				
+									'<div style="width:165px;height:165px;top:-69px;text-align:center;position:relative;">'+
+										'<strong><span id="eBillNo"'+'+iListShow[i].receiptCode+'+' style="margin:0 auto;font-size:14px;color:#972422;text-align: center;">EY0001</span></strong>'+
+									'</div>'+
+								    '</div>'+
+								   '</div>');
+					
+					var $showTop = $('<div>'+			
+						 '<table class="table_list_F" cellpadding="0" cellspacing="0" border="0" style="max-height:200px;">'+
+							'<colgroup>'+
+								'<col width="14%">'+
+								'<col width="42%">'+
+								'<col width="14%">'+
+								'<col width="13%">'+
+								'<col width="8%">'+
+								'<col width="9%">'+
+							'</colgroup>'+
+							'<tbody>'+
+								'<tr>'+
+									'<td style="text-align: center;font-family:黑体; font-size:22px;" colspan="6">东莞农村商业银行电子回单</td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td style="font-size:16px;">交易机构:</td>'+
+									'<td style="font-size:16px;"><span id="1231231231233">1231231231233</span></td>'+
+									'<td style="font-size:16px;">交易日期:</td>'+
+									'<td style="font-size:16px;"><span>2018-10-10</span></td>'+
+									'<td style="font-size:16px;">币种:</td>'+
+									'<td style="font-size:16px;"><span>人民币</span></td>'+
+								'</tr>'+
+							 '</tbody>'+
+						'</table>'+
+						'</div>');
+
+					var $showModel1 = $('<div>'+			
+							 '<table class="table_list_F" cellpadding="0" cellspacing="0" border="0" style="max-height:200px;">'+
+								'<colgroup>'+
+									'<col width="17%">'+
+									'<col width="83%">'+
+								'</colgroup>'+
+								'<tbody>'+
+									'<tr>'+
+										'<td style="font-size:16px;">付款人账号:</td>'+
+										'<td style="font-size:16px;"><span>621111111111111111111</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">付款人名称:</td>'+
+										'<td style="font-size:16px;"><span>张三</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">付款行名称:</td>'+
+										'<td style="font-size:16px;"><span>中国建设银行</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">收款人账号:</td>'+
+										'<td style="font-size:16px;"><span>623333333333333333333</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">收款人名称:</td>'+
+										'<td style="font-size:16px;"><span>李四</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">收款行名称:</td>'+
+										'<td style="font-size:16px;"><span>东莞农商银行</span></td>'+
+									'</tr>'+
+									
+									'<tr>'+
+										'<td style="font-size:16px;">金额(小写):</td>'+
+										'<td style="font-size:16px;"><span>10,000</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">大写金额:</td>'+
+										'<td style="font-size:16px;"><span>壹萬圆整</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">备	注:</td>'+
+										'<td style="font-size:16px;"><span>测试</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">附 	言:</td>'+
+										'<td style="font-size:16px;"><span>test</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">打印次数:</td>'+
+										'<td style="font-size:16px;"><span id="pri">1</span></td>'+
+									'</tr>'+
+								 '</tbody>'+
+							'</table>'+
+							'</div>'+
+							'<br/>'+
+							'<br/>');
+					
+					var $showModel4 = $('<div>'+			
+							 '<table class="table_list_F" cellpadding="0" cellspacing="0" border="0" style="max-height:200px;">'+
+								'<colgroup>'+
+									'<col width="17%">'+
+									'<col width="83%">'+
+								'</colgroup>'+
+								'<tbody>'+
+									'<tr>'+
+										'<td style="font-size:16px;">账号:</td>'+
+										'<td style="font-size:16px;"><span>62111111111111111</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">户名:</td>'+
+										'<td style="font-size:16px;"><span>张三</span></td>'+
+									'</tr>'+
+									
+									'<tr>'+
+										'<td style="font-size:16px;">金额(小写):</td>'+
+										'<td style="font-size:16px;"><span>10,000</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">大写金额:</td>'+
+										'<td style="font-size:16px;"><span>壹萬圆整</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">备	注:</td>'+
+										'<td style="font-size:16px;"><span>测试</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">附 	言:</td>'+
+										'<td style="font-size:16px;"><span>test</span></td>'+
+									'</tr>'+
+									'<tr>'+
+										'<td style="font-size:16px;">打印次数:</td>'+
+										'<td style="font-size:16px;"><span id="pri">1</span></td>'+
+									'</tr>'+
+								 '</tbody>'+
+							'</table>'+
+							'</div>'+
+							'<br/>'+
+							'<br/>'+
+							'<br/>');
+					var $tips = $('<div>'+			
+							 '<table class="table_list_F" cellpadding="0" cellspacing="0" border="0" style="max-height:200px;">'+
+								'<colgroup>'+
+									'<col width="17%">'+
+									'<col width="83%">'+
+								'</colgroup>'+
+								'<tbody>'+
+									'<tr >'+
+									'<td class="content_tilte" colspan="4">'+
+										'<div class="warmPrompt" style="border:none;">'+
+										'<span class="warmPrompt_tit" style="margin: 0 0">电子回单温馨提示:</span>'+
+										'<ul class="warmTips">'+
+											'<li>电子回单可重复打印，如您已经通过银行柜台取得相应纸质回单，请注意核对，勿重复记账。</li>'+
+										'</ul>'+
+										'</div>'+
+									'</td>'+
+										'</tr>'+
+								 '</tbody>'+
+							'</table>'+
+							'</div>'+
+							'<br/>');
+					var $nextShow = $('<div style="page-break-after:always;">'+
+									  '</div>');
+					
+					
+					//$showModel1.css({'background':'url(ReceiptImage?update='+receiptCode+')','background-repeat':'no-repeat'});
+					//$("#"+receiptCode).css({'background':'url(ReceiptImage?update='+receiptCode+')','background-repeat':'no-repeat'});
+
+					$("#printBody").append($seal);
+					$("#printBody").append($showTop);
+					
+					if(4=='4'){
+						$("#printBody").append($showModel4);
+					}else{
+						$("#printBody").append($showModel1);
+					}
+
+//					if((i+1)%4==0){
+//						$("#printBody").append($nextShow);
+//					}
+			
+						//alert(html)
+			//$("#printBody").append(html);
+		}
+		
+		function p(){
+			var table = $("#printBody").clone();
+			
+			var printer = window.open('','','width=900,height=500');
+			printer.document.open("text/html");
+			var oMeta = document.createElement('meta');
+			//oMeta.charset = 'utf-8';
+			oMeta.httpEquiv = 'X-UA-Compatible';
+			oMeta.content = 'IE=edge,chrome=1';
+			
+			//document.getElementsByTagName('head')[0].appendChild(oMeta);
+			printer.document.write('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />')
+			printer.document.write((table[0].outerHTML));
+			print.print();
+			print.document.close();
+			printer.window.close();
+		}
+		printDiv();
+		//$("#print").off().on("click",printDiv);
+		$("#print").off().on("click",p);
+	</script>
+</html>

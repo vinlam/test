@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head id="a">
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script>
+		var company = "cppei";
+	</script>
+
+	<body>
+		<form name="myform">
+			用户名：<input type="text" name="username" value="test" />
+		</form>
+		<div id="d" class="dd" onload="alert(888)">asdfasdfasd</div>
+	</body>
+	<script>
+		console.log("-------------" + document.referrer);
+		console.log(this.parent);
+		//方式一 
+		if(self.frameElement && self.frameElement.tagName == "IFRAME") {
+			console.log('在iframe中');
+		}
+		//方式二 
+		if(window.frames.length != parent.frames.length) {
+			//document.getElementById("d").style.display='none';
+			//document.getElementsByClassName("dd")[0].style.display='none';
+			console.log('在iframe中 length');
+		}
+		//方式三 
+		if(self != top) {
+			console.log('在iframe中 top');
+		}
+	</script>
+
+</html>

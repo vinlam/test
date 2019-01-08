@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>demo</title>
+	</head>
+	<body>
+
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"> </head>
+
+		<body oncontextmenu="return false;" onselectstart="return false;"> <canvas id='canvas' style="border:2px solid #000;margin:2px"></canvas>
+			<div><button id='h'>choose</button> <button id='c'>clear</button> <button id='s'>save</button></div>
+			<div id="res"></div>
+			<script>
+				var canvas = document.getElementById('canvas');
+				canvas.addEventListener('mousemove', onMouseMove, false);
+				canvas.addEventListener('mousedown', onMouseDown, false);
+				canvas.addEventListener('mouseup', onMouseUp, false); 
+				canvas.addEventListener('touchstart', onMouseDown, false);
+				canvas.addEventListener('touchmove', onMouseMove, false);
+				canvas.addEventListener('touchend', onMouseUp, false);  
+				canvas.height = 300;
+				canvas.width = getWidth() - 25;
+				var ctx = canvas.getContext('2d'); 
+				ctx.lineWidth = 3.0; // 设置线宽 
+				ctx.strokeStyle = "#fc1741"; // 设置线的颜色   
+				var flag = false; 
+				
+				var clear = document.getElementById('c'); 
+				clear.addEventListener('click',function() { 
+					ctx.clearRect(0, 0, canvas.width, canvas.height); 
+				},false);  
+				var save = document.getElementById('s'); 
+				save.addEventListener('click',function() { 
+					var saveImage = canvas.toDataURL('image/png');    
+					//alert(saveImage);data/image数据 base64格式
+        			document.getElementById('res').innerHTML = '<img src="'+saveImage+'">';
+				},false);  
+				
+				var choose = document.getElementById('h'); 
+				choose.addEventListener('click',function() { 
+					ctx = canvas.getContext('2d'),
+			        img = new Image();
+			        img.src="http://img-cdn-qiniu.dcloud.net.cn/uploads/questions/20170911/8d62fea03a90e328e8fe7e81351cc71a.PNG";
+			        img.onload = function(){
+			            ctx.drawImage(img,0,0,getWidth() - 25,300);
+			        }
+				},false);  
+				
+				function onMouseMove(evt) { 
+					evt.preventDefault(); 
+					if (flag) {
+						var p = pos(evt); 
+						ctx.lineTo(p.x, p.y); 
+						ctx.lineWidth = 6.0; // 设置线宽 
+						ctx.shadowColor = "#fc1741"; 
+						ctx.shadowBlur = 1; 
+						//ctx.shadowOffsetX = 6; 
+						ctx.stroke(); 
+					} 
+				}   
+				function onMouseDown(evt) { 
+					evt.preventDefault(); 
+					ctx.beginPath(); 
+					var p = pos(evt); ctx.moveTo(p.x, p.y); 
+					flag = true; 
+				}     
+				function onMouseUp(evt) { 
+					evt.preventDefault(); 
+					flag = false; 
+				}     
+				
+				function pos(event) { 
+					var x,y; 
+					if(isTouch(event)){ 
+						x = event.touches[0].pageX; 
+						y = event.touches[0].pageY; 
+					}else{ 
+						x = event.layerX; 
+						y = event.layerY; 
+					} 
+					return {x:x,y:y}; 
+				}   
+				function isTouch(event) { 
+					var type = event.type; 
+					if(type.indexOf('touch')>=0){ 
+						return true; 
+					}else{ 
+						return false; 
+					} 
+				}   
+				function getWidth() { 
+					var xWidth = null;   
+					if (window.innerWidth !== null) { 
+						xWidth = window.innerWidth; 
+					} else { 
+						xWidth = document.body.clientWidth; 
+					}   
+					return xWidth; 
+				}
+			</script>
+			
+		</body>
+
+</html>

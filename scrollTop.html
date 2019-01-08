@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+	</head>
+
+	<body>
+		<div id="scrollBody" style="position:absolute;top:20px;bottom:0;left:0;right:0;overflow:scroll;height:600px;">
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<div style="font-size:20px;height:100px;">
+			</div>
+			<div style="font-size:20px;height:100px;background-color: #005AFF;">
+			</div>
+			<p>asdfadsfadfadf</p>
+			<p>23</p>
+			<p>asdfadsfs23adfadf</p>
+			<p>asdsdffffadsfadfadf</p>
+			<p>asdfad234123sfadfadf</p>
+			<p>asdfads222fadfadf</p>
+			<p>asdfad33123sfadfadf</p>
+			<p>asdfad1123sfadfadf</p>
+		</div>
+		<div style="position:relative;top:350px;">
+			<button onClick="scrollToTop()">按钮1</button>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script>
+			function scrollToTop() {
+				//   这里边可以写一些逻辑，比如偶数行一个一个的置顶，不如状态等于0的一个一个的置顶！
+				//console.log(document.getElementById('scrollBody').style.top);
+				//document.querySelector('#scrollBody').scrollTop= document.getElementById('scrollBody').style.top;
+				//document.getElementById('scrollBody').scrollTop = document.getElementById('scrollBody').style.top;
+				$("html,body").animate({scrollTop:20},300);
+				$("#scrollBody").animate({scrollTop:20},300);
+				console.log(document.getElementsByTagName('p').innerText)
+				//window.scrollTo = 0;
+			}
+		</script>
+	</body>
+
+</html>

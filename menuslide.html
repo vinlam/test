@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Computer World</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+		<!--<style>
+			/*this block should go in the styles.css file*/
+			
+			.ui-panel-inner {
+				padding: 0px;
+				/*make the buttons flush edge to edge*/
+			}
+			.ui-controlgroup {
+				margin: 0;
+				/*make the buttons flush to the top*/
+			}
+			#header {
+				height: 54px;
+			}
+			#bars-button {
+				margin: 7px;
+			}
+		</style>-->
+	</head>
+
+	<body>
+
+		<div data-role="page" id="home" data-theme="b">
+
+			<div data-role="panel" id="navpanel" data-theme="a" data-display="overlay" data-position="left">
+				<div data-role="controlgroup" data-corners="false">
+					<a href="#" data-role="button">Business</a>
+					<a href="#" data-role="button">Numbers</a>
+					<a href="#" data-role="button">Money</a>
+					<a href="#" data-role="button">People</a>
+				</div>
+			</div>
+
+			<div id="header" data-role="header" data-theme="b">
+				<a id="bars-button" data-icon="bars" class="ui-btn-right" style="margin-top:10px;" href="#navpanel">Menu</a>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			function gettotalday() {
+				//构造一个日期对象：
+				var day = new Date(2015,10,0);
+				//获取天数：
+				var daycount = day.getDate();
+				alert("days:" + day.toLocaleDateString());
+				alert(daycount);
+			}
+			gettotalday();
+			DayNumOfMonth(2015, 2)
+			//方法二
+			function DayNumOfMonth(Year, Month) {
+				Month--;
+				var d = new Date(Year, Month, 1);
+				d.setDate(32);
+				alert('d:' + (32 - d.getDate()));
+			}
+			
+			/*//方法三
+			function DayNumOfMonth(Year, Month) {
+				return 32 - new Date(year, month, 32).getData();
+			}*/
+			
+			var getMonthWeek = function(a, b, c) {
+				/* 
+				a = d = 当前日期 
+				b = 6 - w = 当前周的还有几天过完（不算今天） 
+				a + b 的和在除以7 就是当天是当前月份的第几周 
+				*/
+				var date = new Date(a, parseInt(b) - 1, c),
+					w = date.getDay(),
+					d = date.getDate();
+				return Math.ceil(
+					(d + 6 - w) / 7
+				);
+			};
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

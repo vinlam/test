@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<form id="form" name="f" method="get" action="http://127.0.0.1:8020/test/iframepost.html" class="fm">
+			<input id="kw" name="wd" value="input ie enter hre">
+		</form>
+	</body>
+	<script>
+		document.getElementById("kw").onkeydown = function(e) {
+			var e = e || event;
+			if(e.keyCode == 13) {　　
+//				setTimeout(function() {
+//					//alert("自己的逻辑");
+//					window.location.href = window.location.href + '?s=werwer'
+//				}, 0);
+				e.preventDefault ? e.preventDefault() : (e.returnValue = false);//解决ie enter
+				test();
+			}
+		}
+		
+		function test(){
+			window.location.href = document.getElementById("id").getAttribute("action")+"?s=123";
+		}
+	</script>
+
+</html>

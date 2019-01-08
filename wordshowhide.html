@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>文字展开隐藏</title>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var dl = $('<dl>');
+				$('#faqSection').append(dl);
+				$('dt').on('click', function() {
+					var dd = $(this).next();
+					// If the title is clicked and the dd is not currently animated,  
+					// start an animation with the slideToggle() method.  
+					if (!dd.is(':animated')) {
+						dd.slideToggle();
+						$(this).toggleClass('opened');
+					}
+				});
+				$('a.button').click(function() {
+					// To expand/collapse all of the FAQs simultaneously,  
+					// just trigger the click event on the DTs  
+					if ($(this).hasClass('collapse')) {
+						$('dt.opened').click();
+					} else $('dt:not(.opened)').click();
+					$(this).toggleClass('expand collapse');
+					return false;
+				});
+			});
+		</script>
+		<style>
+			@charset "utf-8";
+			/* CSS Document */
+			html,body,div,span,h1,h2,h3,h4,h5,h6,p,pre,a,code,em,img,small,strong,sub,sup,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label{margin:auto;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+			h2{ text-align:center; padding:10px; font-size:20px;}
+			a{color:#007bc4/*#424242*/; text-decoration:none;}
+			a:hover{text-decoration:underline}
+			ol,ul{list-style:none}
+			table{border-collapse:collapse;border-spacing:0}
+			body{height:100%; font:12px; sans-serif; color:#51555C; background:#2C2C2C }
+			img{border:none}
+			.logo{width:910px;}
+			#main_demo{width:910px; min-height:600px; margin:30px auto 0 auto; background:#fff; -moz-border-radius:12px;-khtml-border-radius: 12px;-webkit-border-radius: 12px; border-radius:12px;}
+			.ad{ text-align:center; margin-top:25px;}	
+			#page{
+				width:753px;
+				margin:50px auto;
+			}
+			
+			#headingSection{
+				background-color:#7b8b98;
+				padding:40px;
+				padding-left:60px;
+				position:relative;
+				border:1px solid #8b9ba7;
+				border-bottom:none;
+			}
+			
+			#faqSection{
+				background:url('img/faq_bg.jpg') repeat-y #fff;
+				padding:20px 90px 60px 60px;
+				border:1px solid white;
+				text-shadow:1px 1px 0 white;
+			}
+			
+			
+			
+			/* The expand / collapse button Download by http://www.codefans.net*/
+			
+			a.button{
+				background:url('img/buttons.png') no-repeat;
+				width:80px;
+				height:38px;
+				position:absolute;
+				right:50px;
+				top:45px;
+				text-indent:-9999px;
+				overflow:hidden;
+				border:none !important;
+			}
+			
+			a.button.expand:hover{ background-position:0 -38px;}
+			a.button.collapse{ background-position:0 -76px;}
+			a.button.collapse:hover{ background-position:0 bottom;}
+			
+			/* Definition Lists */
+			
+			dt{
+				color:#8F9AA3;
+				font-size:25px;
+				margin-top:30px;
+				padding-left:25px;
+				position:relative;
+				cursor:pointer;
+				border:1px solid transparent;
+			}
+			
+			dt:hover{ color:#5f6a73;}
+			
+			dt .icon{
+				background:url('img/bullets.png') no-repeat;
+				height:12px;
+				left:3em;
+				position:absolute;
+				top:11px;
+				width:12px;
+			}
+			
+			dt.opened .icon{ background-position:right bottom;}
+			
+			dd{
+				font-size:14px;
+				color:#717f89;
+				line-height:1.5;
+				padding:20px 0 0 25px;
+				width:580px;
+				display:none;
+			}
+			
+			
+			/* Only Needed For The Demo Page */
+			
+			
+			p.createdBy{
+				font-size:15px;
+				font-weight:normal;
+				margin:50px;
+				text-align:center;
+				text-shadow:none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="page">
+
+			<div id="headingSection">
+				<a class="button expand" href="#">展开</a>
+			</div>
+
+			<div id="faqSection">
+				<dl>
+					<dt>详情<span class="icon"></span></dt>
+					<dd><a href="#">jquery点击显示或隐藏内容,可以一次展开多个和点击按钮一次全部展开</a></dd>
+
+					<dt>详情<span class="icon"></span></dt>
+					<dd>内容2</dd>
+				</dl>
+			</div>
+
+		</div>
+	</body>
+
+</html>

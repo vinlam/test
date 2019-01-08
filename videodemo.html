@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+	<script src="js/jquery.min.js"></script>
+
+<div id="dd" style="width: 600px;height: 600px;"></div>
+<!--<video id="vid" controls="controls">
+Your browser does not support the video tag.
+</video>-->
+<script>
+/* function loadsrc(){
+ document.getElementById("vid").src = "http://www.w3school.com.cn/i/movie.ogg";alert(99)
+}
+loadsrc();*/
+init()
+var v = null;
+function init() {
+	//alert(context.src);
+	v = document.getElementById("video");
+	//$("#video").off().on("error", videoError);
+	//loadMedia("http://www.w3school.com.cn/i/movie.ogg");
+	//loadMedia("movie.ogg");
+	http://104.76.8.50:8080/upload/20161222/321152348001571532/mp4/mov_bbb.mp4
+	loadMedia("http://104.0.44.47:9080/isrp/interface/imageUrl?param=aW1hZ2VEaXNUeXBlPU8maW1hZ2VJZD0yMDE2MTIyMzAwMDAwMDE1JnQ9MTQ4MjcxNjk0NzM4Mw==");
+}
+
+function loadMedia(url) {
+	var h ='<video id="vid" width="300" height="300" src="'+url+'"+ controls="controls" >Your browser does not support the video tag.</video>';
+	$("#dd").append(h);
+	$("#dd").append("<span>lkjlkjlk</span>");
+}
+</script>
+</body>
+</html>

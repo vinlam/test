@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>input 删除显示隐藏</title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<style>
+			.input {
+				padding: 5px;
+				margin: 0;
+				border: 1px solid #beceeb;
+			}
+			.clear {
+				display: none;
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				margin: 6px 0 0 -20px;
+				background: url(img/clear.png) no-repeat;
+				outline: none;
+			}
+			.input::-ms-clear {
+				display: none;
+			}
+			.input:valid + .clear {
+				display: inline;
+			}
+		</style>
+		<script>
+			(function(){
+				$(document).ready(function(){
+					$("#del").on("click",delvalue);alert(9)
+				});
+				function delvalue(){
+					//alert($("#txt").val());
+					$("#txt").val("");
+				}
+			})();
+		</script>
+	</head>
+
+	<body>
+		<div id="main">
+			
+			<div id="body">
+				<div id="effect" class="part">
+					<h3>效果：</h3>
+					<div class="show">
+						<div class="demo">
+							输入任意内容：
+							<input id="txt" class="input" required>
+							<a href="javascript:" id="del" class="clear"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

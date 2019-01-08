@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			span {
+				padding: 3px;
+				b
+				border-color: #ddd;
+				border-radius: 2px;
+			}
+			
+			.bcolor{
+				border: 1px solid;
+				border-color: #0000FF;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("span").off().on("click", function() {
+					//console.log("t")
+					var self = $(this);
+					//console.log(self.text());
+					$(".keys span").removeClass("bcolor");
+					self.addClass("bcolor");
+				})
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<div id="divd" class="keys" style="margin: 0px;padding: 2px;">
+			<span class="span" > test </span>
+			<span class="span"> test1 </span>
+			<span class="span"> test2 </span>
+		</div>
+		</div>
+		
+		<div id="divd2"  class="keys" style="margin: 0px;padding: 2px;">
+			<span class="sign span" > test </span>
+			<span class="span"> test1 </span>
+			<span class="span"> test2 </span>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>test</title>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/mydialog.js"></script>
+		<link href="css/mydialog.css" type="text/css" rel="stylesheet" />
+		<style>
+			p {
+				text-indent: 2em;
+				/*em是相对单位，2em即现在一个字大小的两倍*/
+			}
+		</style>
+		<script type="text/javascript">
+			$(function() {
+				$("#show").click(function() {
+					$.myalert({
+						title: "msg",
+						//content: $("input").val(),//<p>段落前面空两个字的距离，不要再使用空格了。应该使用首行缩进text-indent。长度单位em。相对于当前对象内文本的字体尺寸。我们首行缩进了2em。2em即现在一个字大小的两倍。在这里我们需要了解一种长度单位em。em是相对长度单位。相对于当前对象内文本的字体尺寸。我们中文段落一般每段前空两个汉字。实际上，就是首行缩进了2em。</p>
+						content: '<p>段落前面空两个字的距离，不要再使用空格了。应该使用首行缩进text-indent。长度单位em。相对于当前对象内文本的字体尺寸。我们首行缩进了2em。2em即现在一个字大小的两倍。在这里我们需要了解一种长度单位em。em是相对长度单位。相对于当前对象内文本的字体尺寸。我们中文段落一般每段前空两个汉字。实际上，就是首行缩进了2em。</p>',
+						confirm_btn_click: function(e) { //确认按钮点击事件
+							$.myalert("getDialog").mydialog("hide");
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<input type="text" value="确定要删除吗？！" />
+		<button id="show">打开</button>
+	</body>
+
+</html>

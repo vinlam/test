@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Canvas</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="300" height="300"></canvas>
+	</body>
+	<script type="text/javascript">
+		var mycanvas = document.getElementById("myCanvas");
+		var context = mycanvas.getContext("2d");
+		
+		//content.drawImage(img,sx,sy,sw,sh,x,y,width,height);
+		//sx,sy:裁减的图片的左上角坐标
+		//sw,sh:裁减的图片的宽度和高度
+		//s,y:裁减之后的图片放置的位置，左上角的坐标
+		//width,height:放置在多大的容器中，定义宽高
+		var img = new Image();
+		img.src = "1.jpg";
+		img.onload = function(){
+			//console.log(1%=4);
+			var beginx = 0;//裁减图片的X轴坐标。从左往右递增。
+			var beginy = 0;//裁减图片的Y轴坐标。从递增。
+			var time = setInterval(function(){
+				context.clearRect(0,0,mycanvas.width,mycanvas.height);
+				console.log(beginx*40+"----"+beginx*65)
+				//100毫秒裁减一次图片绘制在页面上
+				context.drawImage(img,beginx*40,beginx*65,40,65,150,150,40,65);
+				beginx++;
+				beginx%=4;
+				if(beginx == 4){
+					clearInterval(time);
+				}
+			},100)
+		}
+	</script>
+</html>

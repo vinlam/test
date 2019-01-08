@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>网页授权地址</title>
+		<script>
+			document.addEventListener("DOMContentLoaded")
+			create();
+			function create(){
+				var appId = 'wx0feec2cb67c637d6';
+				//var ggurl =encodeURIComponent("http://www.hubeicfc.com/weixinServer/htmlShow/consumerFinace/html/bridge.html?appid="+appId);
+				//var ggurl =encodeURIComponent("http://5qvv5qv.hk1.mofasuidao.cn/weixinServer/htmlShow/njbank/views/weixinscan.html?appid="+appId);
+				var ggurl ="http://5qvv5qv.hk1.mofasuidao.cn/weixinServer/htmlShow/njbank/views/weixinscan.html?appid="+appId;
+				ggurl ="http://5qvv5qv.hk1.mofasuidao.cn/weixinServer/htmlShow/njbank/views/myqrcode.html?appid="+appId;
+				var path ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ appId+"&redirect_uri="+ggurl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+				//var path ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+ appId+"&redirect_uri="+ggurl+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+				console.log(path);
+			}
+		</script>
+	</head>
+	<body>
+		<br />
+	</body>
+</html>

@@ -1,0 +1,35 @@
+{
+	"res": [
+		{
+			"productname": "意威诺(evnno)手提枕头包大容量限量地图款式B227-16",
+			"price": "10",
+			"dian": ".60",
+			"imgUrl": "img/index/l1.png"
+		}, {
+			"productname": "皮蛋瘦肉粥很喜欢的粥",
+			"price": "21",
+			"dian": ".20",
+			"imgUrl": "img/index/l2.png"
+		}, {
+			"productname": "粥品香坊其烹饪粥料的秘方源于中国千年古法",
+			"price": "15",
+			"dian": ".60",
+			"imgUrl": "img/index/l3.png"
+		}, {
+			"productname": "枕头包大容量限量地图款式",
+			"price": "10",
+			"dian": ".60",
+			"imgUrl": "img/index/l4.png"
+		}, {
+			"productname": "女士新款经典保暖针织不规则设计圆领卫衣",
+			"price": "10",
+			"dian": ".60",
+			"imgUrl": "img/index/l5.png"
+		}, {
+			"productname": "外套休闲撞色拼接连帽抽绳印花图案女卫衣",
+			"price": "10",
+			"dian": ".60",
+			"imgUrl": "img/index/l6.png"
+		}
+	]
+}

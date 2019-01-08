@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>setTimeoutAndsetInterval</title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		//setInval
+		var nums = 0;
+		var maxs = 10;
+		var intervalId = null;
+
+		function incrementNumber() {
+			nums++;
+			console.log("interval:" + nums);
+			if(nums == maxs) {
+				clearInterval(intervalId);
+				console.log('interval done');
+			}
+		}
+
+		//intervalId = setInterval(incrementNumber(), 500);// 一次
+		//intervalId = setInterval(incrementNumber, 500); //多次
+		//		intervalId = setInterval(function(){
+		//			incrementNumber()
+		//		}, 500);
+
+		//setTimeout 实现相同功能
+
+		var num = 0;
+		var max = 10;
+		var timeoutId = null;
+
+		function incrementNumber2() {
+			num++;
+			console.log("timeout:" + num);
+			clearTimeout(timeoutId);
+			if(num < max) {
+				timeoutId = setTimeout(incrementNumber2, 500);
+			} else {
+				console.log("timeoutId:" + timeoutId);
+				//clearTimeout(timeoutId);
+				console.log('timeout done');
+			}
+		}
+		timeoutId = setTimeout(incrementNumber2, 500);
+
+		var timesRun = 0;
+		var interval = setInterval(function() {
+			timesRun += 1;
+			//console.log(timesRun)
+			if(timesRun === 60) {
+
+				clearInterval(interval);
+			}
+			//do whatever here..
+		}, 100);
+		var startTime = new Date().getTime();
+		var intervals = setInterval(function() {
+			if(new Date().getTime() - startTime > 60000) {
+				clearInterval(intervals);
+				return;
+			}
+			//do whatever here..
+		}, 100);
+
+		function t1() {
+			// 题目一
+			var t = true;
+
+			setTimeout(function() {
+				t = false;
+			}, 2000);
+
+			//while(t) {console.log(t)}
+
+			alert('end');
+		}
+
+		function t2() {
+			// 题目二
+			for(var i = 0; i < 5; i++) {
+				setTimeout(function() {
+					console.log(i);
+				}, 0);
+			}
+		}
+
+		function t3() {
+			// 题目三
+			var obj = {
+				msg: 'obj',
+				shout: function() {
+					alert(this.msg);
+				},
+				waitAndShout: function() {
+					var that = this;
+					setTimeout(function() {
+						//that.shout();
+						this.shout();//error
+					}, 0);
+				}
+			};
+			obj.waitAndShout();
+		}
+		t1();
+		//t2();
+		//t3();
+		test();
+		function test(){
+			setTimeout(function(){
+				console.log("t");
+			},16800000);
+		}
+	</script>
+
+</html>

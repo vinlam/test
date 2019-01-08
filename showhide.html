@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>jquery</title>
+		<style type="text/css">
+			#spanel,
+			#showHide,
+			#fadeout {
+				width: 200px;
+				height: 100px;
+				background-color: Aqua;
+				position: relative;
+				cursor: pointer;
+				font-size: 12px;
+			}
+		</style>
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(function() {
+				//用toggle,hide(),show()实现显示与隐藏 
+				$("#showHide").toggle(function() {
+					$(this).hide(600)
+				}, function() {
+					$(this).show(600);
+				});
+				//使用fadeout,fadeIn改变透明度 
+				$("#fadeout").toggle(function() {
+					$(this).fadeOut();
+				}, function() {
+					$(this).fadeIn();
+				});
+				//使用animate实现简单的动画效果 
+				$("#spanel").bind("click", function() {
+					$(this).animate({
+						left: "300px",
+						height: "100px"
+					}, 3000);
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="showHide">show移上去看看</div>
+		<p></p>
+		<div id="spanel">
+			<h5>hello</h5>
+
+		</div>
+		<p></p>
+		<div id="fadeout">fadeout淡出效果 淡出效果淡出效果淡出效果淡出效果淡出效果 淡出效果淡出效果淡出效果淡出效果
+		</div>
+	</body>
+
+</html>

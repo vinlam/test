@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="mbank.param.js"></script>
+		<script language="javascript">
+			$(document).ready(function() {
+				var a = {"a":1,"b":2};
+				var t = {
+					"IF_FLAG":{"2":"否","3":"是"},
+					"ATTENTION_TYPE":{"3":"普通"}
+				}
+				var b = {"c":3,"d":{"a":1,"b":2},"e":"1","f":"f"};
+				var e = $.extend(true,$.mbank.param,t);
+				var re = $.extend(false,$.mbank.param,t);
+				/*var c =$.extend({},a,b);
+				var d =$.extend(a,b);
+				console.log(JSON.stringify(c))*/
+				console.log("d:"+JSON.stringify(e))
+				console.log("dfalse:"+JSON.stringify(re))
+			})
+
+		</script>
+	</head>
+
+	<body>
+		
+	</body>
+</html>

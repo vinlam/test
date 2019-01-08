@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer"></script>
+    <script type="text/javascript" src="coordtrans.js"></script>
+    <title>批量转换</title>
+</head>
+<body>
+    <div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+var points = [
+new BMap.Point(113.095493,23.01718),//{"lng":113.10753788377,"lat":23.020296494325}青湾
+new BMap.Point(113.121339,23.017842),//{"lng":113.1075340868,"lat":23.020296762135},{"lng":113.1333217165,"lat":23.021235216695},{"lng":113.11898139264,"lat":23.029573192808},{"lng":113.11262129053,"lat":23.03057256953},{"lng":113.08556978889,"lat":23.031840227765}
+new BMap.Point(113.106949,23.026381),
+new BMap.Point(113.100579,23.027432),
+new BMap.Point(113.073574,23.028546),
+/*new BMap.Point(113.055628,23.025615),
+new BMap.Point(113.099468,23.035773),
+new BMap.Point(113.114929,23.018632),
+new BMap.Point(113.111536,23.024342),*/
+//new BMap.Point(113.071292,23.011626),
+//new BMap.Point(113.071292,23.011626),
+//new BMap.Point(113.13066,23.017489),
+//new BMap.Point(113.106858,23.053223),
+//new BMap.Point(113.141898,23.019069),
+//new BMap.Point(113.159365,22.989837),
+//new BMap.Point(113.086757,23.009389),
+//new BMap.Point(113.101075,22.993988),
+/*new BMap.Point(113.121492,22.991886),
+new BMap.Point(113.106171,23.012342),
+new BMap.Point(113.107349,23.015941),
+new BMap.Point(113.008238,22.981851),
+new BMap.Point(113.038073,22.954837),
+new BMap.Point(113.038073,22.954837),*/
+//new BMap.Point(113.101075,22.993988)//{"lng":113.11311720589,"lat":22.997116533977}长街支行
+]
+
+
+    /*var points = [new BMap.Point(116.3786889372559,39.90762965106183),
+                  new BMap.Point(116.38632786853032,39.90795884517671),
+                  new BMap.Point(116.39534009082035,39.907432133833574),
+                  new BMap.Point(116.40624058825688,39.90789300648029),
+                  new BMap.Point(116.41413701159672,39.90795884517671)
+    ];*/
+//国测局坐标转百度经纬度坐标
+    //var gcj02tobd09 = coordtransform.gcj02tobd09(113.095493,23.01718);//113.10204190771232,23.022846406970686
+    var gcj02tobd09 = coordtransform.gcj02tobd09(113.121339,23.017842);//113.12785128320071,23.02368966672762
+    var hengan = coordtransform.gcj02tobd09(113.106949,23.026381);//113.12785128320071,23.02368966672762
+    console.log(gcj02tobd09);
+    console.log(hengan);
+    //地图初始化
+    var bm = new BMap.Map("allmap");
+    bm.centerAndZoom(new BMap.Point(113.12785128320071,23.02368966672762), 15);
+    //bm.centerAndZoom(new BMap.Point(113.103772, 23.026138), 15);
+	bm.addEventListener("click",function(e){
+		console.log(e.point.lng + "," + e.point.lat);
+	});
+    /*//坐标转换完之后的回调函数
+    translateCallback = function (data){
+      if(data.status === 0) {//alert(JSON.stringify(data.points))
+      	console.log(JSON.stringify(data.points))
+        for (var i = 0; i < data.points.length; i++) {
+        	
+            bm.addOverlay(new BMap.Marker(data.points[i]));
+            bm.setCenter(data.points[i]);
+        }
+      }
+    }*/
+   /*for (var i = 0; i < points.length; i++) {
+        	
+            bm.addOverlay(new BMap.Marker(points[i]));
+            bm.setCenter(points[i]);
+        }*/
+   	bm.addOverlay(new BMap.Marker(new BMap.Point(113.12785128320071,23.02368966672762)));
+    bm.setCenter(new BMap.Point(113.12785128320071,23.02368966672762));
+    /*setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        convertor.translate(points, 3, 5, translateCallback)
+    }, 1000);*/
+    setTimeout(function(){
+		bm.setZoom(14);   
+	}, 2000);  //2秒后放大到14级
+	bm.enableScrollWheelZoom(true);
+</script>

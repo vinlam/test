@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="js/common/jquery.mobile-1.4.3.css" rel="Stylesheet" type="text/css" />
+		<script src="js/common/jquery-1.9.1.min.js" type="text/javascript"></script>
+		<script>
+			$(function(){
+			//setTimeout('$(".toolbarframe").show("slow")',3000);
+			//setTimeout('$(".toolbarframe").hide("slow")',13000);
+			/*$(".bigad_close").click(function(){
+			 	$(".toolbarframe").hide("slow");
+			})*/var timer;
+			$("#cbox").on("click",function(){//alert($(this).val());//1
+				
+				if($("#cbox").is(':checked')){//alert($("#cbox").is(':checked'));
+					$("#imgico").show();
+					console.log("begin---:" + timer);
+					timer = setTimeout(function(){
+						$("#imgico").hide();
+					},10000);console.log("start---:"+timer);
+				}else{
+					$("#imgico").hide();console.log("unchecked---:"+timer);
+					clearTimeout(timer);console.log("clear---:"+timer);
+					timer = null;
+				}
+			});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<input type="checkbox" name="cbox" value="1" id="cbox">check
+		</div>
+		<div class="toolbarframe">
+			<a href="http://www.jb51.net" target="_blank">
+				<img id="imgico" src="img/head_icon1.png" style="display: none;"/>
+			</a>
+			<a class="bigad_close">关闭</a>
+			<br>
+			<br>
+			<br>
+			
+		</div>
+		
+		
+	</body>
+
+</html>

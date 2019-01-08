@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+
+		<script>
+			if("wView" in window) {
+				window.wView.allowsInlineMediaPlayback = "YES";
+				window.wView.mediaPlaybackRequiresUserAction = "NO";
+			}
+		</script>
+	</head>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
+		video,
+		#output,
+		#output img {
+			width: 100%;
+		}
+		
+		#tulip {
+			width: 100%;
+		}
+	</style>
+
+	<body>
+		<div id="videoBox">
+			<video webkit-playsinline id="video" autoplay src="http://172.20.10.2:8020/test/v.mp4">
+
+			</video>
+		</div>
+
+		<canvas id="canvas"></canvas>
+		<div id="output"></div>
+
+		<script type="text/javascript">
+			var video = document.getElementById('video');
+			var output = document.getElementById("output");
+			var canvas = document.getElementById("canvas");
+			var videoBox = document.getElementById("videoBox");
+			video.addEventListener("touchstart", function() {
+				video.play();
+				setTimeout(function() {
+					video.pause()
+				}, 10)
+			}, false) ;
+			video.onpause = function() {
+				canvas.width = 100;
+				canvas.height = 100;
+				canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
+			}
+		</script>
+	</body>
+
+</html>

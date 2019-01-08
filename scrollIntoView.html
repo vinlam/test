@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+		<title>
+			ScrollIntoView
+		</title>
+		<script src="js/jquery.min.js" charset="utf-8"></script>
+		<style>
+			html,
+			body {
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			
+			header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 9999;
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				font-size: 18px;
+				text-align: center;
+				background: #ccc;
+			}
+			
+			main {
+				position: absolute;
+				top: 50px;
+				bottom: 10px;
+				left: 20px;
+				width: 100%;
+				margin-bottom: 50px;
+				/* 使之可以滚动 */
+				overflow-y: scroll;
+				/* 增加该属性，可以增加弹性，是滑动更加顺畅 */
+				-webkit-overflow-scrolling: touch;
+			}
+			
+			div {
+				position: absolute;
+				/* 使之可以滚动 */
+				overflow-y: scroll;
+				/* 增加该属性，可以增加弹性，是滑动更加顺畅 */
+				-webkit-overflow-scrolling: touch;
+			}
+			
+			footer {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background: #666;
+				border-top: 1px solid #e6e6e6;
+			}
+			
+			footer input {
+				display: inline-block;
+				width: 90%;
+				height: 20px;
+				font-size: 14px;
+				outline: none;
+				border: 1px solid #e6e6e6;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			This is the header
+		</header>
+		<main>
+			<h1>ScrollIntoView</h1>
+			<p>Welcome to ScrollIntoView
+			</p>
+			<ul>
+				<li>Today</li>
+				<li>is</li>
+				<li>Sunday</li>
+				<li>And</li>
+				<li>I</li>
+				<li>have</li>
+				<li>to</li>
+				<li>go</li>
+				<li>to</li>
+				<li>work</li>
+				<li>tomorrow</li>
+			</ul>
+			<div><input id="inp" type="text" placeholder="scrollIntoView..."></div>
+		</main>
+		<footer>
+			<input type="text" placeholder="Type here...">
+		</footer>
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			const wh = $(window).height();
+			var _index = 0;
+			$(window).on('resize', function() {
+				inp.value=$(window).height() +"==="+ $(window).innerHeight() +"--"+wh;
+//				if(wh >= $(window).innerHeight()){
+//					clearInterval(_index)
+//				}
+			});
+			$('input').on('focusin', function() {
+				var target = this;
+				// 使用定时器是为了让输入框上滑时更加自然
+				_index = setInterval(function() {
+					target.scrollIntoView(true);
+					target.value=$(window).innerHeight();
+					clearInterval(_index)
+				}, 400);
+			});
+			
+			//var interval = setInterval(function() {
+    		//	document.body.scrollTop = document.body.scrollHeight
+			//}, 100)
+			function interval(func, wait, times){
+			    var interv = function(w, t){
+			        return function(){
+			            if(typeof t === "undefined" || t-- > 0){
+			                setTimeout(interv, w);
+			                try{
+			                    func.call(null);
+			                }
+			                catch(e){
+			                    t = 0;
+			                    throw e.toString();
+			                }
+			            }
+			        };
+			    }(wait, times);
+			
+			    setTimeout(interv, wait);
+			};
+			var count = 0;
+			interval(function(){
+				count++;
+				console.log(count);
+			},1000,10)
+		})
+	</script>
+
+</html>

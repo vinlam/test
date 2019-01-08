@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>canvas</title>
+<script>
+	window.onload = function(){
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	var W = canvas.width;
+	var H = canvas.height;
+	var deg=0,new_deg=0,dif=0;
+	var loop,re_loop;
+	var text,text_w;
+	
+	function init(){
+		ctx.clearRect(0,0,W,H);
+		ctx.beginPath();
+		ctx.strokeStyle="#333";
+		ctx.lineWidth=20;
+		ctx.arc(W/2,H/2,100,0,Math.PI*2,false);
+		ctx.stroke();
+		/*context.arc(x,y,r,sAngle,eAngle,counterclockwise);
+		参数值
+		参数	描述
+		x	圆的中心的 x 坐标。
+		y	圆的中心的 y 坐标。
+		r	圆的半径。
+		sAngle	起始角，以弧度计。（弧的圆形的三点钟位置是 0 度）。
+		eAngle	结束角，以弧度计。
+		counterclockwise	可选。规定应该逆时针还是顺时针绘图。False = 顺时针，true = 逆时针。*/
+		var r = 50*Math.PI/180;
+		ctx.beginPath();
+		ctx.strokeStyle = "lightgreen";
+		ctx.lineWidth=15;
+		ctx.arc(W/2,H/2,100,0-90*Math.PI/180,r-90*Math.PI/180,false);
+		ctx.stroke();
+		
+		ctx.fillStyle="#f00";
+		ctx.font="50px abc";
+		text = Math.floor(deg/360*100)+"%";
+		text_w = ctx.measureText(text).width;
+		ctx.fillText(text,W/2 - text_w/2,H/2+15);
+	}
+	function draw(){
+		new_deg = Math.round(Math.random()*360);
+		dif = new_deg-deg;
+		loop = setInterval(to,1000/dif);
+	}
+	function to(){
+		if(deg == new_deg){
+			clearInterval(loop);
+		}
+		if(deg<new_deg){
+			deg++;
+		}else{
+			deg--;
+		}
+		init();
+	}
+	draw();
+	re_loop = setInterval(draw,2000);
+}
+</script>
+</head>
+
+<body>
+<canvas id="canvas" width="300" height="300">
+</body>
+</html>

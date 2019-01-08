@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			#box {
+				width: 120px;
+				height: 120px;
+				position: relative;
+				top: 0;
+			}
+			
+			#box img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<img src="http://img.lanrentuku.com/img/allimg/1212/5-121204193R5-50.gif">
+		</div>
+		<script src="js/fetch.js"></script>
+		<script type="text/javascript">
+			// 写法一
+			var requestConfig = {
+			    credentials: 'include',//Fetch 请求默认是不带 cookie 的，需要设置 fetch(url, {credentials: 'include'})
+			    method: "GET",
+			    headers: {
+			      'Accept': 'application/json',
+			      'Content-Type' : 'application/json'
+			    },
+			    mode: "no-cors",//跨域
+			    cache: "force-cache"
+			}
+			fetch("https://www.lolku.cn/?format=json#/",requestConfig).then(function(Response) {
+					console.log('请求成功，并且返回对象：', Response);
+					// 处理json得方法
+					Response.json().then(function(data) {
+						console.log(data)
+					}).catch(function(err) {
+						console.log('err', err)
+					})
+				}
+
+			).catch(function(err) {
+					console.log("Fetch错误:" + err);
+				}
+
+			) // 写法二（推荐）：
+			fetch("http://m.lolku.cn/lib/api/city_thoughtful.php?format=json").then(function(response) {
+					// 使用return 将数据返回对象。
+					return response.json();
+				}
+
+			).then(function(data) {
+					console.log('返回json数据', data);
+				}
+
+			).catch(function(ex) {
+					console.log('parsing failed', ex)
+				}
+
+			)
+			/*
+			拆分写法二：
+			var jsonObj = fetch("http://m.lolku.cn/lib/api/city_thoughtful.php?format=json").then(function(response) {
+			    // 使用return 将数据返回对象。
+			     return response.json();
+			})
+			jsonObj.then(function (data) {
+			    console.log('返回json数据',data);
+			})
+			*/
+		</script>
+	</body>
+
+</html>

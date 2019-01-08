@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta  charset="utf-8" />
+<title> HTML5 input元素type=range </title>
+<style>
+#range{
+    color:#f69;
+}
+input[type="range"] {
+    -webkit-appearance: none;
+    -webkit-box-shadow: 0 1px 0 0px #424242,
+1px 0 #060607 inset,
+        0px 2px 10px 0px black inset,
+        1px 0px 2px rgba(0, 0, 0, 0.4) inset,
+0px 1px rgba(0, 0, 0, 0.6) inset;
+    margin-top: 2px;
+    background-color: #f69;
+    border-radius: 15px;
+    width: 400px;
+}
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+    cursor: default;
+    top: 1px;
+ cursor: default;
+    top: 1px;
+    height: 15px;
+    width: 100px;
+    background: none repeat scroll 0 0 #777;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 -1px 1px black inset;
+
+
+}
+</style>
+</head>
+<body>
+<input id="range" type="range" min="0" max="100" value="0" >
+<script type='text/javascript'>
+~function(){
+  var slider = document.getElementById('range')
+  function gooo(){
+      alert('gooo')
+      }
+  if ('range' == slider.type){
+        var ov = slider.value
+      slider.onchange = function(){
+          var v = this.value|0
+          if (v < ov) return this.value = ov
+ var v = this.value|0
+          if (v < ov) return this.value = ov
+           ov = v
+          if (v > 50) {
+              this.value = ov = 100
+              gooo()
+          }
+          }
+    }else{
+      slider.onclick = gooo
+
+        }
+}()
+</script>
+</body>
+</html>

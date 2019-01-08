@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div>
+			sort()对数组排序，不开辟新的内存，对原有数组元素进行调换
+		</div>
+		<div id="showBox">
+			1、简单数组简单排序
+			<script type="text/javascript">
+				var arrSimple = new Array(1, 8, 7, 6);
+				arrSimple.sort();
+				document.writeln(arrSimple.join());
+			</script>
+		</div>
+		<div>
+			2、简单数组自定义排序
+			<script type="text/javascript">
+				var arrSimple2 = new Array(1, 8, 7, 6);
+				arrSimple2.sort(function(a, b) {
+					return b - a
+				});
+				document.writeln(arrSimple2.join());
+			</script>
+			解释：a,b表示数组中的任意两个元素，若return > 0 b前a后；reutrn
+			< 0 a前b后；a=b时存在浏览器兼容 简化一下：a-b输出从小到大排序，b-a输出从大到小排序。 </div>
+				<div>
+					3、简单对象List自定义属性排序
+					<script type="text/javascript">
+						var objectList = new Array();
+
+						function Persion(name, age) {
+							this.name = name;
+							this.age = age;
+						}
+						objectList.push(new Persion('jack', 20));
+						objectList.push(new Persion('tony', 25));
+						objectList.push(new Persion('stone', 26));
+						objectList.push(new Persion('mandy', 23));
+						 //按年龄从小到大排序
+						objectList.sort(function(a, b) {
+							return a.age - b.age
+						});
+						for (var i = 0; i < objectList.length; i++) {
+							document.writeln('<br />age:' + objectList[i].age + ' name:' + objectList[i].name);
+						}
+					</script>
+				</div>
+				<div>
+					4、简单对象List对可编辑属性的排序
+					<script type="text/javascript">
+						var objectList2 = new Array();
+
+						function WorkMate(name, age) {
+							this.name = name;
+							var _age = age;
+							this.age = function() {
+								if (!arguments) {
+									_age = arguments[0];
+								} else {
+									return _age;
+								}
+							}
+						}
+						objectList2.push(new WorkMate('jack', 20));
+						objectList2.push(new WorkMate('tony', 25));
+						objectList2.push(new WorkMate('stone', 26));
+						objectList2.push(new WorkMate('mandy', 23));
+						 //按年龄从小到大排序
+						objectList2.sort(function(a, b) {
+							return a.age() - b.age();
+						});
+						for (var i = 0; i < objectList2.length; i++) {
+							document.writeln('<br />age:' + objectList2[i].age() + ' name:' + objectList2[i].name);
+						}
+					</script>
+				</div>
+	</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Deferred - notify with</title>
+</head>
+<body>
+
+<h2>Watch the background go red, orange and green</h2>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.myStaticPlugin = function() {
+    var deferred = $.Deferred();
+    var context = $('h2').css('background-color', 'red');
+    window.setTimeout(
+        function () {
+            deferred.resolveWith(context, ['100%']);
+        }, 5000
+    );
+    window.setTimeout(
+        function () {
+            deferred.notifyWith(context, ['50%']);
+        }, 2500
+    );
+    return deferred.promise();
+  };
+  
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+  
+  $.myStaticPlugin()
+  .progress(function(msg) {
+    this.css('background-color', 'orange');
+    // ignore message
+  })
+  .always(function(msg) {
+    this.css('background-color', 'green');
+    // ignore message
+  });
+  
+});
+</script>
+</body>
+</html>

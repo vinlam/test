@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>xml prase</title>
+		<script src="js/common/jquery-1.9.1.min.js"></script>
+		<script>
+		$(function () {
+        	var str = "<xml><result><NewDataSet><Table><UserName>test1</UserName></Table><Table><UserName>test2</UserName></Table></NewDataSet></result></xml>";
+        	var a = $.parseXML(str);
+        	$(a).find('Table').each(function () {
+            	alert($(this).children('UserName').text());
+        	});
+        	
+        	var pstr="<xml><result><NewDataSet><Table><UserName>asd</UserName></Table><Table><UserName>basdfa</UserName></Table></NewDataSet></result></xml>";
+        	var pstr1="<xml><result><NewDataSet><Table1><UserName>test1</UserName></Table1><Table1><UserName>test2</UserName></Table1></NewDataSet></result></xml>";
+        	//解析方式一中，含table的不能正常解析，原因不明。
+//      	$(pstr).find('Table').each(function(){
+//           	alert($(this).children('UserName').text());
+//      	});
+        	$(pstr1).find('Table1').each(function(){
+             	alert($(this).children('UserName').text());
+        	});
+		});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

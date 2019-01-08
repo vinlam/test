@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link href="css/video-js.min.css" rel="stylesheet">
+		<script src="js/video.min.js"></script>
+	</head>
+
+	<body>
+		<video id="my-player" class="video-js" controls preload="auto" poster="hand.png" data-setup='{}'>
+			<!--<source src='rtmp://live.hkstv.hk.lxdns.com/live/hks' type='rtmp/flv'/>-->
+			<source src='http://172.20.10.2:8020/test/v2.mp4' type='video/mp4' />
+			</p>
+		</video>
+		<script type="text/javascript">
+			var player = videojs('my-player');
+			var options = {};
+
+			var player = videojs('my-player', options, function onPlayerReady() {
+				videojs.log('Your player is ready!');
+				// In this context, `this` is the player that was created by Video.js.
+				this.play();
+				// How about an event listener?
+				this.on('ended', function() {
+					videojs.log('Awww...over so soon?!');
+				});
+			});
+			
+			player.on('timeupdate', function() {
+				// 如果 currentTime() === duration()，则视频已播放完毕
+				if(player.duration() != 0 && player.currentTime() === player.duration()) {
+					// 播放结束
+					console.log("end");
+				}
+			});
+		</script>
+	</body>
+
+</html>

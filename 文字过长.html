@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript">
+			jQuery.fn.limit = function() {
+				//这里的div去掉的话，就可以运用li和其他元素上了，否则就只能div使用。
+				var self = $("[limit]");
+				self.each(function() {
+					var objString = $(this).text();
+					var objLength = $(this).text().length;
+					var num = $(this).attr("limit");
+					if(objLength > num) {
+						//这里可以设置鼠标移动上去后显示标题全文的title属性，可去掉。
+						$(this).attr("title", objString);
+						objString = $(this).text(objString.substring(0, num) + "...");
+					}
+				})
+			}
+
+			var a = 1;
+			function fun() {
+				console.log(a);//undefined。因为变量提升
+				var a = 3;
+				console.log(a);// 3 
+
+			}
+			fun();
+
+			//函数声明方式提升【成功】
+			function myTest() {
+				var b = 1;
+				foo();
+				function foo() {
+					console.log(b);
+					alert("我来自 foo");
+					var b = "abc";
+					console.log(b);
+				}
+			}
+			myTest();
+			
+			//函数表达式方式提升【失败】
+			function myTest1() {
+				try{
+					//foo();//报错，foo() is not a function
+					var foo = function foo() {
+						alert("我来自 foo");
+					}
+					foo();//这个位置不报错
+				}catch(e){
+					console.error(e.message);
+				}
+				
+			}
+			myTest1();
+		</script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(document.body).limit();
+			})
+		</script>
+		<style>
+			/*多行文本溢出显示省略号*/
+			
+			#p2 {
+				width: 220px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				background: greenyellow;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				/*-webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性：
+	            display: -webkit-box; 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。
+	            -webkit-box-orient 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。*/
+			}
+		</style>
+	</head>
+
+	<body>
+		==================================
+
+		<!--测试用的Html代码：可以看到，如果不去掉插件代码里的div，则只有div属性的会被影响...-->
+		<div limit="2">计算字串的长度长度长度长度</div>
+		<div limit="12">计算字长度长度</div>
+		<li limit="4">这边有优化很公开这边</li>
+		<li limit="14">这边有优化很公开这边这边有优化很公开这边这个属性定义溢出元素内容区的内容会如何处理。如果值为 hidden，当点击hidden时，滚动机制关闭，内容会被修剪，但是浏览器不会显示供查看内容的滚动条，默认值是 visible。 这是一个段落。这是一个段落。这是一个段落。这是一个段落。
+		</li>
+		<dt limit="12">这边有优化很公开长度长度很公开长度</dt>
+		<dd limit="10">这边有优化很边有优化很边有优化很边有优化很边有优化很这个属性定义溢出元素内容区的内容会如何处理。如果值为 hidden，当点击hidden时，滚动机制关闭，内容会被修剪，但是浏览器不会显示供查看内容的滚动条，默认值是 visible。 这是一个段落。这是一个段落。这是一个段落。这是一个段落。
+		</dd>
+		<div id="p2">
+			这个属性定义溢出元素内容区的内容会如何处理。如果值为 hidden，当点击hidden时，滚动机制关闭，内容会被修剪，但是浏览器不会显示供查看内容的滚动条，默认值是 visible。 这是一个段落。这是一个段落。这是一个段落。这是一个段落。
+		</div>
+		<div id="p2" limit="50">
+			这个属性定义溢出元素内容区的内容会如何处理。如果值为 hidden，当点击hidden时，滚动机制关闭，内容会被修剪，但是浏览器不会显示供查看内容的滚动条，默认值是 visible。 这是一个段落。这是一个段落。这是一个段落。这是一个段落。
+		</div>
+		<p limit="50">
+			仙桃市人民法院将于2018年8月15日10时至2018年8月16日10时止（延时的除外）在京东网络司法拍卖平台上（网址：http://sifa.jd.com/）进行公开拍卖活动，现公告如下
+		</p>
+	</body>
+
+</html>

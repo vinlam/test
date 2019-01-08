@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>filesize</title>
+	</head>
+
+	<body>
+		<!--<input type="file" id="photo" name="photo" accept="image/png,image/jpeg,image/jpg,image/gif">
+		<button id=test>获取文件大小</button>-->
+
+		<input id="file" type="file" multiple="multiple" onchange="filefujianChange(document.getElementById('file'))">
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		$("#test").click(function(event) {
+			var obj_file = $("#photo");
+			//var filesize = obj_file[0].files[0].size;
+			//var filesize = document.getElementById("photo").files[0].size;
+			var filesize = document.querySelector("input[type='file']").files[0].size;
+			alert(filesize);
+			console.log(filesize);
+
+		});
+//		window.onbeforeunload = function(event) {
+//			//event.returnValue = "我在这写点东西...";
+//			alert("refresh");
+//		};
+//
+//		window.onload = function() {
+//			alert("onload refresh");
+//		}
+//
+//		$(document).ready(function(e) {
+//			var counter = 0;
+//			if(window.history && window.history.pushState) {
+//				$(window).on('popstate', function() {
+//					window.history.pushState('forward', null, '#');
+//					window.history.forward(1);
+//					//alert("不可回退");  
+//					location.replace(document.referrer); //刷新
+//				});
+//			}
+//
+//			window.history.pushState('forward', null, '#'); //在IE中必须得有这两行  
+//			window.history.forward(1);
+//		});
+
+		//ie10,firefox,chrome支持 
+		var fileSize;
+
+		function fileChange(target) {
+			fileSize = target.files[0].size;
+			alert(fileSize);
+			//弹出文件大小 
+		}
+
+		//兼容ie8，ie9，ie9以上也支持 
+		function getFileSize(obj) {
+			try {
+				var isIE = /msie/i.test(navigator.getUserAgent()) && !window.opera;
+				var file = obj;
+				file.select();
+				file.blur();
+				if(isIE) {
+					var path = document.selection.createRange().text;
+					var fso = new ActiveXObject("Scripting.FileSystemObject");
+					fileSize = fso.GetFile(path).size;
+					alert(fileSize); //弹出文件大小 
+				}
+
+			} catch(e) {
+				alert(e + "\n" + "如果错误为：Error:Automation 服务器不能创建对象；" + "\n" + "请按以下方法配置浏览器：" + "\n" + "请打开【Internet选项-安全-Internet-自定义级别-ActiveX控件和插件-对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本（不安全）-点击启用-确定】");
+				return window.location.reload();
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		function filefujianChange(target) {
+			var fileSize = 0;
+			if(!target.files) {
+				var filePath = target.value;
+				try{
+					var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+					var file = fileSystem.GetFile(filePath);
+					fileSize = file.Size;
+				}catch(e){
+					//alert(eval('('+e+')'));
+					if(e.message == "Automation 服务器不能创建对象"){
+						alert(e.message + "\n" + "如果错误为：Error:Automation 服务器不能创建对象；" + "\n" + "请按以下方法配置浏览器：" + "\n" + "请打开【Internet选项-安全-Internet-自定义级别-ActiveX控件和插件-对未标记为可安全执行脚本的ActiveX控件初始化并执行脚本（不安全）-点击启用-确定】");
+					}else if(e.message == '文件未找到'){
+						alert(e.message + "\n" + "如果错误为：文件未找到；" + "\n" + "请按以下方法配置浏览器：" + "\n" + "请打开【Internet选项-安全-Internet-自定义级别-其它-将文件上载到服务时包含本地目录路径-点击启用-确定】");
+					}else{
+						alert("当前浏览器不支持方法\n" + e.message)
+					}
+					return;
+				}
+				
+			} else {
+				fileSize = target.files[0].size;
+			}
+			var size = fileSize / 1024;
+			alert(size);
+			if(size > 2000) {
+				alert("附件不能大于2M");
+				target.value = "";
+				return
+			}
+			var name = target.value;
+			var fileName = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
+			alert(fileName);
+			if(fileName != "jpg" && fileName != "jpeg" && fileName != "pdf" && fileName != "png" && fileName != "dwg" && fileName != "gif") {
+				alert("请选择图片格式文件上传(jpg,png,gif,dwg,pdf,gif等)！");
+				target.value = "";
+				return;
+			}
+		}
+	</script>
+	<!--<input type="file" id="fileText">
+	<input type="button" value="检查文件大小" onclick="checkFileChange(document.getElementById('fileText'));">
+	<script type="text/javascript">
+		var Sys = {};
+		if(navigator.userAgent.indexOf("MSIE") > 0) {
+			Sys.ie = true;
+		}
+		if(isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
+			Sys.firefox = true;
+		}
+
+		function checkFileChange(obj) {
+			var filesize = 0;
+
+			if(Sys.firefox) {
+				filesize = obj.files[0].fileSize;
+			} else if(Sys.ie) {
+				var fileobject = new ActiveXObject("Scripting.FileSystemObject"); //获取上传文件的对象
+				var file = fileobject.GetFile(document.getElementById("fileText").value); //获取上传的文件
+				var filesize = file.Size; //检测 上传文件大小
+			}
+			alert(filesize);
+		}
+	</script>
+	<script type="text/javascript">
+		function getFileSize(fileObj) {
+			//不能使用new Image，ie下报无dynsrc属性  
+			var img1 = document.getElementById('img1');
+			img1.dynsrc = fileObj.value;
+			//img1.fileSize：IE ， fileObj.files[0].fileSize：chrome， fileObj.files[0].size：FF  
+			var size = img1.fileSize || fileObj.files[0].fileSize || fileObj.files[0].size;
+			alert(size);
+		}
+	</script>-->
+
+	<body>
+		<INPUT TYPE="file" NAME="file" SIZE="30" onchange="getFileSize(this)">
+		<img id='img1' dynsrc='' />
+	</body>
+
+</html>

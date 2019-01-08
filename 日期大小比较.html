@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.js"></script>
+
+	</head>
+
+	<body>
+		<select id="day"></select>
+		<div class="right-radio-div">
+			<div class="single-radio">
+				<input type="radio" name="radioRepayStyle" id="radioRepayStyle1" value="EDFQ001" />
+				<label>等额本息</label>
+			</div>
+			<div class="single-radio">
+				<input type="radio" name="radioRepayStyle" id="radioRepayStyle2" value="EDLQ001" />
+				<label>随借随还</label>
+			</div>
+			<input type="checkbox" disabled="disabled" value="check"/>
+		</div>
+	</body>
+	<script>
+		function t() {
+			var date1 = new Date("2017-03-09");
+			var date2 = new Date("2017-03-11");
+			console.log(date1.getTime() + "------" + date2.getTime());
+			console.log(new Date(date1.getTime()))
+
+			console.log(parseInt("1.0121"));
+			console.log(parseFloat("0.0621"));
+			var obj = "62231587268568526";
+			console.log(formatAccountNo(obj, 4, 4))
+			var tel = "13410883344";
+			var reg = /(\d{3})\d{4}(\d{4})/;
+			console.log(tel.replace(reg, "$1****$2"));
+			console.log(formatNo(obj));
+		}
+		t();
+		var a = [3,6,9,12];
+		var b = [12,3,6];
+		console.log(intersection(a,b));
+		function intersection(a,b) {
+	var res = [];
+	var len = a.length;
+	var len2 = b.length;
+	for(var i = 0; i < len; i++) {
+		for(var j = 0; j < len2; j++) {
+			if(b[j] === a[i]) {
+				res.push(a[i]);
+			}
+		}
+	}
+	return res;
+}
+
+		function formatNo(obj) {
+			var reg = /(\d{4})\d{4}(\d{4})/;
+			return obj.replace(reg, "$1****$2");
+		}
+
+		function formatAccountNo(accountNo, start, end) {
+			var formatStr = "";
+			start = start || accountNo.length - 8;
+			end = end || accountNo.length - 5;
+			if(start > accountNo.length || end > accountNo.length) {
+				return "输入格式不正确，超出范围";
+			}
+			for(var i in accountNo) {
+				var s = "";
+				//console.log("key:"+i+" value:"+accountNo[i])
+				if(parseInt(i) >= start && parseInt(i) + 1 <= accountNo.length - end) {
+					s = "*";
+					formatStr += s;
+				} else {
+					formatStr += accountNo[i] + s;
+				}
+			}
+			console.log("s:" + formatStr);
+			return formatStr;
+		}
+
+		function dateCompare(startdate, enddate) {
+			var arr = startdate.split("-");
+			var starttime = new Date(arr[0], arr[1], arr[2]);
+			var starttimes = starttime.getTime();
+			var arrs = enddate.split("-");
+			var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+			var lktimes = lktime.getTime();
+			if(starttimes >= lktimes) {
+				return false;
+
+			} else
+				return true;
+		}
+		getDay();
+
+		function getDay() {
+			var _date = new Date(); //alert(_date);
+			_date = _date.getFullYear() + "-" + (_date.getMonth() + 1) + "-" + _date.getDate();
+			//alert(_date);
+			var year = "2017";
+			var month = "3";
+			if(year == "" || month == "") {
+				return;
+			}
+			var max = new Date(year, month, 0).getDate();
+			//获取天数：
+			var con = "<option value=''>-日-</option>";
+			for(var i = 1; i <= max; i++) {
+				con = con + "<option value='" + i + "'>" + i + "</option>";
+
+			}
+			//alert(con)
+			console.log(addDate("2017-04-01", -2))
+			console.log(addDateMonth("2017-6-01", 10))
+			//document.getElementById("day").innerHTML=con;
+		}
+
+		// 日期，在原有日期基础上，增加days天数，默认增加1天
+		function addDate(date, days) {
+			if(days == undefined || days == '') {
+				days = 1;
+			}
+			var date = new Date(date);
+			date.setDate(date.getDate() + days);
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			return date.getFullYear() + '-' + getFormatDate(month) + '-' + getFormatDate(day);
+		}
+
+		function addDateMonth(date, months) {
+			if(months == undefined || months == '') {
+				months = 1;
+			}
+			var date = new Date(date);
+			date.setDate(date.getDate());
+			var month = date.getMonth() + 1 + months;
+			date.setMonth(month);
+			var day = date.getDate();
+			return date.getFullYear() + '-' + getFormatDate(date.getMonth()) + '-' + getFormatDate(day);
+		}
+
+		function addmulMonth(dtstr, n) { // n个月后 
+			var s = dtstr.split("-");
+			var yy = parseInt(s[0]);
+			var mm = parseInt(s[1] - 1);
+			var dd = parseInt(s[2]);
+			var dt = new Date(yy, mm, dd);
+			dt.setMonth(dt.getMonth() + n);
+			if((dt.getYear() * 12 + dt.getMonth()) > (yy * 12 + mm + n)) {
+				dt = new Date(dt.getYear(), dt.getMonth(), 0);
+			}
+			var year = dt.getYear();
+			var month = dt.getMonth() + 1;
+			var days = dt.getDate();
+			var dd = year + "-" + month + "-" + days;
+			return dd;
+		}
+
+		// 日期月份/天的显示，如果是1位数，则在前面加上'0'
+		function getFormatDate(arg) {
+			if(arg == undefined || arg == '') {
+				return '';
+			}
+
+			var re = arg + '';
+			if(re.length < 2) {
+				re = '0' + re;
+			}
+
+			return re;
+		}
+		getCalendarDays()
+
+		function getCalendarDays() {
+			/*var date1 = "2017-12-11";
+			var date2 = "2018-01-21";*/
+			/*var date1 = "2017-12-11";
+			var date2 = "2017-12-31";*/
+			/**/var date1 = "2017-11-11";
+			var date2 = "2017-21-21";
+			var dateArr1 = date1.split("-");
+			var dateArr2 = date2.split("-");
+			var data = [];
+			var monthDays = new Date(dateArr1[0], dateArr1[1], 0).getDate(); //当月总天数
+			//跨年
+			if(dateArr1[0] < dateArr2[0]) {
+				for(var i = 0; i < 2; i++) {
+					var objYear = {
+						"value": "Year" + (parseInt(dateArr1[0]) + i),
+						"text": parseInt(dateArr1[0]) + i,
+						"children": []
+					}
+					data.push(objYear);
+					if(i == 0) {
+						var objMonth1 = {
+							"value": "Month" + (parseInt(dateArr1[1])),
+							"text": parseInt(dateArr1[1]),
+							"children": []
+						}
+						data[i].children.push(objMonth1);
+						for(var j = parseInt(dateArr1[2]); j <= monthDays; j++) {
+							var objDay1 = {
+								"value": "Day" + j,
+								"text": j
+							}
+							data[i].children[0].children.push(objDay1);
+						}
+					} else {
+						var objMonth2 = {
+							"value": "Month" + (parseInt(dateArr2[1])),
+							"text": parseInt(dateArr2[1]),
+							"children": []
+						}
+						data[i].children.push(objMonth2);
+
+						for(var k = 1; k <= parseInt(dateArr2[2]); k++) {
+							var objDay2 = {
+								"value": "Day" + k,
+								"text": k
+							}
+							data[i].children[0].children.push(objDay2);
+						}
+					}
+				}
+
+				//var monthDays2 = new Date(dateArr2[0], dateArr2[1], 0).getDate(); //当月总天数
+				//alert(parseInt(dateArr2[2])+"==="+monthDays2)
+
+				//console.log(JSON.stringify(data))
+			} else {
+				var objYear = {
+					"value": "Year" + (parseInt(dateArr1[0])),
+					"text": parseInt(dateArr1[0]),
+					"children": []
+				}
+				data.push(objYear);
+				//同年同月
+				if(dateArr1[1] == dateArr2[1]) {
+					var objMonth1 = {
+						"value": "Month" + (parseInt(dateArr1[1])),
+						"text": parseInt(dateArr1[1]),
+						"children": []
+					}
+					data[0].children.push(objMonth1);
+
+					for(var i = parseInt(dateArr1[2]); i <= monthDays; i++) {
+						var objDay1 = {
+							"value": "Day" + i,
+							"text": i
+						}
+						data[0].children[0].children.push(objDay1);
+					}
+				} else {//同年跨月
+					for(var i = 0; i < 2; i++) {
+						if(i == 0) {
+							var objMonth1 = {
+								"value": "Month" + (parseInt(dateArr1[1])),
+								"text": parseInt(dateArr1[1]),
+								"children": []
+							}
+							data[0].children.push(objMonth1);
+							for(var j = parseInt(dateArr1[2]); j <= monthDays; j++) {
+								var objDay1 = {
+									"value": "Day" + j,
+									"text": j
+								}
+								data[0].children[0].children.push(objDay1);
+							}
+						} else {
+							var objMonth2 = {
+								"value": "Month" + (parseInt(dateArr2[1])),
+								"text": parseInt(dateArr2[1]),
+								"children": []
+							}
+							data[0].children.push(objMonth2);
+
+							for(var k = 1; k <= parseInt(dateArr2[2]); k++) {
+								var objDay2 = {
+									"value": "Day" + k,
+									"text": k
+								}
+								data[0].children[1].children.push(objDay2);
+							}
+						}
+					}
+				}
+				console.log("date:" + JSON.stringify(data))
+			}
+			
+			
+		}radiotest();
+
+				function radiotest() {
+					document.querySelector(".single-radio").addEventListener("click", function() {
+						alert(this);
+					})
+				}
+	</script>
+
+</html>

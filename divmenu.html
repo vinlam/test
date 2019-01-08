@@ -1,0 +1,93 @@
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>menu</title>
+		<style>
+			.bgWrap {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				left: 0;
+				top: 0;
+				background: rgba(3, 3, 3, 0.6);
+			}
+			/*灰色半透明div的样式。*/
+			
+			#drawingMap.menuBtn {
+				width: 4rem;
+				position: absolute;
+			}
+			/*操控div显示隐藏的img样式*/
+			
+			.wrap-items-types {
+				width: 50%;
+				height: 100%;
+				position: relative;
+				background: rgba(255, 255, 255, 1);
+				margin-left: -50%;
+				text-align: center;
+			}
+			/*菜单栏样式*/
+			/*#drawingMap.wrap-items-types {
+				width: 90%;
+				margin: 0 auto;
+				border-top: 1px solid #D1D9CF;
+				padding: 10px 0;
+				font-family: "微软雅黑";
+				font-size: 16px;
+				
+			}*/
+			/*菜单栏里可选择的文字样式*/
+			/*#drawingMap.wrap-items-types:nth-child(1) {
+				border-top: none;
+			}*/
+		</style>
+
+	</head>
+
+	<body>
+		<p>Div meun</p>
+		<div id="drawingMap">
+			<span class="menuBtn">menu</span>
+			<div class="bgWrap" style="display: none;z-index: 98;"></div>
+			<div class="wrap-items-types" style="z-index: 99;">
+				<ul>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+				</ul>
+			</div>
+		</div>
+
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//隐藏
+			function hideTypeWrap() {
+				$("#drawingMap .wrap-items-types").animate({
+					marginLeft: "-50%" //菜单栏div的margin-left缓慢从0到-50%；完全隐藏了。
+				}, 300, function() {
+					$("#drawingMap .bgWrap").fadeOut();
+				}); //同时animate还可以设置一个回调函数，当动画结束后，隐藏半透明灰的div.
+			}
+			//缓慢显示，绑定了class为menuBtn事件tap。
+			$("li").off().on("click", function() {
+				hideTypeWrap();
+			});
+			$("#drawingMap .menuBtn").off().on("click", function() {
+				$("#drawingMap .bgWrap").show();
+				$("#drawingMap .wrap-items-types").animate({
+					marginLeft: "0" //700毫秒内，margin-left缓慢从-50%到0
+				}, 300, function() {}); //700毫秒是动画时长。
+			});
+
+		});
+	</script>
+
+</html>

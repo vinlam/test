@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				font-size: 14px;
+				font-family: "微软雅黑";
+				color: #666;
+				background: #666;
+			}
+			#container {
+				width: 300px;
+				margin: 100px auto;
+				background: white;
+				border: 2px solid #99ccff;
+				border-radius: 5px;
+			}
+			#container h3 {
+				text-align: center;
+				margin-top: 5px;
+			}
+			.text {
+				width: 280px;
+				border: 3px solid #c2c2c2;
+				height: 50px;
+				border-radius: 5px;
+				margin: 10px;
+				font-size: 24px;
+				text-align: right;
+				background: #ffffff;
+			}
+			.buttons {
+				margin: 5px 0 0 4px;
+				position: relative;
+			}
+			.button {
+				width: 70px;
+				height: 50px;
+				margin-bottom: 5px;
+				border: 10px solid #ddd;
+				border-radius: 1px;
+				font-weight: bold;
+				color: #1e395b;
+				background: #eaf1f9;
+			}
+			.button:hover {
+				background: #ffe77c;
+			}
+			.ling {
+				width: 145px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="leftNav" style="height: 50px;overflow-y: auto;">
+			<ul>
+				<li id="pub01"><a href="javascript:;"><i class="icon-upload"></i><span>文件上传</span></a></li>
+				<li id="pub02"><a href="javascript:;"><i class="calculator"></i><span>计算器</span></a></li>
+				<li id="pub03"><a href="javascript:;"><i class="passwordChange"></i><span>个人密码修改</span></a></li>
+				<li id="pub04" class="active"><a href="javascript:;"><i class="knowledgeBase"></i><span>知识库</span></a></li>
+				<li id="pub05"><a href="javascript:;"><i class="survey"></i><span>问卷调查</span></a></li>
+				<li id="pub06"><a href="javascript:;"><i class="bankMap"></i><span>网点地图</span></a></li>
+			</ul>
+		</div>
+		<div id="container">
+		<input type="button" value="←" class="button" id="s">
+		<input type="button" value="+" class="button" id="sw">
+		<input type="button" value="-" class="button" id="delwee">
+		</div>
+	</body>
+
+</html>

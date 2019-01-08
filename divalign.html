@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>DIV垂直水平居中</title>
+		<style>
+			.v {
+				width: 150px;
+				height: 150px;
+				border: solid blue;
+				margin: -75px auto 0;
+				position: relative;
+				top: 50%;
+				background: #eee;
+			}
+			
+			.className {
+				border: solid blue;
+				width: 270px;
+				height: 150px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin: -75px 0 0 -135px;
+			}
+			
+			.div1 {
+				width: 150px;
+				height: 150px;
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+				border: 1px solid #000;
+			}
+			/*img {
+        width: 50px;
+        height: 50px;
+    }*/
+			
+			.div2 {
+				width: 100px;
+				height: 100px;
+				position: relative;
+				border: 1px solid #000;
+			}
+			
+			.img2 {
+				/*width: 90px;*/
+				height: 90px;
+				position: absolute;
+				top: 10%;
+				left: 10%;
+				margin-top: -5px;
+				/* 高度的一半 */
+				margin-left: -5px;
+				/* 宽度的一半 */
+			}
+			/* 样式 */
+			
+			.img-wrap-2 {
+				display: inline-block;
+				width: 200px;
+				height: 200px;
+				line-height: 200px;
+				border: 1px solid #ccc;
+				text-align: center;
+			}
+			
+			.img-wrap-2 img {
+				vertical-align: middle;
+				border: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="width:275px;height:375px;border: solid red;">
+			<div style=" height: 375px; width: 275px; position: relative; display: table-cell; vertical-align: middle;">
+				<div style="position:static;position:absolute/9; top: 50%;">
+					<div style="position: relative; top: -50%; text-align: center;">
+						<div style="background-color:#F0AD4E;width: 85px;WORD-WRAP: break-word;TABLE-LAYOUT: fixed;word-break:break-all;margin:0 auto;">
+							aaaaaabbbbbccccccdddfasdfwegerjjlklolofwefemosmhsjgigafinmaofmaofjoajfomdasofmnfenfien
+						</div>
+					</div>
+					<div style="background-color:#E0E8FF;width: 85px;WORD-WRAP: break-word;TABLE-LAYOUT: fixed;word-break:break-all;margin:0 auto;text-align: center;vertical-align:middle;">
+						dfs中文
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="div1">
+			<a>
+				<!--<img src="img/add.png" /></a>-->
+				<img src="img/1.png" /></a>
+		</div>
+		<div class="div2">
+			<a>
+				<img class="img2" src="img/add.png" /></a>
+		</div>
+		<div class="box-2">
+			<a class="img-wrap-2" href="#">
+				<img src="img/1.png" alt="" />
+			</a>
+		</div>
+		<!--<div class="v">
+			<div style="width: 85px;WORD-WRAP: break-word;TABLE-LAYOUT: fixed;word-break:break-all;margin:0 auto;">
+				aaaaaabbbbbccccccdddfasdfwegerjjlklolofwefemosmhsjgigafinmaofmaofjoajfomdasofmnfenfien
+			</div>
+			<br>
+			<div style="width: 85px;WORD-WRAP: break-word;TABLE-LAYOUT: fixed;word-break:break-all;margin:0 auto;">
+				nfien
+			</div>
+			<br>
+			<div style="width: 85px;WORD-WRAP: break-word;TABLE-LAYOUT: fixed;word-break:break-all;margin:0 auto;">
+				顶替
+			</div>
+		</div>-->
+	</body>
+
+</html>

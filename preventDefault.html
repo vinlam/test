@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/common/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/common/jquery.mobile-1.4.3.js"></script>
+		<script type="text/javascript" src="mbank.utils.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#user').focus(function() {
+					//alert($("#d").next("span").attr("id"))
+					//console.log(Win.utils.formatAccountNo("6217220111187699","hide",5,10));
+					//console.log("ss".leftPadZero(4));
+					//document.querySelector("span").innerText = "请输入用户名！";
+					$('#d').next("span").html('请输入用户名！');//不知为何input next()不生效
+				});
+				$("#btn").bind('click', function(event) {
+					var user_val = $('#user').val();
+					user_val = user_val.replace(/(^\s*)|(\s*$)/, '');alert("当前数据：" + user_val + " ---")
+					if (user_val == "") {//
+						document.querySelector("span").innerText = "警告：用户名不能为空！";//alert("当前数据：" + $('#user').next().html() + " ---")
+						event.preventDefault(); //阻止表单提交（注：也可以改写为"return false"）
+						//event.stopPropagation();
+					}
+				});
+			})
+		</script>
+	</head>
+
+	<body>
+		
+		<form action="?a=add" method="post">
+			<p>用户名：
+				<input type="text" name="user" id="user" /><div id="d"></div> <span id="sp"></span>
+			</p>
+			<p>
+				<input type="submit" id="btn" value="提交" />
+			</p>
+		</form>
+		
+	</body>
+
+</html>

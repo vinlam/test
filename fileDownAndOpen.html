@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>phonegap文件下载</title>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript">
+			window.appRootDirName = "download_test";
+			    document.addEventListener("deviceready", onDeviceReady, false);
+			
+			    function onDeviceReady() {
+			        console.log("device is ready");
+			        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+			    }
+			
+			    function fail() {
+			        console.log("failed to get filesystem");
+			    }
+			
+			    function gotFS(fileSystem) {
+			        console.log("filesystem got");
+			        window.fileSystem = fileSystem;
+			        fileSystem.root.getDirectory(window.appRootDirName, {
+			            create : true,
+			            exclusive : false
+			        }, dirReady, fail);
+			    }
+			
+			    function dirReady(entry) {
+			        window.appRootDir = entry;
+			        console.log("application dir is ready");
+			    }
+			
+			    downloadFile = function(){
+			        alert("start");
+			        var fileTransfer = new FileTransfer();
+			        var uri = encodeURI("http://12.130.30.22:8080/uploadImagetest.xls");
+			        var filePath = window.appRootDir.fullPath + "/test.xls";
+			        
+			        alert(window.appRootDir.fullPath);
+			        fileTransfer.download(
+			            uri,
+			            filePath,
+			            function(entry) {
+			                alert("success");
+			                alert(entry.fullPath);
+			                //此处调用打开文件方法
+			                OpenFile(entry.fullPath);
+			                //window.location.href = window.appRootDir.fullPath;
+			                console.log("download complete: " + entry.fullPath);
+			            },
+			            function(error) {
+			                alert("error");
+			                alert(JSON.stringify(error));
+			                console.log("download error source " + error.source);
+			                console.log("download error target " + error.target);
+			                console.log("upload error code" + error.code);
+			            }
+			        );   
+			    }
+			    function OpenFile(path){
+			        try {
+			            alert('OpenFile');
+			            var array = [];
+			            array[0] = path;
+			            alert(array[0]);
+			            cordova.exec(function(message) {
+			
+			            }, null, 'OpenFilePlugin', 'haha', array);
+			        } catch(e) {
+			            alert(e.message);
+			        }
+			    }
+		</script>
+	</head>
+
+	<body>
+		<a href="#" onclick="downloadFile()">Download File</a>
+	</body>
+</html>

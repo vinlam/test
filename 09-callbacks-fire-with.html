@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>The timeout property</title>
+</head>
+<body>
+
+<h2>Callbacks will add content below</h2>
+
+<p>This is a first attach point</p>
+
+<span>This element is ignored</span>
+
+<p>This is a second attach point</p>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.fn.testCallbacks = function() {
+    
+   var hello = function(to) {
+     this.append('<br>hello ' + to);
+   }
+   var bye = function(to) {
+     this.append('<br>bye ' + to);
+    }
+  
+   var callbacks = $.Callbacks();
+   
+   window.setTimeout(callbacks.fireWith, 3000, this, ['world']);
+   
+   callbacks.add(hello);
+   callbacks.add(bye);
+   //callbacks.lock();
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('p').testCallbacks();
+
+});
+</script>
+</body>
+</html>

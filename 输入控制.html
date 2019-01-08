@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script language="javascript">
+			function test(target) {
+				/*var pattern = /^([0-9.]+)$/;
+				//var str = prompt("Enter the test string","");
+				var str = target.value;
+				console.log(str)
+				if (pattern.test(str)) {
+					
+				} else {
+					//alert(false);
+					return;
+					
+				}*/
+				target.value = (target.value.match(/^([0-9.]+)$/))
+			}
+		</script>
+	</head>
+
+	<body>
+		<input type="text" onkeyup="value=this.value.match(/^-?(\d{1,3}|\d\.\d{1,2}|\d\d\.\d)$/) "/>
+		<input type="text" onkeyup="test(this)" />
+		<input type="text" onkeyup="this.value=(this.value.match(/^[1-9]{0,7}.\d{0,2}$/))" />
+		<input type="text" onkeyup="this.value=(this.value.match(/^\d+(\.\d{2})?$/))" />
+		<h3>输入完按回车后即可验证！（自认为最简单！）</h3> 正整数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^\d+$/))" />
+		<br /> 负整数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-\d+$/))" />
+		<br /> 整　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+$/))" />
+		<br /> 正小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^\d+\.\d+$/))" />
+		<br /> 负小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-\d+\.\d+$/))" />
+		<br /> 小　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+\.\d+$/))" />
+		<br /> 实　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d+)?$/))" />
+		<br /> 保留1位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,1})?$/))" />
+		<br /> 保留2位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,2})?$/))" />
+		<br /> 保留3位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,3})?$/))" />
+		<br />
+		只能输入数字：
+<input onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+	</body>
+
+</html>

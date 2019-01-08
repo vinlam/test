@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			//一.升序排列
+			var theArray1 = [2, 3, 5, 1, 15, 8, 12, 11, 7];
+			//console.log("aaa:" + theArray1.sort());
+			
+			var theArray1 = ["2017-03-11", "2017-02-8", "2017-03-08", "2017-04-12", "2017-03-18"];
+			console.log("aaa:" + theArray1.sort()[0]);
+			/*function des1(a, b) {
+				return a - b;
+			}
+			console.log(theArray1.sort(des1));
+
+			//二.降序排列
+			var theArray = [2, 3, 5, 1, 15, 8, 12, 11, 7];
+
+			function des(a, b) {
+				return b - a;
+			}
+			console.log(theArray.sort(des));*/
+
+			var arrA = [6, 2, 4, 3, 5, 1];
+			/*arrA.sort();
+			document.writeln(arrA);
+			*/
+			function desc(x, y) {
+				if(x > y)
+					return -1;
+				if(x < y)
+					return 1;
+			}
+
+			function asc(x, y) {
+				if(x > y)
+					return 1;
+				if(x < y)
+					return -1;
+			}
+
+			arrA.sort(desc); // sort by desc
+			document.writeln(arrA);
+			document.writeln("<br>");
+			arrA.sort(asc); //sort by asc
+			document.writeln(arrA);
+
+			//输出结果：
+			//6,5,4,3,2,1 
+			//1,2,3,4,5,6 
+			//另外，可以直接把一个无名函数直接放到sort()方法的调用中。如下的例子是将奇数排在前面，偶数排在后面，例子如下：
+
+			var arrA = [6, 2, 4, 3, 5, 1];
+			arrA.sort(function(x, y) {
+				if(x % 2 == 0)
+					return 11;
+				if(x % 2 != 0)
+					return -1;
+			});
+			document.writeln(arrA);
+			
+			var a = {"测试01":["01","02","03"],"测试02":["04","05"]}
+			
+			var ta = null;
+			//ta = [{name:"测试01",value:"01"},{name:"测试01",value:"02"},{name:"测试01",value:"03"},{name:"测试02",value:"04"},{name:"测试02",value:"05"}];
+			ta = [{name:"测试02",value:"04"},{name:"测试02",value:"05"},{name:"测试01",value:"01"},{name:"测试01",value:"02"},{name:"测试01",value:"03"}];
+			var tt = ["测试01","测试02"]
+			
+			var ss = "测试01:01;测试02:04;测试03:21";
+			ss = ""
+			var ks = ss.split(";");
+			tt = [];
+			for(var i =0,l=ks.length;i<l;i++){
+				var nn = ks[i].split(":");
+				tt.push(nn[0]);
+			}
+			console.log(tt.toString());
+			var nna = [];
+			for(var j = 0,leng=tt.length;j<leng;j++){
+				for(var i =0,len = ta.length;i<len;i++){
+					if(tt[j] == ta[i]['name']){
+						var id = ta[i]['name'];
+						var val = ta[i]['value'];
+						console.log("id:"+id+"-- val:"+val)
+						//nna[id].push(val)
+						//nna[id].push(val)
+					}
+				}
+			}
+			
+			console.log(nna)
+//			for(var obj in nna){
+//				console.log(nna[obj]);
+//				var aa = a[obj];
+//				for(var i= 0,len = aa.length;i<len;i++){
+//					console.log(obj+":"+aa[i])
+//				}
+//			}
+			//输出：1,5,3,4,6,2
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

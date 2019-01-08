@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Page Title</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.3.min.css" />
+		<script src="js/common/jquery-1.9.1.min.js"></script>
+		<script>
+			//$(function() {
+				 $( document ).on( "mobileinit", function() {
+					/*alert("yes");
+					console.log("mobile initialize .....");
+					$.extend($.mobile, {
+						defaultPageTransition: 'slide'
+					});*/
+					$.mobile.defaultPageTransition = 'slide';alert(9)
+				});
+			//});
+		</script>
+		<script src="js/common/jquery.mobile-1.4.3.js"></script>
+	</head>
+
+	<body>
+		<div data-role="page" id="page-1">
+			<div data-role="header">Page 1</div>
+			<div data-role="content">
+				<a href="#page-2">Page 2</a>
+				<button onclick="console.log($.mobile.defaultPageTransition)">$.mobile.defaultPageTransition</button>
+			</div>
+		</div>
+		<div data-role="page" id="page-2">
+			<div data-role="header">Page 2</div>
+			<div data-role="content">
+				<a href="#page-1">Page 1</a>
+			</div>
+		</div>
+	</body>
+
+</html>

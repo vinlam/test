@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Adding method calls to your plugin</title>
+</head>
+<body>
+
+<h2>Change the background color of this header</h2>
+
+<button id="blue">Blue</button>
+<button id="green">Green</button>
+<button id="light">Light</button>
+<button id="dark">Dark</button>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+    var helper = function( options, prefix ) { 
+        var settings = $.extend(
+          { color: 'gray' },
+          this.data('settings'), 
+          options
+        );
+        this.data('settings', settings);
+        this.css('background-color', 
+            (prefix != undefined ? prefix : '') 
+            + settings.color);    
+      };
+
+    var methods = {  
+      init : helper,
+      dark : function( options ) {
+        helper.apply(this, [options, 'dark']);
+      },
+      light : function( options ) { 
+        helper.apply(this, [options, 'light']);
+      }
+    };
+
+    $.fn.makeIt = function( method ) {
+
+      // Method calling logic
+      if ( methods[method] ) {
+        return methods[ method ].apply( this, 
+            Array.prototype.slice.call( arguments, 1 ));
+      } else if ( typeof method === 'object' || ! method ) {
+        return methods.init.apply( this, arguments );
+      } else {
+        $.error( 'Method ' +  method + ' does not exist' );
+      }    
+
+    };
+    
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('#green').click(function() {
+    $('h2').makeIt({ color: 'green' });
+  });
+  $('#blue').click(function() {
+    $('h2').makeIt({ color: 'blue' });
+  });
+  $('#dark').click(function() {
+    $('h2').makeIt('dark'); // default is gray
+    //$('h2').makeIt('dark',{ color: 'red' }); // default is gray
+  });
+  $('#light').click(function() {
+    $('h2').makeIt('light'); // default is gray
+  });
+
+});
+</script>
+</body>
+</html>

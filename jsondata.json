@@ -1,0 +1,28 @@
+{
+	"result": {
+		"f": {
+			"imgFlag": "location",
+			"url": "file:///storage/emulated/0/Android/data/cn.com.yusys.marketing/apps/marketing/doc/1464257726125_f.jpg"
+		},
+		"v": {
+			"imgFlag": "location",
+			"url": "file:///storage/emulated/0/Android/data/cn.com.yusys.marketing/apps/marketing/doc/1464257751392_v.mp4"
+		},
+		"g": {
+			"imgFlag": "location",
+			"url": "file:///storage/emulated/0/Android/data/cn.com.yusys.marketing/apps/marketing/doc/1464257742334_g.jpg"
+		},
+		"b": {
+			"imgFlag": "location",
+			"url": "file:///storage/emulated/0/Android/data/cn.com.yusys.marketing/apps/marketing/doc/1464257733655_b.jpg"
+		},
+		"s": {
+			"imgFlag": "location",
+			"url": "file:///storage/emulated/0/Android/data/cn.com.yusys.marketing/apps/marketing/doc/1464257669477_s.jpg"
+		},
+		"imgFlag": "location",
+		"did": "867106020138928"
+	},
+	"em": "交易成功",
+	"ec": "0"
+}

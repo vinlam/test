@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JSON应用</title>
+		<script src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				test('tt()');
+				function test(callback){
+					
+					eval(callback);
+					//return callback;
+				}
+				
+				function tt(){
+					console.log('ddd99999')
+				}
+			});
+			(function(){
+				test2('tt1()');
+				function test2(callback){
+					
+					eval(callback);
+					//return callback;
+				}
+				
+				function tt1(){
+					console.log('ddd99999')
+				}
+			})();
+			function StrToJSON(str) {
+				json = eval('(' + str + ')');
+				return json;
+			}
+
+			function JsonStrToArrag(str) {
+				arr = eval(str);
+				return arr;
+			}
+
+			function ToJSON(data) {
+				json = eval(data);
+				return json;
+			}
+
+			function JsonPrase(str) {
+				if (!!window.ActiveXObject || "ActiveXObject" in window)
+  					json = eval('(' + str + ')');
+  				else
+  					json = JSON.stringify(str);
+				//json = JSON.stringify(str)
+				return json;
+			}
+
+			function JtO(s) {
+				var o = JSON.parse(s);
+				if (!!window.ActiveXObject || "ActiveXObject" in window)
+  					json = eval('(' + o + ')');
+  				else
+  					json = JSON.stringify(o);
+				console.log(json);
+			}
+			
+				// JSON数据
+				str = '{\"id\":1,\"title\":\"你好，朋友\",\"addtime\":\"2010-05-03\"}';
+				strJson = StrToJSON(str);
+				//var ar = JsonStrToArrag(str);
+				//alert(ar.length);
+				data = {
+					id: 2,
+					title: "你好，哈哈",
+					addtime: "2010-05-04"
+				};
+				//JtO(str);
+				/**/Json = ToJSON(data);
+				var a = {a:1,b:2,c:"bb"};
+				alert(JsonPrase(a));
+				document.write(strJson.id + "、 " + strJson.title + " " + strJson.addtime + "<br />");
+				document.write(Json.id + "、 " + Json.title + " " + Json.addtime + "<br />");
+		
+		</script>
+	</head>
+
+	<body>
+		<label>正面照</label><br>
+		<label>视&nbsp;&nbsp;&nbsp;&nbsp;频</label>
+	</body>
+
+</html>

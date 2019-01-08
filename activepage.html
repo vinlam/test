@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>jQuery.mobile.activePage demo</title>
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<style>
+			#myResult {
+			    border: 1px solid;
+			    border-color: #108040;
+			    padding: 10px;
+			  }
+		</style>
+		<script>
+			$(function() {
+				$(".myButton").on("click", function() {
+					var whichPageId = $.mobile.activePage.attr("id");
+					$(".myResult").html("This is " + whichPageId);
+				});
+				//$(document).ready(function(){
+				$("#divt").scroll(function(){
+					alert(9);
+					$.mobile.loading("show", {
+	                    text: "加载中...",
+	                    textVisible: true,
+	                    theme: "b",
+	                    html: ""
+	                });
+				});
+				//})
+			});
+		</script>
+	</head>
+
+	<body>
+
+		<div data-role="page" id="page1">
+			<div data-role="header">
+				<h1>Page 1</h1>
+			</div>
+			<div data-role="content">
+				<a href="#page2" data-role="button" data-inline="true">Go to Page 2</a>
+				<input type="button" value="Which Page is this?" class="myButton" data-inline="true" />
+				<br>
+				<div class="myResult">The result will be displayed here</div>
+			</div>
+		</div>
+
+		<div data-role="page" id="page2">
+			<div data-role="header">
+				<h1>Page 2</h1>
+			</div>
+			<div data-role="content">
+				<a href="#page1" data-role="button" data-inline="true">Go to Page 1</a>
+				<input type="button" value="Which Page is this?" class="myButton" data-inline="true" />
+				<br>
+				<div id="divt" class="myResult" style="height: 300px;overflow-y: auto;">
+					<ul id="list">
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+						<li>1</li>
+					</ul>
+					The result will be displayed here</div>
+			</div>
+		</div>
+
+		
+
+	</body>
+
+</html>

@@ -1,0 +1,113 @@
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>FAQ列表</title>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				padding: 0px;
+				font-size: 12px;
+			}
+			
+			a {
+				color: #000;
+				text-decoration: none;
+			}
+			
+			#menu {
+				margin: 30px;
+				width: 188px;
+				background-color: #EFFDFA;
+			}
+			
+			.top {
+				height: 40px;
+				line-height: 40px;
+				font-size: 14px;
+				font-weight: bold;
+				text-align: center;
+				border: 1px solid #93D6C5;
+				border-bottom: none;
+			}
+			
+			.nav {
+				list-style: none;
+			}
+			
+			li {
+				display: block;
+				height: 30px;
+				line-height: 30px;
+				border: 1px solid #93D6C5;
+				border-top: none;
+				padding-left: 30px;
+			}
+			
+			.lastone {
+				border: none;
+				cursor: pointer;
+				background-color: red;
+			}
+			
+			.up {
+				border: none;
+				cursor: pointer;
+				background-color: blue;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div id="menu">
+			<div class="top">全部商品详细分类</div>
+			<ul class="nav">
+				<li>
+					<a href="#">尾品汇</a>
+				</li>
+				<li>
+					<a href="#">图书音像数字管</a>
+				</li>
+				<li>
+					<a href="#">美妆个护</a>
+				</li>
+				<li>
+					<a href="#">家具、家纺、家装</a>
+				</li>
+				<li>
+					<a href="#">鞋靴、箱包</a>
+				</li>
+				<li>
+					<a href="#">珠宝装饰</a>
+				</li>
+				<li>
+					<a href="#">手表/眼镜/礼品</a>
+				</li>
+				<li>
+					<a href="#">运动户外</a>
+				</li>
+				<li>
+					<a href="#">食品、茶、酒</a>
+				</li>
+				<li>
+					<a href="#">手机、数码</a>
+				</li>
+				<li>
+					<a href="#">电脑办公</a>
+				</li>
+				<li class="lastone"></li>
+			</ul>
+		</div>
+		<script>
+			$(function() {
+				$("li:last").click(function() {
+					$("li:not(li:last):gt(6)").toggle("slow");
+					$("li:last").toggleClass("lastone");
+					$("li:last").toggleClass("up");
+				});
+			})
+		</script>
+	</body>
+
+</html>

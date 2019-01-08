@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>获取页面路径参数</title>
+		<script>
+			function GetRequest() {
+				var url = location.search; //获取url中"?"符后的字串 
+				var theRequest = new Object();
+				if(url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			
+			show();
+			function show(){
+				var param = {}; 
+				param = GetRequest(); 
+				//alert(param.hasOwnProperty("aa"));
+				//alert(isEmptyObject(param));
+				if(isEmptyObject(param)){
+					alert(JSON.stringify(param));
+				}else{
+					//alert("对象里面没有内容")
+				}
+			}
+			
+			//判断对象是否为空
+			function isEmptyObject(obj) {  
+    			var i;  
+    			for (i in obj)  
+        			return true;  
+    			return false;  
+			} 
+			
+			alert(GetQueryString("id"));//abc.html?id=123&url=http://www.csdn.com
+			function GetQueryString(name) {
+				//var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");//此方法若不用window.location.search.substr(1)而是字符窜且只有一个参数时会获取不到
+			    //var reg = new RegExp("(|^/?|^&)" + name + "=([^&]*)(&|$)", "i");
+			    
+			    var reg = new RegExp("(^|/?|&)" + name + "=([^&]*)(&|$)", "i");
+			    var r = window.location.search.substr(1).match(reg);
+			    //var r = "abc.html?id=123".match(reg);
+			    
+			    if (r != null) return unescape(r[2]); return null;
+			}
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>jQuery UI 拖动（Draggable） - 视觉反馈</title>
+		<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+		<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<style>
+			body{
+				height: 500px;
+				width: 500px;
+			}
+			#set div {
+				width: 90px;
+				height: 90px;
+				padding: 0.5em;
+				float: left;
+				margin: 0 10px 10px 0;
+			}
+			#set {
+				clear: both;
+				float: left;
+				width: 368px;
+				height: 120px;
+			}
+			p {
+				clear: both;
+				margin: 0;
+				padding: 1em 0;
+			}
+		</style>
+		<script>
+			$(function() {
+				$("#set li").draggable({
+					containment: "parent",stack: "#set li",cursor: "move",scroll:"false"
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="set">
+			<ul>
+				<li>
+					<div class="ui-widget-content">
+						<p>我们是 draggables..</p>
+					</div>
+				</li>
+				<li>
+					<div class="ui-widget-content">
+						<p>..它的 z-index 是自动控制的..</p>
+					</div>
+				</li>
+				<li>
+					<div class="ui-widget-content">
+						<p>..带有 stack 选项。</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,119 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<canvas id="canvas3" width="250" height="300" style="background-color:black">
+   		你的浏览器不支持 &lt;canvas&gt;标签，请使用 Chrome 浏览器 或者 FireFox 浏览器
+  	</canvas><br/>
+	<input type="button" onclick="move(1);" value="移动裁剪区域">
+	<input type="button" onclick="move(2);" value="移动蒙版">
+	<input type="button" onclick="stop();" value="停止移动"><br />
+
+	<script type="text/javascript">
+		//美女图的 Base64 编码,省略了一些数据
+		var IMG_SRC = 'img/1.png';
+
+		//==========================================
+		function Clip() {
+			var canvas = document.getElementById("canvas3");
+			this.ctx = canvas.getContext("2d");
+			this.img = new Image();
+			this.img.src = IMG_SRC;
+			//移动方向
+			this.delta = [3, 3];
+			//起始点
+			this.pos_x = 225;
+			this.pos_y = 120;
+			//半径
+			this.radius = 40;
+			//画布的长和宽
+			this.w = parseInt(canvas.getAttribute("width"));
+			this.h = parseInt(canvas.getAttribute("height"));
+		}
+
+		Clip.prototype.draw1 = function() {
+			//碰撞检测
+			if(this.pos_x < this.radius) {
+				this.delta[0] = Math.random() % 4 + 5;
+			} else if(this.pos_x > this.w - this.radius) {
+				this.delta[0] = -(Math.random() % 4 + 5);
+			}
+			if(this.pos_y < this.radius) {
+				this.delta[1] = Math.random() % 4 + 5;
+			} else if(this.pos_y > this.h - this.radius) {
+				this.delta[1] = -(Math.random() % 4 + 5);
+			}
+			this.pos_x += this.delta[0];
+			this.pos_y += this.delta[1];
+			this.ctx.clearRect(0, 0, this.w, this.h);
+			//保存状态
+			this.ctx.save()
+			//移动变形
+			this.ctx.translate(this.pos_x, this.pos_y);
+			//设置裁剪区域
+			this.ctx.beginPath();
+			this.ctx.arc(0, 0, this.radius, 0, Math.PI * 2, true);
+			this.ctx.clip();
+			// 将图片画到画布上
+			this.ctx.drawImage(this.img, -this.pos_x, -this.pos_y, this.w, this.h);
+			//恢复状态
+			this.ctx.restore();
+		}
+
+		Clip.prototype.draw2 = function() {
+			//碰撞检测
+			if(this.pos_x < this.radius) {
+				this.delta[0] = Math.random() % 4 + 5;
+			} else if(this.pos_x > this.w - this.radius) {
+				this.delta[0] = -(Math.random() % 4 + 5);
+			}
+			if(this.pos_y < this.radius) {
+				this.delta[1] = Math.random() % 4 + 5;
+			} else if(this.pos_y > this.h - this.radius) {
+				this.delta[1] = -(Math.random() % 4 + 5);
+			}
+			this.pos_x += this.delta[0];
+			this.pos_y += this.delta[1];
+			this.ctx.clearRect(0, 0, this.w, this.h);
+			//绘制灰色的半透明蒙版
+			this.ctx.fillStyle = "rgba(125,125,125,0.9)"
+			this.ctx.fillRect(0, 0, this.w, this.h);
+			//保存状态
+			this.ctx.save()
+			//移动坐标
+			this.ctx.translate(this.pos_x, this.pos_y);
+			//裁剪透明的圆形区域
+			this.ctx.globalCompositeOperation = "xor";
+			this.ctx.fillStyle = "white"
+			this.ctx.beginPath();
+			this.ctx.arc(0, 0, this.radius, 0, Math.PI * 2, true);
+			this.ctx.fill();
+			// 将图片画到蒙版的下面，即只露出透明区域
+			this.ctx.globalCompositeOperation = "destination-over";
+			this.ctx.drawImage(this.img, -this.pos_x, -this.pos_y, this.w, this.h);
+			//恢复状态
+			this.ctx.restore();
+		}
+		var cl = new Clip();
+		cl.interval = null;
+
+		function move(id) {
+			if(cl.interval)
+				clearInterval(cl.interval)
+			if(id == 1) {
+				cl.ctx.clearRect(0, 0, 450, 300);
+				cl.interval = setInterval(function() { cl.draw1() }, 20);
+			} else {
+				cl.ctx.clearRect(0, 0, 450, 300);
+				cl.interval = setInterval(function() { cl.draw2() }, 20);
+			}
+		}
+
+		function stop() {
+			clearInterval(cl.interval)
+		}
+	</script>
+
+</html>

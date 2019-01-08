@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			console.log(parseInt("0.9204"));//0
+			console.log(parseInt("1.0205"));//1
+			console.log(parseInt("123abc"));//123
+			console.log(parseInt("abc123"));//NaN
+			console.log(parseInt(".123"));//NaN
+			console.log(parseInt("0x10"));//16 16进制
+			console.log(parseInt("010"));//结果10 10 或 8 8进制时是8
+			console.log(parseInt("08"));//8
+			console.log(parseInt("09"));//9
+			console.log(parseInt("123abc",16));//1194684
+			console.log(parseInt("10",2));//2
+			console.log(parseInt("10",8));//8
+			console.log(parseInt("10",10));//10
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

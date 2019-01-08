@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My Page</title>
+		<link rel="stylesheet" href="js/common/jquery.mobile-1.4.3.css" />
+		<script src="js/common/jquery-1.9.1.min.js"></script>
+		<script src="js/common/jquery.mobile-1.4.3.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#cb").bind("click", function(){alert("Clicked by jquery")});
+				document.getElementById("cb").addEventListener("click", function(){alert("Clicked by DOM")});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div data-role="page">
+			<input type="checkbox" name="cb" id="cb" />
+			<label for="cb">I am a checkbox</label>
+		</div>
+	</body>
+</html>

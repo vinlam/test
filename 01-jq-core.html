@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Very basic static plugin</title>
+</head>
+<body>
+  
+<h2>Very basic static plugin</h2>
+
+<button>Click here</button>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.doSomething = function() {
+  
+    alert('Here is something!');
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('button').click(function() {
+      
+    $.doSomething();
+    
+  });
+
+});
+</script>
+</body>
+</html>

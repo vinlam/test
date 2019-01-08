@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			//四舍五入保留2位小数（若第二位小数为0，则保留一位小数）
+			function keepTwoDecimal(num) {
+				var result = parseFloat(num);
+				if(isNaN(result)) {
+					alert('传递参数错误，请检查！');
+					return false;
+				}
+				result = Math.round(num * 100) / 100;
+				return result;
+			}
+			//四舍五入保留n位小数（不够位数，则用0替补）
+			function keepDecimal(num,digits) {
+				var result = parseFloat(num);
+				if(isNaN(digits)){
+					digits = 2;//默认保留两位
+				}
+				if(isNaN(result)) {
+					alert('传递参数错误，请检查！');
+					return false;
+				}
+				var a = Math.pow(10,digits);
+				result = Math.round(num * a) / a;
+				//result = Math.round(num * 100) * 0.01;
+				//result = Math.round(num * 1000) * 0.001;//保留3位小数
+				var s_x = result.toString();
+				var pos_decimal = s_x.indexOf('.');
+				if(pos_decimal < 0) {
+					pos_decimal = s_x.length;
+					s_x += '.';
+				}
+				while(s_x.length <= pos_decimal + digits) {
+					s_x += '0';
+				}
+				return s_x;
+			}
+			
+			function preaseDoubleString(munber,digits){
+        	if (munber == undefined) munber = '0';
+			if (digits == undefined) digits = 2;
+			
+			if (typeof munber !== 'string') {
+				munber = munber.toString();
+			}
+			
+			munber = parseFloat(munber);
+			munber = munber.toFixed(digits);
+			return munber.toString();
+        }
+			console.log(keepDecimal(0.920400,1));
+			console.log(keepDecimal(0.950400,1));
+			console.log(keepDecimal(0.10,2));
+			console.log(keepDecimal(1.020500));
+			console.log(preaseDoubleString(0.926500,3));
+			console.log(preaseDoubleString(0.926500,2));
+			console.log(preaseDoubleString((1-0.1),2));
+			console.log(1-0.5);
+			console.log(0.1*0.1);
+			console.log(parseFloat(((0.1*100)*(0.1*100))/10000));
+			console.log(parseFloat(1-0.5));
+			
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

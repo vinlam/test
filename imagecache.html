@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			/**
+			 url 测试图片路径
+			 被缓存返回true，没被缓存返回false
+			 */
+			function testCache(url) {
+				alert('执行');
+				var url = 'http://f.hiphotos.baidu.com/image/h%3D200/sign=370234c2718da977512f812b8050f872/9922720e0cf3d7ca0659c887f01fbe096a63a990.jpg';
+				var myImg = new Image();
+				myImg.src = url;
+				if (myImg.complete) {
+					alert('图片被缓存');
+					return true;
+				} else {
+					alert('图片没被缓存');
+					myImg.onload = function() {
+						alert('图片已经下载成功!');
+					}
+					return false;
+				}
+			}
+			
+			testCache("http://f.hiphotos.baidu.com/image/h%3D200/sign=370234c2718da977512f812b8050f872/9922720e0cf3d7ca0659c887f01fbe096a63a990.jpg");
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

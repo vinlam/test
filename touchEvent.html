@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>焦点测试</title>
+		
+	</head>
+
+	<body>
+		<div>
+			<input type="text" id="t" />
+			<input type="text" id="t2" />
+		</div>
+		<script>
+			function BlurOrFocus(Id) {
+				var obj = document.getElementById(Id);
+				var docTouchend = function(event) {
+					if(event.target != obj) {
+						var _index = setTimeout(function() {
+							obj.blur();
+							alert(obj.id +"----"+obj.value)
+							document.removeEventListener('touchend', docTouchend, false);
+							clearTimeout(_index);
+						}, 100);
+					}
+				}
+
+				if(obj) {
+					obj.addEventListener('touchstart', function() {
+						document.addEventListener('touchend', docTouchend, false);
+					}, false);
+				}
+			}
+
+			document.getElementById("t").addEventListener("focus",function(){
+				
+			});
+			BlurOrFocus("t");
+			BlurOrFocus("t2");
+		</script>
+	</body>
+
+</html>

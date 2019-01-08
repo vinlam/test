@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+		<form id="form1">
+			<label>mobile:</label>
+			<input type="tel" onblur="check()" id="phone" />
+		</form>
+
+	</body>
+	<script type="text/javascript">
+		var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+
+		function check() {
+			if(!myreg.test($("#phone").val())) {
+				alert('请输入正确的手机号码！');
+				return false;
+			}
+			return true;
+		}
+
+		function validatemobile(mobile) {
+			if(mobile.length == 0) {
+				alert('请输入手机号码！');
+				mobile.focus();
+				return false;
+			}
+			if(mobile.length != 11) {
+				alert('请输入有效的手机号码！');
+				mobile.focus();
+				return false;
+			}
+
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			if(!myreg.test(mobile)) {
+				alert('请输入有效的手机号码！');
+				mobile.focus();
+				return false;
+			}
+		}
+
+		document.getElementById("phone").addEventListener("change",function(){
+			var self = this
+			validatemobile(self);
+		})
+	</script>
+</html>

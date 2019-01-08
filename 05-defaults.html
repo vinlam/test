@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Offering a default fallback for options</title>
+</head>
+<body>
+
+<h2>See blue paragraphs below</h2>
+
+<p>This one is red</p>
+
+<span>This is green</span>
+
+<p>And this one it red again</p>
+
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.fn.makeIt = function(options) {
+    
+    var settings = $.extend(
+      { color: 'red' }, 
+      options
+    );
+  
+    this.css('background-color', settings.color);
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('p').makeIt(); // default is red
+  $('span').makeIt({ color: 'green' });
+
+});
+</script>
+</body>
+</html>

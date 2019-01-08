@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/html5validates.js"></script>
+		<script language="javascript">
+			function t(){
+				var a = "8/";
+				var b = "8-";
+				var c = "8*";
+				var d = "8//";
+				var reg = /\+|\-|\*|\//;
+				//alert(reg.test(a));
+			}
+			t();
+			function test(target) {
+				/*var pattern = /^([0-9.]+)$/;
+				//var str = prompt("Enter the test string","");
+				var str = target.value;
+				console.log(str)
+				if (pattern.test(str)) {
+					
+				} else {
+					//alert(false);
+					return;
+					
+				}*/
+				target.value = (target.value.match(/^([0-9.]+)$/))
+			}
+			$(document).ready(function() {
+				
+				$("#pt").removeAttr("disabled");
+				//alert(9);
+				//$("#pt").attr("disabled",false); 
+				//$("#pt").attr("disabled",""); 
+				$("#pt").on("click", function() {
+					$("#pt").attr("disabled", "disabled")
+				})
+				
+			})
+
+			function validate() {
+				//调用此方法须在标签元素上添加   tip 自定义属性(如 tip="密码")，该属性值为此标签的对应描述，还要在class上加入 required 
+				var elements = document.getElementsByClassName("required");
+				$.each(elements, function(i) {
+					var elemen = elements[i];
+					if (elemen.tagName == "INPUT") {
+						//alert(elemen.getAttribute("type").match(/text|email|tel/));
+						if (elemen.getAttribute("type").match(/text|email|tel|password/)) {
+							if (elemen.value == "") {
+								alert('"' + elemen.getAttribute("tip") + '"' + " 为必填项。");
+								return false;
+							}
+						} else if (elemen.getAttribute("type").match(/radio|checkbox/)) {
+							//alert(elemen.checked);
+							if (!elemen.checked) {
+								alert('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
+								return false;
+							}
+						}
+					} else if (elemen.tagName == "A") { //此处为下拉选项
+						if (elemen.getAttribute("value") == "") {
+							alert('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
+							return false;
+						}
+					}
+				});
+				return true;
+				/*for(var i=0;i<elements.length;i++){
+					var elemen = elements[i];
+					if(elemen.tagName == "INPUT"){
+						if(elemen.getAttribute("type") == "text"){
+							if(elemen.value == ""){
+								alert('"' + elemen.name + '"' +"为填项");
+								return;
+							}
+						}
+					}
+				};*/
+			}
+
+			function valid() {
+				$("#validdiv").html5Validate(function() {
+					alert("全部通过！");
+					//this.submit();	
+				}, {
+					// novalidate: false	
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<a href="javascript:(0);" class="required" tip="证件类型" value="s">全部</a>
+		<input type="button" value="提交" onclick="validate()" />
+		<input type="button" value="检测" onclick="valid()" />
+		<div id="validdiv">
+			<br>radio
+			<input class="required" required type="radio" tip="radio" value="test" />
+			<br>checkbox
+			<input class="required" required type="checkbox" tip="checkbox" value="test" />
+			<br>测试一:
+			<input class="required" required type="text" tip="测试一" onkeyup="value=this.value.match(/^-?(\d{1,3}|\d\.\d{1,2}|\d\d\.\d)$/) " />
+			<br>email:
+			<input class="required" required type="email" tip="email" />
+			<br>tt
+			<input type="text" onkeyup="test(this)" />
+			<br>number
+			<input type="number" max="5" />
+			<br>pwd
+			<input id="pt" type="password" readonly="readonly" disabled="disabled" />
+			<br>测试二:
+			<input class="required" type="text" tip="测试二" onkeyup="this.value=(this.value.match(/^[1-9]{0,7}.\d{0,2}$/))" />
+		</div>
+		<br>ttt
+		<input type="text" onkeyup="this.value=(this.value.match(/^\d+(\.\d{2})?$/))" />
+		<h3>输入完按回车后即可验证！（自认为最简单！）</h3> 正整数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^\d+$/))" />
+		<input type="email" size="20" onkeyup="this.value=(this.value.match(/^\d+$/))" />
+		<br /> 负整数:
+		<input type="number" size="20" onkeyup="this.value=(this.value.match(/^-\d+$/))" />
+		<br /> 整　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+$/))" />
+		<br /> 正小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^\d+\.\d+$/))" />
+		<br /> 负小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-\d+\.\d+$/))" />
+		<br /> 小　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+\.\d+$/))" />
+		<br /> 实　数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d+)?$/))" />
+		<br /> 保留1位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,1})?$/))" />
+		<br /> 保留2位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,2})?$/))" />
+		<br /> 保留3位小数:
+		<input type="text" size="20" onkeyup="this.value=(this.value.match(/^-?\d+(\.\d{1,3})?$/))" />
+		<br /> 只能输入数字：
+		<input onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+		<input type="text" readonly="readonly" id="ft" value="abc">
+	</body>
+
+</html>

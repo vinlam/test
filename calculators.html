@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				font-size: 14px;
+				font-family: "微软雅黑";
+				color: #666;
+				background: #666;
+			}
+			
+			#container {
+				width: 300px;
+				margin: 100px auto;
+				background: white;
+				border: 2px solid #99ccff;
+				border-radius: 5px;
+			}
+			
+			#container h3 {
+				text-align: center;
+				margin-top: 5px;
+			}
+			
+			.text {
+				width: 280px;
+				border: 1px solid #c2c2c2;
+				height: 50px;
+				border-radius: 5px;
+				margin: 10px;
+				font-size: 24px;
+				text-align: right;
+				background: #ffffff;
+			}
+			
+			.buttons {
+				margin: 5px 0 0 4px;
+				position: relative;
+			}
+			
+			.button {
+				width: 70px;
+				height: 50px;
+				margin-bottom: 5px;
+				border: 1px solid #ddd;
+				border-radius: 1px;
+				font-weight: bold;
+				color: #1e395b;
+				background: #eaf1f9;
+				-webkit-user-select: none;
+			}
+			
+			.button:hover {
+				background: #ffe77c;
+			}
+			
+			.ling {
+				width: 145px;
+			}
+		</style>
+
+		<script src="js/jquery.min.js"></script>
+		<script>
+			var endNumber = true;
+			var carry = 10;
+			var stack = "";
+			var level = "0";
+			
+			var displaytxt = null;
+			init();
+			function init(){
+				//console.log(displaytxt)
+			}
+				//数字键
+			function inputkey(key) {
+				displaytxt = document.getElementById("display");
+				
+				var currentlyDisplayed = displaytxt;
+				//$displayFn.value = currentlyDisplayed+buttonValue;
+				// keep the max digits to a reasonable number
+				if (currentlyDisplayed.value.length < 20) {
+					if (key === "." && currentlyDisplayed.value.indexOf(".") >= 0 && !endNumber) {
+						return;
+					}
+				}
+				
+				//console.log(currentlyDisplayed.value.indexOf("."));
+				var index = key.charCodeAt(0);
+				//console.log("index: "+index);//0-48 9-57 .-46
+				if (index >= 48 && index <= 57 || index == 46)
+					if (endNumber) {
+						
+						if ((displaytxt.value == null || displaytxt.value == "0") && index == 46){
+						console.log(1);	displaytxt.value = "0.";
+						}else{
+							if(index == 46){
+								displaytxt.value = "0.";
+							}else{
+								displaytxt.value = key;
+							}
+						}
+						endNumber = false;
+					} else if (displaytxt.value == null || displaytxt.value == "0"){
+						if ((displaytxt.value == null || displaytxt.value == "0") && index == 46){
+						console.log(3);	displaytxt.value = "0.";
+						}else{
+						console.log(4);	displaytxt.value = key;
+						}
+					}
+				else
+					displaytxt.value += key;
+				
+				
+			}
+
+			function changeSign() {
+				if (displaytxt.value != "0"){
+					if (displaytxt.value.substr(0, 1) == "-"){
+						displaytxt.value = displaytxt.value.substr(1);
+					}
+					else{
+						displaytxt.value = "-" + displaytxt.value;
+					}
+				}
+			}
+			
+			//运算符
+			function operation(join, newlevel) {
+				endNumber = true;
+				var temp = stack.substr(stack.lastIndexOf("(") + 1) + displaytxt.value;
+				while (newlevel != 0 && (newlevel <= (level.charAt(level.length - 1)))) {
+					temp = parse(temp);
+					level = level.slice(0, -1);
+				}
+				if (temp.match(/^(.*\d[\+\-\*\/\%\^\&\|x])?([+-]?[0-9a-f\.]+)$/)){
+					console.log(RegExp.$2);
+					displaytxt.value = RegExp.$2;
+				}
+				stack = stack.substr(0, stack.lastIndexOf("(") + 1) + temp + join;
+				level = level + newlevel;
+			}
+			
+			//等号
+			function result() {
+				endNumber = true;
+				var temp = stack + displaytxt.value;
+				while ((level.charAt(level.length - 1)) > 0) {
+					console.log(parse(temp));
+					temp = parse(temp);
+					level = level.slice(0, -1);
+				}
+				displaytxt.value = temp;
+				stack = "";
+				level = "0";
+			}
+			
+			//退格键
+			function backspace() {
+				if (!endNumber) {
+					if (displaytxt.value.length > 1){
+						displaytxt.value = displaytxt.value.substring(0, displaytxt.value.length - 1);
+					}else{
+						displaytxt.value = 0;
+					}
+				}
+			}
+
+			function clearall() {
+				displaytxt.value = "0";
+				endNumber = true;
+				stack = "";
+				level = "0";
+			}
+			
+			function setPercent() {
+				var currentlyDisplayed = displaytxt.value;
+				if (currentlyDisplayed) {
+					displaytxt.value = (currentlyDisplayed / 100);
+				}
+			}
+			
+			//表达式解析
+			function parse(string) {
+				if (string.match(/^(.*\d[\+\-\*\/\%\^\&\|x\<])?([+-]?[0-9a-f\.]+)([\+\-\*\/\%\^\&\|x\<])([+-]?[0-9a-f\.]+)$/))
+					return (RegExp.$1 + cypher(RegExp.$2, RegExp.$3, RegExp.$4));
+				else
+					return (string);
+			}
+			
+			//数学运算和位运算
+			function cypher(left, join, right) {
+				console.log(left+"   "+join+"   "+right);
+				if (join == "+")
+					return add(left, right);
+					//return (parseFloat(left) + parseFloat(right));
+				if (join == "-")
+					return subtract(left,right);
+					//return (left - right);
+				if (join == "*")
+					return multiply(left,right);
+					//return (left * right);
+				if (join == "/" && right != 0)
+					return divide(left,right);
+					//return (left / right);
+			}
+			
+			function add(a, b) {
+				//alert(a)
+			    var c, d, e;
+			    try {
+			        c = a.toString().split(".")[1].length;
+			    } catch (err) {
+			        c = 0;
+			    }
+			    try {
+			        d = b.toString().split(".")[1].length;
+			    } catch (err) {
+			        d = 0;
+			    }
+			    e = Math.pow(10, Math.max(c, d)); 
+			    return (multiply(a, e) + multiply(b, e)) / e;
+			}
+			
+			function subtract(a, b) {
+			    var c, d, e;
+			    try {
+			        c = a.toString().split(".")[1].length;
+			    } catch (err) {
+			        c = 0;
+			    }
+			    try {
+			        d = b.toString().split(".")[1].length;
+			    } catch (err) {
+			        d = 0;
+			    }
+			    e = Math.pow(10, Math.max(c, d)); 
+			    return (multiply(a, e) - multiply(b, e)) / e;
+			}
+			
+			function multiply(a, b) {
+			    var c = 0,
+			        d = a.toString(),
+			        e = b.toString();
+			    try {
+			        c += d.split(".")[1].length;
+			    } catch (err) {}
+			    try {
+			        c += e.split(".")[1].length;
+			    } catch (err) {}
+			    return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
+			}
+			
+			function divide(a, b) {
+				if(b == 0) {
+					$.mbank.myAlert('除数不能为0！');
+					return 0;
+				}
+			    var c, d, e = 0,f = 0;
+			    try {
+			        e = a.toString().split(".")[1].length;
+			    } catch (err) {}
+			    try {
+			        f = b.toString().split(".")[1].length;
+			    } catch (err) {}
+			    c = Number(a.toString().replace(".", ""));
+			    d = Number(b.toString().replace(".", ""));
+			    return multiply(c / d, Math.pow(10, f - e));
+			}
+		</script>
+		</head>
+<body>
+		<div id="container">
+			<input type="text" id="display" class="text" disabled="disabled" value="0">
+
+			<div class="buttons">
+				<input class="button" onclick="clearall()" type="button" value="CE">
+				<input class="button" onClick="setPercent()" type="button" value="%">
+				<input class="button" onclick="changeSign()" type="button" value="+/-">
+				<input class="button" onclick="backspace()" type="button" value="DEL">
+				<input class="button" onClick="inputkey('7')" type="button" value=" 7 " name="k7">
+				<input class="button" onClick="inputkey('8')" type="button" value=" 8 " name="k8">
+				<input class="button" onClick="inputkey('9')" type="button" value=" 9 " name="k9">
+				<input class="button" onClick="operation('/',6)" type="button" value=" / ">
+				<input class="button" onClick="inputkey('4')" type="button" value=" 4 " name="k4">
+				<input class="button" onClick="inputkey('5')" type="button" value=" 5 " name="k5">
+				<input class="button" onClick="inputkey('6')" type="button" value=" 6 " name="k6">
+				<input class="button" onClick="operation('*',6)" type="button" value=" * ">
+				<input class="button" onClick="inputkey('1')" type="button" value=" 1 ">
+				<input class="button" onClick="inputkey('2')" type="button" value=" 2 " name="k2">
+				<input class="button" onClick="inputkey('3')" type="button" value=" 3 " name="k3">
+				<input class="button" onClick="operation('-',5)" type="button" value=" - ">
+				<input class="button" onClick="inputkey('0')" type="button" value=" 0 ">
+				<input class="button" onClick="inputkey('.')" type="button" value=" . " name="kp">
+				<input class="button" onclick="result()" type="button" value=" = ">
+				<input class="button" onClick="operation('+',5)" type="button" value=" + ">
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>A plugin to create plugins</title>
+</head>
+<body>
+
+<h2>Change the background color of this header</h2>
+
+<button id="blue">Blue</button>
+<button id="green">Green</button>
+<button id="light">Light</button>
+<button id="dark">Dark</button>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN PLUGIN
+
+(function( $ ){
+
+    $.pluginPlugin = function(methods) {
+         return function( method ) {
+          if ( methods[method] ) {
+            return methods[ method ].apply( this, 
+                Array.prototype.slice.call( arguments, 1 ));
+          } else if ( typeof method === 'object' || ! method ) {
+            return methods.init.apply( this, arguments );
+          } else {
+            $.error( 'Method ' +  method + ' does not exist' );
+          }    
+        };
+    };
+        
+})( jQuery );
+
+// DEFINE PLUGIN (using the plugin plugin)
+
+(function( $ ){
+
+    $.fn.makeIt = $.pluginPlugin(function() {
+        // private functions and variables
+        var helper = function( options, prefix ) { 
+            var settings = $.extend(
+              { color: 'gray' },
+              this.data('settings'), 
+              options
+            );
+            this.data('settings', settings);
+            this.css('background-color', 
+                (prefix != undefined ? prefix : '') 
+                + settings.color);    
+          };
+        // publicly available functions
+        return {  
+          init : helper,
+          dark : function( options ) {
+            return helper.apply(this, [options, 'dark']);
+          },
+          light : function( options ) { 
+            return helper.apply(this, [options, 'light']);
+          }
+        }}());
+
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('#green').click(function() {
+    $('h2').makeIt({ color: 'green' });
+  });
+  $('#blue').click(function() {
+    $('h2').makeIt({ color: 'blue' });
+  });
+  $('#dark').click(function() {
+    $('h2').makeIt('dark'); // default is gray
+  });
+  $('#light').click(function() {
+    $('h2').makeIt('light'); // default is gray
+  });
+
+});
+</script>
+</body>
+</html>

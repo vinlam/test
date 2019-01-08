@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>禁止选择文字</title>
+	</head>
+	<style>
+		
+		body {
+			-moz-user-select: none;
+			/*火狐*/
+			
+			-webkit-user-select: none;
+			/*webkit浏览器*/
+			
+			-ms-user-select: none;
+			/*IE10*/
+			
+			-khtml-user-select: none;
+			/*早期浏览器*/
+			
+			user-select: none;
+		}
+	</style>
+	<script>
+		//IE6-9
+/*document.body.onselectstart = document.body.ondrag = function(){
+return false;
+}*/
+	</script>
+	</head>
+
+	<body onselectstart = "return false;">
+		<div>css3html5</div>
+		<input type="text" value="test">
+		<p>adfadfadf</p>
+		<span>twerlsdfjjald</span>
+		<div>css3html5</div>
+	</body>
+
+</html>

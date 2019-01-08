@@ -1,0 +1,108 @@
+<!DOCTYPE html>-
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>按钮</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<link rel="shortcut icon" href="/favicon.ico">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/sm.min.css">
+		<link rel="stylesheet" href="css/sm-extend.css">
+		<!--<link rel="stylesheet" href="../../css-sui/base.css">-->
+		<script src="js/zepto.js"></script>
+		<script src="js/sm.js"></script>
+		<!--<script src="js/sm.min.js"></script>-->
+		<script src="js/sm-extend.js"></script>
+	</head>
+
+	<body>
+		<style type="text/css">
+			.infinite-scroll-preloader {
+				margin-top: -20px;
+			}
+			
+			.tab_box {
+			    display: block;
+			    clear: both;
+			    zoom: 1;
+			    border: 1px solid #e6e6e6;
+			    width: auto;
+			    padding: 20px;
+			}
+			.tab_box img{width:100%;}
+		</style>
+		<div class="page-group">
+			<div class="page page-current" id="pagelist">
+				<header class="bar bar-nav">
+					<h1 class="title">按钮组</h1>
+				</header>
+				<!-- 添加 class infinite-scroll 和 data-distance  向下无限滚动可不加infinite-scroll-bottom类，这里加上是为了和下面的向上无限滚动区分-->
+				<div class="content">
+					<div class="content-block">
+						<p class="buttons-row">
+							<a href="#" class="button">Button 1</a>
+							<a href="#" class="button">Button 2</a>
+							<a href="#" class="button">Button 3</a>
+						</p>
+						<p class="buttons-row">
+							<a href="#" class="button active">Button 1</a>
+							<a href="#" class="button">Button 2</a>
+							<a href="#" class="button">Button 3</a>
+						</p>
+						<p class="buttons-row">
+							<a href="#" class="button">Button 1</a>
+							<a href="#" class="button active">Button 2</a>
+							<a href="#" class="button">Button 3</a>
+						</p>
+						<p class="buttons-row">
+							<a href="#" class="button button-round">Button 1</a>
+							<a href="#" class="button button-round">Button 2</a>
+						</p>
+						<p class="buttons-row">
+							<a href="#" class="button button-round">Button 1</a>
+							<a href="#" class="button button-round active">Button 2</a>
+
+						</p>
+						<p>
+							<a href="#" class="prompt-ok">Prompt with text and Ok callback</a>
+						</p>
+					</div>
+
+					<!--<div class="tab_box" id="boxDetail" style="min-height:140px;height:auto !important;_height:140px;line-height:250%;">
+						<p>国行现货，原封正品，未激活！<img src="http://img.mall.ccb.com/photo/2014/10/31/118716263/6707f0bbdae14b1586ef0897353a0778.png" alt=""><img src="http://img.mall.ccb.com/photo/2014/10/31/118716263/634c855d3eea3632a14d406964a9226f.png" alt=""></p>
+					</div>-->
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+	<script>
+		$.init();
+		$(document).on('click', '.prompt-ok', function() {
+			$.prompt('What is your name?', 'tt', function(value) {
+
+				//$.alert('Your name is "' + value + '". You clicked Ok button');
+			});
+		});
+
+		$(document).on('click', '.modal-button-bold', function() {
+			console.log($(".modal-text-input").val());
+			if($(".modal-text-input").val() != '') {
+				$(".modal").css("display", "none");
+				return;
+			}
+		})
+		
+		$(document).ready(function(){
+			var html = '<div class="tab_box" id="boxDetail" style="min-height:140px;height:auto !important;_height:140px;line-height:250%;">'
+						+'<p>国行现货，原封正品，未激活！<img src="http://img.mall.ccb.com/photo/2014/10/31/118716263/6707f0bbdae14b1586ef0897353a0778.png" alt=""><img src="http://img.mall.ccb.com/photo/2014/10/31/118716263/634c855d3eea3632a14d406964a9226f.png" alt=""></p>'
+					+'</div>';
+			$(".content").append(html);
+		})
+	</script>
+
+</html>

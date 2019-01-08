@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Testing the Callback utility</title>
+</head>
+<body>
+
+<h2>Callbacks will add content below</h2>
+
+<p>This is a first attach point</p>
+
+<span>This element is ignored</span>
+
+<p>This is a second attach point</p>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.fn.testCallbacks = function() {
+    
+   var hello = function(jqEl, to) {
+     jqEl.append('<br>hello ' + to);
+     //callbacks.lock();
+     //callbacks.disable();
+   }
+   var bye = function(jqEl, to) {
+     jqEl.append('<br>bye ' + to);
+    }
+  
+   var callbacks = $.Callbacks();
+      window.setTimeout(callbacks.fire, 2000, this, 'world');
+   window.setTimeout(callbacks.fire, 3000, this, 'world');
+   window.setTimeout(callbacks.fire, 4000, this, 'world');   
+   callbacks.add(hello);
+   callbacks.add(bye);
+   //callbacks.remove(bye);
+   //callbacks.empty();
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('p').testCallbacks();
+
+});
+</script>
+</body>
+</html>

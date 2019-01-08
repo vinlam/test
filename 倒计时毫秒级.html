@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>抢购倒计时</title>
+		<style>
+			/*限时抢购*/
+			
+			.time {
+				background: #ea3b38;
+				height: 40px;
+				line-height: 40px;
+			}
+			
+			.time .active-label {
+				color: #fff;
+				margin-left: 6px;
+			}
+			
+			.time .proinfo-cd {
+				margin-left: 10px;
+			}
+			
+			.time .proinfo-cd em {
+				width: 39px;
+				height: 40px;
+				font: 700 14px/40px Tahoma;
+				color: #fff;
+				overflow: hidden;
+				word-break: break-all;
+			}
+			
+			.time .proinfo-cd span {
+				width: 30px;
+				text-align: center;
+				color: #fff;
+				font-weight: 600;
+				font-size: 14px;
+			}
+			
+			.time .time-title {
+				padding: 0 10px;
+				border-right: 1px solid #fff;
+				font: 700 16px/24px Microsoft Yahei;
+				color: #fff;
+				display: inline-block;
+				height: 24px;
+				vertical-align: -1px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="time">
+			<span class="time-title">限时抢购</span>
+			<span class="time-cd">
+        <span class="active-label">距抢购结束</span>
+			<span class="proinfo-cd" id="Countdown">
+            <em class="d">00</em>
+            <span>天</span>
+			<em class="h">00</em>
+			<span>时</span>
+			<em class="m">00</em>
+			<span>分</span>
+			<em class="s">00.0</em>
+			<span>秒</span>
+			</span>
+			</span>
+		</div>
+
+		<script>
+			!(function() {
+				'use strict';
+				var Countdown;
+				Countdown = function(settings) {
+					var _ = this,
+						str, time;
+					if(typeof settings !== 'object') {
+						return;
+					}
+					_.endTime = new Date(settings.endTime);
+					_.el = settings.el instanceof HTMLElement ? settings.el : document.querySelector(settings.el);
+					_.init = function() {
+						time = (function() {
+							var curTime = new Date(),
+								diff = parseInt((_.endTime.getTime() - curTime.getTime()) /1000),
+								day = parseInt(diff / (60 * 60 * 24)),
+								hour = parseInt(diff / (60 * 60) % 24),
+								mini = parseInt(diff / 60 % 60),
+								sec = parseInt(diff % 60),
+								ms = parseInt(((_.endTime.getTime() - curTime.getTime()) / 100) % 10); //豪秒
+								console.log(diff);
+							diff <= 0 && clearInterval(_.timer);
+							return {
+								d: (day < 10) ? ("0" + day) : day,
+								h: (hour < 10) ? ("0" + hour) : hour,
+								m: (mini < 10) ? ("0" + mini) : mini,
+								s: (sec < 10) ? ("0" + sec) : sec,
+								ms: ms
+							}
+						})();
+						str = '<em class="d">' + time.d + '</em><span>天</span>&nbsp;<em class="h">' + time.h + '</em><span>时</span>&nbsp;<em class="m">' + time.m + '</em><span>分</span>&nbsp;<em class="s">' + time.s + '.' + time.ms + '</em><span>秒</span>';
+						_.el.innerHTML = str;
+						_.timer = setInterval(function() {
+							_.init();
+						}, 100);
+					};
+					_.init();
+				};
+				window.Countdown = Countdown || {};
+			})();
+
+			new Countdown({
+				el: "#Countdown",
+				endTime: "2018-08-25 22:21:00"
+			})
+		</script>
+	</body>
+
+</html>

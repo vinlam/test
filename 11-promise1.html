@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Deferred - promises</title>
+	</head>
+
+	<body>
+
+		<h2>Please wait 5 sec for a popup</h2>
+
+		<!--<script src="js/common/jquery-1.9.1.min.js"></script>-->
+
+		<script>
+			//var mypermise = new Permise(function(resolve,rejected){
+			//	if(success){
+			//		resolve('success')
+			//	}else{
+			//		rejected('error')
+			//	}
+			//});
+
+			var st = 0;
+			var et = 0;
+
+			function getUser() {
+				st = new Date().getTime();
+				return new Promise(function(resolve, rejected) {
+					setTimeout(function() {
+						if(true) {
+							resolve("00001");
+						} else {
+							rejected("fail");
+							console.log("fail");
+						}
+					}, 2000)
+				})
+			}
+
+			function getPhone(userId) {
+				return new Promise(function(resolve, rejected) {
+					setTimeout(function() {
+						if(userId) {
+							resolve("13800138000");
+						} else {
+							rejected("fail");
+							console.log("fail");
+						}
+					}, 4000)
+
+				})
+			}
+
+			function getCoupon(phone) {
+				return new Promise(function(resolve, rejected) {
+					if(phone) {
+						resolve("A13800138000");
+						et = new Date().getTime();
+						var total = (et - st) * 0.001 + "s";
+						alert("success:" + total)
+					} else {
+						rejected("fail");
+						console.log("fail");
+					}
+				})
+			}
+
+			getUser().then(getPhone).then(getCoupon);
+
+			var promise1 = Promise.resolve(3);
+			var promise2 = 42;
+			var promise3 = new Promise(function(resolve, reject) {
+				setTimeout(resolve, 3000, 'foo');
+			});
+			promise3.then(function(res) {
+				return res;
+			}).then(resfun);
+
+			function resfun(res) {
+				console.log("-------------" + res);
+			}
+			Promise.all([promise1, promise2, promise3]).then(function(values) {
+				console.log(values);
+			});
+
+			//new Promise() vs Promise.resolve()
+			//then 方法每次都会返回 promise实例对象
+
+			function newPromise_resolve() {
+				return new Promise((resolve, reject) => {
+					resolve(); //这里调resolve方法，则then方法会被调用
+					console.log('resolve里面的log');
+				})
+				//先输出 resolve里面的log
+				//后输出 then方法
+				//这里很好地体现了 Promise实现了 node.js的异步机制
+			}
+
+			newPromise_resolve().then(() => {
+				console.log('then方法');
+			});
+
+			newPromise_resolve();
+
+			//使用Promise.resolve
+			function promise_resolve() {
+				let promise = Promise.resolve();
+				promise
+					.then(() => {
+						console.log('promise_resolve1');
+					})
+					.then(() => {
+						console.log('promise_resolve2');
+					});
+
+				return promise;
+			}
+
+			promise_resolve(); 
+
+			function promise_forEach_then() {
+				let ids = [1, 2, 3];
+				let promise = Promise.resolve();
+				ids.forEach((id) => {
+					promise
+						.then(() => {
+							return {
+								id
+							}
+						})
+						.then(consoleLogId)
+				});
+			}
+
+			function consoleLogId(id) {
+				console.log('promise_forEach_then---' + id);
+			}
+
+			promise_forEach_then();
+			
+			function promise_forEach_then1(callback) {
+				let ids = [1, 2, 3];
+				let promise = Promise.resolve();
+				ids.forEach((id) => {
+					promise
+						.then(() => {
+							return id
+						})
+						.then(callback)
+				});
+			}
+
+			function consoleLogId1(id) {
+				console.log('promise_forEach_then1---' + id);
+			}
+
+			promise_forEach_then1(consoleLogId1);
+		</script>
+	</body>
+
+</html>

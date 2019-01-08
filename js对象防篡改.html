@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		//不可扩展对象
+
+		//在默认情况下，所有对象都是可以扩展的，也就是说，无论什么时候都可以向对象中添加属性和方法。
+		//例如以下，先定义一个对象，再向其添加一个新属性：
+		var obj = {
+			name: "Tom"
+		}
+
+		obj.age = 21;
+		console.log(obj.age); //21  
+		//即使先定义好一个对象，后面也可以向其新添加属性和方法。
+
+		//Object.preventExtensions()方法
+		//现在使用Object.preventExtensions()方法可以改变这个行为，这样就不能向对象中新添加属性和方法了。不可扩展量一级保护措施。
+		var obj = {
+			name: "Tom"
+		}
+		Object.preventExtensions(obj); //阻止篡改对象  
+		obj.age = 21;
+		console.log(obj.age); //undefined  
+
+		//修改原有的属性  
+		obj.name = "Bob";
+		console.log(obj.name); //Bob  
+
+		//可以发现，使用了Object.preventExtensions()方法，就不能向对象中新添加属性和方法了，但是可以修改对象原有的属性和方法。
+		//Object.isExtensible()方法
+		//使用这个方法可以确定对象是否为可篡改，如果可篡改，则返回true，相反返回false。
+		var obj = {
+			name: "Tom"
+		}
+
+		console.log(Object.isExtensible(obj)); //true  
+
+		Object.preventExtensions(obj); //阻止篡改对象  
+		console.log(Object.isExtensible(obj)); //false  
+
+		//密封的对象
+		//对象的第二个保护级别就是密封对象，密封对象不可扩展，且其对象的属性特性[[Configurable]]被设置为false，意味着对象的属性和方法不能通过delete操作符删除。
+		//Object.seal()方法
+		//该方法用于密封对象。
+		var obj = {
+			name: "Tom"
+		}
+
+		//密封对象  
+		Object.seal(obj);
+
+		obj.age = 21;
+		console.log(obj.age); //undefined 不能新添加属性  
+
+		delete obj.name;
+		console.log(obj.name); //Tom 不能删除对象的属性  
+
+		//密封的对象不能新添加属性、不能删除属性。拥有了不可扩展对象的特性。
+		//Object.isSealed()方法
+		//该方法用于确定对象是否是密封对象，如果是密封对象返回true，相反返回false。
+		var obj = {
+			name: "Tom"
+		}
+
+		console.log(Object.isExtensible(obj)); //true  
+		console.log(Object.isSealed(obj)); //false  
+
+		Object.seal(obj);
+		console.log(Object.isExtensible(obj)); //false  
+		console.log(Object.isSealed(obj)); //true  
+
+		//冻结对象
+		//保护对象的最高级防篡改就是冻结对象。冻结的对象，即是不可扩展的，也是密封的，而且其属性的特性[[Writable]]被设置为false，也就是说属性值也不能修改。
+		//Object.freeze()方法
+		//该方法用于设置对象为冻结对象。
+		var obj = {
+			name: "Tom"
+		}
+
+		Object.freeze(obj); //冻结对象  
+
+		obj.age = 21;
+		console.log(obj.age); //undefined 不可扩展  
+
+		delete obj.name;
+		console.log(obj.name); //Tom 不可删除  
+
+		obj.name = "Bob";
+		console.log(obj.name); //Tom 不可修改  
+
+		//冻结对象同时拥有了不可扩展对象、密封对象的特性。
+
+		//Object.isFrozen()方法
+		//该方法用于确定对象是否是冻结对象。如果是返回true，相反返回false。
+		var obj = {
+			name: "Tom"
+		}
+
+		//未冻结之前  
+		console.log(Object.isExtensible(obj)); //true  
+		console.log(Object.isSealed(obj)); //false  
+		console.log(Object.isFrozen(obj)); //false  
+
+		//冻结对象之后  
+		//Object.freeze(obj); //冻结对象  
+
+		console.log(Object.isExtensible(obj)); //false  
+		console.log(Object.isSealed(obj)); //true  
+		console.log(Object.isFrozen(obj)); //true
+	</script>
+
+</html>

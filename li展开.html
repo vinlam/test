@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>JQ点击伸缩、展开的菜单</title>
+		<style type="text/css">
+			body {
+				font-family: Arial;
+				font-size: 16px;
+			}
+			
+			#dtdiv dl {
+				width: 300px;
+			}
+			
+			dl,
+			dd {
+				margin: 0;
+			}
+			
+			dt {
+				background-color: #ae8758;
+				background-image: url(images/201207.png);
+				background-repeat: no-repeat;
+				background-position: 5px 13px;
+				font-size: 18px;
+				padding: 5px 5px 5px 20px;
+				margin: 2px;
+				height: 29px;
+				line-height: 28px;
+			}
+			
+			dt a {
+				color: #FFF;
+				text-decoration: none;
+			}
+			
+			dd a {
+				color: #000;
+			}
+			
+			ul {
+				list-style: none;
+				padding: 5px 5px 5px 20px;
+				margin: 0;
+			}
+			
+			li {
+				line-height: 24px;
+			}
+			/*.bg {
+				background-position: 5px -16px;
+			}*/
+		</style>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("dd").hide();
+				var flag = true;
+				$("dt").off().on("click", function() {
+					//$(this).toggleClass("bg");
+					/*$(this).prevAll("dt").removeClass("bg")
+					$(this).nextAll("dt").removeClass("bg")*/
+					//var ulVar = $("#dtdiv dd").attr("id");
+					if(flag) {
+						flag = false;
+						$(this).next().slideToggle();
+						$(this).prevAll("dd").slideUp("slow");
+						$(this).next().nextAll("dd").slideUp("slow");
+						//alert($(this).attr("flag"));
+						var _self = $(this);
+						var index = setTimeout(function() {
+							flag = true;
+							console.log(_self.next().css("display"));
+							clearTimeout(index);
+						}, 1000);
+						
+						//alert($(this).attr("id"));
+						var selecter = "#" + $(this).next().attr("id") + " ul";
+						//alert(selecter);
+						//var ulVar = $(selecter).attr("id");
+						//alert($(JSON.stringify($(selecter))));
+						//alert($("#"+ulVar).css("display"));
+					} else {
+						return;
+					}
+
+					return false;
+				});
+
+				image.onload = function() {
+					var _self = this;
+					//alert(_self.width + "*" + _self.height);
+					var width = _self.width;
+					var height = _self.height;
+
+					var canvas = document.createElement('CANVAS'),
+						ctx = canvas.getContext('2d');
+					canvas.height = height;
+					canvas.width = width;
+					ctx.drawImage(_self, 0, 0);
+					//alert(canvas.height);
+
+					var dataURL = canvas.toDataURL('image/jpeg', 0.7);
+					//alert(dataURL);
+					//var dataURL = canvas.toDataURL('image/jpeg', 0.7);
+					//alert(dataURL);
+					//callback.call(this, dataURL);
+					canvas = null;
+				};
+				$("#mymenu ul li").next("ul").hide();
+				$("#mymenu ul li").click(function() {
+					$(this).next("ul").toggle();
+					//var selecter = "#" + $(this).attr("id") + " ul";
+					//alert($(selecter).css("display"));
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<img id="image" src="http://img3.imgtn.bdimg.com/it/u=1965627915,4017972178&fm=21&gp=0.jpg" />
+		<div id="dtdiv">
+			<dl>
+				<dt id="dtt" flag="aaa"><a href="#">郑州美食</a></dt>
+				<dd id="ddd">
+					<ul id="list" class="ullist">
+						<li>
+							<a href="#">美食论坛</a>
+						</li>
+						<li>
+							<a href="#">地方小吃</a>
+						</li>
+						<li>
+							<a href="#">郑州酒店</a>
+						</li>
+					</ul>
+				</dd>
+				<dt flag="bbb"><a href="#">郑州交通</a></dt>
+				<dd>
+					<ul>
+						<li>
+							<a href="#">新郑机场</a>
+						</li>
+						<li>
+							<a href="#">周边高速</a>
+						</li>
+					</ul>
+				</dd>
+				<dt><a href="#">郑州房产</a></dt>
+				<dd flag="ccc">
+					<ul>
+						<li>
+							<a href="#">房产论坛</a>
+						</li>
+						<li>
+							<a href="#">大河论坛</a>
+						</li>
+						<li>
+							<a href="#">天下中原</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+		</div>
+
+		<div id="mymenu">
+			<ul>
+				<li>
+					<a href="#">用户管理</a>
+				</li>
+				<ul>
+					<li>
+						<a href="#">用户查询</a>
+					</li>
+					<li>
+						<a href="#">添加用户</a>
+					</li>
+					<li>
+						<a href="#">用户组</a>
+					</li>
+				</ul>
+			</ul>
+			<ul>
+				<li>
+					<a href="#">课程管理</a>
+				</li>
+				<ul>
+					<li>
+						<a href="#">课程列表</a>
+					</li>
+					<li>
+						<a href="#">添加课程</a>
+					</li>
+				</ul>
+			</ul>
+		</div>
+	</body>
+
+</html>

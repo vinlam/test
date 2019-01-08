@@ -1,0 +1,138 @@
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>js判断输入字符串长度（汉字算两个字符，字母数字算一个）</title>
+		<style type="text/css">
+			.pbt {
+				margin-bottom: 10px;
+			}
+			
+			.ie6 .pbt .ftid a,
+			.ie7 .pbt .ftid a {
+				margin-top: 1px;
+			}
+			
+			.cl:after {
+				clear: both;
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+		<script type="text/javascript">
+			//获取字符串长度（汉字算两个字符，字母数字算一个）
+			function getByteLen(val) {
+				var len = 0;
+				for(var i = 0; i < val.length; i++) {
+					var a = val.charAt(i);
+					if(a.match(/[^\x00-\xff]/ig) != null) {
+						len += 2;
+					} else {
+						len += 1;
+					}
+				}
+				return len;
+			}
+			// 只要键盘一抬起就验证编辑框中的文字长度，最大字符长度可以根据需要设定
+			function checkLength(obj) {
+				var maxChars = 80; //最多字符数   
+				var curr = maxChars - getByteLen(obj.value);
+				if(curr > 0) {
+					document.getElementById("checklen").innerHTML = curr.toString();
+				} else {
+					document.getElementById("checklen").innerHTML = '0';
+					//document.getElementById("subject").readOnly = true;
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<div class="pbt cl">
+			<textarea id="subject" maxlength="80" onkeyup="checkLength(this)" accesskey="1" tabindex="11"></textarea>
+			<span id="subjectchk">还可输入
+    <strong id="checklen" style="color: #FF0000">80</strong>
+      个字符
+    </span>
+			<span id="postNameRule" class="spn_flag_1" style="display: none"></span>
+		</div>
+
+		<input type="text" name="username" />
+		<span id="subjectchk">已输入
+    <strong id="cin" style="color: #FF0000">0</strong>
+     /10 个字符
+    </span>
+	</body>
+	<script type="text/ecmascript">
+		var GetLength = function(str) {
+			///<summary>获得字符串实际长度，中文2，英文1</summary>
+			///<param name="str">要获得长度的字符串</param>
+			var realLength = 0,
+				len = str.length,
+				charCode = -1;
+			for(var i = 0; i < len; i++) {
+				charCode = str.charCodeAt(i);
+				if(charCode >= 0 && charCode <= 128) realLength += 1;
+				else realLength += 2;
+			}
+			return realLength;
+		};
+
+		//js截取字符串，中英文都能用  
+		//如果给定的字符串大于指定长度，截取指定长度返回，否者返回源字符串。  
+		//字符串，长度  
+
+		/** 
+		 * js截取字符串，中英文都能用 
+		 * @param str：需要截取的字符串 
+		 * @param len: 需要截取的长度 
+		 */
+		function cutstr(str, len) {
+			var str_length = 0;
+			var str_len = 0;
+			str_cut = new String();
+			str_len = str.length;
+			//console.log(str_len);
+			for(var i = 0; i < str_len; i++) {
+				var a = str.charAt(i);
+				str_length++;
+				if(escape(a).length > 4) {
+					//中文字符的长度经编码之后大于4  
+					str_length++;
+				}
+				str_cut = str_cut.concat(a);
+				if(str_length >= len) {
+					//str_cut = str_cut.concat("...");
+					return str_cut;
+				}
+			}
+			//如果给定字符串小于指定长度，则返回源字符串；  
+			if(str_length < len) {
+				return str;
+			}
+		}
+		$(function() {
+			$("input[name=username]").off().on('keyup keydown blur', function() {
+				var valStr = $(this).val();
+				var len = GetLength(valStr);
+				if(len > 10) {
+					if(GetLength(valStr.substr((valStr.length-1),1)) > 1){
+						$(this).val(cutstr(valStr, 10-1));
+						$("#cin").html(10-1);
+						//$(this).val(cutstr(valStr, 10-(len-10)));
+					}else{
+						$(this).val(cutstr(valStr, 10));
+						$("#cin").html(10);
+					}
+					
+					return;
+				}
+				$("#cin").html(len);
+			});
+		});
+	</script>
+
+</html>

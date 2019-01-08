@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<title>js获取上一页url,js获取前一页地址,javascripts获取上一页url,javascript获取前一页地址</title>
+	</head>
+
+	<body>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script language="javascript">
+			(function($) {
+				$(document).ready(function() {
+					document.write("js获取当前域名" + window.location.host + "或者" + document.domain + "<br>");
+
+					//document.write("js获取当前url" + window.location.href + "<br>");
+
+					document.write("js获取上(前)一页url" + document.referrer+ "<br>");
+					console.log(window.location.search);
+					//document.write("path:" + getQueryString("GoodsUrl"));
+				});
+
+				function getQueryString(name) {
+					var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+					var r = window.location.search.substr(1).match(reg);
+					if(r != null) {
+						return unescape(r[2]);
+					}
+					return null;
+				}
+			})(jQuery)
+		</script>
+
+	</body>
+
+</html>

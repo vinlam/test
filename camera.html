@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--自适应界面,如果出现,在某些设备出现界面偏小的话,检查一下有没有加入这句 -->
+    <meta http-equiv="Content-type" name="viewport"
+ 
+          content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <!--样式-->
+    <link rel="stylesheet" href="js/common/jquery.mobile-1.4.3.css" />
+    <!--end-->
+ 
+    <!--导入的js框架-->
+    <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+    <script src="js/common/jquery-1.8.2.min.js"></script>
+ 
+    <script src="js/common/jquery.mobile-1.4.3.js"></script>
+    <!--end-->
+    <!--自己写的js-->
+    <script type="text/javascript">
+ 
+ 
+    </script>
+    <!--end-->
+</head>
+<body>
+        <div data-role="page" id="home">
+ 
+            <div data-role="header">
+                <h1>个人信息</h1>
+                <a href="#setting" data-icon="home" id="intro" class="ui-btn-right">设置</a>
+ 
+            </div>
+            <div data-role="content" id="homeContent">
+                <p>头像</p>
+                <img id="cameraImage" src="" />
+ 
+                <!--这一块的动态实现你会图片的读取和存储,这个就很简单了..这里就不做介绍了..-->
+                <p>名字:阿柴</p>
+                <p>联系方式:xxxxx</p>
+            </div>
+        </div>
+ 
+        <div data-role="page" id="setting">
+            <div data-role="header">
+                <h1>头像设置</h1>
+            </div>
+ 
+            <div data-role="settingContent">
+                <p>头像</p>
+                <img id="settingImage" src="" />
+ 
+                <div class="ui-grid-a">
+                   <div class="ui-block-a"><div  data-role="button" id="takePhoto">take photo</div></div>
+                  <div class="ui-block-b">  <div  data-role="button"  id="upload">upload</div></div>
+ 
+                </div>
+                
+            </div>
+        </div>
+    </body> 
+<!--import custom library -->
+<script type="text/javascript" charset="utf-8" src="js/camera.js"></script>
+ 
+<script type="text/javascript" charset="utf-8" src="js/device.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/storage.js"></script>
+<script type="text/javascript">
+            //在页面初始化的时候,利用phonegap初始化我们的应用
+            $('body').live("pageinit",function(){
+               init();
+            });
+            //为页面添加swip 事件
+            $("#home").live("pageinit",function(){
+                //当我们向左滑动的时候,进入setting页面
+                $('#homeContent').bind("swipeleft",function(){
+                  $.mobile.changePage('#setting', { transition: "fade"});
+                });
+ 
+            });
+            $('#setting').live("pageinit",function(){
+                //显示头像图片
+                var saveImage = kget("image");
+                if(saveImage){
+                    //console.log("have image"+saveImage);
+                    var cameraImage = document.getElementById('settingImage');
+                    cameraImage.style.visibility = 'visible';
+                    cameraImage.src = "data:image/jpeg;base64," + saveImage;
+ 
+                }
+                //当我们向右滑动的时候,回到主页
+                $('#settingContent').bind("swiperight",function(){
+                    $.mobile.changePage('#home',{ transition: "fade"});
+                });
+                //进行拍照
+                $('#takePhoto').bind("tap",function(){
+                    take_pic();
+                });
+            });
+ 
+        </script> 
+<!--end-->
+</body>
+</html>

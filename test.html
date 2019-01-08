@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+	</head>
+
+	<body>
+		<div id="divd" textcontext="ssss">
+			<ul id="list">
+
+			</ul>
+		</div>
+		<script>
+			var count = 0;
+			var indexT = 0;
+			test();
+
+			function testGetJson() {
+				$.getJSON("/weixinServer/" + pathConfig.model, config.param, function(result) {
+					console.log(result);
+					if(callback) {
+						callback(result);
+					}
+					if(result.ec != '0') {
+						return;
+					}
+				}).done(function() {
+					console.log("second success");
+				}).fail(function(jqxhr, textStatus, error) {
+					var err = textStatus + ", " + error;
+					console.log(jqxhr);
+					alert("请求服务器数据异常");
+				}).always(function() {
+					// console.log( "complete" );
+				});
+			}
+
+			function test() {
+				console.log("1.00".replace(/\./g,""))
+				var thDiv = document.createElement('div');
+				thDiv.id = "thdiv";
+				thDiv.style.cssText = 'display:block;background:#ffca8d;color:#333333;text-align:center;height:3.0em;line-height:3.0em;font-size:1.8em;font-weight:normal';
+				thDiv.textContent = "title";
+				document.body.appendChild(thDiv);
+				
+				var cancelDiv = document.createElement('div');
+					cancelDiv.style.cssText = 'text-align: center;';
+					var btn = document.createElement('button');
+					btn.id = "showSelCancelBtn";
+					btn.innerText = '取消';
+					btn.onclick = function(){ thDiv.style.display = 'none'; console.log("cancel:"+document.getElementById("showSelCancelBtn").parentNode.style.display)};
+					btn.style.cssText = 'margin-top:10px; width:100px; height:3.0em;line-height:1.5em; font-size:1.5em;font-weight:normal; background-color: #ff9800;color: #FFFFFF;border: 1px solid #EC7B00;';
+					thDiv.appendChild(btn);
+				console.log(document.getElementById("showSelCancelBtn").parentNode.style.display)
+				var url = "/path/a.do";
+				var p = url.substring(0, url.lastIndexOf("/"));
+
+				var url = "blob:http%30www.hhhh.com/dadfadfadflk23lkjl-w342lkjlskfd";
+				url = "blob:" + url.substr(url.lastIndexOf("/") + 1)
+					//console.log(url);
+					//console.log(p);
+					//var appId = 'wx24b183a54a65ced4';
+				var appId = 'wx520304cb96c1d409';
+				//encodeURIComponent()
+				var gurl = escape("http://www.hubeicfc.com/weixinServer/htmlShow/consumerFinace/html/bridge.html");
+				var ggurl = encodeURIComponent("http://weixin.hubeicfc.com/weixinServer/htmlShow/consumerFinace/html/bridge.html");
+				var path = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri=" + gurl + "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+				console.log(path);
+				console.log(ggurl);
+
+				indexT = setInterval(getCount, 1000);
+				var ind = setInterval(function() {
+					//console.log("cc:"+count);
+					if(count == 3) {
+						clearInterval(indexT);
+						clearInterval(ind);
+					}
+				}, 1000)
+
+				var htmlstr = '<li id="1">1</li><li id="1">1</li><li id="1">1</li><li id="1">3</li><li id="1">2</li>';
+				//var htmlstr = '<li id="1">1</li>';
+				document.getElementById("list").innerHTML = htmlstr;
+			}
+
+			function getCount() {
+				count++;
+				console.log("c:" + count)
+				return count;
+			}
+
+			var d;
+
+			function test2() {
+				d = {};
+				d.c = {
+					"em": "获取随机数失败-数据库无记录!",
+					"ec": "1000"
+				};
+				var s = "c";
+
+				t(s);
+				var url = "/path/a.do";
+				var p = url.substring(0, url.lastIndexOf("/"));
+				console.log("放手");
+			}
+
+			function t(s) {
+				console.log(d[s].ec);
+				console.log(d['ec']);
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Snake</title>
+		<script>
+			/*
+			待优化：
+			1.吃食物计数器
+			2.设置游戏等级（每吃到5个食物，就提速）
+			提速：停止旧的setInterval(),根据新时间重新设置setInterval().
+			*/
+
+			//(重点)把地图对象全局化，方便后面访问
+
+			var map;
+			var food;
+			var snake;
+
+			//1.定义地图类
+			function Map() {
+				//定义相关属性
+				this.width = 800;
+				this.height = 400;
+				this.color = '#ddd';
+				this.position = 'absolute';
+				//(重点)定义一个公有属性，用于获取div元素
+
+				this._map = null;
+
+				//定义相关方法
+				this.show = function() {
+					//创建DIV元素
+					this._map = document.createElement('div');
+					this._map.style.width = this.width + "px";
+					this._map.style.height = this.height + "px";
+					this._map.style.backgroundColor = this.color;
+					this._map.style.position = this.position;
+					//追加div元素到body
+					document.getElementsByTagName('body')[0].appendChild(this._map);
+				}
+			}
+
+			//2.定义食物类
+
+			function Food() {
+				//定义相关属性
+				this.width = 20;
+				this.height = 20;
+				this.color = 'green';
+				this.position = 'absolute';
+				this.x = 0;
+				this.y = 0;
+				//定义一个属性接收div元素，防止多次创建
+				var _food = null;
+				//定义相关方法
+				this.show = function() {
+					if(this._food == null) {
+						//创建div元素节点
+						this._food = document.createElement('div');
+						this._food.style.width = this.width + 'px';
+						this._food.style.height = this.height + 'px';
+						this._food.style.backgroundColor = this.color;
+						this._food.style.position = this.position;
+					}
+
+					this.x = Math.floor(Math.random() * 40);
+					this.y = Math.floor(Math.random() * 20);
+					this._food.style.left = this.x * 20 + 'px';
+					this._food.style.top = this.y * 20 + 'px';
+					//把食物显示在地图上
+					map._map.appendChild(this._food);
+				}
+			}
+
+			//3.定义蛇类
+
+			function Snake() {
+				//定义相关属性
+				this.width = 20;
+				this.height = 20;
+				this.position = 'absolute';
+				this.direct = 'right';
+				//（重点）定义蛇节
+
+				this.body = [
+					[3, 2, 'red', null],
+					[2, 2, 'blue', null],
+					[1, 2, 'blue', null]
+				];
+
+				//定义显示方法
+
+				this.show = function() {
+					//获取蛇节的长度
+					var length = this.body.length;
+					for(var i = 0; i < length; i++) {
+						if(this.body[i][3] == null) {
+							//创建div元素
+							this.body[i][3] = document.createElement('div');
+							this.body[i][3].style.width = this.width + 'px';
+							this.body[i][3].style.height = this.height + 'px';
+							this.body[i][3].style.direct = this.direct;
+							this.body[i][3].style.position = this.position;
+							this.body[i][3].style.backgroundColor = this.body[i][2];
+							this.body[i][3].style.left = this.body[i][0] * 20 + 'px';
+							this.body[i][3].style.top = this.body[i][1] * 20 + 'px';
+						}
+						//追加div元素到map地图里
+						map._map.appendChild(this.body[i][3]);
+						//每次调用show方法的时候，如果创建了蛇身只需要改变元素的坐标即可
+						this.body[i][3].style.left = this.body[i][0] * 20 + 'px';
+						this.body[i][3].style.top = this.body[i][1] * 20 + 'px';
+					}
+				}
+
+				//定义move方法，让蛇运动起来
+				this.move = function() {
+					//判断蛇是否吃上食物
+					if(this.body[0][0] == food.x && this.body[0][1] == food.y) {
+						//吃到食物，增加一节
+						this.body.push([0, 0, 'blue', null]);
+						//吃到食物，重新显示食物
+						food.show();
+					}
+
+					var length = this.body.length;
+					//交换除蛇头以外的其他坐标
+					for(var i = length - 1; i > 0; i--) {
+						this.body[i][0] = this.body[i - 1][0];
+						this.body[i][1] = this.body[i - 1][1];
+					}
+
+					//蛇头决定运动方向
+					if(this.direct == 'right') {
+						this.body[0][0] += 1;
+					}
+
+					if(this.direct == 'left') {
+						this.body[0][0] -= 1;
+					}
+
+					if(this.direct == 'up') {
+						this.body[0][1] -= 1;
+					}
+
+					if(this.direct == 'down') {
+						this.body[0][1] += 1;
+					}
+
+					//触边界，游戏结束
+					if(this.body[0][1] < 0 || this.body[0][1] >= 20 || this.body[0][0] < 0 || this.body[0][0] >= 40) {
+						alert('Game Over!');
+						clearInterval(mytime);
+						return false;
+					}
+
+					//碰到自己的身体,游戏结束
+					for(var i = length - 1; i > 0; i--) {
+						if(this.body[i][0] == this.body[0][0] && this.body[i][1] == this.body[0][1]) {
+							alert('Game over kill by yourself!');
+							clearInterval(mytime);
+							return false;
+						}
+					}
+					//重新显示
+					this.show();
+				}
+
+				//定义setDirect方法，控制运动方向
+
+				this.setDirect = function(code) {
+					switch(code) {
+						case 37:
+							if(this.direct == 'right') { //阻止蛇倒退
+								break;
+							}
+							this.direct = 'left';
+							break;
+						case 38:
+							if(this.direct == 'down') { //阻止蛇倒退
+								break;
+							}
+							this.direct = 'up';
+							break;
+						case 39:
+							if(this.direct == 'left') { //阻止蛇倒退
+								break;
+							}
+							this.direct = 'right';
+							break;
+						case 40:
+							if(this.direct == 'up') { //阻止蛇倒退
+								break;
+							}
+							this.direct = 'down';
+							break;
+					}
+				}
+			}
+
+			//4.定义window.onload页面载入事件
+			window.onload = function() {
+				//实例化Map类
+				map = new Map();
+				map.show();
+				//实例化Food类
+				food = new Food();
+				food.show();
+				//实例化蛇类
+				snake = new Snake();
+				snake.show();
+
+				//使用定时器
+				mytime = setInterval('snake.move()', 150);
+				//按键控制蛇运动
+				document.onkeydown = function(event) {
+					var code;
+					if(window.event) {
+						//IE
+						code = window.event.keyCode;
+					} else {
+						//W3C
+						code = event.keyCode;
+					}
+					snake.setDirect(code);
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

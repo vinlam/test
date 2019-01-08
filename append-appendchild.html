@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jq append与document.body.appendChild</title>
+		<script src="js/jquery.min.js"></script>
+		<script>
+			window.onload = function(){
+				var div = document.createElement("div");
+			div.style.width ="100px";
+			div.style.height ="100px";
+			div.style.backgroundColor = "red";
+			/*var img = document.createComment("img");
+			img.src = "img/album-af.jpg"
+			div.applyElement(img);*/
+			document.body.appendChild(div);
+			$("div").off().on("dblclick",function(){
+				alert(9)
+			})
+			$("div").longPress(function(){
+				alert(98)
+			})
+			}
+			$.fn.longPress = function(fn){
+				var timeout = undefined;
+				var $that = this;
+				for(var i = 0;i<$that.length;i++){
+					$that[i].addEventListener('touchstart',function(){
+						timeout = setTimeout(fn,800);
+					},false);
+					$that[i].addEventListener('touchend',function(){
+						clearTimeout(timeout);
+					},false);
+				}
+			}
+			/*var param = {};
+			param.account = "dadfasdf";
+			
+			if(param.account =="" || param.account ==null){
+				alert("账户为空，无法进行开卡操作，请检查信息是否完整");
+			}else if(param.account.length < 17){
+				console.log(param.account.length);
+				alert("账户为空，无法进行开卡操作，请检查信息是否完整");
+				
+			}*/
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GB2312"?>
+<esb>
+	<head>
+		<syshead>
+			<svc_id>99IBK0003004</svc_id>
+			<svc_version>V001</svc_version>
+			<svc_scene>00</svc_scene>
+			<req_sys_id>319CHNIBK</req_sys_id>
+			<send_req_date>20161118</send_req_date>
+			<send_req_seq>321144511000100337</send_req_seq>
+			<org_sys_id></org_sys_id>
+			<org_sys_date>20161118</org_sys_date>
+			<ors_sys_seq></ors_sys_seq>
+		</syshead>
+		<apphead>
+			<tran_date>20161118</tran_date>
+			<tran_time>144511</tran_time>
+			<tran_chn>010000</tran_chn>
+			<tran_chn_seq>321144511000100337</tran_chn_seq>
+			<tx_brch>03141</tx_brch>
+			<tx_teller>0001360</tx_teller>
+			<auth_teller>0001358</auth_teller>
+			<tx_end_no></tx_end_no>
+			<mac_node>0458800001</mac_node>
+			<pin_node>0458800001</pin_node>
+			<rec_begin></rec_begin>
+			<rec_max></rec_max>
+		</apphead>
+	</head>
+	<body>
+		<sign_acct>80010000026942825</sign_acct>
+		<card_no></card_no>
+		<mobile_type>1</mobile_type>
+		<mobile>18800188008</mobile>
+		<services>22000</services>
+		<limits>000000001000.000000000001000.000000000002000.000</limits>
+		<cust_name>张文亮</cust_name>
+		<id_type>01</id_type>
+		<id_no>130524199110021944</id_no>
+		<voucher_type></voucher_type>
+		<voucher_no></voucher_no>
+		<pay_way></pay_way>
+		<password></password>
+		<suit_id>M</suit_id>
+	</body>
+</esb>

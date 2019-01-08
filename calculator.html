@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>网页版计算器</title>
+
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				font-size: 14px;
+				font-family: "微软雅黑";
+				color: #666;
+				background: #666;
+			}
+			#container {
+				width: 300px;
+				margin: 100px auto;
+				background: white;
+				border: 2px solid #99ccff;
+				border-radius: 5px;
+			}
+			#container h3 {
+				text-align: center;
+				margin-top: 5px;
+			}
+			.text {
+				width: 280px;
+				border: 1px solid #c2c2c2;
+				height: 50px;
+				border-radius: 5px;
+				margin: 10px;
+				font-size: 24px;
+				text-align: right;
+				background: #ffffff;
+			}
+			.buttons {
+				margin: 5px 0 0 4px;
+				position: relative;
+			}
+			.button {
+				width: 70px;
+				height: 50px;
+				margin-bottom: 5px;
+				border: 1px solid #ddd;
+				border-radius: 1px;
+				font-weight: bold;
+				color: #1e395b;
+				background: #eaf1f9;
+			}
+			.button:hover {
+				background: #ffe77c;
+			}
+			.ling {
+				width: 145px;
+			}
+		</style>
+
+		<script type="text/javascript" lang="javascript">
+			var clearmsg = false;
+			var ispoint = true;
+
+			function show(obj) {
+					var data = obj.value;
+					var text = document.getElementById("text");
+					if (clearmsg) {
+						text.value = "";
+						clearmsg = false;
+					}
+					if (data == "+" || data == "-" || data == "*" || data == "/") {
+						ispoint = true;
+					}
+					if (data == "0" && text.value == "0") {
+						text.value = parseInt(text.value) + 0;
+					} else if (text.value == "0" && data != "+" && data != "-" && data != "*" && data != "/") {
+						text.value = parseInt(text.value) + parseInt(data);
+					} else {
+						text.value += data;
+					}
+				}
+				//计算结果
+
+			function getResult() {
+					var data = document.getElementById("text");
+					try {
+						ispoint = true;
+						data.value = eval(data.value);
+						clearmsg = true;
+						//alert(ispoint);
+					} catch (err) {
+						alert("这怎么算!");
+						data.value = "0";
+					}
+				}
+				//点
+
+			function point() {
+					var p = document.getElementById(".");
+					var text = document.getElementById("text");
+					if (ispoint) {
+						text.value += p.value;
+						ispoint = false;
+					}
+					//if(text.value.indexOf(".") == true ){
+					//}else{
+					//	text.value += p.value;
+					//}			
+				}
+				//清空
+
+			function funclear() {
+					var a = document.getElementById("text").value = "0";
+					clearmsg = false;
+					ispoint = true;
+					//if(a==null || a==""){
+					//	alert("null");
+					//}else{
+					//	alert(a);
+					//}
+				}
+				//退格键
+
+			function funback() {
+				var text = document.getElementById("text");
+				if (text.value == "0" || text.value == "") {
+					text.value = "0";
+				} else {
+					document.getElementById("text").value = document.getElementById("text").value.slice(0, -1);
+				}
+			}
+		</script>
+
+	</head>
+
+	<body>
+
+		<div id="container">
+			<form name="computer">
+				<h3>网页版简单计算器</h3>
+				<input type="text" id="text" name="text" class="text" disabled="disabled" value="0">
+				<div class="buttons">
+					<input type="button" value="←" class="button" id="dele" onClick="funback()">
+					<input type="button" value="CE" class="button" id="ce" onClick="funclear()">
+					<input type="button" value="C" class="button" id="c" onClick="funclear()">
+					<input type="button" value="/" class="button" id="/" onClick="show(this)">
+					<input type="button" value="7" class="button" id="7" onClick="show(this)">
+					<input type="button" value="8" class="button" id="8" onClick="show(this)">
+					<input type="button" value="9" class="button" id="9" onClick="show(this)">
+					<input type="button" value="*" class="button" id="*" onClick="show(this)">
+					<input type="button" value="4" class="button" id="4" onClick="show(this)">
+					<input type="button" value="5" class="button" id="5" onClick="show(this)">
+					<input type="button" value="6" class="button" id="6" onClick="show(this)">
+					<input type="button" value="-" class="button" id="-" onClick="show(this)">
+					<input type="button" value="1" class="button" id="1" onClick="show(this)">
+					<input type="button" value="2" class="button" id="2" onClick="show(this)">
+					<input type="button" value="3" class="button" id="3" onClick="show(this)">
+					<input type="button" value="+" class="button" id="+" onClick="show(this)">
+					<input type="button" value="0" class="button ling" id="0" onClick="show(this)">
+					<input type="button" value="." class="button" id="." onClick="point()">
+					<input type="button" value="=" class="button" id="=" onClick="getResult()">
+				</div>
+			</form>
+		</div>
+
+	</body>
+
+</html>

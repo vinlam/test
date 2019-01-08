@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>input</title>
+		<style>
+			input{
+				width: 25px;
+				height: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pwd">
+			<input name="pw" type="text" maxlength="1"/>
+			<input name="pw" type="text" maxlength="1"/>
+			<input name="pw" type="text" maxlength="1"/>
+			<input name="pw" type="text" maxlength="1"/>
+			<input name="pw" type="text" maxlength="1"/>
+			<input name="pw" type="text" maxlength="1"/>
+		</div>
+		<input type="button" value="getVal" id="btn" />
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		(function(){
+			$(document).ready(function(){
+				$(".pwd input").keyup(function(e){
+					var index = $(this).index();
+					console.log("keycode:"+e.keyCode + "--"+$(this).val())
+					if(e.keyCode === 8 || e.keyCode === 46){
+						$(this).val("");
+						$(".pwd input").eq(index - 1).focus();
+					}else{
+						if($(this).val() !=""){
+							console.log("keycode:"+e.keyCode + "--U"+$(this).val()+"---"+e.key)
+							$(this).val(e.key);
+							$(".pwd input").eq(index + 1).focus();
+						}
+							
+					}
+				});
+				
+				$("#btn").off("click").on("click",getval);
+				
+				function getval(){
+				var arr = $(".pwd input[name=pw]");
+				for(var i=0;i<arr.length;i++){
+					var _val = $(arr[i]).val();
+					console.log(_val);
+				}
+			}
+			});
+			
+			
+		})()
+	</script>
+</html>

@@ -1,0 +1,90 @@
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			body,
+			html,
+			#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer"></script>
+	-->
+		<title>单击获取点击的经纬度</title>
+	</head>
+
+	<body>
+		<div id="allmap"></div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	(function() {
+		$(document).ready(function() {});
+
+	})();
+	// 百度地图API功能
+	/*var map = new BMap.Map("allmap");            
+	map.centerAndZoom("佛山",12);           
+	//单击获取点击的经纬度
+	map.addEventListener("click",function(e){
+		alert(e.point.lng + "," + e.point.lat);
+	});*/
+	getBaiduMapAPI()
+		//异步加载百度地图
+	function getBaiduMapAPI() {
+
+		/*var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "http://api.map.baidu.com/api?v=2.0&callback=loadMapSucc&ak=WH1r6gyQnp9Q3sSqemqhZUer";
+		script.onload = function(res) {*/ //
+			//(function() {
+				var s = document.createElement('script');
+				//s.src = 'http://api.map.baidu.com/getscript?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer&services=&t=20161112000328';
+				s.src = 'bmap.js';
+				document.body.appendChild(s);
+				s.onload = function(res) {
+					alert("ss:"+res)
+				}
+				window.BMap_loadScriptTime = (new Date).getTime();
+				window.BMap = window.BMap || {};
+				console.log(window.BMap)
+				window.BMap.apiLoad = function() {console.log()
+					delete window.BMap.apiLoad;
+					if(typeof loadMapSucc == "function") {
+						loadMapSucc()
+					}
+				};
+			//})();
+			/*console.log(res + "BaiduMap API load finish ! ");
+		}
+		script.onerror = function() {
+			console.log("BaiduMap API load failed ! ");
+			//		$.mbank.showTip('地图加载失败，请检查网络');
+		}
+		document.body.appendChild(script);*/
+
+	}
+
+	//初始化地图
+	function loadMapSucc() {
+		console.log("callback");
+		var map = new BMap.Map("allmap");
+		map.centerAndZoom("佛山", 12);
+		//单击获取点击的经纬度
+		map.addEventListener("click", function(e) {
+			alert(e.point.lng + "," + e.point.lat);
+		});
+		/*var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "../../../js/controllers/public/bankMap/bankMapSync.js";
+		document.body.appendChild(script);*/
+	}
+</script>

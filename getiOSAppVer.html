@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<script>
+			function getVer() {
+				var a = "1.0.0";
+				a =a.replace(/\./g,"");
+				alert(a)
+				$.ajax({
+					type: "post",
+					url: "http://itunes.apple.com/lookup?id=1102729211",
+					async: true,
+					dataType: 'json',
+					success: function(result) {
+						alert(result["results"][0]["version"]+"===="+JSON.stringify(result));
+						var storeVersion = result["results"][0]["version"];
+						storeVersion = storeVersion.replaceAll(/./g,"");
+						//var currentVersion = plus.runtime.version();
+//						currentVersion = currentVersion.replaceAll(/./g,"");
+//						if(parseint(currentVersion) < parseint(storeVersion)){
+//							
+//							iosAppstore();
+//							return;
+//						}
+						console.log(result["results"][0]["version"]+"===="+JSON.stringify(result));
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("ajaxerror: " + JSON.stringify(XMLHttpRequest) + " textStatus: " + XMLHttpRequest.statusText);
+					}
+				});
+			}
+			
+			function iosAppstore( url ) {
+				plus.runtime.openURL( "itms-apps://"+url );
+			}
+			
+			getVer();
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

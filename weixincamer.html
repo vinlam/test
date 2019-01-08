@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<!--<link rel="shortcut icon" href="images/send.png" type="/image/x-icon">-->
+		<title>wx</title>
+		<!--<script src="js/jquery.js"></script>-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jweixin-1.1.0.js"></script>
+		<script src="js/sha.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-size: 0.04rem;
+			}
+			
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			body {
+				height: 3rem;
+			}
+			
+			.cosPhoto {
+				max-width: 0.667rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input class="takePhoto" type="button" value="拍照">
+		<div class="txt">
+			<img id="cosPhoto" width="100" height="100" />
+		</div>
+		<script>
+			window.onload = function() {
+				getticket();
+				//document.write(location.pathname); //返回当前URL的路径名
+				//document.write(location.href); //返回当前URL的路径名
+				var winW = document.body.clientWidth,
+					htmlObj = document.querySelector('html');
+				htmlObj.style.fontSize = ((winW < 750) ? winW : 750) + 'px';
+
+				var jsapi_ticket = "";
+				var nonceStr = createNonceStr();
+				var timestamp = createTimestamp();
+				var url = location.href.split('#')[0]; //完整url动态取
+				//var url ="http://weixin.hubeicfc.com/weixinServer/htmlShow/consumerFinace/html/weixincamer.html";
+				//alert(url);
+				localStorage.removeItem("ticket");
+				//alert(9999)
+				/*if(localStorage.getItem("ticket") == null) {//alert(22)
+					getticket();
+					
+					var wait = function(dtd) {
+						var dtd = $.Deferred(); // 在函数内部，新建一个Deferred对象
+						var tasks = function() {
+							if (localStorage.getItem("ticket") !=null) {
+								clearInterval(interval);
+								dtd.resolve();
+							} else {
+								dtd.fail();
+							}
+								// 改变Deferred对象的执行状态
+						};
+						interval = setInterval(tasks, 100);
+						return dtd.promise(); // 返回promise对象
+					};
+					
+					$.when(wait()).done(function() {
+						//alert("wait");
+						jsapi_ticket = localStorage.getItem("ticket");
+						
+						var t = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + nonceStr + '&timestamp=' + timestamp + '&url=' + url;
+						console.log("wt:" + t);
+						var s = new jsSHA(t, "TEXT"),
+							signature = s.getHash("SHA-1", "HEX");
+						console.log(signature);
+						
+						wxfun(timestamp,nonceStr,signature);
+					}).fail(function() {
+						alert("请求出错啦！");
+						clearInterval(interval);
+					});
+				} else {
+					jsapi_ticket = localStorage.getItem("ticket");
+					
+					var t = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + nonceStr + '&timestamp=' + timestamp + '&url=' + url;
+					console.log("t:" + t);
+					var s = new jsSHA(t, "TEXT"),
+						signature = s.getHash("SHA-1", "HEX");
+					console.log(signature);
+					
+					wxfun(timestamp,nonceStr,signature);
+				}*/
+
+				var t = 'jsapi_ticket=' + 'kgt8ON7yVITDhtdwci0qedz7zau3OjaR3HHKonzD30MIYOVdTguwEmLyV82eA4XeCaXynxsgtYNrffC0qrN5vg' + '&noncestr=' + 'lf8p7eh77uq8h0k' + '&timestamp=' + '1474526686' + '&url=' + url;
+				var s = new jsSHA(t, "TEXT"),
+					signature = s.getHash("SHA-1", "HEX");
+				timestamp = "1474526686";
+				nonceStr = "lf8p7eh77uq8h0k"; //var signature = "6fbfe030ee2f65e5e57ae09d55a926c5e6421628";
+				//timestamp ="1474521469" ;nonceStr = "aa51t1yahy3nmi";var signature = "5cd78bc2af070742549de8dab68194cdf667da7d";
+				//wxfun(timestamp, nonceStr, signature);
+			}
+
+			function wxfun(timestamp, nonceStr, signature) {
+				alert(signature)
+				wx.config({
+					debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					appId: 'wx24b183a54a65ced4', // 必填，公众号的唯一标识
+					timestamp: timestamp, // 必填，生成签名的时间戳
+					nonceStr: nonceStr, // 必填，生成签名的随机串
+					signature: signature, // 必填，签名，见附录1
+					jsApiList: ['chooseImage'], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+				wx.ready(function() {
+					//console.log("ok");
+
+				});
+
+				var takePhoto = document.querySelector('.takePhoto');
+				takePhoto.addEventListener('click', function() {
+					wx.chooseImage({
+						count: 1, //默认9
+						//sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+						sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
+						sourceType: ['camera'], //可以指定来源是相册还是相机，默认二者都有
+						//sourceType: ['album','camera'], //可以指定来源是相册还是相机，默认二者都有
+						success: function(res) {
+							//alert(JSON.stringify(res))
+							var localIds = res.localIds; //返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+							cosPhoto.src = localIds;
+							alert(cosPhoto.width);
+							try {
+								convertImgToBase64(localIds);
+							} catch(e) {
+								alert(e);
+							}
+
+						}
+					});
+				});
+				wx.error(function(res) {
+					//alert("config信息验证失败:"+JSON.stringify(res));
+					// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+				});
+			}
+			
+			//分享朋友
+        wx.onMenuShareAppMessage({
+            title: '转盘大抽奖', // 分享标题
+            desc: '转盘大抽奖，好奖等你拿', // 分享描述
+            link: 'http://open.weixin.qq.com/connect/oauth2/authorize?appid='你的APPID'&redirect_uri=www.baidu.com', // 分享链接
+            imgUrl: 'http://www.****.com/*****/static/img/line.png', // 分享图标
+            trigger: function (res) {
+                    alert(res.);
+                },
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+                alert("分享成功");
+                // 用户确认分享后执行的回调函数,跳转后台
+                //获取openid
+                var openid = $("#openid").val();
+                location.href = "/*****/shareOk?openid="+openid;
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                alert("分享失败");
+            }
+        });
+        //分享朋友圈
+        wx.onMenuShareTimeline({
+            title: '大抽奖', // 分享标题
+            link: 'www.baidu.com', // 分享链接
+            imgUrl: 'http://www.*****.com/******/static/img/line.png', // 分享图标
+            success: function () { 
+                alert("分享成功");
+                // 用户确认分享后执行的回调函数,跳转后台
+                //获取openid
+                var openid = $("#openid").val();
+                location.href = "/*******/shareOk?openid="+openid;  
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+                alert("分享失败");
+            }
+        });
+
+
+			function convertImgToBase64(url) { //alert(url);
+				var image = new Image();
+				image.src = url;
+
+				image.crossOrigin = '';
+				image.onload = function() {
+					var _self = this;
+					//alert(_self.width +"*"+ _self.height);
+					var width = _self.width;
+					var height = _self.height;
+
+					var canvas = document.createElement('CANVAS'),
+						ctx = canvas.getContext('2d');
+					canvas.height = height;
+					canvas.width = width;
+					ctx.drawImage(_self, 0, 0);
+					//alert(canvas.height);
+
+					var dataURL = canvas.toDataURL('image/jpeg', 0.7);
+					alert(dataURL);
+					//var dataURL = canvas.toDataURL('image/jpeg', 0.7);
+					//alert(dataURL);
+					//callback.call(this, dataURL);
+					canvas = null;
+				}; /**/
+			}
+
+			function getticket() {
+				var appid = "wx24b183a54a65ced4";
+				var sec = "baddffc1b9d573fc6f5c4a142b25cc74";
+				var tokenpath = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + sec;
+				tokenpath = encodeURI(tokenpath);
+				//(tokenpath)
+				var t = 20000;
+				//$.get(tokenpath, function (res) { console.log(res); }, 'jsonp');
+				
+				$.ajax({
+					type: "get",
+					url: tokenpath,
+					dataType : "jsonp",
+					async: false,
+					crossDomain:true,
+					timeout: t,
+					//jsonp: "callback",//服务端用于接收callback调用的function名的参数
+					//jsonp:"jsonpCallback",//callback的function名称
+					//jsonpCallback:"callback",//callback的function名称
+					success: function(data) {
+						alert(data);
+						//console.log("token:" + JSON.stringify(data));
+						//var token = "E_uykK8vHPuZ-wRlJ391aRIReusWHltDBs4yi60qLAHlM9_v6-jbLVd_eXllJXrZ3O_QdYXcmkL1MFDytC8bor3fL_9mCX1VbFHlAliZ_0TOcQhmVKw5qEoawtPT9KXPZAOiAFAIJX";
+//						var token = data.access_token;
+//						var ticketpath = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + token + "&type=jsapi";
+//						//alert(path);
+//						ticketpath = encodeURI(ticketpath);
+//						$.ajax({
+//							type: "get",
+//							url: ticketpath,
+//							//dataType : "jsonp",
+//							async: true,
+//							crossDomain:true,
+//							jsonp: "callback",//服务端用于接收callback调用的function名的参数
+//							//jsonpCallback:"?",//callback的function名称
+//							success: function(data) {
+//								//console.log(JSON.stringify(data));
+//								var ticket = data.ticket;
+//								localStorage.setItem("ticket", data.ticket);
+//							},
+//							error: function(xhr) {
+//								alert("ticketerr")
+//								localStorage.removeItem("ticket");
+//								//console.log("ticketErr:" + JSON.stringify(xhr));
+//							}
+//						});
+					},
+					error: function(xhr) {
+						alert("tokenErr:" + JSON.stringify(xhr))
+						localStorage.removeItem("ticket");
+						console.log("tokenErr:" + JSON.stringify(xhr));
+					},
+					callback:function(res){
+						console.log(res)
+					}
+				});
+				function callback(data) {
+					console.log(JSON.stringify(data));
+				}
+				//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx24b183a54a65ced4&secret=baddffc1b9d573fc6f5c4a142b25cc74&callback=success&_=1494991235630
+				//function 
+			}
+
+			function createNonceStr() {
+				return Math.random().toString(36).substr(2, 15);
+			};
+
+			function createTimestamp() {
+				return parseInt(new Date().getTime() / 1000) + '';
+			};
+		</script>
+	</body>
+
+</html>

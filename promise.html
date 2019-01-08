@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Promise</title>
+	</head>
+
+	<body>
+		<h2>Please wait 2 sec for a popup and a green background</h2>
+	</body>
+	<!--<script src="js/common/browser.js"></script>-->
+	<script src="js/common/babel-polyfill/dist/polyfill.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		//		let p1 = new Promise((resolve, reject) => {
+		//			resolve('成功了')
+		//		})
+		//
+		//		let p2 = new Promise((resolve, reject) => {
+		//			resolve('success')
+		//		})
+		//
+		//		let p3 = Promise.reject('失败')
+		//
+		//		Promise.all([p1, p2]).then((result) => {
+		//			console.log(result) //['成功了', 'success']
+		//		}).catch((error) => {
+		//			console.log(error)
+		//		})
+		//
+		//		Promise.all([p1, p3, p2]).then((result) => {
+		//			console.log("all:"+result)
+		//		}).catch((error) => {
+		//			console.log("err:"+error) // 失败了，打出 '失败'
+		//		})
+		//
+		//		let wake = (time) => {
+		//			return new Promise((resolve, reject) => {
+		//				setTimeout(() => {
+		//					resolve(`${time / 1000}秒后醒来`)
+		//				}, time)
+		//			})
+		//		}
+		//
+		//		let w1 = wake(3000)
+		//		let w2 = wake(2000)
+		//
+		//		Promise.all([w1, w2]).then((result) => {
+		//			console.log(result) // [ '3秒后醒来', '2秒后醒来' ]
+		//		}).catch((error) => {
+		//			console.log(error)
+		//		})
+		//
+		//		//哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态
+		//		let r1 = new Promise((resolve, reject) => {
+		//			setTimeout(() => {
+		//				resolve('success')
+		//			}, 1000)
+		//		})
+		//
+		//		let r2 = new Promise((resolve, reject) => {
+		//			setTimeout(() => {
+		//				reject('failed')
+		//			}, 500)
+		//		})
+		//
+		//		Promise.race([r1, r2]).then((result) => {
+		//			console.log(result)
+		//		}).catch((error) => {
+		//			console.log(error) // 打开的是 'failed'
+		//		})
+		//
+		//		var cp = new Promise((resolve, reject) => {
+		//			var count = 0;
+		//			var interval = null;
+		//			interval = setInterval(() => {
+		//				count++;
+		//				console.log(count);
+		//				if(count >= 10) {
+		//					console.log(count);
+		//					clearInterval(interval);
+		//					resolve(count);
+		//				}
+		//			}, 1000);
+		//
+		//		});
+		//
+		//		cp.then((result) => {
+		//			console.log("res:" + result)
+		//		}).catch((error) => {
+		//			console.log(error)
+		//		})
+				var c = null;
+				var t = setTimeout(function(){
+					c = 5;
+					console.log("setTimeout"+c);
+					clearTimeout(t);
+				},5000);
+		//		
+		//		var cpn = new Promise((resolve, reject) => {
+		//			var interval = null;
+		//			interval = setInterval(() => {
+		//				if(c == 5) {
+		//					clearInterval(interval);
+		//					console.log(c);
+		//					resolve(c);
+		//				}
+		//			}, 1000);
+		//		});
+		//
+		//		cpn.then((result) => {
+		//			console.log("cpn res:" + result)
+		//		}).catch((error) => {
+		//			console.log(error)
+		//		})
+
+		var ocpn = new Promise(function(resolve, reject) {
+			var interval = null;
+			interval = setInterval(function() {
+				if(c == 5) {
+					clearInterval(interval);
+					console.log(c);
+					resolve(c);
+				}
+			}, 1000);
+		});
+
+		ocpn.then(function(result) {
+			console.log("cpn res:" + result)
+		}).catch(function(error) {
+			console.log(error)
+		})
+
+		var deferred = $.Deferred();
+		setTimeout(function() {
+			deferred.resolveWith($('h2'),[{a:"123",b:"abc"}]);
+			//deferred.resolve("ok");
+			//deferred.resolve();
+			//or:
+			//deferred.reject($('h2'), ['Fail!']);
+			//deferred.reject("fail");
+		}, 2000);
+
+		deferred.done(function(res) {
+			this.css('background-color', 'green');
+      		alert('Done: ' + JSON.stringify(res));
+		}).fail(function(err) {
+			alert('Fail: ' + err);
+		})
+	</script>
+
+</html>

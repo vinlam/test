@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>Document</title>
+    <style type="text/css">
+        *{margin:0; padding:0;}
+        body{ max-width: 640px; margin: 0 auto; }
+        .left{ float: left; }
+        .right{ float: right; }
+        .public_bzhh_title{margin:15px 10px; height: 38px; line-height: 38px;  color: #fff; text-align: center; display: block;background:url(img/bg_title_center.png) repeat-x; background-size: 1px 38px; }
+        /*注意  background-size: 1px 38px; 当宽度写成auto时，安卓手机标题背景不显示background-size: auto 38px;*/
+        .public_bzhh_title span{ display: block; }
+        .public_bzhh_title span.left,
+        .public_bzhh_title span.right{ background:#ffc99f url(img/title_edge.png) no-repeat; width:21px; height: 38px; background-size: 100% 100%; }
+        .public_bzhh_title span.center{ overflow: hidden; -ms-text-overflow: ellipsis;text-overflow: ellipsis;white-space: nowrap;  }
+        /*水平翻转 这个兼容性比较好 安卓低版本都可以兼容*/
+       .public_bzhh_title span.right{
+            -moz-transform:scaleX(-1);
+            -webkit-transform:scaleX(-1);
+            -o-transform:scaleX(-1);
+            transform:scaleX(-1);
+            /*IE*/
+            filter:FlipH; }
+        
+        /*水平翻转 这个兼容性比较好 安卓低版本都可以兼容*/
+        /*.public_bzhh_title span.left{
+            -moz-transform:scaleX(1);
+            -webkit-transform:scaleX(1);
+            -o-transform:scaleX(1);
+            transform:scaleX(1);
+            
+            filter:FlipH; }*//*IE*/
+
+         .note{font-size: 23px; color: red; margin: 10px; line-height: 30px; }
+    </style>
+</head>
+<body>
+<div class="public_bzhh_title"><span class="left"></span><span class="right"></span><span class="center">你是否在困扰这些问题？</span></div>
+<p class="note">注意: </p>
+<p class="note">样式中background-size: 1px 38px; 当宽度写成auto时，安卓手机标题背景不显示background-size: auto 38px;</p>
+
+    
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>jQuery下拉收缩特效</title>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".btn-slide").click(function() {
+				$("#panel").slideToggle("slow");
+				$(this).toggleClass("active");
+				return false;
+			});
+		});
+	</script>
+	<style type="text/css">
+		body {
+			margin: 0 auto;
+			padding: 0;
+			width: 570px;
+			font: 75%/120% Arial, Helvetica, sans-serif;
+		}
+		
+		a:focus {
+			outline: none;
+		}
+		
+		#panel {
+			background: #69C7F7;
+			height: 200px;
+			display: none;
+		}
+		
+		.slide {
+			margin: 0;
+			padding: 0;
+			border-top: solid 4px #F27613;
+		}
+		
+		.btn-slide {
+			background: #F27613 url(http://files.jb51.net/file_images/article/201212/20121225165932118.gif) no-repeat right -50px;
+			;
+			text-align: center;
+			width: 144px;
+			height: 31px;
+			padding: 10px 10px 0 0;
+			margin: 0 auto;
+			display: block;
+			font: bold 120%/100% Arial, Helvetica, sans-serif;
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		.active {
+			background-position: right 12px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>演示不了 请刷新下</h1>
+	<div style="display: block;" id="panel">
+		<!-- you can put content here -->
+	</div>
+	<p class="slide">
+		<a href="javascript:;" class="btn-slide active">点击试试</a>
+	</p>
+</body>
+
+</html>

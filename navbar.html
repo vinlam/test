@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>a</title>
+
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+	<link rel="stylesheet" href="js/common/jquery.mobile-1.4.3.css">
+
+	<script src="js/common/jquery-1.9.1.min.js"></script>
+	<script src="js/common/jquery.mobile-1.4.3.js"></script>
+	<script type="text/javascript">
+		(function(){
+			$(document).on("pageinit","#mypage",function(){
+				testTabs();				
+			});
+			function testTabs() {
+				var list = new Array;
+				for (var i = 0; i < 3; i++) {
+					var obj = new Object;
+					obj.tabname = 'tab' + i;
+					obj.tabid = 'tab' + i;
+					obj.ispage = i;
+					list[list.length] = obj;
+				}
+				createTabs(list);
+			}
+	
+			function createTabs(tabs) {
+				var htmlstr = '';
+				for (var i = 0; i < tabs.length; i++) {
+					htmlstr = htmlstr + createTab(tabs[i].tabname, tabs[i].tabid, tabs[i].ispage);
+				}
+				//$('#divtabul').empty();
+				//$('#divtabul').append(htmlstr);
+				$("#divtabul").html(htmlstr).trigger('create');
+				//alert(htmlstr);
+				//$("#divul").append("<li title='abc'>hello</li>"); 
+				//$("#divul").append("<li title='xyz'>world</li>"); 
+	
+				//$("<li title='xyz'>hello</li>").appendTo($("#divul")); 
+				//$('div #divtab').navbar('refresh'); //注意这一行,danielinbiti
+			}
+	
+			function createTab(tabname, tabid, isPage) {
+				var lihtml = '<li><a onclick="clickTab(this,true)"  data-ajax="false" txt="' + tabname + '" id="' + tabid + '" isPage="' + isPage + '" class="self-class">' + tabname + '</a></li>';
+				return lihtml;
+			}
+		})();
+	</script>
+	<style>
+		.self-class{
+			color: red;
+		}
+	</style>
+</head>
+
+<body>
+	<div data-role="page" data-position="fixed" data-fullscreen="true" id="mypage">
+
+		<div data-role="header" data-theme="b" data-tap-toggle="false">
+			<span>navbar</span>
+		</div>
+		<div data-role="content">
+			<ul id='divul'>
+			</ul>
+		</div>
+	</div>
+	<div data-role="navbar" id='divtab'>
+		<ul id='divtabul'>
+		</ul>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Barcode Example</title>
+		<style>
+			.qrcodediv{ 
+			   width:200px;  
+			   height:200px;  
+			   position:absolute;  
+			   left:50%;  
+			   top:50%;  
+			   margin:-100px 0 0 -100px 
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+		<script type="text/javascript">
+			(function($){
+				$(document).ready(function(){
+					creatBarcode("adsf1234");
+					function creatBarcode(data) {
+						var str = data;
+						$("#bcid").empty();
+						$("#bcid").qrcode({
+							width: 200,
+							height: 200,
+							render: "canvas", //设置渲染方式 table canvas
+							text: str,
+							background: "#ffffff", //背景颜色 
+							foreground: "#000000" //前景颜色 
+						});
+					}
+					
+					$("#btn").off().on("click",function(){
+						var d = $("#text").val();
+						creatBarcode(d);
+					});
+					console.log(utf16to8("62211009876543210"));
+				});
+				
+				
+				function utf16to8(str) {
+					var out, i, len, c;
+					out = "";
+					len = str.length;
+					for (i = 0; i < len; i++) {
+						c = str.charCodeAt(i);
+						console.log(i+"-charcode:"+c);
+						if ((c >= 0x0001) && (c <= 0x007F)) {
+							out += str.charAt(i);
+						} else if (c > 0x07FF) {
+							out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+							out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+							out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+						} else {
+							out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+							out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+						}
+					}
+					return out;
+				};
+			})(jQuery)
+		</script>
+	</head>
+
+	<body>
+		<div id="bcid" class="qrcodediv"></div>
+		<input type='text' id='text' />
+		<br>
+		<input type='button' id='btn' value="生成" />
+	</body>
+
+</html>

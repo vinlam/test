@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Providing options</title>
+</head>
+<body>
+
+<h2>See green paragraphs below</h2>
+
+<p>This one is green</p>
+
+<span>This is not green</span>
+
+<p>And this one is green again</p>
+
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.fn.makeIt = function(options) {
+  
+    return this.css('background-color', options.color);
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('p').makeIt({color: 'green'});
+
+});
+</script>
+</body>
+</html>

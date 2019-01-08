@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+	</head>
+
+	<body>
+		<div>
+			<input type="button" id="eT1" />
+			<span id="sub"></span>
+			<ul>
+				<li onclick="window.location.href='http://localhost/arr.php?name=jack'" >1</li>
+				<li>2</li>
+			</ul>
+			<input type="button" value="click" onclick="window.location.href='http://localhost/arr.php?name=jack'" />
+		</div>
+		<script>
+			/*添加事件监听函数
+			obj 要添加监听的对象或元素 
+			eventName 事件名 
+			fun 监听函数的名称 
+			param 给监听函数传的参数， 这里就传了一个参数*/
+			function addEventHandler(obj, eventName, fun, param) {
+				var fn = fun;
+				if(param) {
+					fn = function(e) {
+						fun.call(this, param); //继承监听函数,并传入参数以初始化;
+					}
+				}
+				if(obj.attachEvent) {
+					obj.attachEvent('on' + eventName, fn);
+				} else if(obj.addEventListener) {
+					obj.addEventListener(eventName, fn, false);
+				} else {
+					obj["on" + eventName] = fn;
+				}
+			}
+
+			/*删除事件监听函数 
+			obj 要添加监听的对象或元素 
+			eventName 事件名 
+			fun 监听函数的名称 */
+			function removeEventHandler(obj, eventName, fun) {
+				if(obj.removeEventListener)
+					obj.removeEventListener(eventName, fun, false);
+				else if(obj.detachEvent)
+					obj.detachEvent("on" + eventName, fun);
+				else delete obj["on" + eventName];
+			}
+			test2()
+			//添加test02监听函数
+			function test2() {
+				var oview = document.getElementById('eT1');
+				var data = 100 ;
+				addEventHandler(oview, 'click', test02,data);
+			}
+
+			//删除test02监听函数
+			function test2D() {
+				var oview = document.getElementById('eT1');
+				removeEventHandler(oview, 'click', test02);
+			}
+
+			var test002 = 0;
+
+			function test02(data) {
+				console.log(data)
+				document.getElementById('sub').innerHTML = data;
+			}
+		</script>
+	</body>
+
+</html>

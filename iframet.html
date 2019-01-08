@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script>
+		function test() {
+			var obj1 = document.getElementById("myframe"); //获得对应iframe的HTMLIFrameElement对象，可以获取iframe相关属性  
+			alert(obj1.src);
+
+			/*情况一：iframe定义了name="myframe"的情况 IE和火狐兼容*/
+			var obj2 = window.frames["myframe"]; //获得对应iframe的window对象  
+			alert(obj2.company);
+			alert(obj2.document.myform.username.value);
+
+			alert(obj1.contentWindow == obj2); //true,可见document.getElementById("myframe").contentWindow与document.frames["myframe"]都是指向iframe对应的window对象  
+			alert(obj1.contentWindow.document.myform.username.value);
+
+			/*情况二：iframe没有定义name="myframe"的情况，情况如同文章最开始所描述  
+			  var obj2=window.frames["myframe"];//获得对应iframe的window对象  
+			  alert(obj2.company);//IE下正确，火狐下错误  
+			  alert(obj2.contentWindow.company);//IE下错误，火狐下正确  
+			  alert(obj2.contentWindow.document.myform.username.value);//IE下错误，火狐下正确  
+			    
+			  alert(obj1==obj2);//true,可见document.getElementById("myframe")与document.frames["myframe"]都是指向iframe对应的HTMLIFrameElement对象  
+			*/
+		}
+	</script>
+
+	<body onload="test()">
+		<iframe id="myframe" name="myframe" src="child.html" frameborder="3" style="width:300;height:200;border-width:1;border-color:red;border-style:solid"></iframe>
+	</body>
+
+</html>

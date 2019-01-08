@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>夜晚模式</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.3.min.css" />
+		<script src="js/common/jquery-1.9.1.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#night_bgcolor").on("change", function() {
+					//alert($("#night_bgcolor").val())
+					var s = $("#night_bgcolor").val() == 'on' ? $('#night_css').html() : "";
+					$('head').find('style').html(s);
+				});
+			});
+		</script>
+		<script src="js/common/jquery.mobile-1.4.3.js"></script>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<select name="night" data-role="slider" id="night_bgcolor">
+			<option value="off">白天</option>
+			<option value="on">黑夜</option>
+		</select>
+
+		<div id="night_css" style="display:none;">
+			body,div,table { background-color: #000000; color: #f0efd0; } a:link { color: #71baa5; } a:hover {color: #FFE900 !important; background-color: #363037 !important;}
+		</div>
+
+	</body>
+
+</html>

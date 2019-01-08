@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Deferred - resolve with</title>
+</head>
+<body>
+
+<h2>Please wait 5 sec for a popup and a green background</h2>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.myStaticPlugin = function() {
+    var deferred = $.Deferred();
+    window.setTimeout(
+        function () {
+            deferred.resolveWith($('h2'), ['Ready!']);
+            //or:
+            //deferred.reject($('h2'), ['Fail!']);
+        }, 5000
+    );
+    return deferred.promise();
+  };
+  
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $.myStaticPlugin()
+  .done(function(msg) {
+      this.css('background-color', 'green');
+      alert('Done ' + msg);
+  })
+  .fail(function(msg) {
+        alert('Fail ' + msg);
+  });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			function aa() {
+				var tempcar = new Object;
+				tempcar.bb = function() {
+					//alert("我是bb")
+					var s = "FUz5cdvcOQ6JdfqZk3H8gw==";
+					s = s.replace(/=/g,"\\u003d");
+					alert(s);
+					//var where = escape(encodeURI("FUz5cdvcOQ6JdfqZk3H8gw=="));
+					//var where = encodeURI("0OAmkr4/UJY32beSUgYHgg\u003d\u003d");
+					//alert(where);
+				};
+				return tempcar;
+			}
+			var a = aa();
+			a.bb(); //或者直接aa().bb();
+			
+			function f(){
+				alert("first a");
+			}
+			
+			function b(){
+				f();
+			}
+			
+			function f(){
+				alert("second a");
+			}
+			
+			b();
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

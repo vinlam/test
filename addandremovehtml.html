@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用JavaScript动态添加删除html元素</title>
+		<script type="text/javascript">
+			<!-- 
+			function $(nodeId) {
+				return document.getElementById(nodeId);
+			}
+
+			function $Name(tagName) {
+				return document.getElementsByTagName(tagName);
+			}
+
+			function replaceMsg() {
+				var newNode = document.createElement("P"); //创建一个P标签 
+				newNode.innerHTML = "<font color='red'>替换后的文字</font>";
+				var oldNode = $Name("P")[0]; //获取body里面第一个p元素 
+				oldNode.parentNode.replaceChild(newNode, oldNode); //直接替换了标签 
+			}
+
+			function removeMsg() {
+				var node = $("p2"); //p标签 
+				var nodeBtn = $("remove"); //按钮 
+				//node.parentNode.removeChild(node); //下面效果相同 
+				document.body.removeChild(node); //在body中删除id为P2的元素 
+				//nodeBtn.parentNode.removeChild(nodeBtn);//删除该按钮 
+				document.body.removeChild(nodeBtn);
+				//document.body.removeNode();执行这条语句将清空body里面的任何元素 
+			}
+
+			function addbefore() {
+				var newNode = document.createElement("p"); //创建P标签 
+				//var newText = document.createTextNode("前面添加的元素"); 
+				//newNode.appendChild(newText);//与下面效果一样 
+				newNode.innerHTML = "<font color='red'>前面添加的元素</font>"; //书写P标签里面的内容 
+				var oldNode = $("p3"); //目标标签 
+				//document.body.insertBefore(newNode,oldNode); 
+				oldNode.parentNode.insertBefore(newNode, oldNode); //在目标标签前面添加元素 
+			}
+
+			function addlast() {
+				var newNode = document.createElement("p"); //创建P标签 
+				//var newText = document.createTextNode("后面添加的元素"); 
+				//newNode.appendChild(newText);//与下面效果一样 
+				newNode.innerHTML = "<font color='red'>后面添加的元素</font>";
+				var oldNode = $("p3");
+				oldNode.appendChild(newNode);
+				//document.body.appendChild(newNode);//如果使用该方法,则在body的最后添加元素 
+			}
+
+			window.onload = function addArrayMsg() {
+				var arrayMsg = ['one', 'two', 'three', 'four', 'five']; //创建数组 
+				var fragment = document.createDocumentFragment(); //创建文档片段 
+				var newNode;
+				for(var i = 0; i < arrayMsg.length; i++) {
+					newNode = document.createElement("P"); //创建P标签 
+					var nodeText = document.createTextNode(arrayMsg[i]); //创建文本标签,value为数组里面的值 
+					newNode.appendChild(nodeText); // 
+					fragment.appendChild(newNode); //把P标签追加到fragment里面 
+				}
+				document.body.appendChild(fragment); //把fragment追加到body里面 
+			}
+
+			function addRow() {
+				var tab = $("myTable");
+				//tab.createCaption().innerHTML="<font color='red'>我的表格</font>"; 
+				var oldTr = $("handleTr");
+				var newTr = tab.insertRow(); //创建一行 
+				var newTd1 = newTr.insertCell(); //创建一个单元格 
+				var newTd2 = newTr.insertCell(); //创建一个单元格 
+				newTd1.innerHTML = "<input type='checkbox' />";
+				newTd2.innerHTML = "<div class='division clearfix' id='goods_value'><div class='span-3'> <span title='09春季新款简约大方高雅修身针织连衣裙983配腰带'> <a href='?product-55.html'>09春季新款简约大方高雅修身针织连衣裙983配腰带 </a> </span> </div> <a class='floatRight lnk' href='#' onclick=''>删除</a> </div>";
+			}
+
+			function removeRow() {
+				var tab = $("myTable");
+				console.log(tab.rows.length)
+				// if(tab.rows.length>0){ 
+				// tab.deleteRow(); 
+				// if(tab.rows.length==1) 
+				// tab.deleteCaption(); 
+				// } 
+				var cbbox;
+				for(var i = 0; i < tab.rows.length; i++) {
+					cbbox = tab.rows[i].childNodes[0].childNodes[0]; //获取input元素 
+					console.log(cbbox.checked)
+					if(cbbox.checked) {
+						tab.deleteRow(i--);
+					}
+				}
+			}
+
+			//全选 
+
+			function selAll(value) {
+				var items = document.getElementsByTagName("input"); //获取页面上所有的input元素 
+				for(var i = 0; i < items.length; i++) {
+					if(items[i].type == "checkbox") { //判断类型是否为checkbox 
+						items[i].checked = value.checked;
+					}
+				}
+			}
+
+			function getInputValue() {
+				var inputArray = new Array(); //创建一个数组 
+				var tab = $("myTable");
+				var tbInput;
+				for(var i = 0; i < tab.rows.length; i++) {
+					tbInput = tab.rows[i].childNodes[1].childNodes[0].value;
+					if(tbInput != "" && tbInput != null)
+						inputArray.push(tbInput);
+				}
+				inputArray = inputArray.join("*^&"); //默认以","号连接 
+				$("showValue").value = inputArray;
+			}
+
+			var x = '10+20';
+			("alert(x);")
+			// -->
+		</script>
+	</head>
+
+	<body>
+		<p id="p1">Hello World!
+			<input type="button" value="替换内容" onclick="replaceMsg();" />
+			<p id="p2">我可以被删除!
+				<input type="button" id="remove" value="删除它" onclick="removeMsg();" />
+				<p id="p3">在我上下添加一个元素吧！
+					<input type="button" id="addbefore" value="前面添加" onclick="addbefore();" />
+					<input type="button" id="addlast" value="后面添加" onclick="addlast();" />
+					<div style="border:1px solid blue;height:300px">
+						<table id="myTable" cellpadding="0" cellspacing="0" border="1px solid blue" style="padding:4px;" style="padding:4px;">
+						</table>
+						<input type="checkbox" onclick="selAll(this);" />
+						<input type="button" value="添加一行" id="addRow" onclick="addRow();" />
+						<input type="button" value="删除一行" id="removeRow" onclick="removeRow();" />
+						<textarea rows="5" cols="25" id="showValue" />
+					</div>
+				</p>
+			</p>
+		</p>
+	</body>
+</html>

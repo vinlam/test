@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+				.test_triangle_border {
+				width: 200px;
+				margin: 0 auto;
+				position: relative;
+			}
+			
+			.test_triangle_border .popup {
+				width: 100px;
+				background: #fff;
+				padding: 10px 20px;
+				color: #333;
+				border-radius: 2px;
+				position: absolute;
+				top: 30px;
+				left: 30px;
+				border: 1px solid #333;
+			}
+			
+			.test_triangle_border .popup span {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 0 10px 10px;
+				border-style: solid;
+				border-color: transparent transparent #333;
+				position: absolute;
+				top: -10px;
+				left: 50%;
+				/* 三角形居中显示 */
+				margin-left: -10px;
+				/* 三角形居中显示 */
+			}
+			
+			.test_triangle_border .popup em {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 0 10px 10px;
+				border-style: solid;
+				border-color: transparent transparent #fff;
+				position: absolute;
+				top: 1px;
+				left: -10px;
+			}
+			
+			/*东北*/
+			.triangle_border_ne {
+				width: 0;
+				height: 0;
+				border-width: 0 30px 30px 0px;
+				border-style: solid;
+				border-color: transparent #ED1C24;
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			/*西北*/
+			.triangle_border_nw {
+				width: 0;
+				height: 0;
+				border-width: 30px 30px 0 0;
+				border-style: solid;
+				border-color: #6c6 transparent transparent transparent;
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			/*东南*/
+			.triangle_border_se {
+				width: 0;
+				height: 0;
+				border-width: 0 0 30px 30px;/*上,右,下,左*/
+				border-style: solid;
+				border-color: transparent  transparent #6c6;
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			/*西南*/
+			.triangle_border_sw {
+				width: 0;
+				height: 0;
+				border-width: 0 30px 30px 0;
+				border-style: solid;
+				border-color: transparent  transparent  #6c6;
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			
+			
+			/*向上*/
+			.triangle_border_up {
+				width: 0;
+				height: 0;
+				border-width: 0 30px 30px;
+				border-style: solid;
+				border-color: transparent transparent #333;
+				/*透明 透明  灰*/
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			.triangle_border_up span {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 0 28px 28px;
+				border-style: solid;
+				border-color: transparent transparent #fc0;
+				/*透明 透明  黄*/
+				position: absolute;
+				top: 1px;
+				left: -28px;
+			}
+			
+			/*向下*/
+			.triangle_border_down {
+				width: 0;
+				height: 0;
+				border-width: 30px 30px 0;
+				border-style: solid;
+				border-color: #333 transparent transparent;
+				/*灰 透明 透明 */
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			.triangle_border_down span {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 28px 28px 0;
+				border-style: solid;
+				border-color: #fc0 transparent transparent;
+				/*黄 透明 透明 */
+				position: absolute;
+				top: -29px;
+				left: -28px;
+			}
+			
+			/*向左*/
+			.triangle_border_left {
+				width: 0;
+				height: 0;
+				border-width: 30px 30px 30px 0;
+				border-style: solid;
+				border-color: transparent #333 transparent transparent;
+				/*透明 灰 透明 透明 */
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			.triangle_border_left span {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 28px 28px 28px 0;
+				border-style: solid;
+				border-color: transparent #fc0 transparent transparent;
+				/*透明 黄 透明 透明 */
+				position: absolute;
+				top: -28px;
+				left: 1px;
+			}
+			
+			/*向右*/
+			.triangle_border_right {
+				width: 0;
+				height: 0;
+				border-width: 30px 0 30px 30px;
+				border-style: solid;
+				border-color: transparent transparent transparent #333;
+				/*透明 透明 透明 灰*/
+				margin: 40px auto;
+				position: relative;
+			}
+			
+			.triangle_border_right span {
+				display: block;
+				width: 0;
+				height: 0;
+				border-width: 28px 0 28px 28px;
+				border-style: solid;
+				border-color: transparent transparent transparent #fc0;
+				/*透明 透明 透明 黄*/
+				position: absolute;
+				top: -28px;
+				left: -29px;
+		</style>
+	</head>
+
+	<body>
+		<div class="test_triangle_border">
+			<div class="popup">
+				<span><em></em></span>纯CSS写带边框的三角形
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<div class="triangle_border_ne"></div>
+	</body>
+
+</html>

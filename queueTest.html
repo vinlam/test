@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试ajax队列</title>
+	</head>
+
+	<body>
+		<div id="dtitle">点此触发</div>
+		<button id="btn">扩展ajax queue， 通过 abort取消</button>
+		<div>
+			<ul></ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/ajaxExtend.js"></script>
+	<script>
+		$(function() {
+			$("body").queue([]);
+			$("#dtitle").click(function() {
+				$("body").queue(function() {
+					$.get("http://localhost/test.php?t=" + new Date().getMilliseconds(), function(data) {
+						alert(data);
+						//这一句让queue往下执行；
+						$("body").dequeue();
+						if($("body").queue().length == 0)
+							alert("done");
+					});
+				});
+			});
+			
+			$("#btn").click(function(){
+				$.ajax({
+				    url: "http://localhost/test.php?t=" + new Date().getMilliseconds(),
+				    async:"false",
+				    success: function(html){
+				    	var s = "<li>";
+				    	s = s + html + "</li>"
+				        $("ul").append(s);
+				    },
+				    //用abort而不用queue，是因为需求是需要最后一个ajax request，而之前的ajax request
+				    //其实并没有用，那何必要等它们执行完呢？中途就可以把它中止掉
+				    mode: "abort"
+				});
+				$.ajax({
+				    url: "http://localhost/hello.php?R=" + Math.random(),
+				    success: function(html){
+				    	var s = "<li>";
+				    	s = s + html + "</li>"
+				        $("ul").append(s);
+				    },
+				    //用abort而不用queue，是因为需求是需要最后一个ajax request，而之前的ajax request
+				    //其实并没有用，那何必要等它们执行完呢？中途就可以把它中止掉
+				    mode: "abort"
+				});
+			});
+		});
+	</script>
+
+</html>

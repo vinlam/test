@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--<meta http-equiv="Access-Control-Allow-Origin" content="http://127.0.0.1:8020">-->
+		<title>ajax</title>
+		<script src="js/zepto.min.js"></script>
+		<script>
+			$(function(){
+				var xhr = null;
+				$(document).ready(function(){
+					$("#sendbtn").off().on("click",sendFun);
+					//$("#sendbtn").off().on("click",testsend);
+					$("#sendbtnmsg").off().on("click",testsendmsg);
+					$("#abortbtn").off().on("click",testsend2);
+				});
+				
+				function sendFun(){
+					var param = {};
+						param.logonid = "张三";
+						param.password = "aaaaaa";
+					xhr = $.ajax({
+						type:"post",
+						data:param,
+						url:"http://192.168.1.110:8080/mobileMS/MBUserController/signIn.do",
+						dataType: 'json',
+						async:false,
+						success:function(res){
+							alert(JSON.stringify(res));
+						},error:function(xhrs){
+							alert(JSON.stringify(xhrs));
+						}
+					});
+/*					var param = {};
+				param.did = "adfadfwerfsdfadfadfa" + new Date().getTime();
+				did = param.did;
+					xhr = $.ajax({
+						type:"post",
+						data:param,
+						url:"http://104.76.8.50:8080/marketMS/password/getRandomNoAndRsakey.do",
+						dataType: 'json',
+						async:false,
+						success:function(res){
+							alert(JSON.stringify(res));
+						},error:function(xhrs){
+							alert(JSON.stringify(xhrs));
+						}
+					});*/
+				}
+				
+				function testsend(){
+					var param = {};
+				param.channel = "1204";
+				param.oprationType = "weixinInterface";
+				param.oprations = "014";
+				param.markId = "gh_008f39fa0cf8";
+				param.reqUrl = "http://104.0.44.44:9002/weixinInterface";
+				param.data = '{"action_name":"QR_LIMIT_SCENE","action_info":{"scene":{"scene_id":1002}}}';
+					xhr = $.ajax({
+						type:"post",
+						data:param,
+						url:"http://104.76.8.50:8080/commonPlatform/efficentbank/common.do",
+						dataType: 'json',
+						//async:false,
+						success:function(res){
+							alert(JSON.stringify(res));
+						},error:function(xhrs){
+							alert(JSON.stringify(xhrs));
+						}
+					});
+				}
+				function testsendmsg(){
+					var num = Math.random()*1000000;
+					num = num.toFixed(0);
+					console.log(num);
+					var param = {};
+				param.channel = "1204";
+				param.mobile = "13888888880";
+				param.smsid = "D00024";
+				param.otppassword = num;
+				param.maintransactionname = "预约取号";
+					xhr = $.ajax({
+						type:"post",
+						data:param,
+						url:"http://104.0.44.58:9083/commonPlatform/sendmessage/send.do",
+						dataType: 'json',
+						//async:false,
+						success:function(res){
+							alert(JSON.stringify(res));
+						},error:function(xhrs){
+							alert(JSON.stringify(xhrs));
+						}
+					});
+				}
+				
+				function testsend2(){
+					var param = {};
+				param.channel = "1204";
+				param.oprationType = "weixinInterface";
+				param.oprations = "020";
+				param.markId = "gh_008f39fa0cf8";
+				param.reqUrl = "http://104.0.44.44:9002/weixinInterface";
+				param.data = "{\"data\":{\"remark\":{\"color\":\"#000000\",\"value\":\"请您准时前行网点以免过号\"},\"keyword1\":{\"color\":\"#000000\",\"value\":\"青湾支行\"},\"keyword2\":{\"color\":\"#000000\",\"value\":\"个人预约业务\"},\"first\":{\"color\":\"#000000\",\"value\":\"恭喜您预约成功\"},\"keyword3\":{\"color\":\"#000000\",\"value\":\"2017-01-18\"},\"keyword4\":{\"color\":\"#000000\",\"value\":\"09:30-10:30\"}},\"template_id\":\"THGtlkcILF_4iJcpIDBlLnXY3YQj3-fGv4IfXDQy5bo\",\"touser\":\"o5lzsvjIAfYGXApJBOpO1IzcY4bM\",\"topcolor\":\"#000000\",\"url\":\"http://weixin.qq.com/download\"}";
+					xhr = $.ajax({
+						type:"post",
+						data:param,
+						url:"http://104.76.8.50:8080/commonPlatform/efficentbank/common.do",
+						dataType: 'json',
+						//async:false,
+						success:function(res){
+							alert(JSON.stringify(res));
+						},error:function(xhrs){
+							alert(JSON.stringify(xhrs));
+						}
+					});
+				}
+				
+				function abortFun(){
+					if(xhr){
+						console.log("readyState:"+xhr.readyState)
+						if ( xhr.readyState != 4 ) {
+							xhr.abort();
+						}
+					}
+				}
+				getjson()
+				function getjson(){
+					$.getJSON("http://apid.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?", function(data){
+					  $.each(data.items, function(i,item){
+					    $("<img/>").attr("src", item.media.m).appendTo("#images");
+					    if ( i == 3 ) return false;
+					  });
+					});
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<input type="button" id="sendbtn" value="send"/>
+		<input type="button" id="sendbtnmsg" value="sendmsg"/>
+		<input type="button" id="abortbtn" value="abort"/>
+	</body>
+</html>

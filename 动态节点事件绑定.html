@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<input id="txt1" type="text" />
+		<input id="btn1" type="button" value="创建li" />
+		<ul id="ul1">
+		</ul>
+
+		<script>
+			window.onload = function() {
+				var oul = document.getElementById("ul1");
+				var obtn = document.getElementById("btn1");
+				var otxt = document.getElementById("txt1");
+
+				/************************添加节点**********************************/
+				obtn.onclick = function() {
+					var oli = document.createElement('li');
+					oli.innerHTML = otxt.value + '　&nbsp;&nbsp;<a class="ac" href="javascript:;">删除</a>';
+					ali = oul.getElementsByTagName("li");
+
+					if(ali.length > 0) {
+						oul.insertBefore(oli, ali[0]);
+					} else {
+						oul.appendChild(oli);
+					}
+
+				}
+
+				　　 /************************绑定事件**********************************/
+				function fnHandle(e) {
+					e = e || window.event;　 //IE window.event
+					var t = e.target || e.srcElement; //目标对象
+					var classname = t.className;
+					if(classname == 'ac') {
+						oul.removeChild(t.parentNode);
+					}
+				}
+
+				//事件绑定
+				addEventHandler(oul, 'click', fnHandle);
+				//解除绑定
+				//removeEventHandler(oul, 'click', fnHandle);
+
+			}
+
+			/*
+			 *  oTarget：监听对象 
+			 *  sEventType：监听事件类型，如click,mouseover 
+			 *  fnHandler：监听函数 
+			 */
+			function addEventHandler(oTarget, sEventType, fnHandler) {
+				if(oTarget.addEventListener) { //监听IE9，谷歌和火狐  
+					oTarget.addEventListener(sEventType, fnHandler, false);
+				} else if(oTarget.attachEvent) { //IE  
+					oTarget.attachEvent("on" + sEventType, fnHandler);
+				} else {
+					oTarget["on" + sEventType] = fnHandler;
+				}
+			}
+
+			/* 
+			 * 采用事件监听给对象绑定方法后，可以解除相应的绑定 
+			 *  oTarget：监听对象 
+			 *  sEventType：监听事件类型，如click,mouseover 
+			 *  fnHandler：监听函数 
+			 */
+			function removeEventHandler(oTarget, sEventType, fnHandler) {
+				if(oTarget.removeEventListener) {
+					//监听IE9，谷歌和火狐  
+					oTarget.removeEventListener(sEventType, fnHandler, false);
+				} else if(oTarget.detachEvent) {
+					oTarget.detachEvent("on" + sEventType, fnHandler);
+				} else {
+					delete oTarget["on" + sEventType];
+				}
+			}
+		</script>
+	</body>
+
+</html>

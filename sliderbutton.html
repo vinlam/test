@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>翻转切换开关 </title>
+
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+		<link rel="stylesheet" href="js/common/jquery.mobile-1.4.3.css">
+
+		<script src="js/common/jquery-1.9.1.min.js"></script>
+
+		<script src="js/common/jquery.mobile-1.4.3.js"></script>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+		<style type="text/css">
+			#pTip {
+				font-weight: bold;
+				clear: both;
+				text-align: center
+			}
+		</style>
+		<script type="text/javascript">
+			 //显示翻转切换开关当前的值
+			function ChangeEvent() {
+				$("#pTip").html($("#slider").val());
+			}
+		</script>
+	</HEAD>
+
+	<BODY>
+		<div data-role="page">
+			<div data-role="header">
+				<h1>头部栏</h1></div>
+			<div data-role="content">
+				<select id="slider" data-role="slider" onchange="ChangeEvent();">
+					<option value="false">开</option>
+					<option value="true">关</option>
+				</select>
+				<p id="pTip"></p>
+			</div>
+			<div data-role="footer">
+				<h4>@2013 3I Studio</h4></div>
+		</div>
+
+</html>

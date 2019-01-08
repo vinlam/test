@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+<head >
+	<meta charset="utf-8">
+	<title>Deferred</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getData3(){       
+            var defer = $.Deferred();
+            $.ajax({
+                url: 'message.json',
+                async : false, 
+                cache: false,
+                success: function (data) {
+                defer.resolve(data)
+            }
+            });        
+            return defer.promise();
+        }
+ 
+ 
+        $(document).ready(function () {
+            $('.loadingicon').hide();
+            $('#statm').click(function () {
+            $('.loadingicon').show();
+            $.when(getData3()).done(function(data){
+                $('.loadingicon').hide();
+                for(var i in data){
+                	console.log(data[i]);
+                }
+                console.log(JSON.stringify(data));
+                //alert(data);
+            });
+            });
+ 
+ 
+            var iii = 0;
+            setInterval(function () {
+                iii += 1;
+                $("#sp").text(iii);
+ 
+            }, 1000);
+ 
+        });
+ 
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <input  type="button" value="button"  id="statm" />
+        <div class=".loadingicon">正在获取</div>
+        <span id="sp"></span>
+    </form>
+</body>
+</html>

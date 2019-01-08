@@ -1,0 +1,18 @@
+<div data-role="dialog" data-rel="dialog" id="dia"  data-transition="pop">
+	<script>
+		$(document).off("pageinit").on("pageinit","#dia",function(){
+				alert(0);
+			});
+	</script>
+	<div data-role="header">
+		<h1>提示</h1>
+	</div>
+	<div data-role="content">
+		<p>真的要关闭弹出的对话框吗？</p>
+		<p><a href="#" data-role="button" id="confirm" data-theme="a">确定</a></p>
+		<p><a href="#" data-role="button" data-rel="back" data-theme="a">取消</a></p>
+		</div>
+	<div data-role="footer">
+		<h4>2012 rttop.cn studio</h4>
+	</div>
+</div>

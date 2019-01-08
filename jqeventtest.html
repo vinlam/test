@@ -1,0 +1,57 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+	</head>
+
+	<body>
+		<button id="idButtonTrigger" onmouseover="TriggerEvent()">Hover to Trigger Event</button>
+		<button id="idButtonDispatch" onmouseover="DispatchEvent()">Hover to Dispatch Event</button>
+		<p>ClickListener:
+			<a id="idClickListener"></a>
+		</p>
+		<p>ClickBind:
+			<a id="idClickBind"></a>
+		</p>
+		<p>CustomListener:
+			<a id="idCustomListener"></a>
+		</p>
+		<p>CustomBind:
+			<a id="idCustomBind"></a>
+		</p>
+
+		<script type="text/javascript">
+			document.addEventListener('click', function(event) {
+				document.getElementById('idClickListener').innerHTML = "Fired!";
+				$('#idClickListener').fadeIn('slow').fadeOut('slow');
+			});
+			$(document).bind('click', function(event) {
+				document.getElementById('idClickBind').innerHTML = "Fired!";
+				$('#idClickBind').fadeIn('slow').fadeOut('slow');
+			});
+			document.addEventListener('custom', function(event) {
+				document.getElementById('idCustomListener').innerHTML = "Fired!";
+				$('#idCustomListener').fadeIn('slow').fadeOut('slow');
+			});
+			$(document).bind('custom', function(event) {
+				document.getElementById('idCustomBind').innerHTML = "Fired!";
+				$('#idCustomBind').fadeIn('slow').fadeOut('slow');
+			});
+
+			function TriggerEvent() {
+				$('#idButtonTrigger').trigger('click');
+				$('#idButtonTrigger').trigger('custom'); // CANNOT catch with addEventListener
+			}
+
+			function DispatchEvent() {
+				var clickEvent = document.createEvent("MouseEvents");
+				clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				document.getElementById('idButtonDispatch').dispatchEvent(clickEvent);
+				var customEvent = document.createEvent('Event');
+				customEvent.initEvent('custom', true, true);
+				document.getElementById('idButtonDispatch').dispatchEvent(customEvent);
+			}
+		</script>
+	</body>
+
+</html>

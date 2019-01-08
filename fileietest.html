@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JS获取图片大小和预览【兼容IE和其它浏览器】</title>
+	</head>
+	<script type="application/javascript">
+		function previewImage(oImage, preViewId) {
+			if(!oImage.value.match(/.jpg|.jpeg|.gif|.png|.bmp/i)) {
+				//alert('图片格式无效！');
+				return;
+			}
+			var imgPath = "";
+			if(document.all) {
+				//低版本IE浏览器
+				oImage.select();
+				imgPath = document.selection.createRange().text;
+				//使用滤镜效果
+				var tempValue = "progid:DXImageTransform.Microsoft.AlphaImageLoader("
+				tempValue += "enabled='true',sizingMethod='scale',src=\"" + imgPath + "\")";
+				document.getElementById(preViewId).style.filter = tempValue;
+			} else {
+				//非IE浏览器，如火狐google等浏览器
+				imgPath = window.URL.createObjectURL(oImage.files[0]); //FF7.0以上
+				document.getElementById(preViewId).src = imgPath; //显示预览图
+			}
+		};
+
+		function getFileSize(objFile) {
+			var fileSize = objFile.fileSize || 0;
+			if(fileSize == 0) {
+				fileSize = objFile.files[0].size;
+			}
+			return fileSize;
+		}
+
+		function imageChange() {
+			var oImg = document.getElementById("imageFile01");
+			previewImage(oImg, "preview");
+			var fileSize = getFileSize(oImg);
+			fileSize = Math.ceil(fileSize / 1024) + "KB";
+			var filePath = oImg.value;
+			var agent = window.navigator.userAgent;
+			var tempValue = "<br>File size: " + fileSize;
+			tempValue += "<br>File path: " + filePath;
+			tempValue += "<br>agent=" + agent;
+			document.getElementById("imageInfo").innerHTML = tempValue;
+		};
+	</script>
+
+	<body>
+		<h3>JS获取图片大小和预览【兼容IE和其它浏览器】</h3>
+		<img id="preview" style="width: 100px; height: 60px; border: 0px;" />
+		<br>
+		<input name="imageFile01" id="imageFile01" type="file" onchange="javascript:imageChange();" />
+		<br>
+		<div id="imageInfo"></div>
+	</body>
+
+</html>

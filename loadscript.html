@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>load script</title>
+	</head>
+
+	<body>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+		function loadScript(url, callback) {　　
+			var script = document.createElement('script');　　　　
+			script.type = 'text/javascript';　　　　
+			script.async = 'async';　　　　
+			script.src = url;　　　　
+			document.body.appendChild(script);　　　　
+			if(script.readyState) { //IE
+				 // ie6, ie7不支持onload的情况　　　　　　
+				script.onreadystatechange = function() {　　　　　　　　
+					if(script.readyState == 'complete' || script.readyState == 'loaded') {　　　　　　　　　　
+						script.onreadystatechange = null;　　　　　　　　　　
+						callback();　　　　　　　　
+					}　　　　　　
+				}　　　　
+			} else { //非IE
+				script.onload = function() {
+					callback();
+				}　　　　
+			}
+		}
+		
+//		loadScript('http://localhost/jquery.min.js',function(){
+//			console.log("succ");
+//		});
+		
+		
+		//$.holdReady()函数表示 延迟加载
+		//Jquery：使用 $.holdReady(true);  $.getScript();   $.holdReady(false)   3个函数实现
+		$.holdReady(true);    //hold住，等待jquery.min.js加载，后续代码不能执行
+		$.getScript('http://localhost/jquery.min.js',function(){
+			console.log("success");
+　　			$.holdReady(false);     //释放，jquery.min.js加载完成，继续执行后续代码
+		});
+	</script>
+
+</html>

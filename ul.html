@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>tab选项卡</title>
+    <style type="text/css">
+        ul,li{list-style: none;margin: 0px; padding: 0px;}
+        li{float: left;width: 80px; height: 30px; background-color: #ccc; border: 2px solid #fff;text-align:center; line-height:30px;}
+        #content{clear:left; width:336px; height: 180px; background-color: #999; color:white;}
+        #content div{display: none}
+        #content .consh{display: block;}
+        #title .titsh{background-color: #999;border:2px solid #999; color:#fff}
+    </style>
+    <script src="js/common/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            /*$("li").each(function(index){
+                $(this).mouseover(function(){
+                    $("#title .titsh").removeClass("titsh");
+                    $("#content .consh").removeClass("consh");
+                    $(this).addClass("titsh");
+                    $("#content>div:eq("+index+")").addClass("consh");
+                })
+            })  */   
+            var ul = document.getElementsByTagName("ul")[0];
+            ul.onclick = function(e){
+            	e = e || window.event;
+            	alert(e.target.innerHTML);
+            }
+            
+            var li = document.getElementsByTagName("li");
+            var len = li.length;
+            for(var i =0;i< len;i++){
+            	li[i].onclick = function(){
+            		console.log(this.innerHTML);
+            	}
+            }
+            alert(GetQueryString("openId"));
+            console.log($("#testul li").length);
+            
+            
+			function GetQueryString(name)
+			{
+			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			     var r = window.location.search.substr(1).match(reg);
+			     if(r!=null)return  unescape(r[2]); return null;
+			}
+        })
+    </script>
+</head>
+<body>
+    <!--<div id="tab">
+        <div id="title">
+            <ul>
+                <li class="titsh">选项一</li>
+                <li>选项二</li>
+                <li>选项三</li>
+                <li>选项四</li>
+            </ul>
+        </div>
+        <div id="content">
+            <div class="consh">内容一</div>
+            <div>内容二</div>
+            <div>内容三</div>
+            <div>内容四</div>
+    </div>-->
+    </br>
+    <div id="divul">
+        <div id="title">
+            <ul id="testul">
+            	<li class="titsh">选项一</li>
+            	<li>选项二</li>
+                <li>选项三</li>
+                <li>选项四</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

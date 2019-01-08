@@ -1,0 +1,87 @@
+<!--<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<title>脚本之家</title>
+<style>
+ul li{
+  width:400px;
+  height:30px;
+  line-height:30px;
+  list-style:none;
+}
+</style>
+<script src="js/jquery.js"></script>
+<script>
+$(document).ready(function(){
+  $("#bt").click(function(){
+    $($("#box").find("li")[0].remove());
+  })
+})
+</script>
+</head>
+<body>
+<ul id="box">
+  <li>脚本之家欢迎您，只有努力奋斗才会有美好的明天。</li>
+  <li>没有任何人一开始就是高手，必须要努力奋斗才行。</li>
+  <li>每一天都是新的，要好好的珍惜时间。</li>
+</ul>
+<input type="button" id="bt" value="查看效果"/>
+</body>
+</html>-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>jQuery add/remove ul li</title>
+
+		<style type="text/css">
+			#nav{width:1000px;height:450px;border-top:#060 2px solid;margin-top:10px;border-bottom:#060 2px solid;background-color:#690;margin-left:50px;}
+			    #nav ul{list-style:none;line-height:40px;}
+			    #nav li{display:block;float:left;padding:15px;line-height:50px;}
+			    #nav a{display:block;color:#fff;text-decoration:none;padding:0px;}
+			    #nav a:hover{background-color:#060;}
+			    input {margin-top:10px;margin-left:50px;width:100px;height:50px;font-size:15px;}
+		</style>
+
+		<script src="js/jquery.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			    $("#addButton").bind("click",function(){
+			        var google = Math.random();
+			        var msg = "<li><a href='javascript:void(0)'>删我</a><span style='color:yellow;'>" + google + "</span></li>";
+			        $("#colist").append(msg);
+			        bindListener();
+			    });
+			
+			    function bindListener(){
+			        $("#colist li a").unbind().click(function(){
+			          $(this).parent().remove();
+			        });
+			    }
+			
+			    $("#collect").click(function(){
+			        var data = "";
+			        $("#nav").find("ul li span").each(function(index,value){
+			            data += $(this).text() + "|";
+			        })
+			        alert(data);
+			    })
+			})
+		</script>
+
+	</head>
+
+	<body>
+
+		<div id="nav">
+			<ul id="colist">
+			</ul>
+		</div>
+
+		<input type="button" value="增加" id="addButton" />
+		<input type="button" value="获取值集合" id="collect" />
+
+	</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<!--<link rel="shortcut icon" href="images/send.png" type="/image/x-icon">-->
+		<title>扫码</title>
+		<!--<script src="js/jquery.js"></script>-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jweixin-1.1.0.js"></script>
+		<script src="js/sha.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-size: 0.04rem;
+			}
+			
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			body {
+				height: 3rem;
+			}
+			
+			.cosPhoto {
+				max-width: 0.667rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input class="scan" id="scanbtn" type="button" value="扫码">
+		<div class="txt">
+			<img id="cosPhoto" width="100" height="100" />
+		</div>
+		<script>
+			window.onload = function() {
+				alert("urlparam:"+window.location.search);
+				getticket();
+				//document.write(location.pathname); //返回当前URL的路径名
+				//document.write(location.href); //返回当前URL的路径名
+				var winW = document.body.clientWidth,
+					htmlObj = document.querySelector('html');
+				htmlObj.style.fontSize = ((winW < 750) ? winW : 750) + 'px';
+
+				var jsapi_ticket = "";
+				var nonceStr = createNonceStr();
+				var timestamp = createTimestamp();
+				var url = location.href.split('#')[0]; //完整url动态取
+				//var url ="http://weixin.hubeicfc.com/weixinServer/htmlShow/consumerFinace/html/weixincamer.html";
+				//alert(url);
+				localStorage.removeItem("ticket");
+				//alert(9999)
+				/*if(localStorage.getItem("ticket") == null) {//alert(22)
+					getticket();
+					
+					var wait = function(dtd) {
+						var dtd = $.Deferred(); // 在函数内部，新建一个Deferred对象
+						var tasks = function() {
+							if (localStorage.getItem("ticket") !=null) {
+								clearInterval(interval);
+								dtd.resolve();
+							} else {
+								dtd.fail();
+							}
+								// 改变Deferred对象的执行状态
+						};
+						interval = setInterval(tasks, 100);
+						return dtd.promise(); // 返回promise对象
+					};
+					
+					$.when(wait()).done(function() {
+						//alert("wait");
+						jsapi_ticket = localStorage.getItem("ticket");
+						
+						var t = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + nonceStr + '&timestamp=' + timestamp + '&url=' + url;
+						console.log("wt:" + t);
+						var s = new jsSHA(t, "TEXT"),
+							signature = s.getHash("SHA-1", "HEX");
+						console.log(signature);
+						
+						wxfun(timestamp,nonceStr,signature);
+					}).fail(function() {
+						alert("请求出错啦！");
+						clearInterval(interval);
+					});
+				} else {
+					jsapi_ticket = localStorage.getItem("ticket");
+					
+					var t = 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + nonceStr + '&timestamp=' + timestamp + '&url=' + url;
+					console.log("t:" + t);
+					var s = new jsSHA(t, "TEXT"),
+						signature = s.getHash("SHA-1", "HEX");
+					console.log(signature);
+					
+					wxfun(timestamp,nonceStr,signature);
+				}*/
+
+				var t = 'jsapi_ticket=' + 'kgt8ON7yVITDhtdwci0qecMonRMdfUfEKwi8KAEfV7sbKRuKwRDXCoPSfg_G2ki4isbLf12qgPwP2XBdjZMwtg' + '&noncestr=' + 'lf8p7eh77uq8h0k' + '&timestamp=' + '1474526686' + '&url=' + url;
+				var s = new jsSHA(t, "TEXT"),
+					signature = s.getHash("SHA-1", "HEX");
+				timestamp = "1474526686";
+				nonceStr = "lf8p7eh77uq8h0k"; //var signature = "6fbfe030ee2f65e5e57ae09d55a926c5e6421628";
+				//timestamp ="1474521469" ;nonceStr = "aa51t1yahy3nmi";var signature = "5cd78bc2af070742549de8dab68194cdf667da7d";
+				//wxfun(timestamp, nonceStr, signature);
+			}
+
+			function wxfun(timestamp, nonceStr, signature) {
+				alert(signature)
+				wx.config({
+					debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					appId: 'wx0feec2cb67c637d6', // 必填，公众号的唯一标识
+					timestamp: timestamp, // 必填，生成签名的时间戳
+					nonceStr: nonceStr, // 必填，生成签名的随机串
+					signature: signature, // 必填，签名，见附录1
+					jsApiList: ['scanQRCode']// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+				wx.ready(function() {
+					alert("ready");
+				});
+
+				var scan = document.querySelector('#scanbtn');
+				scan.addEventListener('click', function() {
+					wx.scanQRCode({
+						needResult:1,//默认为0，扫描结果由微信处理，1则直接返回扫描结果
+						scanType:["qrCode","barCode"],//可以指定扫二维码还是一维码，默认二者都有
+						success: function(res) {
+							//alert(JSON.stringify(res))
+							var result = res.resultStr;
+							alert(result);
+							if(reuslt.indexOf("http") > 0)
+								window.location.href = result;
+						}
+					});
+				});
+				wx.error(function(res) {
+					alert("config信息验证失败:"+JSON.stringify(res));
+					// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+				});
+			}
+
+			function getticket() {
+				var appid = "wx0feec2cb67c637d6";
+				var sec = "aedf8b158aeff99926a728d7c3a88dca";
+//				var appid = "wx24b183a54a65ced4";
+//				var sec = "baddffc1b9d573fc6f5c4a142b25cc74";
+				var tokenpath = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + sec;
+				tokenpath = encodeURI(tokenpath)+"&callbacks=callbacks";
+				
+//				$.getJSON(tokenpath+"&jsoncallback=?",function(json){   
+//				    //要求远程请求页面的数据格式为： ?(json_data)   
+//				    //例如：   
+//				    //?([{"_name":"湖南省","_regionId":134},{"_name":"北京市","_regionId":143}]) alert(json[0]._name);  
+//				    //alert(json[0])
+//				}); 
+				//(tokenpath)
+				var t = 20000;
+				$.support.cors = true;
+				$.ajax({
+					type: "get",
+					url: tokenpath,
+					dataType : "jsonp",
+					async: false,
+					timeout: t,
+					corssDomain:true,
+					jsonp: "callbacks",//服务端用于接收callback调用的function名的参数
+					//jsonp:"jsonpCallback",//callback的function名称
+					//jsonpCallback:"callback",//callback的function名称
+					success: function(data) {
+						//alert(data);
+						alert("token:" + JSON.stringify(data));
+						console.log("token:" + JSON.stringify(data));
+						//var token = "E_uykK8vHPuZ-wRlJ391aRIReusWHltDBs4yi60qLAHlM9_v6-jbLVd_eXllJXrZ3O_QdYXcmkL1MFDytC8bor3fL_9mCX1VbFHlAliZ_0TOcQhmVKw5qEoawtPT9KXPZAOiAFAIJX";
+						var token = data.access_token;
+						var ticketpath = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + token + "&type=jsapi";
+						//alert(path);
+						ticketpath = encodeURI(ticketpath);
+						$.ajax({
+							type: "get",
+							url: ticketpath,
+							//dataType : "jsonp",
+							crossDomain: true == !(document.all),
+							async: true,
+							jsonp: "callbacks",//服务端用于接收callback调用的function名的参数
+							//jsonpCallback:"?",//callback的function名称
+							success: function(data) {
+								console.log(data);
+								//console.log(JSON.stringify(data));
+								var ticket = data.ticket;
+								localStorage.setItem("ticket", data.ticket);
+							},
+							error: function(xhr) {
+								alert("ticketerr")
+								localStorage.removeItem("ticket");
+								console.log("ticketErr:" + JSON.stringify(xhr));
+							}
+						});
+					},
+					error: function(xhr) {
+						alert("tokenErr:" + JSON.stringify(xhr))
+						localStorage.removeItem("ticket");
+						console.log("tokenErr:" + JSON.stringify(xhr));
+					}
+				});
+				function callbacks(data) {
+					console.log(data);
+				}
+				//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx24b183a54a65ced4&secret=baddffc1b9d573fc6f5c4a142b25cc74&callback=success&_=1494991235630
+			}
+
+			function createNonceStr() {
+				return Math.random().toString(36).substr(2, 15);
+			};
+
+			function createTimestamp() {
+				return parseInt(new Date().getTime() / 1000) + '';
+			};
+			
+			function getQueryString(name) {
+				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) {
+					return unescape(r[2]);
+				}
+				return null;
+			}
+		</script>
+	</body>
+
+</html>

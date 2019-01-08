@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>用映射方式绑定不同事件 </title>
+		<script type="text/javascript" src="js/common/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".txt").bind({
+					focus: function() {
+						$("#divTip").show().html("执行的是focus事件");
+					},
+					change: function() {
+						$("#divTip").show().html("执行的是change事件");
+					}
+				})
+			})
+		</script>
+	</head>
+
+	<body>
+		<div>姓名：
+			<input type="text" class="txt" />
+		</div>
+		<div id="divTip" class="clsTip"></div>
+	</body>
+
+</html>

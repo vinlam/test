@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Deferred - promise - progress</title>
+</head>
+<body>
+
+<h2>Please wait 2.5 sec for an update and 5 sec for a final popup</h2>
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.myStaticPlugin = function() {
+    var deferred = $.Deferred();
+    window.setTimeout(
+        function () {
+            deferred.resolve('Ready!');
+            //or:
+            //deferred.reject('Fail!');
+        }, 5000
+    );
+    window.setTimeout(
+        function () {
+            deferred.notify('Halfway there!');
+        }, 2500
+    );
+    return deferred.promise();
+  };
+  
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+  
+  $.myStaticPlugin()
+  .progress(function(msg) {
+        alert('Progress ' + msg); 
+  })
+  .always(function(msg) {
+      alert('Always ' + msg);
+  });
+  
+});
+</script>
+</body>
+</html>

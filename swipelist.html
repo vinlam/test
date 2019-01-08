@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JQM Swipe Delete</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css" />
+		<style>
+			.behind {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			.behind a.ui-btn {
+				width: 68px;
+				margin: 0px;
+				float: right;
+				border: none;
+			}
+			.behind a.delete-btn,
+			.behind a.delete-btn:active,
+			.behind a.delete-btn:visited,
+			.behind a.delete-btn:focus,
+			.behind a.delete-btn:hover {
+				color: white;
+				background-color: red;
+				text-shadow: none;
+			}
+			.behind a.ui-btn.pull-left {
+				float: right;
+			}
+			.behind a.edit-btn,
+			.behind a.edit-btn:active,
+			.behind a.edit-btn:visited,
+			.behind a.edit-btn:focus,
+			.behind a.edit-btn:hover {
+				color: white;
+				background-color: orange;
+				text-shadow: none;
+			}
+		</style>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<script>
+			(function() { 
+				$(document).on("pageinit","#swipelistview",function(){ alert(8);
+					init(); 
+				}); 
+				function init(){ 
+					$('.swipe-delete li > a').on('swipeleft', function(e) { 
+						$(e.currentTarget).animate({left: '-200px'}, 200) 
+					}); 
+					
+					$('.swipe-delete li > a').on('swiperight', function(e) { 
+						if(e.currentTarget.style.left == '-200px') 
+							$(e.currentTarget).animate({left: '0px'}, 200);
+					}); 
+					$('li .delete-btn').on('click', function(e) { 
+						e.preventDefault();
+						$(this).parents('li').slideUp('fast', function() { 
+							$(this).remove(); 
+						});
+					});
+							
+					$('li .edit-btn').on('click', function(e)
+					{ 
+						e.preventDefault(); 
+						$(this).parents('li').children('a').html('edited'); 
+					});
+				}
+			})();
+		</script>
+	</head>
+
+	<body>
+		<div id="container">
+			<div data-role="page" id="swipelistview">
+				<div data-role="header" data-position="fixed">
+					<h1>Swipe Delete</h1>
+				</div>
+				<div data-role="content">
+					<ul data-role="listview" class="swipe-delete">
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 1</a>
+						</li>
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 2</a>
+						</li>
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 3</a>
+						</li>
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 4</a>
+						</li>
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 5</a>
+						</li>
+						<li>
+							<div class="behind">
+								<a href="#" class="ui-btn delete-btn">Delete</a>
+								<a href="#" class="ui-btn edit-btn pull-left">Edit</a>
+							</div>
+							<a href="#">item 6</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

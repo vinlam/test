@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>caller callee</title>
+		<script>
+			function callerDemo() {
+				if(arguments.caller) {
+					var a = callerDemo.caller.toString();
+					alert(a);
+				} else {
+					alert("this is a top function");
+				}
+			}
+
+			function handleCaller() {
+				callerDemo();
+			}
+			handleCaller();
+
+			function calleeDemo() {
+				alert(arguments.callee);
+			}
+			calleeDemo();
+
+//			//callee可以打印其本身
+//			function calleeDemo() {
+//				alert(arguments.callee);
+//			}
+//			//用于验证参数
+//			function calleeLengthDemo(arg1, arg2) {
+//				if(arguments.length == arguments.callee.length) {
+//					window.alert("验证形参和实参长度正确！");
+//					return;
+//				} else {
+//					alert("实参长度：" + arguments.length);
+//					alert("形参长度： " + arguments.callee.length);
+//				}
+//			}
+//			//递归计算
+//			var sum = function(n) {
+//				if(n <= 0)
+//					return 1;
+//				else
+//					return n+ arguments.callee(n - 1)
+//			}
+		</script>
+	</head>
+
+	<body>
+	</body>
+
+</html>

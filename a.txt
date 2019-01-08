@@ -1,0 +1,129 @@
+很多人都想、甚至曾使用HTML5开发跨平台App，并且想达到原生App的体验。
+
+最后的结果都是无奈的放弃，HTML5貌似美好，但坑太多，想做到原生App的体验几乎不可为。
+
+也曾有过著名的facebook放弃HTML5改用原生做App的事件。
+
+但是坑多不怕，就怕没人填。
+
+本系列文章，就将我在开发中的各种HTML5的坑如何解决，一一道给大家。
+
+HTML5的性能体验比原生差，体现在很多方面，比如切页时白屏、Android上列表滚动不流畅、下拉刷新和上拉翻页卡顿。
+
+尤其在低端Android手机上，表现差距非常明显。
+
+我们首先来看第一个问题，如何避免切页白屏。
+
+浏览器的页面在切换时，由于其页面加载机制，在跳转到下一个页面时，先要请求联网、载入页面代码、构建dom、渲染，最后才显示出来。
+
+在最终结果渲染完毕前，会出现几十毫秒甚至数秒的白屏。原生App是没有这个问题的。
+
+虽然使用SPA应用模型，即ajax+div切换也可以避免白屏，但把所有页面写在一个SPA页面里，手机上也跑不起来。
+
+办法其实是有的，需要使用扩展的手段。
+
+在HBuilder(http://www.dcloud.net.cn)工具里，内置了[HTML5+](http://www.html5plus.org)的规范API，它把几十万原生API映射为js对象。
+
+想要解决切页白屏这个问题，需要使用plus.webview类来做MPA应用。
+
+plus.webview类是对原生的webview对象的js化封装，使用js可以操作webview。
+
+解决白屏的原理是：**把每个页面当作一个webview，但用js来控制它就像控制div一样。
+
+因为webview可以隐藏创建，后台载入内容，并且在载入完毕时有js事件通知，我们可以利用它做窗体切换，从而避免白屏。
+
+通过操作webview来避免切页白屏，有2种常见的做法： 
+
+一种是称之为预载，即后台预载新页面的基础文件，使用时直接调出来；
+
+另一种称之为现载，即点击前页的链接开始走waiting转圈，后台加载完整的新页面，加载完再用js控制显示到前台。
+
+- 1、预载，新页面基础模板，使用时直接调出来
+
+在HBuilder里新建App时有一个csdn的项目源码，这个应用就是使用了预载思路。
+
+启动首先载入资讯列表list页面，然后延时创建了一个隐藏的webview，加载了一个内容模板show页面（app/show.html）。
+
+在点击list页面的一个新闻item时，调用webview的窗体控制动画，把show页面侧滑进屏幕。
+
+但show页面仅仅是一个模板而没有数据，在show页面刚侧滑进屏幕时，在show页面有一个正在联网的提示。
+
+紧接着show页面开始执行ajax请求，联网加载数据并显示出来。
+
+我们可以在list页面的item点击里，一边移动窗体，一边通知新页面执行ajax。webview间相互传递消息使用webview的evalJS方法。
+
+这种做法，相当于用户是在show页面来等待联网数据。
+
+预加载，虽然只加载模板，但占用的内存资源较多。
+
+如果是list转到content，其实不同的item点击只是一个页面，完全可以使用预载。
+
+但如果页面不同且较多，后台预载太多webview还是会消耗不少系统资源，有可能在低配Android手机上不流畅。
+
+（webview隐藏会降低内存占用，一般处于显示状态的webview不要超过3个）。
+
+示例代码如下：
+
+var webviewShow;
+document.addEventListener('plusready', function(){ //扩展的js对象在plusready后方可使用
+    webviewShow = plus.webview.create("show.html"); //后台创建一个webview，载入show.html文件
+});
+function clicklist (id) { //list点击item后的事件
+    webviewShow.show("slide-in-right",300); //<span style="font-family: Arial, Helvetica, sans-serif;">把新webview窗体显示出来，显示动画效果为速度300毫秒的右侧移入动画</span>
+}
+复制代码
+
+在HBuilder里新建一个移动App，构造好index里的list或按钮，把show页面准备好，把上述js代码复制进去，手机插上数据线连电脑，点HBuilder的真机运行，即可看到效果。
+
+- 2、现载，后台创建webview加载新页面完整内容，渲染后再显示到前台
+
+如果觉得内存消耗多，可以不预载页面。
+
+当点击list页面的item时，首先绘出一个联网等待框，比如plus.nativeui里的原生waiting。
+
+紧接着在后台create一个webview，载入show页面。
+
+show页面在后台联网获取数据。
+
+show页面在数据解析渲染后，再通过evalJS方法通知list页面关闭等待框，并执行窗体切换把show页面显示出来。
+
+示例代码如下：
+
+function clicklist (id) { //list点击item后的事件
+        var nwaiting = plus.nativeUI.showWaiting();//显示原生等待框
+        webviewShow = plus.webview.create("show.html");//后台创建webview并打开show.html
+        webviewShow.addEventListener("loaded", function() { //注册新webview的载入完成事件
+                nwaiting.close(); //新webview的载入完毕后关闭等待框
+                webviewShow.show("slide-in-right",300); //把新webview窗体显示出来，显示动画效果为速度300毫秒的右侧移入动画
+        }, false);
+}
+复制代码
+
+### 还有一个需要注意的白屏问题，是启动后第一个页面的白屏。第一个页面是无法隐藏创建的。
+如果第一个页面内容较大或联网，会出现启动封面图片消失后，页面还没渲染好。
+
+此时需要手动控制封面图片消失。
+
+首先在manifest.json里找到plus、splashscreen、autoclose节点，设置为false，即手动控制封面图片的消失。
+
+然后在首页合适的位置，一般在联网并构造完新的dom时，调用js关闭封面图片，plus.navigator.closeSplashscreen();
+这样就能防止第一个页面的白屏。
+
+### 后记
+不管使用哪种方法，都要注意一点，手机App的HTML页面必须本身性能足够高。
+
+页面体积要小、加载和渲染要快。
+
+互联网上有很多提升HTML、JS、CSS、图片性能的方案，此处不再罗列。
+
+但务必注意一点，尽量不要使用js框架。
+
+pc上web框架的盛行，也是后来pc浏览器性能足够高之后的事情，互联网发展初期的开发者并不像如今这般依赖框架。
+
+手机，尤其是低端Android机的性能也很差，如果照着写pc web的思路写页面，最终的用户体验必然会非常差。
+
+首先，AMD框架不要想了，js动态解析标签再替换渲染根本来不及。
+
+其次，jquery、zepto也尽量不要使用。document.getElementById("") 、document.querySelectorAll("")、$("")，这三者性能依次下降，尤其是在低端Android上遍历dom时，当你辛辛苦苦减少白屏和用户等待时间时，你会非常愤怒这些js框架拖了你的后腿。
+
+来源：http://blog.csdn.net/heavensoft/article/details/37920595

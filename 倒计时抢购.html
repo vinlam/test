@@ -1,0 +1,63 @@
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>限时抢购倒计时间表</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#content {
+				width: 300px;
+				margin: 0 auto;
+				padding: 10px;
+				background: #eee;
+				border: 1px solid #999;
+			}
+			
+			#content p span {
+				color: red;
+				font: bold 20px Arial;
+			}
+			
+			#content p a {
+				font: 12px/23px '宋体';
+				color: #888;
+			}
+			
+			.div1 {
+				display: none;
+			}
+		</style>
+		<SCRIPT LANGUAGE="JavaScript">
+			function fresh() {
+				var endtime = new Date("2110/11/06,12:20:12");
+				var nowtime = new Date();
+				var leftsecond = parseInt((endtime.getTime() - nowtime.getTime()) / 1000);
+				d = parseInt(leftsecond / 3600 / 24);
+				h = parseInt((leftsecond / 3600) % 24);
+				m = parseInt((leftsecond / 60) % 60);
+				s = parseInt(leftsecond % 60);
+				//    document.getElementById("times").innerHTML=__h+"小时"+__m+"分"+__s+"秒";
+				document.getElementById("times").innerHTML = h + "小时" + m + "分" + s + "秒";
+				if(leftsecond <= 0) {
+					document.getElementById("times").innerHTML = "已结束";
+					clearInterval(sh);
+				}
+			}
+
+			var sh;
+			sh = setInterval(fresh, 1000);
+		</SCRIPT>
+	</head>
+
+	<body>
+		<div id="content">
+			<h1>限时抢购啦！</h1>
+			<p>还剩<span id="times"></span></p>
+		</div>
+	</body>
+
+</html>

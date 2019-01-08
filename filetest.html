@@ -1,0 +1,81 @@
+<!--<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css">
+			.image_container {
+				width: 48px;
+				height: 48px;
+				position: relative;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script language="javascript">
+			$(function() {
+					$("#file_upload").change(function() {
+						var $file = $(this);
+						var fileObj = $file[0];
+						var windowURL = window.URL || window.webkitURL;
+						var dataURL;
+						var $img = $("#preview");
+						if(fileObj && fileObj.files && fileObj.files[0]) {
+							dataURL = windowURL.createObjectURL(fileObj.files[0]);
+							$img.attr('src', dataURL);
+						} else {
+							dataURL = $file.val();
+							// $img.css("filter",'progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod = scale,src="' + dataURL + '")');
+							// var imgObj = document.getElementById("preview");
+							// imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=/"" + dataURL + "/")";
+							// imgObj.style.width = "48px";
+							// imgObj.style.height = "48px";
+							var imgObj = document.getElementById("preview");
+							// 两个坑:
+							// 1、在设置filter属性时，元素必须已经存在在DOM树中，动态创建的Node，也需要在设置属性前加入到DOM中，先设置属性在加入，无效；
+							// 2、src属性需要像下面的方式添加，上面的两种方式添加，无效；
+							imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+							imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+						}
+					});
+				}
+
+			);
+		</script>
+	</head>
+
+	<body>
+		<div id="demo"><input id="file_upload" type="file" />
+			<div class="image_container"><img id="preview" width="60" height="60"></div>
+		</div>
+	</body>
+
+</html>-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>兼容IE6、IE7、IE8的图片上传前预览效果</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<!--把下面代码加到<head>与</head>之间-->
+<script type="text/javascript" language="javascript">
+function PreviewImg(imgFile){
+ var newPreview=document.getElementById("newPreview");
+ var imgDiv=document.createElement("div");
+ document.body.appendChild(imgDiv);
+ imgDiv.style.width="118px";imgDiv.style.height="127px";
+ imgDiv.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+ imgDiv.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src=imgFile.value;
+ newPreview.appendChild(imgDiv);
+ var showPicUrl=document.getElementById("showPicUrl");
+ showPicUrl.innerText=imgFile.value;
+ newPreview.style.width="80px";
+ newPreview.style.height="60px";
+}
+</script>
+</head>
+<body>
+<!--把下面代码加到<body>与</body>之间-->
+<div id="newPreview"></div>
+<div id="showPicUrl"></div>
+<hr><br>
+请选择图片：<input type="file" name="file" onchange="javascript:PreviewImg(this);">
+</body>
+</html>

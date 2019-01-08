@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>static plugin</title>
+		<script src="js/common/jquery-1.8.2.min.js"></script>
+		<script src="js/common/jquery.mobile-1.4.3.js"></script>
+		<script>
+			(function($){
+				
+				//绑定beforeunload事件 
+				/*$(window).unbind('beforeunload').bind('beforeunload',function(){ 
+					return '您输入的内容尚未保存，确定离开此页面吗？'; 
+				}); */
+				
+				$.alertWhileClick = function() {
+					
+					alert("static plugin test");
+					window.history
+					location.href = "geturlparam.html";
+				}
+				
+				var param = {
+    				"action_name": "QR_LIMIT_SCENE",
+    				"action_info": {
+	        			"scene": {"scene_id": 1000}
+    				}
+				}
+				
+				var appid = "wx24b183a54a65ced4";
+				var sec = "baddffc1b9d573fc6f5c4a142b25cc74";
+				
+				
+				//		https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx24b183a54a65ced4&secret=baddffc1b9d573fc6f5c4a142b25cc74
+				var p = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+sec;
+				p = encodeURI(p);
+				$.ajax({
+					type:"get",
+					url:p,
+					async:true,
+					success:function(data){
+						console.log("token:"+JSON.stringify(data));
+						//var token = "E_uykK8vHPuZ-wRlJ391aRIReusWHltDBs4yi60qLAHlM9_v6-jbLVd_eXllJXrZ3O_QdYXcmkL1MFDytC8bor3fL_9mCX1VbFHlAliZ_0TOcQhmVKw5qEoawtPT9KXPZAOiAFAIJX";
+						var token = data.access_token;
+						var path = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token="+token;
+						//alert(path);
+						path = encodeURI(path);
+						var s = "{\"action_name\": \"QR_LIMIT_SCENE\",\"action_info\": {\"scene\": {\"scene_id\": 100000}}}";
+						$.ajax({
+							type:"post",
+							url:path,
+							data:s,
+							async:true,
+							success:function(data){
+								console.log(JSON.stringify(data));
+								var ticket = data.ticket;
+								var turl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+ticket;
+								console.log(turl);
+								turl = encodeURI(turl);
+								$.ajax({
+									type:"get",
+									url:turl,
+									async:true,
+									success:function(data){
+										console.log(data);
+										$("#im").attr('src', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==");
+										alert($("#im").attr('src'));
+									},error:function(xhr){
+										
+									}
+								});
+							},error:function(xhr){
+								
+							}
+						});
+					},error:function(xhr){
+						
+					}
+				});
+			})(jQuery);
+			
+			$(document).ready(function(){
+				$("button").click(function(){
+					$.alertWhileClick();	
+				});
+			});
+			
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<button>click here</button>
+			<img id="im" width="100" height="100" />
+		</div>
+	</body>
+</html>

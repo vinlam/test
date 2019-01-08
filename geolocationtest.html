@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	</head>
+
+	<body>
+		<p id="demo">点击这个按钮，获得您的位置：</p>
+		<button onclick="getLocationCity()">新浪api获取城市名</button>
+		<button onclick="bdCity()">百度获取城市名</button>
+		<div id="mapholder"></div>
+
+	</body>
+	<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer"></script>
+	<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+	<script>
+		function getLocationCity() {
+			var province = remote_ip_info['province'];
+			var city = remote_ip_info['city'];
+			alert("省：" + province + "---市：" + city)
+		}
+
+		function bdCity() {
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+					var mk = new BMap.Marker(r.point);
+					currentLat = r.point.lat;
+					currentLon = r.point.lng;
+					//SetCookie("curLat", currentLat, 1); //设置cookie  
+					//SetCookie("curLng", currentLon, 1); //设置cookie             
+					var pt = new BMap.Point(currentLon, currentLat);
+					var geoc = new BMap.Geocoder();
+					geoc.getLocation(pt, function(rs) {
+						var addComp = rs.addressComponents;
+						//SetCookie("curLat", currentLat, 1); //设置cookie  s
+						var city = addComp.city;
+						var addComp = rs.addressComponents;
+						var texts = addComp.district + "-" + addComp.street + "-" + addComp.streetNumber;
+						//获取地理位置成功，跳转  
+						console.log(city + "-" + texts);
+						document.getElementById("mapholder").innerHTML = city;
+					});
+				}
+			});
+		}
+	</script>
+
+</html>

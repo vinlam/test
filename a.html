@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+	</head>
+
+	<body><p>sdfadfdsdaddfadd</p>
+		<div id="ttd"></div>
+	</body>
+	<script>
+		function DemoFunction() {
+			this.init = function() {
+				var func = (function(va) {
+					this.va = va;
+					return function() {
+						va += this.va;
+						return va;
+					}
+				})(function(va1, va2) {
+					var va3 = va1 + va2; //干扰代码
+					return va1;
+				}(1, 2));
+
+				console.log(func(20));
+
+				this.func = func;
+				console.log(this.func(100));
+			}
+		}
+		var a = new DemoFunction();
+		a.init();
+		$("#ttd").load("tt.html #tdiv");
+		//$("#tdiv").load();
+		//fun();
+		
+	</script>
+
+</html>

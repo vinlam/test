@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Basic context-aware plugin</title>
+</head>
+<body>
+
+<h2>See blue paragraphs below</h2>
+
+<p>This one is blue</p>
+
+<span>This is not blue</span>
+
+<p>And this one it blue again</p>
+
+
+<script src="js/common/jquery-1.9.1.min.js"></script>
+
+<script>
+// please externalize this code to an external .js file
+
+// DEFINE PLUGIN
+
+(function( $ ){
+
+  $.fn.makeItBlue = function() {
+
+    this.css('background-color', 'blue');
+
+  };
+})( jQuery );
+
+// USE PLUGIN
+
+$(document).ready(function() {
+
+  $('p').makeItBlue();
+
+});
+</script>
+</body>
+</html>

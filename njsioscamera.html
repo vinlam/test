@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>Hello H5+</title>
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript">
+
+			// H5 plus事件处理
+
+			function plusReady() {
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener("plusready", plusReady, false);
+			}
+			
+			function testcamera(){
+				var AVCaptureDevice = plus.ios.importClass("AVCaptureDevice");
+				var Status = AVCaptureDevice.authorizationStatusForMediaType("vide");
+				if (3 != Status) {
+				    alert('请在设置中允许使用相机');
+				}
+			}
+			
+		</script>
+		
+	</head>
+
+	<body style="background:#CCCCCC;">
+		<header id="header">
+			<div class="nvbt iback"></div>
+			<div class="nvtt">Native.JS</div>
+		</header>
+		<div id="dcontent" class="dcontent">
+		<input type="button" value="test" onclick="testcamera()" />
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/immersed.js"></script>
+
+</html>

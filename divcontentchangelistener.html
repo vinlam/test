@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>div content change</title>
+	</head>
+	<body>
+		<input id="btn" type="button" value="click"/>
+		<div id="divcontent"></div>
+		<div id="dd" style="width:100px;height: 720px;background-color: #3E3E3E;"></div>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		$(function(){
+			$("#btn").off("click").on("click",function(){
+				var html = "<span>"+Math.random()*100+"<span>";
+				$("#divcontent").append(html);
+			})
+			
+			$("#divcontent").off().on('DOMNodeInserted', function(e) {
+				alert('element now contains: ' + $(e.target).html());
+				 console.log(Math.max(document.body.scrollHeight,document.documentElement.scrollHeight));
+			});
+		})
+	</script>
+</html>

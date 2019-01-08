@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>trigger event</title>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="t.js"></script>
+		
+	</head>
+
+	<body>
+		<input type="text" name="FirstName" value="Hello World" />
+		<br />
+		<button>激活 input 域的 select 事件</button>
+		<input type="button" class=".btn" id="btnn" value="click" />
+	</body>
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$("input").change(function(event, data,param) {
+					console.log(JSON.stringify(data))
+					console.log(param)
+					$("input").after("文本被选中！");
+				});
+				//trigger必须有触发才能生效，要么放到某个function,要么自执行匿名函数
+				$(function(){$("#btnn").trigger("click");})
+				var url = "https://www.baidu.com";
+				console.log(url.match(/http:/));
+				console.log(/http:\/\/|https:\/\//.test(url));
+				if(url.match(/http:\/\/|https:\/\//)){
+					console.log(true);
+				}else{
+					console.log(false);
+				}
+				$("#btnn").off("click").on("click",function(){
+					alert(8080)
+				});
+				$("button").click(function() {
+					$("input").trigger("change", [{
+						"a": 123,
+						"b": "sdfsdf"
+					},"asdf"]);//(event,[param,param1,.....];
+				});
+				t();
+				function t(){
+					var obj = {};
+					obj.name = "jack";
+					obj.age = "23";
+					obj.sex = "male";
+					
+					for(var o in obj){
+						console.log(o);
+						console.log(obj[o]);
+					}
+				}
+			});
+		</script>
+</html>

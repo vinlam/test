@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>a onclick disabled</title>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="body">
+			<a class="page-next" href="javascript:void(0)">aAlert</a>
+			<br />
+			<span class="pre">spanAlert</span>
+			<br />
+			<input type="button" onclick="disableFn()" value="chageDisabled" />
+			<input type="button" onclick="ableFn()" value="chageAbled" />
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.page-next').click(function(e) {
+					e.preventDefault();
+					alert('aaaaaaaaaaaa');
+				})
+				$('.pre').click(function(e) {
+					e.preventDefault();
+					alert('span span span');
+				})
+
+			})
+
+			function disableFn() {
+				$('.page-next').attr('disabled', true);
+				$('.page-next').css('pointer-events', 'none');
+
+				$('.pre').attr('disabled', true);
+				$('.pre').css('pointer-events', 'none')
+				alert('change success');
+			}
+
+			function ableFn() {
+				$('.page-next').attr('disabled', false);
+				$('.page-next').css('pointer-events', 'auto');
+
+				$('.pre').attr('disabled', false);
+				$('.pre').css('pointer-events', 'auto')
+				alert('change success');
+			}
+		</script>
+	</body>
+
+</html>

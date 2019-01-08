@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-hans">
+<head>
+<meta charset="UTF-8">
+<title>jQuery Mobile教程-中级篇-dialog篇</title>
+<meta name="keywords" content="jQuery Mobile,jQuery Mobile基础教程,jQuery Mobile使用说明">
+<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	$(function(e){
+		
+		//关闭dialog
+		$("#close-dialog-btn").click(function(){
+			$("#alert-dialog").dialog("close");
+		});
+		
+	});
+
+</script>
+</head>
+<body>
+
+  
+  
+  <!-- 页面容器start -->
+  <div data-role="page" id="loadPage-page">
+	
+	<!-- 页眉部分start -->
+	<div data-role="header" data-add-back-btn="false">
+	   <h1>jqm中级篇之dialog</h1>
+	   <a target="_self" data-role="button" data-icon="home" href="../index.html">首页</a>
+	</div>
+	<!-- 页眉部分end -->
+	
+	<!-- content部分start -->
+	<div data-role="content">
+		<a href="#alert-dialog" data-role="button">弹出dialog</a>
+		<input type="text" id="txt"/>
+	</div>
+	<!-- content部分end -->
+	
+	<!-- 页脚部分start -->
+	<div data-role="footer" data-position="fixed">
+		<h3>&copy;zhangyaochun for W3CPlus</h3>
+	</div>
+    <!-- 页脚部分end -->
+	
+	
+  </div> 
+  <!-- 页面容器end -->
+  
+  
+ 
+  <!-- dialog容器start -->
+  <div data-role="dialog" id="alert-dialog">
+  
+		<!-- 页眉部分start -->
+		<div data-role="header">
+		   <h1>提示信息</h1>
+		</div>
+		<!-- 页眉部分end -->
+		
+		<!-- content部分start -->
+		<div data-role="content">
+			<a id="close-dialog-btn" data-role="button">想关闭，就点我，esc默认无用！</a>
+			<p>亲，pc的用户习惯来了，对不起，这个是移动交互！</p>
+		</div>
+  
+  </div>
+  <!-- dialog容器end -->
+  <!-- dialog容器start -->
+  <!--<div data-role="popup" id="pop">
+  
+		<div data-role="header">
+		   <h1>提示信息</h1>
+		</div>
+		
+		<div data-role="content">
+			<a id="close-dialog-btn" data-role="button">想关闭，就点我，esc默认无用！</a>
+			<p>亲，pc的用户习惯来了，对不起，这个是移动交互！</p>
+		</div>
+  
+  </div>-->
+  <!-- dialog容器end -->
+  
+  
+  
+
+
+</body>
+</html>
