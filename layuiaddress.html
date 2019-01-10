@@ -27,16 +27,22 @@
                 </select>  
             </div>  
         </div>  
+        <button id="getbtn">GetData</button>
     </body>  
     <!--<script type="text/javascript" src="js/common/jquery-1.12.4.js"></script>-->  
     <script type="text/javascript" src="js/layui/layui.all.js"></script>  
-    <script type="text/javascript" src="address.js"></script>  
+    <!--<script type="text/javascript" src="address.js"></script>-->  
     <script type="text/javascript">  
         layui.config({  
             //base : "" //address.js的路径  
         }).use([ 'layer', 'jquery', "address" ], function() {  
-            var layer = layui.layer, $ = layui.jquery, address = layui.address();  
-  
+            var layer = layui.layer, $ = layui.jquery, address = layui.address;  
+  			address.data([13, 1302, 130205]);
+  			$("#getbtn").off().on("click",getData);
+  			
+  			function getData(){
+  				alert(JSON.stringify(address.getSelect()));
+  			}
         });  
     </script>  
 <html>  

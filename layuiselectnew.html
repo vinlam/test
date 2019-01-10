@@ -52,7 +52,7 @@
 		<script type="text/javascript">
 			layui.define(["form", "jquery"], function() {
 				var $ = layui.jquery;
-				
+				var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
 				//form.render('select');
 				var pca = {};
 
@@ -70,11 +70,11 @@
 						$(province).append('<option code="' + citys[i].code + '">' + citys[i].name + '</option>');
 						pca.keys[citys[i].name] = citys[i];
 					}
-					var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+					//var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+					
 					form.render('select');
-
 					if(initprovince) {
-						$(province).next().find('[lay-value="' + initprovince + '"]').val("initprovince");
+						//$(province).next().find('[lay-value="' + initprovince + '"]').val("initprovince");
 						//$(province).next().find('[lay-value="' + initprovince + '"]').click();
 					}
 
@@ -107,12 +107,11 @@
 						//$(city).next().find('.layui-this').removeClass('layui-this').click();
 
 						$('.pca-label-province').html(value); //此处可以自己修改 显示的位置, 不想显示可以直接去掉
-
 					});
 					if(initprovince) {
 						//console.log($(province).next().find('[lay-value="' + initprovince + '"]'));
 						//$(province).next().find('[lay-value="' + initprovince + '"]').click();
-						//$(province).next().find('[lay-value="' + initprovince + '"]').trigger("click");
+						$(province).next().find('[lay-value="' + initprovince + '"]').trigger("click");
 					}
 //					if(initcity) {
 //						$(city).next().find('[lay-value="' + initcity + '"]').click();
@@ -142,9 +141,8 @@
 						pca.ckeys[pvcitys[i].name] = pvcitys[i];
 					}
 					$(city).find('option:eq(1)').attr('selected', true);
-					var formc = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-					formc.render();
-					formc.on('select(city)', function(data) {
+					form.render('select');
+					form.on('select(city)', function(data) {
 						var value = data.value;
 						var pcity = pca.ckeys[value];
 						if(value == "全部") {
@@ -171,9 +169,8 @@
 						pca.akeys[cityareas[i].name] = cityareas[i];
 						$(area).find('option:eq(1)').attr('selected', true);
 					}
-					var forma = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-					forma.render();
-					forma.on('select(area)', function(data) {
+					form.render('select');
+					form.on('select(area)', function(data) {
 						var value = data.value;
 						var carea = pca.akeys[value];
 						if(value == "全部") {
