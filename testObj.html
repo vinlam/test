@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Obj</title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript" src="js/layui/layui.all.js"></script>
+	<script>
+		var obj = {
+			init: null,
+			name: "tom"
+		};
+		obj.init = function() {
+			this.name = "jack";
+			console.log("init name:" + obj.name)
+		}
+
+		obj.setting = function(data) {
+			this.init();
+			this.name = data;
+		}
+		console.log(obj.name)
+		//obj.init()
+		obj.setting('lili')
+		console.log(obj.name)
+
+		function Obj() {
+
+		}
+
+		Obj.a = 0; //静态变量
+
+		Obj.fn = function() { //静态函数
+
+		}
+
+		console.log(Obj.a); //0
+		console.log(typeof Obj.fn); //function
+
+		var o = new Obj();
+		console.log(o.a); //undefined
+		console.log(typeof o.fn); //undefined
+
+		function Obj1() {
+			this.a = []; //实例变量
+			this.fn = function() { //实例方法
+
+			}
+		}
+
+		console.log(typeof Obj1.a); //undefined
+		console.log(typeof Obj1.fn); //undefined
+
+		var o = new Obj1();
+		console.log(typeof o.a); //object
+		console.log(typeof o.fn); //function
+
+		function Obj2() {
+			this.a = []; //实例变量
+			this.fn = function() { //实例方法
+
+			}
+		}
+
+		var o1 = new Obj2();
+		o1.a.push(1);
+		o1.fn = {};
+		console.log(o1.a); //[1]
+		console.log(typeof o1.fn); //object
+		var o2 = new Obj2();
+		console.log(o2.a); //[]
+		console.log(typeof o2.fn); //function
+	</script>
+
+</html>

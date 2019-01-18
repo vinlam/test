@@ -1,13 +1,10 @@
-<html>  
-    <head>  
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-        <meta name="renderer" content="webkit">  
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">  
-        <meta name="apple-mobile-web-app-capable" content="yes">  
-        <meta name="format-detection" content="telephone=no">  
-        <link rel="stylesheet" href="js/layui/css/layui.css" />  
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>layui</title>
+	<link rel="stylesheet" href="js/layui/css/layui.css" />  
     </head>  
     <body>  
         <div class="layui-form">  
@@ -29,25 +26,43 @@
         </div>  
         <button id="setbtn">SetData</button>
         <button id="getbtn">GetData</button>
-    </body>  
-    <!--<script type="text/javascript" src="js/common/jquery-1.12.4.js"></script>-->  
+    </body>
     <script type="text/javascript" src="js/layui/layui.all.js"></script>  
-    <!--<script type="text/javascript" src="address.js"></script>-->  
     <script type="text/javascript">  
         layui.config({  
             //base : "" //address.js的路径  
-        }).use([ 'layer', 'jquery', "address" ], function() {  
-            var layer = layui.layer, $ = layui.jquery, address = layui.address;  
-  			address.data();
+        }).use([ 'layer', 'jquery', "selectObj" ], function() {  
+            var layer = layui.layer, $ = layui.jquery, selectObj = layui.selectObj;  
+  			selectObj.init();
   			$("#setbtn").off().on("click",setData);
   			$("#getbtn").off().on("click",getData);
   			
   			function getData(){
-  				alert(JSON.stringify(address.getSelect()));
+  				alert(JSON.stringify(selectObj.getSelect()));
   			}
   			function setData(){
-  				address.data([13, 1302, 130205]);
+  				selectObj.init([13, 1302, 130205]);
   			}
         });  
-    </script>  
-<html>  
+    </script> 
+	<script>
+		var obj = {
+			init: null,
+			name: "tom"
+		};
+		obj.init = function() {
+			this.name = "jack";
+			console.log("init name:" + obj.name)
+		}
+
+		obj.setting = function(data) {
+			this.init();
+			this.name = data;
+		}
+		console.log(obj.name)
+		//obj.init()
+		obj.setting('lili')
+		console.log(obj.name)
+	</script>
+
+</html>

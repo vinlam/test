@@ -16,7 +16,7 @@ layui.define(["form", "jquery"], function(exports) {
 			form.render();
 
 			form.on('select(province)', function(proData) {
-				$("select[name=area]").html('<option value="">请选择县/区</option>');
+				//$("select[name=area]").html('<option value="">请选择县/区</option>');
 				var value = proData.value;
 				if(value > 0) {
 					if(code && code[1] && code[2]) {
