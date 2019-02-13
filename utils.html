@@ -377,7 +377,7 @@
 				console.log(newDate.toLocaleString().replace('/',"年").replace('/',"月"));
 
 				console.log(d);
-				console.log("2017-08-12 17:50:00".replace(/-|.|\//,"年")..replace(/-|.|\//,"月"));
+				console.log("2017-08-12 17:50:00".replace(/-|.|\//,"年").replace(/-|.|\//,"月"));
 			}
 
 			var u = "GoodsUrl=http://test.eliwang.com:8069/mobile/goods.php?GoodsId=1526";
@@ -883,12 +883,12 @@
 			var r1, r2, m;
 			try {
 				r1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				r1 = 0;
 			}
 			try {
 				r2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				r2 = 0;
 			}
 			m = Math.pow(10, Math.max(r1, r2));
@@ -901,34 +901,34 @@
 			var r1, r2, m;
 			try {
 				r1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				r1 = 0;
 			}
 			try {
 				r2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				r2 = 0;
 			}
 			m = Math.pow(10, Math.max(r1, r2));
 			n = (r1 >= r2) ? r1 : r2;
-			return(Math.round(num1 * m - num2 * m) / m).toFixed(n);
+			return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
 		}
 		// 两数相除  
 		function accDiv(num1, num2) {
 			var t1, t2, r1, r2;
 			try {
 				t1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				t1 = 0;
 			}
 			try {
 				t2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				t2 = 0;
 			}
 			r1 = Number(num1.toString().replace(".", ""));
 			r2 = Number(num2.toString().replace(".", ""));
-			return(r1 / r2) * Math.pow(10, t2 - t1);
+			return (r1 / r2) * Math.pow(10, t2 - t1);
 		}
 
 		function accMul(num1, num2) {
@@ -937,10 +937,10 @@
 				s2 = num2.toString();
 			try {
 				m += s1.split(".")[1].length
-			} catch(e) {};
+			} catch (e) {};
 			try {
 				m += s2.split(".")[1].length
-			} catch(e) {};
+			} catch (e) {};
 			return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
 		}
 
@@ -958,18 +958,18 @@
 				var index = 0,
 					isDeep = false,
 					obj, copy, destination, source, i
-				if(isBoolean(arguments[0])) {
+				if (isBoolean(arguments[0])) {
 					index = 1
 					isDeep = arguments[0]
 				}
-				for(i = arguments.length - 1; i > index; i--) {
+				for (i = arguments.length - 1; i > index; i--) {
 					destination = arguments[i - 1]
 					source = arguments[i]
-					if(isObject(source) || isArray(source)) {
+					if (isObject(source) || isArray(source)) {
 						console.log(source)
-						for(var property in source) {
+						for (var property in source) {
 							obj = source[property]
-							if(isDeep && (isObject(obj) || isArray(obj))) {
+							if (isDeep && (isObject(obj) || isArray(obj))) {
 								copy = isObject(obj) ? {} : []
 								var extended = extend(isDeep, copy, obj)
 								destination[property] = extended
@@ -998,36 +998,36 @@
 			name: [a, b, c],
 			value: a
 		});
-		
-		
+
+
 		console.log(a);
-		console.log(a.name[0] === a);// false
+		console.log(a.name[0] === a); // false
 		console.log(a.value === a); // false
-		
+
 		function hasClass(obj, cls) {
 			return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
 		}
 
 		function addClass(obj, cls) {
-			if(!this.hasClass(obj, cls)) obj.className += " " + cls;
+			if (!this.hasClass(obj, cls)) obj.className += " " + cls;
 		}
 
 		function removeClass(obj, cls) {
-			if(hasClass(obj, cls)) {
+			if (hasClass(obj, cls)) {
 				var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
 				obj.className = obj.className.replace(reg, ' ');
 			}
 		}
 
 		function toggleClass(obj, cls) {
-			if(hasClass(obj, cls)) {
+			if (hasClass(obj, cls)) {
 				removeClass(obj, cls);
 			} else {
 				addClass(obj, cls);
 			}
 		}
 		document.write("使用js原生态方法");
-		document.write("<br/> 11111.12/10000 =" + (11111.12/10000));
+		document.write("<br/> 11111.12/10000 =" + (11111.12 / 10000));
 		document.write("<br/> 1.01 + 1.02 =" + (1.01 + 1.02));
 		document.write("<br/> 1.01 - 1.02 =" + (1.01 - 1.02));
 		document.write("<br/> 0.000001 / 0.0001 =" + (0.000001 / 0.0001));
@@ -1089,163 +1089,312 @@
 			var tempValue = val;
 			var tempValueStr = new String(tempValue);
 			var res = "";
-			if((tempValueStr.indexOf('E') != -1) || (tempValueStr.indexOf('e') != -1)) {
+			if ((tempValueStr.indexOf('E') != -1) || (tempValueStr.indexOf('e') != -1)) {
 				console.log(tempValueStr + '是科学计数法表示!');
-				var regExp = new RegExp('^((\\d+.?\\d+)[Ee]{1}(\\d+))$','ig');
+				var regExp = new RegExp('^((\\d+.?\\d+)[Ee]{1}(\\d+))$', 'ig');
 				var result = regExp.exec(tempValue);
 				var resultValue = "";
 				var power = "";
-				if(result != null) {
+				if (result != null) {
 					resultValue = result[2];
 					power = result[4];
 					result = regExp.exec(tempValueStr);
-					if(resultValue != "") {
-						if(power != "") {
-							var powVer = Math.pow(10,power);
+					if (resultValue != "") {
+						if (power != "") {
+							var powVer = Math.pow(10, power);
 							console.log("10的" + power + "次方[" + powVer + "]");
 							resultValue = resultValue * powVer;
 							res = resultValue;
 						}
 					}
-				}else{
-					var reg = new RegExp('^((\\d+.?\\d+)(e-){1}(\\d+))$','ig');
+				} else {
+					var reg = new RegExp('^((\\d+.?\\d+)(e-){1}(\\d+))$', 'ig');
 					var re = reg.exec(tempValue);
 					resultValue = re[2];
 					power = re[4];
-					if(resultValue != "") {
-						if(power != "") {
+					if (resultValue != "") {
+						if (power != "") {
 							var zero = "";
-							for(var i=1;i<power;i++){
-								zero +="0";
+							for (var i = 1; i < power; i++) {
+								zero += "0";
 							}
 							console.log("10的" + power + "次方[" + powVer + "]");
 							var arr = resultValue.split(".");
-							if(arr[0] == "0"){
-								resultValue = arr[0]+"."+zero+arr[1];
-							}else{
-								resultValue = 0+"."+zero+arr[0]+arr[1];
+							if (arr[0] == "0") {
+								resultValue = arr[0] + "." + zero + arr[1];
+							} else {
+								resultValue = 0 + "." + zero + arr[0] + arr[1];
 							}
-							
+
 							//resultValue = resultValue * (1/powVer);
 							res = resultValue;
 						}
 					}
 				}
-				
+
 			}
 			return res;
 		}
-		
-		
-//		var arra = [1,2,3,4,5];
-//		var bt = new Date().getTime();  
-//		for(var i = 0,len = arra.length;i<len;i++){
-//			console.log("arra:"+arra[i]);
-//		}
-//		var et = new Date().getTime();
-//		
-//		console.log((et - bt)*0.001);
-		var bt1 = new Date().getTime(); 
-		console.log("gettime:"+bt1);
-		var ar = [1,2,3,4,5];
-		for(var i = 0,item;item = ar[i++];){
-			console.log("item==:"+item);
+
+
+		//		var arra = [1,2,3,4,5];
+		//		var bt = new Date().getTime();  
+		//		for(var i = 0,len = arra.length;i<len;i++){
+		//			console.log("arra:"+arra[i]);
+		//		}
+		//		var et = new Date().getTime();
+		//		
+		//		console.log((et - bt)*0.001);
+		var bt1 = new Date().getTime();
+		console.log("gettime:" + bt1);
+		var ar = [1, 2, 3, 4, 5];
+		for (var i = 0, item; item = ar[i++];) {
+			console.log("item==:" + item);
 		}
-//		for(var i in arra){
-//			console.log("in:"+arra[i]);
-//		}
-		
+		//		for(var i in arra){
+		//			console.log("in:"+arra[i]);
+		//		}
+
 		var et1 = new Date().getTime();
-		
-		console.log("item:"+(et1 - bt1)*0.001);
-		
-		console.log(11111.00/10000);
-		
-		console.log("123".substr(0,2))
+
+		console.log("item:" + (et1 - bt1) * 0.001);
+
+		console.log(11111.00 / 10000);
+
+		console.log("123".substr(0, 2))
 		//document.body.textContent//firefox浏览器
- 
- 
-	//document.body.innerText//适用ie webkit浏览器 
- 
-	console.log(document.body.innerHTML.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' '));
-	var s = document.body.innerHTML;
-	var tx = document.body.innerText;
-	console.log(tx);
-	tx = '<p class="p-header">本溪市明山区人民法院关于辽E18690号金杯牌中型普通客车一辆（第一次...</p> <p class="p-header-sub">发布时间： 2018年7月30日 10:19</p>';
-	console.log(tx.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' '));
-	//console.log(s.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' '));
-	
-	
-	//做饭
-	function cook(){
-	    console.log('开始做饭。');
-	    var p = new Promise(function(resolve, reject){        //做一些异步操作
-	        setTimeout(function(){
-	            console.log('做饭完毕！');
-	            resolve('鸡蛋炒饭');
-	        }, 1000);
-	    });
-	    return p;
-	}
-	 
-	//吃饭
-	function eat(data){
-	    console.log('开始吃饭：' + data);
-	    var p = new Promise(function(resolve, reject){        //做一些异步操作
-	        setTimeout(function(){
-	            console.log('吃饭完毕!');
-	            resolve('一块碗和一双筷子');
-	        }, 2000);
-	    });
-	    return p;
-	}
-	 
-	function wash(data){
-	    console.log('开始洗碗：' + data);
-	    var p = new Promise(function(resolve, reject){        //做一些异步操作
-	        setTimeout(function(){
-	            console.log('洗碗完毕!');
-	            resolve('干净的碗筷');
-	        }, 2000);
-	    });
-	    return p;
-	}
-	
-	//（2）使用 then 链式调用这三个方法：
-	
-	cook()
-	.then(function(data){
-	    return eat(data);
-	})
-	.then(function(data){
-	    return wash(data);
-	})
-	.then(function(data){
-	    console.log(data);
-	});
-	
-	//当然上面代码还可以简化成如下：
-//	cook()
-//	.then(eat)
-//	.then(wash)
-//	.then(function(data){
-//	    console.log(data);
-//	});
-var word = "aa";
-word = word.substring(0,10) + "...";
-console.log(location.host);
-console.log(word);
 
-(function(){
-		
-	 function test(){
-	 	var word = "";
-	 	console.log("word:"+word +" ------------");
-	 }
-	 test();
-})()
 
-	document.getElementById("p").innerText = "aaaa";
+		//document.body.innerText//适用ie webkit浏览器 
+
+		console.log(document.body.innerHTML.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(
+			/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' '));
+		var s = document.body.innerHTML;
+		var tx = document.body.innerText;
+		console.log(tx);
+		tx =
+			'<p class="p-header">本溪市明山区人民法院关于辽E18690号金杯牌中型普通客车一辆（第一次...</p> <p class="p-header-sub">发布时间： 2018年7月30日 10:19</p>';
+		console.log(tx.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(
+			/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' '));
+		//console.log(s.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' '));
+
+
+		//做饭
+		function cook() {
+			console.log('开始做饭。');
+			var p = new Promise(function(resolve, reject) { //做一些异步操作
+				setTimeout(function() {
+					console.log('做饭完毕！');
+					resolve('鸡蛋炒饭');
+				}, 1000);
+			});
+			return p;
+		}
+
+		//吃饭
+		function eat(data) {
+			console.log('开始吃饭：' + data);
+			var p = new Promise(function(resolve, reject) { //做一些异步操作
+				setTimeout(function() {
+					console.log('吃饭完毕!');
+					resolve('一块碗和一双筷子');
+				}, 2000);
+			});
+			return p;
+		}
+
+		function wash(data) {
+			console.log('开始洗碗：' + data);
+			var p = new Promise(function(resolve, reject) { //做一些异步操作
+				setTimeout(function() {
+					console.log('洗碗完毕!');
+					resolve('干净的碗筷');
+				}, 2000);
+			});
+			return p;
+		}
+
+		//（2）使用 then 链式调用这三个方法：
+
+		cook()
+			.then(function(data) {
+				return eat(data);
+			})
+			.then(function(data) {
+				return wash(data);
+			})
+			.then(function(data) {
+				console.log(data);
+			});
+
+		//当然上面代码还可以简化成如下：
+		//	cook()
+		//	.then(eat)
+		//	.then(wash)
+		//	.then(function(data){
+		//	    console.log(data);
+		//	});
+		var word = "aa";
+		word = word.substring(0, 10) + "...";
+		console.log(location.host);
+		console.log(word);
+
+		(function() {
+
+			function test() {
+				var word = "";
+				console.log("word:" + word + " ------------");
+			}
+			test();
+		})()
+
+		document.getElementById("p").innerText = "aaaa";
+
+		//是否包含指定字符： ~
+		//~"str1".indexOf("str2")
+
+		//str1 被查找的字符串
+		//str2 查找的字符串
+		//如果 str1 不含有 str2 ，则返回数字 0 。
+
+		//例：
+
+		var str1 = 'abc';
+		var str2 = 'a';
+		if (~str1.indexOf(str2)) {
+			console.log('有' + str2) //有a
+		} else {
+			console.log('无' + str2)
+		}
+
+		//取整： |
+		//num | 0
+
+		//num 整数
+
+		//例：
+
+		1.3 | 0 //1
+
+		//取半： >>
+		//num >> 1
+
+		//num 整数
+		//例：求 50 的 1/2
+
+		50 >> 1 //25
+		//有除号 / 干嘛不用呢？多好呀： 50/2 //25
+
+
+		//成长值评级： ||
+		//需求1：
+		//成长值为5是1星；
+		//成长值为10是2星；
+		//成长值为12是3星；
+		//成长值为15是4星；
+		//其他都是0星。
+		val = 10;
+		({
+			'5': 1,
+			'10': 2,
+			'12': 3,
+			'15': 4
+		} [val] || 0);
+
+		//val 成长值。
+
+
+		//判断奇偶： &
+		//num & 1
+
+		//num 整数
+
+		//例：
+
+		var num = 3;
+		if (num & 1) {
+			console.log("num是奇数"); //num是奇数
+		} else {
+			console.log("num是偶数");
+		}
+
+		//交换两个数字的值： ^=
+		//使用位运行符：
+
+		var num1 = 1,
+			num2 = 2;
+		num1 ^= num2;
+		num2 ^= num1;
+		num1 ^= num2;
+		console.log(num1, num2); //2 1
+		//使用数组：
+
+		var num1 = 1,
+			num2 = 2;
+		num1 = [num2, num2 = num1][0];
+		console.log(num1, num2); //2 1
+
+		//2的n次方： << 和 **
+		//1 << n-1
+		//使用位运行符：
+
+		//2的n次方
+		//例：2的3次方：1<<3 //8
+
+		//使用幂运行符：
+
+		//个人觉得这个不如直接使用 幂 的方式好。
+
+		//x的y次方： x**y
+
+		//例：2的3次方：2**3 //8
+
+		//方法比较：
+
+		//使用 << 的方式可以支持负数，** 需要用括号否则出错。
+		//使用 ** 比较直观，没研究过 << 方法的任意数的任意次方的规律。
+
+		1 << 3 //8
+		2 ** 3 //8
+		-1 << 3 //-8
+		-2 ** 3 // 报错
+		-(2 ** 3) //-8
+		3 << 2 //12 错误
+		3 ** 2 //9 正确
+
+		//是否是指定字符串开头： ! 和 ^
+		//!str1.indexOf("str2")
+
+		//例：
+
+		var str1 = 'abc';
+		var str2 = 'a';
+		if (!str1.indexOf(str2)) {
+			console.log('是开头')
+		} else {
+			console.log('不是开头')
+		}
+		//使用正则方式
+
+		/^a/.test('abc') //a开头，true
+		var reg = /c$/;
+	    reg.test('abc') //c结尾，true
+
+		//字符串转数字： +
+		//+str
+
+		//例：
+
+		var str = '123';
+		console.log(typeof(str)) //string
+		console.log(typeof(+str)) //number
+
+		//转为 Boolean 值： !!
+		//!!obj
+
+		//例：
+
+		!!'text' //true
 	</script>
 
 </html>
