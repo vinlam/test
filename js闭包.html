@@ -91,15 +91,15 @@
 
 			//质数
 			function isPrime(n) {
-				if(n <= 3) {
+				if (n <= 3) {
 					return n > 1;
 				}
-				if(n % 2 == 0 || n % 3 == 0) {
+				if (n % 2 == 0 || n % 3 == 0) {
 					return false;
 				}
 
-				for(var i = 5; i * i <= n; i += 6) {
-					if(n % i == 0 || n % (i + 2) == 0) {
+				for (var i = 5; i * i <= n; i += 6) {
+					if (n % i == 0 || n % (i + 2) == 0) {
 						console.log("i:" + i);
 						return false;
 					}
@@ -108,8 +108,8 @@
 			}
 			console.log(isPrime(7))
 			var arr = [];
-			for(var i = 0; i <= 100; i++) {
-				if(isPrime(i)) {
+			for (var i = 0; i <= 100; i++) {
+				if (isPrime(i)) {
 					arr.push(isPrime(i));
 				}
 			}
@@ -118,7 +118,7 @@
 			var obj = {
 				count: 0,
 				cool: function() {
-					if(this.count < 1) {
+					if (this.count < 1) {
 						setTimeout(() => { //箭头函数
 							this.count++;
 							console.log("awesome?");
@@ -139,7 +139,7 @@
 
 			function destroyer(arr) {
 				console.log(arguments.length);
-				for(var i = 1; i < arguments.length; i++) {
+				for (var i = 1; i < arguments.length; i++) {
 					(function(i) {
 						arr = arr.filter(
 							function(val) {
@@ -205,6 +205,20 @@
 			var Circle = new Function("this.PI = 3.14159;this.area = function( r ) {return r*r*this.PI;}");
 
 			alert((new Circle()).area(1.0));
+
+			var a = "global variable";
+			(function() {
+				console.log(a);
+				var fn = function() {
+					var a = "local variable"
+					console.log(a);
+				}
+				fn();
+			})()
+
+			//输出
+			//global variable
+			//local variable
 		</script>
 	</head>
 
