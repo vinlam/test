@@ -9,8 +9,8 @@
         <meta name="format-detection" content="telephone=no">  
         <link rel="stylesheet" href="js/layui/css/layui.css" />  
     </head>  
-    <body>  
-        <div class="layui-form">  
+    <body> 
+        <!--<div class="layui-form">  
             <div class="layui-input-inline">  
                 <select name="province" lay-filter="province" class="province">  
                     <option value="">请选择省</option>  
@@ -26,7 +26,7 @@
                     <option value="">请选择县/区</option>  
                 </select>  
             </div>  
-        </div>  
+        </div>  -->
         <button id="setbtn">SetData</button>
         <button id="getbtn">GetData</button>
     </body>  
@@ -34,10 +34,32 @@
     <script type="text/javascript" src="js/layui/layui.all.js"></script>  
     <!--<script type="text/javascript" src="address.js"></script>-->  
     <script type="text/javascript">  
+    	
         layui.config({  
             //base : "" //address.js的路径  
         }).use([ 'layer', 'jquery', "address" ], function() {  
+        	
+        	
             var layer = layui.layer, $ = layui.jquery, address = layui.address;  
+  			var html = '<div class="layui-form">'+  
+            '<div class="layui-input-inline">'+  
+                '<select name="province" lay-filter="province" class="province"> '+  
+                 '   <option value="">请选择省</option> '+ 
+               ' </select>  '+
+            '</div>  '+
+            '<div class="layui-input-inline">  '+
+             '   <select name="city" lay-filter="city" disabled>  '+
+             '       <option value="">请选择市</option>  '+
+             '   </select>  '+
+            '</div>  '+
+            '<div class="layui-input-inline">  '+
+             '   <select name="area" lay-filter="area" disabled> '+ 
+             '       <option value="">请选择县/区</option>  '+
+             '   </select>  '+
+           ' </div>  '+
+        '</div>';
+  			
+  			$('body').append(html);
   			address.data();
   			$("#setbtn").off().on("click",setData);
   			$("#getbtn").off().on("click",getData);
