@@ -1,0 +1,37 @@
+<html>
+<head>
+<!--[if lt IE 8]><script src="json2.js"></script> <![endif]-->
+</head>
+
+<body>
+<!-- <script src="cycle.js"></script> -->
+<pre><p id=output></p>
+<script>
+function out(s) {
+    document.getElementById('output').innerHTML += s + '<br>';
+}
+
+function doTest() {
+    var i, o, s, jsonObj;
+    try {
+        o = {
+            number: 98.6,
+            string: 'Why is it called string?'
+        };
+        //o.object = o;
+        //o.array = [o];
+		//alert(JSON.stringify(o));
+		var str = JSON.stringify(o);
+		alert(str);
+        var obj = {};
+		obj = JSON.parse(str);
+		alert(obj.string);
+    } catch (e) {
+        debugger;
+        out("    name: " + e.name);
+        out(" message: " + e.message);
+    }
+}
+
+doTest();
+</script></pre></body></html>
