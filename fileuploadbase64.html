@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>简单的html5 File测试 for pic2base64</title>
+		<style>
+
+		</style>
+		<script src="jquery.min.js"></script>
+		<script>
+			window.onload = function() {
+				var input = document.getElementById("demo_input");
+				var result = document.getElementById("result");
+				var img_area = document.getElementById("img_area");
+				if(typeof(FileReader) === 'undefined') {
+					result.innerHTML = "抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！";
+					input.setAttribute('disabled', 'disabled');
+				} else {
+					input.addEventListener('change', readFile, false);
+				}
+			}
+			var imagebase64 = "";
+
+			function readFile() {
+				var file = this.files[0];
+				//这里我们判断下类型如果不是图片就返回 去掉就可以上传任意文件   
+				if(!/image\/\w+/.test(file.type)) {
+					alert("请确保文件为图像类型");
+					return false;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function(e) {
+					result.innerHTML = this.result;
+					imagebase64 = this.result;
+					fileSize(imagebase64)
+					img_area.innerHTML = '<div class="sitetip">图片img标签展示：</div>![](' + this.result + ')';
+				}
+			}
+
+			function fileSize(baseStr) {
+				var eqTagIndex = baseStr.indexOf("=");
+				baseStr = eqTagIndex != -1 ? baseStr.substring(0, eqTagIndex) : baseStr;
+
+				var strLen = baseStr.length;
+				var fileSize = strLen - (strLen / 8) * 2
+				alert("文件大小:" + fileSize);
+			}
+
+			$(function() {
+				$(document).ready(function() {
+					$("#subbut").off("click").on("click", uploadfile);
+				})
+
+				function uploadfile() {
+					var param = {
+						"img": imagebase64
+					}
+					var path = "fileuploadbase64.php";
+					$.ajax({
+						type: "post",
+						url: path,
+						data: param,
+						success: function(res) {
+							alert("upload success")
+						},
+						error: function(xhr) {
+							alert("err" + JSON.stringify(xhr));
+						}
+					});
+				}
+			})
+		</script>
+	</head>
+
+	<body>
+		<form action="fileuploadbase64.php" method="post">
+			<input type="file" value="sdgsdg" id="demo_input" />
+			<textarea name="img" id="result" rows=30 cols=300></textarea>
+			<p id="img_area"></p>
+			<input type="submit" value="提交">
+		</form>
+		<input id="subbut" type="button" value="ajax提交">
+	</body>
+
+</html>

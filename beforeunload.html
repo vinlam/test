@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>阻止关闭和刷新</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//			var ie = userAgent.
+			//			if() {
+			//				window.attachEvent("beforeunload", listenClose, false);
+			//			} else {
+			//				window.addEventListener("beforeunload", listenClose, false);
+			//			}
+			//
+			//			function unListen() {
+			//				if() {
+			//					window.detachEvent("beforeunload", listenClose, false);
+			//				} else {
+			//
+			//					window.removeEventListener('beforeunload', listenClose, false);
+			//				}
+			//			}
+			
+			function listenClose(e) {
+				alert(e+ "go away");
+				var confirmationMessage = '业务未执行完成，离开本页面会导致执行失败，是否现在离开？';
+
+				(e || window.event).returnValue = confirmationMessage;
+
+				return confirmationMessage;
+
+			}
+			
+			//firefoxt第一次好像不触发
+			var EventUtil = {
+				addHandler: function(element, type, handler) {
+					if(element.addEventListener) {
+						element.addEventListener(type, handler, false);
+					} else if(element.attachEvent) {
+						element.attachEvent("on" + type, handler);
+					} else {
+						element["on" + type] = handler;
+					}
+				},
+				removeHandler: function(element, type, handler) {
+					if(element.removeEventListener) {
+						element.removeEventListener(type, handler, false);
+					} else if(element.detachEvent) {
+						element.detachEvent("on" + type, handler);
+					} else {
+						element["on" + type] = null;
+					}
+				}
+			};
+			EventUtil.addHandler(window, "beforeunload", listenClose);
+			//EventUtil.addHandler(window,"beforeunload",)
+		</script>
+
+		<button id="" onclick="unListen()">解除关闭监听</button>
+	</body>
+
+</html>
