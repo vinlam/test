@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>clone</title>
+	</head>
+
+	<body id="b">
+		<div id="box">adfad</div>
+		<div id="d">
+			<ul id="myList1">
+				<li>Coffee</li>
+				<li>Tea</li>
+			</ul>
+			<ul id="myList2">
+				<li>Water</li>
+				<li>Milk</li>
+			</ul>
+		</div>
+		<p id="demo">请点击按钮把项目从一个列表复制到另一个列表中。</p>
+
+		<button onclick="myFunction()">试一下</button>
+
+		<p>请尝试把 <em>deep</em> 参数设置为 false，将仅仅克隆空的 LI 元素。</p>
+	</body>
+	<script>
+		function myFunction() {
+			var itm = document.getElementById("myList2").lastChild;
+			var cln = itm.cloneNode(true);
+			document.getElementById("myList1").appendChild(cln);
+
+			var itm1 = document.getElementById("myList2");
+			var cln1 = itm1.cloneNode(true);
+			document.getElementById("b").appendChild(cln1);
+		}
+		
+		//1.通用对象克隆：
+		function clone(obj) {
+			let temp = null;
+			if(obj instanceof Array) {
+				temp = obj.concat();
+			} else if(obj instanceof Function) {
+				//函数是共享的是无所谓的，js也没有什么办法可以在定义后再修改函数内容
+				temp = obj;
+			} else {
+				temp = new Object();
+				for(let item in obj) {
+					let val = obj[item];
+					temp[item] = typeof val == 'object' ? clone(val) : val; //这里也没有判断是否为函数，因为对于函数，我们将它和一般值一样处理
+				}
+			}
+			return temp;
+		}
+
+		//整个clone函数的思路可能有点乱，但是可以这样理顺：
+		//把obj的value当做只有普通值、数组和函数，先按部就班地处理，然后再考虑之前的“普通值”有可能是object，所以这里做个判断，在递归一下clone函数就可以了
+		//ps:值得注意的是，官方有一种方法可以生成新的函数实例，就是bind()
+
+		function aaa() {
+			console.log(this);
+		};
+
+		var c = aaa;
+		var d = aaa.bind(); //bind如果不传东西，默认是window对象
+
+		c === aaa; //true
+		d === aaa; //false
+
+		//2.JSON对象序列化方法
+		//这个方法明显是简单得多，但是有个弊端，就是不能复制函数
+		var obj = {
+			a: 1,
+			b: 2
+		}
+		var newObj = JSON.parse(JSON.stringify(obj));
+		newObj.a = "abc";
+		console.log(obj);
+		console.log(newObj);
+		//3.dom元素的复制——cloneNode
+		var div = document.getElementById('box');
+		var box2 = div.cloneNode(true);
+		document.getElementsByTagName("body")[0].appendChild(box2);
+		//4.es6新方法——Object.assign
+		//		var obj = {
+		//			a: 1,
+		//			b: 2
+		//		}
+		var newObj = Object.assign({}, obj);
+		console.log(newObj)
+	</script>
+
+</html>
