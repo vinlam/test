@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>禁止按回车键提交表单</title>
+	</head>
+
+	<body>
+		<form name="myform" action="" onkeydown="if(event.keyCode==13){return false;}">
+			<input type=text name=user>
+			<input type=text name=pass>
+			<input type=button name=mybutton value=submit onclick=myform.submit()>
+		</form>
+		您可以在"myform.submit()"函数里加入表单判断，和一般的表单判断一样，只是改一下函数名。
+	</body>
+	<script>
+		document.onkeydown = keyDownSearch;
+
+		function keyDownSearch(e) {
+			// 兼容FF和IE和Opera  
+			var theEvent = e || window.event;
+			var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+			if(code == 13) {
+				DoSomeThing(); //具体处理函数  
+				return false;
+			}
+			return true;
+		}
+
+		function DoSomeThing() {
+			alert("enter");
+		}
+	</script>
+
+</html>

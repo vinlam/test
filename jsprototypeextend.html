@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>原型链继承</title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		// 创建父构造函数
+		function SuperClass() {
+			this.name = 'liyajie';
+			this.age = 25;
+			this.showName = function() {
+				console.log(this.name);
+			}
+		}
+		// 设置父构造函数的原型
+		SuperClass.prototype.friends = ['小名', '小强'];
+		SuperClass.prototype.showAge = function() {
+			console.log(this.age);
+		}
+		// 创建子构造函数
+		function SubClass() {
+
+		}
+		// 实现继承
+		SubClass.prototype = new SuperClass();
+		// 修改子构造函数的原型的构造器属性
+		SubClass.prototype.constructor = SubClass;
+
+		var child = new SubClass();
+		console.log(child.name); // liyajie
+		console.log(child.age); // 25
+		child.showName(); // liyajie
+		child.showAge(); // 25
+		console.log(child.friends); // ['小名','小强']
+
+		// 当我们改变friends的时候, 父构造函数的原型对象的也会变化
+		child.friends.push('小王八');
+		console.log(child.friends);
+		//["小名", "小强", "小王八"]
+		var father = new SuperClass();
+		console.log(father.friends);
+		//["小名", "小强", "小王八"]
+	</script>
+
+</html>
