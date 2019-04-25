@@ -8,12 +8,25 @@
 
 		</style>
 		<script src="js/jquery.min.js"></script>
-		<script>
-//			window.onload = function() {
-//				load()
-//			}
+	</head>
+
+	<body>
+		<form action="fileuploadbase64.php" method="post">
+			<input type="file" value="sdgsdg" id="demo_input" />
+			<textarea name="img" id="result" rows=30 cols=300></textarea>
+			<p id="img_area"></p>
+			<input type="submit" value="Form提交">
+		</form>
+		<input id="subbut" type="button" value="ajax提交">
+	</body>
+	<script>
+		$(function() {
+			//			window.onload = function() {
+			//				load()
+			//			}
 			var result = null;
-			function load(){
+
+			function load() {
 				var input = document.getElementById("demo_input");
 				result = document.getElementById("result");
 				var img_area = document.getElementById("img_area");
@@ -24,7 +37,7 @@
 					input.addEventListener('change', readFile, false);
 				}
 			}
-			
+
 			//firefoxt第一次好像不触发
 			var EventUtil = {
 				addHandler: function(element, type, handler) {
@@ -47,7 +60,7 @@
 				}
 			};
 			EventUtil.addHandler(window, "load", load);
-			var imagebase64 = "";
+			var imagebase64 = null;
 
 			function readFile() {
 				var file = this.files[0];
@@ -56,32 +69,50 @@
 					alert("请确保文件为图像类型");
 					return false;
 				}
-				var reader = new FileReader();//ie,7,8,9不支持
+				var reader = new FileReader(); //ie,7,8,9不支持
 				reader.readAsDataURL(file);
 				reader.onload = function(e) {
-					result.innerHTML = this.result;
+					//result.innerHTML = this.result;
 					imagebase64 = this.result;
-					fileSize(imagebase64);
+					//fileSize(imagebase64);
 					imagecompresswithcanvas(imagebase64);
 					//img_area.innerHTML = '<div class="sitetip">图片img标签展示：</div>![](' + this.result + ')';
 				}
 			}
-			
+
 			// 添加文件
 			var index = 1;
 			var files = [];
-			function imagecompresswithcanvas(path) {
+
+			function imagecompresswithcanvas(source,compressvalue,quality) {
 				var img = new Image();
-				img.src = path;
-				console.log("before:"+fileSize(path));
+				img.src = source;
+				console.log("before:" + fileSize(source));
+				//默认压缩尺寸
+				var defaultcompressvalue = 800;
+				//默认质量0.1-1;
+				var defaultquality = 1;
 				img.onload = function() {
 					var that = this;
 					//生成比例 
 					var w = that.width,
 						h = that.height,
+						
+					defaultvalue = compressvalue?compressvalue:defaultcompressvalue;
+					defaultquality = quality && quality <　1 ?quality:defaultquality;
+					if(w > h && w > defaultvalue){
 						scale = w / h;
-					w = 480 || w; //480  你想压缩到多大
-					h = w / scale;
+						w = defaultvalue; //480  你想压缩到多大
+						h = w / scale;
+					}else if(h > w && h > defaultvalue){
+						scale = h / w;
+						h = defaultvalue; //480  你想压缩到多大
+						w = h / scale;
+					}else{
+						defaultquality = 1;
+					}
+//					w = defaultvalue || w; //480  你想压缩到多大
+//					h = w / scale;
 
 					//生成canvas
 					var canvas = document.createElement('canvas');
@@ -95,17 +126,18 @@
 
 					ctx.drawImage(that, 0, 0, w, h);
 
-					var base64 = canvas.toDataURL('image/jpeg', 1 || 0.8); //1z 表示图片质量，越低越模糊。
-					console.log("after:"+fileSize(base64));
+					var base64 = canvas.toDataURL('image/jpeg', 1 || defaultquality); //1z 表示图片质量，越低越模糊。
+					console.log("after:" + fileSize(base64));
+					imagebase64 = base64;
 					files.push({
 						name: "file" + index,
 						pic: base64
 					}); // 把base64数据丢进数组，上传要用。
 
 					index++;
-
-//					var pic = document.getElementById("x");
-//					pic.src = base64; //这里丢到img 的 src 里面就能看到效果了
+					
+					//					var pic = document.getElementById("x");
+					//					pic.src = base64; //这里丢到img 的 src 里面就能看到效果了
 				}
 			}
 
@@ -115,46 +147,38 @@
 
 				var strLen = baseStr.length;
 				var fileSize = strLen - (strLen / 8) * 2;
-				fileSize = fileSize / 1024 ;
+				fileSize = fileSize / 1024;
 				alert("文件大小:" + fileSize);
-				return fileSize.toFixed(2)+ "Kb";
+				return fileSize.toFixed(2) + "Kb";
 				//
 			}
 
-			$(function() {
-				$(document).ready(function() {
-					$("#subbut").off("click").on("click", uploadfile);
-				})
-
-				function uploadfile() {
-					var param = {
-						"img": imagebase64
-					}
-					var path = "fileuploadbase64.php";
-					$.ajax({
-						type: "post",
-						url: path,
-						data: param,
-						success: function(res) {
-							alert("upload success")
-						},
-						error: function(xhr) {
-							alert("err" + JSON.stringify(xhr));
-						}
-					});
-				}
+			$(document).ready(function() {
+				$("#subbut").off("click").on("click", uploadfile);
 			})
-		</script>
-	</head>
 
-	<body>
-		<form action="fileuploadbase64.php" method="post">
-			<input type="file" value="sdgsdg" id="demo_input" />
-			<textarea name="img" id="result" rows=30 cols=300></textarea>
-			<p id="img_area"></p>
-			<input type="submit" value="提交">
-		</form>
-		<input id="subbut" type="button" value="ajax提交">
-	</body>
+			function uploadfile() {
+				if(imagebase64 == null){
+					alert("请选择图片！");
+					return;
+				}
+				var param = {
+					"img": imagebase64
+				}
+				var path = "fileuploadbase64.php";
+				$.ajax({
+					type: "post",
+					url: path,
+					data: param,
+					success: function(res) {
+						alert("upload success")
+					},
+					error: function(xhr) {
+						alert("err" + JSON.stringify(xhr));
+					}
+				});
+			}
+		})
+	</script>
 
 </html>

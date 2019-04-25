@@ -3994,7 +3994,6 @@ S2.define('select2/dropdown/search',[
   '../utils'
 ], function ($, Utils) {
   function Search () { }
-
   Search.prototype.render = function (decorated) {
     var $rendered = decorated.call(this);
 
@@ -4086,6 +4085,12 @@ S2.define('select2/dropdown/search',[
   };
 
   Search.prototype.showSearch = function (_, params) {
+  	//Defaults.options
+  	//console.log(JSON.stringify(this))
+  	//console.log(this.options.options.searchFlag)
+  	if(this.options.options.searchFlag == false){
+  		return false;
+  	}
     return true;
   };
 
@@ -4755,6 +4760,14 @@ S2.define('select2/defaults',[
           HidePlaceholder
         );
       }
+      if (options.searchFlag != null) {
+      	this.defaults.searchFlag = options.searchFlag
+//    	 var search = require(options.amdBase + 'dropdown/search');
+//      options.search = Utils.Decorate(
+//        options.resultsAdapter,
+//        search
+//      );
+      }
 
       if (options.selectOnClose) {
         options.resultsAdapter = Utils.Decorate(
@@ -4987,6 +5000,7 @@ S2.define('select2/defaults',[
       maximumSelectionLength: 0,
       minimumResultsForSearch: 0,
       selectOnClose: false,
+      searchFlag:true,
       sorter: function (data) {
         return data;
       },

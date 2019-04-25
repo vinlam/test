@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>IE的hideFocus与非IE的outline:none</title>
+		<!--<script src="js/common/jquery-1.8.3.js"></script>-->
+		<script src="js/jquery.min.js"></script>
+		<!--<script src="js/common/jquery-1.12.4.js"></script>-->
+		<style type="text/css">
+			<!-- .STYLE1 {
+				outline: none;
+				/*可用于a,input == */
+			}
+			
+			-->
+		</style>
+		<script>
+			//$(function(){
+				
+				$(document).ready(function(){
+					var html = '<div style="background-color: blue;" style="width: 100px;height: 100px;">aaaaaaaaaaaaaaadfsdfs</div>';
+					$('html').append(html);
+					//$('body').append(html);
+					
+				})
+			//})()
+			
+		</script>
+	</head>
+
+	<body>
+		<a href="#">正常情况</a><br />
+		<input type="file" name="file" value="fileselect" hidefocus="hidefocus" /><br />
+		<input type="checkbox" name="checkbox" value="checkbox" /><br />
+		<input type="submit" name="Submit" value="正常情况" /><br />
+		<br />
+		<br />
+		<a href="#" hidefocus="true">IE的hideFocus</a><br />
+		<input type="checkbox" name="checkbox" value="checkbox" hidefocus="true" /><br />
+		<input type="submit" name="Submit" value="IE的hideFocus" hidefocus="true" /><br /> 对应的JS为：
+		<br /> document.getElementById(ID).hideFocus = true;<br /> document.getElementsByName(Name).hideFocus = true;<br /> 两都的区别：http://332374363.blog.51cto.com/5262696/1128379
+		<br />
+		<br />
+		<br />
+		<a href="#" class="STYLE1">非IE的outline:none</a><br />
+		<input type="checkbox" name="checkbox" value="checkbox" class="STYLE1" /><br />
+		<input type="submit" name="Submit" value="非IE的outline:none" class="STYLE1" /><br />
+		<div id="d" style="background-color: red;" style="width: 100px;height: 100px;"></div>
+	</body>
+	
+
+</html>
