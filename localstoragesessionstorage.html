@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>storage</title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		if(window.localStorage) {
+			alert("浏览支持localStorage");
+			
+			if(sessionStorage.getItem("key")){
+				alert("sessionStorage:"+sessionStorage.getItem("key"));
+			}else{
+				sessionStorage.setItem("key", "value"+Math.random(100)); 	
+				
+			}
+			if(localStorage.getItem("site")){
+				alert("localStorage:"+localStorage.getItem("key"));
+			}else{
+				localStorage.setItem("key", "value"+Math.random(100)); 	
+				
+			}
+		} else {
+			alert("浏览暂不支持localStorage")
+		} //或者 if(typeof window.localStorage == 'undefined'){ 	alert("浏览暂不支持localStorage") }
+		if(window.addEventListener) {
+			window.addEventListener("storage", handle_storage, false);
+		} else if(window.attachEvent) {
+			window.attachEvent("onstorage", handle_storage);
+		}
+
+		function handle_storage(e) {
+			if(!e) {
+				e = window.event;
+			}
+		}
+	</script>
+
+</html>
