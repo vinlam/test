@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>layui小例子</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+	</head>
+	</head>
+
+	<body>
+		<form class="layui-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label">站点</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="close" lay-skin="switch" id="c_all" lay-filter="switchTest" lay-text="全不选|全选">
+					<input type="checkbox" name="close" lay-skin="switch" id="c_boolean" lay-filter="c_boolean" lay-text="反选|反选"><br/><br/>
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="北京" value="10001">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="测试" value="10002">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="西安" value="10003">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="常州" value="10004">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="肇庆" value="10005">
+				</div>
+			</div>
+		</form>
+	</body>
+	<script src="js/layui/layui.all.js"></script>
+	<script>
+		layui.use(['form',"jquery"], function() {
+			var form = layui.form;
+			var $ = layui.jquery;
+			//全选 全不选
+			form.on('switch(c_boolean)', function(data) {
+
+				var item = $(".cityId");
+				item.each(function() {
+					if($(this).prop("checked")) {
+						$(this).prop("checked", false);
+					} else {
+						$(this).prop("checked", true);
+					}
+				})
+				form.render('checkbox');
+			})
+
+			//有一个未选中 取消全选
+			form.on('checkbox(c_one)', function(data) {
+				var item = $(".cityId");
+				for(var i = 0; i < item.length; i++) {
+					if(item[i].checked == false) {
+						$("#c_all").prop("checked", false);
+						form.render('checkbox');
+						break;
+					}
+				}
+				//如果都勾选了  勾上全选
+				var all = item.length;
+				for(var i = 0; i < item.length; i++) {
+					if(item[i].checked == true) {
+						all--;
+					}
+				}
+				if(all == 0) {
+					$("#c_all").prop("checked", true);
+					form.render('checkbox');
+				}
+			});
+
+			//反选
+			form.on('switch(switchTest)', function(data) {
+				if(this.checked) {
+					var a = data.elem.checked;
+					if(a == true) {
+						$(".cityId").prop("checked", true);
+						form.render('checkbox');
+					} else {
+						$(".cityId").prop("checked", false);
+						form.render('checkbox');
+					}
+				} else {
+					var item = $(".cityId");
+					item.each(function() {
+						if($(this).prop("checked")) {
+							$(this).prop("checked", false);
+						} else {
+							$(this).prop("checked", true);
+						}
+					})
+					form.render('checkbox');
+				}
+
+			});
+
+		});
+	</script>
+
+</html>

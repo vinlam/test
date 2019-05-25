@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>layui小例子</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+	</head>
+	</head>
+
+	<body>
+		<form class="layui-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label">站点</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="常州" value="10004">
+					<input type="checkbox" name="cityId" lay-skin="primary" lay-filter="c_one" class="cityId" title="肇庆" value="10005">
+				</div>
+			</div>
+		</form>
+	</body>
+	<script src="js/layui/layui.all.js"></script>
+	<script>
+		layui.use(['form',"jquery"], function() {
+			var form = layui.form;
+			var $ = layui.jquery;
+			//全选 全不选
+
+			//有一个未选中 取消全选
+			form.on('checkbox(c_one)', function(data) {
+				console.log(data.elem.value);
+				var target = data.elem;
+				
+				var item = $(".cityId");
+					item.each(function() {
+						if($(this).prop("checked")) {
+							$(this).prop("checked", false);
+						}
+					})
+				for(var i = 0; i < item.length; i++) {
+					if(item[i].value == data.elem.value) {
+						$(item[i]).prop("checked", true);
+						form.render('checkbox');
+						break;
+					}
+				}
+			});
+
+
+		});
+	</script>
+
+</html>

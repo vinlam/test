@@ -13,7 +13,10 @@
 		<button id="btn1" name="btnnnn" bid="sdasda" onclick="showOut(this.getAttribute('bid'))">add2</button>
 		<!--showFun(默认属性可以通过this.获取，自定义属性则通过this.getAttribute("bid"))-->
 		<div id="testdiv">
-			<ul></ul>
+			<!--<ul>
+				<li class="tt" name="liname1" id="1">1<input type="button" name="liinputname1" value="btninp"></li>
+				<li class="tt" name="liname1" id="2">1<input type="button" name="liinputname1" value="btninp"></li>
+			</ul>-->
 		</div>
 		<div>
 			<ul id="one" class="level-1">
@@ -56,6 +59,12 @@
 				//	alert(this.id);
 				//});
 				//				//addChild();
+				
+				var html = '<ul>'+
+				'<li class="tt" name="liname1" id="1">1<input type="button" name="liinputname1" value="btninp"></li>'+
+				'<li class="tt" name="liname1" id="2">1<input type="button" name="liinputname1" value="btninp"></li>'
+				'</ul>';
+				$("#testdiv").append(html);
 				$("#btn1").on("mousedown", function() {
 					alert("add mousedown")
 				});
@@ -133,7 +142,7 @@
 				$('li.item-a').closest('ul').css('background-color', 'red');
 
 			})
-			$("div").on("click", ".hh", function() {
+			$("#testdiv").on("click", ".hh", function() {
 				console.log($(this).closest('.pp').text());
 
 			})
