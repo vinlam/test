@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>layui</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" />
+	</head>
+
+	<body>
+		<table id="demo" lay-filter="test"></table>
+		<button id="setbtn">SetData</button>
+		<button id="getbtn">GetData</button>
+	</body>
+	<script type="text/javascript" src="js/layui/layui.all.js"></script>
+	<script type="text/javascript">
+		layui.config({
+			//base : "" //address.js的路径  
+		}).use(['layer', 'jquery'], function() {
+			var layer = layui.layer,
+				$ = layui.jquery,
+				table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#demo',
+				height: 312,
+				url: 'layuitabledata.json' //数据接口
+					,
+				page: true //开启分页
+					,
+				cols: [
+					[ //表头
+						{
+							field: 'id',
+							title: 'ID',
+							width: 80,
+							sort: true,
+							fixed: 'left'
+						}, {
+							field: 'username',
+							title: '用户名',
+							width: 80
+						}, {
+							field: 'sex',
+							title: '性别',
+							width: 80,
+							sort: true
+						}, {
+							field: 'city',
+							title: '城市',
+							width: 80
+						}, {
+							field: 'sign',
+							title: '签名',
+							width: 177
+						}, {
+							field: 'experience',
+							title: '积分',
+							width: 80,
+							sort: true
+						}, {
+							field: 'score',
+							title: '评分',
+							width: 80,
+							sort: true
+						}, {
+							field: 'classify',
+							title: '职业',
+							width: 80
+						}, {
+							field: 'wealth',
+							title: '财富',
+							width: 135,
+							sort: true
+						}
+					]
+				]
+			});
+
+			//selectObj.init();
+			$("#setbtn").off().on("click", setData);
+			$("#getbtn").off().on("click", getData);
+
+			function getData() {
+				//alert(JSON.stringify(selectObj.getSelect()));
+			}
+
+			function setData() {
+				//selectObj.init([13, 1302, 130205]);
+			}
+		});
+	</script>
+	<script>
+		var obj = {
+			init: null,
+			name: "tom"
+		};
+		obj.init = function() {
+			this.name = "jack";
+			console.log("init name:" + obj.name)
+		}
+
+		obj.setting = function(data) {
+			this.init();
+			this.name = data;
+		}
+		console.log(obj.name)
+		//obj.init()
+		obj.setting('lili')
+		console.log(obj.name)
+	</script>
+
+</html>

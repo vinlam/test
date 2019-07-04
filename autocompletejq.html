@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>AutoComplate</title>
+		<link rel="Stylesheet" href="js/jquery.autocomplete.css" />
+		<script type="text/javascript" src="js/common/jquery-1.12.4.js"></script>
+		<!--<script type="text/javascript" src="js/common/jquery-1.8.3.js"></script>-->
+		<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+
+		<script type="text/javascript">
+			$(function() {
+
+				var emails = [{
+						name: "Peter Pan",
+						to: "peter@pan.de"
+					},
+					{
+						name: "Molly",
+						to: "molly@yahoo.com"
+					},
+					{
+						name: "Forneria Marconi",
+						to: "live@japan.jp"
+					},
+					{
+						name: "Master <em>Sync</em>",
+						to: "205bw@samsung.com"
+					},
+					{
+						name: "Dr. <strong>Tech</strong> de Log",
+						to: "g15@logitech.com"
+					},
+					{
+						name: "Don Corleone",
+						to: "don@vegas.com"
+					},
+					{
+						name: "Mc Chick",
+						to: "info@donalds.org"
+					},
+					{
+						name: "Donnie Darko",
+						to: "dd@timeshift.info"
+					},
+					{
+						name: "Quake The Net",
+						to: "webmaster@quakenet.org"
+					},
+					{
+						name: "Dr. Write",
+						to: "write@writable.com"
+					}
+				];
+
+				$('#content').autocomplete(emails, {
+					width: 400,
+					formatItem: function(row, i, max) {
+						//   var row=eval("("+row+")");//将JSON转换成对象    
+						return "<table><tr><td align='left'>" + row.name + "</td><td align='right'>约" + row.to + "个宝贝</td></tr></table>";
+					},
+					formatMatch: function(row, i, max) {
+						// var obj=eval("("+row+")");//将JSON转换成对象    
+						return row.name + " " + row.to;
+					},
+					formatResult: function(row, i, max) {
+
+						return row.to;
+					}
+				});
+
+			});
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<input id="content" />
+		</div>
+	</body>
+
+</html>

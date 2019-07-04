@@ -7,6 +7,10 @@
 	</head>
 
 	<body>
+		<!--<img STYLE="background-image:/75/72/6c/28/6a/61/76/61/73/63/72/69/70/74/3a/61/6c/65/72/74/28/27/58/53/53/27/29/29">-->
+		<!--<img src='&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;:alert("Hello world!")' />
+		<img src="&#x6A;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;:alert('b')">-->
+		<IMG SRC="jav ascript:alert('XSS')">
 	</body>
 	<script src="js/xss.js"></script>
 	<script>
@@ -15,7 +19,7 @@
 		html = filterXSS('<script>alert("xss");<\/script>');
 		html = filterXSS('&lt;script&gt;alert("xss");&lt;/script&gt;');
 		console.log(html);
-		alert(html);
+		//alert(html);
 	</script>
-
+	<ScriPt>ALeRt("i am here")</scriPt>
 </html>

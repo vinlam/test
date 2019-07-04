@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>菜鸟教程(runoob.com)</title>
+	</head>
+
+	<body>
+
+		<p>局部变量计数。</p>
+		<button type="button" onclick="myFunction()">计数!</button>
+		<p id="demo">0</p>
+		<script>
+			var add = (function() {
+				var counter = 0;
+				return function a() {
+					return counter += 1;
+				}
+			})();
+			var b = (function() {
+				var counter = 0;
+				function a() {
+					return counter += 1;
+				}
+				return a;
+			})();
+			
+			var c = (function f() {
+				var counter = 0;
+				return function c(){return counter += 1;};
+			})();
+			
+			var fu = (function (){
+				var counter = 123;
+				return counter+1;
+			})();
+			console.log(fu);
+			function f(){
+				return 9;
+			}
+			function myFunction() {
+				document.getElementById("demo").innerHTML =""+ add()+b()+c();
+			}
+			
+			function t(word,check){
+				var contains = false;
+				for(var letter in word){
+					contains = contains || (letter === check);
+				}
+				return contains;
+			}
+			
+			console.log(t("jack","b"));
+		</script>
+
+	</body>
+
+</html>
