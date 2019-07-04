@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>精度计算</title>
+	</head>
+	<body>
+		<div>
+			<label>数1：</label>
+			<input id="n1" type="text">
+			<br>
+			<label>数2：</label>
+			<input id="n2" type="text">
+			<br>
+			<button id="add0">加(原生)</button>
+			<button id="add">加(BigNumber)</button>
+			<button id="mul">乘(BigNumber)</button>
+            <button id="divn">除(BigNumber)</button>
+			<br>
+			<label>结果： </label><span id="res"></span>
+		</div>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bignumber.js"></script>
+
+	<script>
+		$(function() {
+			$("#add0").click(function() {
+				var n1Text = $("#n1").val();
+				var n2Text = $("#n2").val();
+				var _n1 = parseFloat(n1Text);
+				var _n2 = parseFloat(n2Text);
+				var _res = _n1 + _n2;
+				$("#res").text(_res);
+			});
+			$("#add").click(function() {
+				var n1Text = $("#n1").val();
+				var n2Text = $("#n2").val();
+				var n1 = new BigNumber(n1Text);
+				var n2 = new BigNumber(n2Text);
+				var res = n1.plus(n2);
+				$("#res").text(res);
+			});
+			$("#mul").click(function() {
+				var n1Text = $("#n1").val();
+				var n2Text = $("#n2").val();
+				var n1 = new BigNumber(n1Text);
+				var n2 = new BigNumber(n2Text);
+				var res = n1.multipliedBy(n2);
+				var n = n1Text * n2Text;
+				$("#res").text(res+"---"+n);
+			});
+			
+			$("#divn").click(function() {
+				var n1Text = $("#n1").val();
+				var n2Text = $("#n2").val();
+				var n1 = new BigNumber(n1Text);
+				var n2 = new BigNumber(n2Text);
+				var res = n1.dividedBy(n2);
+				var n = n1Text / n2Text;
+				$("#res").text(res+"---"+n);
+			});
+		})
+	</script>
+</html>

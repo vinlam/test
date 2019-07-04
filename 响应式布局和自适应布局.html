@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 自适应网页设计 -->
+		<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"> -->
+		<title></title>
+		<style>
+			@media  screen and (min-width:600px) {
+				img[data-src-600px] {
+					border-radius: 8px;
+					/* content: attr(data-src-600px, url); */
+					content: url("img/image-600px.jpg"); /* */
+				}
+			}
+
+			@media  screen and (min-width:800px) {
+				img[data-src-800px] {
+					border-radius: 50%;
+					/* content: attr(data-src-800px, url); */
+					content: url("img/image-800px.jpg");
+				}
+			}
+			
+			
+			* {
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			label[for] {
+				cursor: pointer;
+			}
+			input[type="checkbox"] {
+				display: none;
+			}
+			body {
+				background-color: #000;
+			}
+			.lightbox {
+				width: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				min-height: 100%;
+				z-index: 1;
+				overflow: auto;
+				-webkit-transform: scale(0);
+				-ms-transform: scale(0);
+				transform: scale(0);
+				-webkit-transition: -webkit-transform 0.75s ease-out;
+				transition: transform 0.75s ease-out;
+			}
+			.lightbox img {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				max-width: 96%;
+				max-height: 96%;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+			}
+			input[type="checkbox"]:checked + .lightbox {
+				-webkit-transform: scale(1);
+				-ms-transform: scale(1);
+				transform: scale(1);
+			}
+			input[type="checkbox"]:checked ~ .grid {
+				opacity: 0.125;
+			}
+			.grid {
+				width: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100%;
+				background-color: #222;
+				z-index: 0;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+				-webkit-align-items: flex-start;
+				-ms-flex-align: start;
+				align-items: flex-start;
+				-webkit-align-content: flex-start;
+				-ms-flex-line-pack: start;
+				align-content: flex-start;
+				padding: 16px;
+				overflow: auto;
+				text-align: center;
+				-webkit-transition: opacity 0.75s;
+				transition: opacity 0.75s;
+			}
+			.grid .grid-item {
+				width: 25%;
+				display: inline-block;
+				padding: 16px;
+				opacity: 0.75;
+				-webkit-transition: opacity 0.5s;
+				transition: opacity 0.5s;
+			}
+			.grid .grid-item:hover {
+				opacity: 1;
+			}
+			@media screen and (max-width: 1024px) {
+				.grid .grid-item {
+					width: 50%;
+				}
+			}
+			@media screen and (max-width: 480px) {
+				.grid .grid-item {
+					width: 100%;
+				}
+			}
+			.grid img {
+				max-width: 100%;
+				max-height: 100%;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+			}
+			label {
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="img/landrover.jpg" data-src-600px="img/image-600px.jpg" data-src-800px="img/image-800px.jpg" alt="">
+		<div style="width:100%;">
+			<img style="width:100%;" src="img/landrover.jpg" srcset="img/image-600px.jpg 600w, img/image-800px.jpg 800w, img/landrover.jpg 1600w">
+		</div>
+		<div>
+			
+		</div>
+		<!-- <input type="checkbox" id="pic-1" />
+		<label for="pic-1" class="lightbox"><img src="//wow.techbrood.com/img?s=800_600&id=1" />
+		</label>
+
+		<input type="checkbox" id="pic-2" />
+		<label for="pic-2" class="lightbox"><img src="//wow.techbrood.com/img?s=800_600&id=2" />
+		</label>
+		<input type="checkbox" id="pic-3" />
+		<label for="pic-3" class="lightbox"><img src="//wow.techbrood.com/img?s=800_600&id=3" />
+		</label>
+		<input type="checkbox" id="pic-4" />
+		<label for="pic-4" class="lightbox"><img src="//wow.techbrood.com/img?s=800_600&id=4" />
+		</label>
+		<div class="grid">
+			<label for="pic-1" class="grid-item"><img src="//wow.techbrood.com/img?s=400_300&id=1" /> 巫师之手
+			</label>
+			<label for="pic-2" class="grid-item"><img src="//wow.techbrood.com/img?s=400_300&id=2" /> 会当凌绝顶
+			</label>
+			<label for="pic-3" class="grid-item"><img src="//wow.techbrood.com/img?s=400_300&id=3" /> 魔幻塔楼
+			</label>
+			<label for="pic-4" class="grid-item"><img src="//wow.techbrood.com/img?s=400_300&id=4" /> 冲浪
+			</label>
+		</div> -->
+	</body>
+</html>

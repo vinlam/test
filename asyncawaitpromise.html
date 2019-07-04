@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//在语义上要理解，async表示函数内部有异步操作
+        //另外注意，一般 await 关键字要在 async 关键字函数的内部，await 写在外面会报错
+		//先得到await右侧表达式的结果。执行async2()，打印同步代码console.log('async2'), 并且return Promise.resolve(undefined)
+        //await后，中断async函数，先执行async外的同步代码
+		async function async1() {
+			console.log("async1 start");
+			await async2();
+			console.log("async1 end");
+		}
+
+		async function async2() {
+			console.log("async2");
+		}
+
+		console.log("script start");
+
+		setTimeout(function() {
+			console.log("setTimeout");
+		}, 0);
+
+		async1();
+
+		new Promise(function(resolve) {
+			console.log("promise1");
+			resolve();
+		}).then(function() {
+			console.log("promise2");
+		});
+
+		console.log("script end");
+		
+// 		script start
+//      async1 start
+// 		async2
+// 		promise1
+// 		script end
+// 		promise2
+// 		async1 end
+//      setTimeout
+	</script>
+</html>

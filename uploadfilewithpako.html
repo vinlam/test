@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>pako upload file</title>
+		<style>
+			/*
+			 * The MIT License
+			 * Copyright (c) 2012 Matias Meno <m@tias.me>
+			 */
+			body {
+				color: #dddddd;
+				background: #2a2a2a;
+				font-family: Helvetica, Arial;}
+			p {
+				padding: 10px;}
+			a {
+				text-decoration: none;
+				color: #fff;
+				font-weight: 600;}
+			.dropzone, .dropzone * {
+				box-sizing: border-box; }
+			.dropzone {
+				position: relative; }
+			.dz-default.dz-message {
+				margin: 10px;
+				font-weight: 600;}
+			#demo-upload {
+				border: 2px dashed white;
+				border-radius: 10px;
+				margin: 10px;
+				padding: 10px;}
+			.dropzone .dz-preview {
+				position: relative;
+				display: inline-block;
+				width: 200px;
+				margin: 5px; }
+			.dz-filename {
+				overflow: hidden;
+				text-overflow: ellipsis;}
+			.dz-details > div {
+				margin: 5px;}
+			.dropzone .dz-preview .dz-progress {
+				display: block;
+				height: 20px;
+				padding: 2px;
+				background: rgba(0, 0, 0, 0.25);
+				border-radius: 10px;
+				box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
+				border: 1px solid #aaa;
+				overflow: hidden; }
+			.dropzone .dz-preview .dz-progress .dz-upload {
+				display: block;
+				height: 100%;
+				width: 0;
+				height: 14px;
+				border-radius: 7px;
+				background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+				background-color: #f2b01e;
+				transition: 0.1s linear;
+				transition-property: width, background-color;
+				box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1); }
+			button {
+				display: inline-block;
+				padding: 5px 10px;
+				font-size: 18px;
+				appearance: none;
+				box-shadow: none;
+				margin: 10px;
+				color: #2a2a2a;
+				background-color: #f2b01e;
+				border: none;
+				border-radius: 10px;
+				box-shadow: 0 5px #b2600e;}
+			button:focus {
+				outline: none}
+			button:hover {
+				background-color: #d2901e}
+			button:active {
+				background-color: #d2901e;
+				box-shadow: 0 1px #b2600e;
+				transform: translateY(4px);
+			}
+			.dropzone .dz-complete .dz-progress .dz-upload {
+				background-color: #90d21e;}
+			#speed-form {
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="speed-form" action="#">
+			Upload speed:
+			<select id="speed">
+				<option value="12500">3G (1Mbps)</option>
+				<option value="75000">LTE (6Mbps)</option>
+				<option value="150000">Cable (12Mbps)</option>
+				<option value="1250000">Fiber (100Mbps)</option>
+			</select>
+		</form>
+		<form action="#" class="dropzone" id="demo-upload"></form>
+		<div id="preview-template" style="display: none;">
+			<div class="dz-preview dz-file-preview">
+				<div class="dz-details">
+					<div class="dz-filename"><span data-dz-name=""></span></div>
+					<div class="dz-size"><span data-dz-size=""></span></div>
+				</div>
+				<div class="dz-progress">
+					<div class="dz-upload" data-dz-uploadprogress=""></div>
+				</div>
+			</div>
+		</div>
+		<p>
+			You can read more about what's happening here in <a href="https://blog.daftcode.pl/how-to-make-uploading-10x-faster-f5b3f9cfcd52"
+			 target="_blank">this short(-ish) blogpost</a>
+		</p>
+
+	</body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.4/pako_deflate.min.js"></script>
+	<script type="text/js-worker" id="worker">
+		self.addEventListener('message', function(e) {
+    // We need pako in this worker
+    importScripts('https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.4/pako_deflate.min.js');
+    // Here is our file
+    file = e.data;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var file = this.result;
+      // Compress the file
+      var compressed_file = pako.deflate(file, {level: 1});
+      var myBlob = new Blob([compressed_file]);
+      // Pass it back to the main thread
+      self.postMessage(myBlob);
+    }; 
+    reader.readAsArrayBuffer(file);
+  }, false);
+	
+	
+	
+	Dropzone.autoDiscover = false;
+
+	// Setup file upload form
+	function init() {
+		var dropzone = new Dropzone('#demo-upload', {
+			autoProcessQueue: true,
+			parallelUploads: 12,
+			dictDefaultMessage: "Drop files or click here to begin",
+			previewTemplate: document.querySelector('#preview-template').innerHTML,
+			init: function() {
+				this.on("addedfile", function(file) {
+					// Handle adding files
+					if(file.name.match(/\.gz$/g) == null) {
+						// Dirty check for compressed files
+						var blob = new Blob([document.getElementById('worker').text], {type:'text/javascript'});
+						var blobURL = window.URL.createObjectURL(blob);
+						// Compressing data may take some time, we don't want to block the main thread. Do this in a WebWorker
+						var worker = new Worker(blobURL);
+						worker.addEventListener('message', function(e) {
+							var myBlob = e.data;
+							myBlob.name = file.name + ".gz";
+							// Add compressed file to upload form
+							dropzone.addFile(myBlob);
+						}, false);
+						worker.postMessage(file);
+					}
+				});
+			}
+		});
+
+
+		// Here we fake the file upload
+		dropzone.uploadFiles = function(files) {
+			var self = this;
+			
+			var speedSelect = document.getElementById("speed");
+			var selectedSpeed = speedSelect.options[speedSelect.selectedIndex].value;
+			
+			var timeBetweenSteps = 100,
+					bytesPerStep = selectedSpeed; 
+
+			for (var i = 0; i < files.length; i++) {
+
+				var file = files[i];
+				totalSteps = file.size / bytesPerStep;
+
+				for (var step = 0; step < totalSteps; step++) {
+					var duration = timeBetweenSteps * (step + 1);
+					setTimeout(function(file, totalSteps, step) {
+						return function() {
+							file.upload = {
+								progress: Math.min(100, 100 * (step + 1) / totalSteps),
+								total: file.size,
+								bytesSent: (step + 1) * file.size / totalSteps
+							};
+
+							self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
+							if (file.upload.progress == 100) {
+								file.status = Dropzone.SUCCESS;
+								self.emit("success", file, 'success', null);
+								self.emit("complete", file);
+								self.processQueue();
+							}
+						};
+					}(file, totalSteps, step), duration);
+				}
+			}
+		}
+	}
+
+	document.addEventListener("DOMContentLoaded", init);
+</script>
+</html>

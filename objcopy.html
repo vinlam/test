@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>objectcopy</title>
+	</head>
+	<body>
+		<button id="btn">click</button>
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		var Chinese = {
+			nation: '中国'
+		}
+		var Doctor = {
+			career: '医生'
+		}
+		//浅复制
+		function extendCopy(p) {
+			var c = {};
+			for (var i in p) {
+				c[i] = p[i];
+			}
+			c.uber = p;
+			return c;
+		}
+
+		function deepCopy(p, c) {
+			var c = c || {};
+			for (var i in p) {
+				if (typeof p[i] === 'object') {
+					c[i] = (p[i].constructor === Array) ? [] : {};
+					deepCopy(p[i], c[i]);
+				} else {
+					c[i] = p[i];
+				}
+			}
+			return c;
+		}
+
+
+
+		function testcopy() {
+			var Doctor = extendCopy(Chinese);
+			Doctor.career = '医生';
+			alert(Doctor.nation); // 中国
+
+			var object1 = {
+				apple: 0,
+				banana: {
+					weight: 52,
+					price: 100
+				},
+				cherry: 97
+			};
+			var object2 = {
+				banana: {
+					price: 200
+				},
+				durian: 100
+			};
+
+			// Merge object2 into object1
+			$.extend(object1, object2);
+
+			// Assuming JSON.stringify - not available in IE<8
+			console.log(JSON.stringify(object1));
+			//{"apple":0,"banana":{"price":200},"cherry":97,"durian":100}
+		}
+
+
+		function testdeepcopy() {
+			var Doctor = deepCopy(Chinese);
+
+			//现在， 给父对象加一个属性， 值为数组。 然后， 在子对象上修改这个属性：
+			Chinese.birthPlaces = ['北京', '上海', '香港'];
+			Doctor.birthPlaces.push('厦门');
+
+			alert(Doctor.birthPlaces); //北京, 上海, 香港, 厦门
+			alert(Chinese.birthPlaces); //北京, 上海, 香港
+
+			// 			$.extend()
+			// 			jquery 中$.extend()如同。
+			// 			$.extend( [deep ], target, object1 [, objectN ] )
+			// 			 •deep 
+			// 			类型: Boolean 
+			// 			如果是true，合并成为递归（又叫做深拷贝）
+
+			var object1 = {
+				apple: 0,
+				banana: {
+					weight: 52,
+					price: 100
+				},
+				cherry: 97
+			};
+			var object2 = {
+				banana: {
+					price: 200
+				},
+				durian: 100
+			};
+
+			// Merge object2 into object1, recursively
+			$.extend(true, object1, object2);
+
+			// Assuming JSON.stringify - not available in IE<8
+			console.log(JSON.stringify(object1));
+			//{"apple":0,"banana":{"weight":52,"price":200},"cherry":97,"durian":100}
+		}
+
+		$(document).ready(function() {
+			$("#btn").off("click").on("click", testdeepcopy);
+
+			var defaults = {
+				validate: false,
+				limit: 5,
+				name: "foo"
+			};
+			var options = {
+				validate: true,
+				name: "bar"
+			};
+
+			// Merge defaults and options, without modifying defaults
+			var settings = $.extend({}, defaults, options);
+
+
+			console.log(JSON.stringify(defaults));
+			console.log(JSON.stringify(options));
+			console.log(JSON.stringify(settings));
+			//defaults -- {"validate":false,"limit":5,"name":"foo"}
+			//options -- {"validate":true,"name":"bar"}
+			//settings -- {"validate":true,"limit":5,"name":"bar"}
+		})
+	</script>
+</html>

