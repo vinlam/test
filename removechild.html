@@ -10,10 +10,23 @@
 				var liNodes = document.getElementsByTagName("li");
 				alert(liNodes.length);
 				for (var i = liNodes.length - 1; i >= 0; i--) {
-					alert("删除" + i + " liNodes[i]=" + liNodes[i]);
+					console.log("删除" + i + " liNodes[i]=" + liNodes[i]);
 					el.removeChild(liNodes[i]);
-					//<-- el.removeChild(liNodes[i]);
 				}
+			}
+			
+			function initData1() {
+				var el = document.querySelector('#thelist');
+				var liNodes = document.querySelectorAll("li");
+				alert(liNodes.length);
+// 				for (var i = liNodes.length - 1; i >= 0; i--) {
+// 					console.log("query删除" + i + " liNodes[i]=" + liNodes[i]);
+// 					el.removeChild(liNodes[i]);
+// 				}
+				liNodes.forEach(function(childNode,i){
+					console.log("for each删除" + i + " childNode=" + childNode);
+					el.removeChild(childNode);
+				})
 			}
 		</script>
 		<style type="text/css" media="all">
@@ -24,6 +37,7 @@
 				margin: 0;
 				border: 0;
 			}
+
 			body {
 				font-size: 12px;
 				-webkit-user-select: none;
@@ -36,6 +50,7 @@
 	<body>
 		<div>
 			<input type="submit" name="button" id="button" value="删除li节点" class="button gray" onclick="initData()" /> </div>
+			<input type="submit" name="button" id="button" value="query 删除li节点" class="button gray" onclick="initData1()" /> </div>
 		<div>
 			<ul id="thelist">
 				<li>Pretty row 1</li>

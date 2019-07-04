@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>图像处理marvinj</title>
+	</head>
+	<body>
+
+		<div style="width:500px; margin:auto">
+			<canvas id="canvas_1" width="500" height="300"></canvas>
+		</div>
+		<div style="width:601px; margin:auto">
+			<canvas id="canvas_2" width="601" height="400"></canvas>
+		</div>
+	</body>
+	<script src="js/marvinj-1.0.js"></script>
+	<script>
+		// Canvas and Images 
+		var canvas1 = document.getElementById("canvas_1");
+		var canvas2 = document.getElementById("canvas_2");
+
+		// Load Road image 
+		var imageRoad = new MarvinImage();
+		imageRoad.load("img/road_sign2.jpg", imageRoadLoaded);
+
+		// Load Passport image 
+		var imagePassport = new MarvinImage();
+		imagePassport.load("img/passport.png", imagePassportLoaded);
+
+		// Find Text regions in the road image 
+		function imageRoadLoaded() {
+			var segments = Marvin.findTextRegions(imageRoad, 10, 20, 70, 200);
+			drawSegments(segments, imageRoad);
+			imageRoad.draw(canvas1);
+		}
+
+		// Find Text regions in the passport image 
+		function imagePassportLoaded() {
+			var segments = Marvin.findTextRegions(imagePassport, 15, 8, 30, 150);
+			drawSegments(segments, imagePassport);
+			imagePassport.draw(canvas2);
+		}
+
+		function drawSegments(segments, image) {
+			for (var i in segments) {
+				var seg = segments[i];
+				// Skip segments that are too small
+				if (seg.height >= 5) {
+					image.drawRect(seg.x1, seg.y1 - 5, seg.width, seg.height + 10, 0xFFFF0000);
+					image.drawRect(seg.x1 + 1, seg.y1 - 4, seg.width - 2, seg.height + 8, 0xFFFF0000);
+				}
+			}
+		}
+	</script>
+</html>

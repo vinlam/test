@@ -287,7 +287,7 @@
 			function AntiSqlValid(field) {
 				var reg = /select|update|delete|insert|exec|count|'|"|=|;|>|<|%/i;
 				if(reg.test(field.value)) {
-					alert("请不要输入特殊字符及sql关键字");
+					console.log("请不要输入特殊字符及sql关键字");
 					field.value = "";
 					return false;
 				}
@@ -502,12 +502,12 @@
 				var dateStr = "2015-02-01";
 				dateStr = "2015/02/01";
 				var date = Date.parse(dateStr );//ie 8 以下不支持 - 需要改成 /
-				alert(date );
+				console.log(date );
 			}
 			
 			dateparse();
 			//地址取参
-			//alert(GetQueryString("id")); //abc.html?id=123&url=http://www.csdn.com
+			//console.log(GetQueryString("id")); //abc.html?id=123&url=http://www.csdn.com
 			function GetQueryString(name) {
 				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 				var r = window.location.search.substr(1).match(reg);
@@ -625,7 +625,7 @@
 				var reg = /^\d{13}|^\d{10}/g;
 				var ts = parseInt(timestamp);
 				if(!reg.test(ts)) {
-					alert("请输入正确的时间戳");
+					console.log("请输入正确的时间戳");
 					return;
 				}
 
@@ -673,7 +673,7 @@
 			function keepTwoDecimal(num) {
 				var result = parseFloat(num);
 				if(isNaN(result)) {
-					alert('传递参数错误，请检查！');
+					console.log('传递参数错误，请检查！');
 					return false;
 				}
 				result = Math.round(num * 100) / 100;
@@ -687,7 +687,7 @@
 					digits = 2; //默认保留两位
 				}
 				if(isNaN(result)) {
-					alert('传递参数错误，请检查！');
+					console.log('传递参数错误，请检查！');
 					return false;
 				}
 				var a = Math.pow(10, digits);
@@ -842,12 +842,13 @@
 	</body>
 	<script>
 		document.getElementById("bt").addEventListener("click", function(event) {
-			alert("cccc");
+			console.log("cccc");
 			toggleClass(this, "btn");
 		})
 		$(document).ready(function() {
 
 			$.mbank.a = "adadf";
+			//$.mbank.b = "123";
 			console.log($.mbank.a);
 
 			function afun() {
@@ -856,15 +857,15 @@
 			}
 
 			function bfun() {
-				$.extend($.mbank, {
-					a: "aaaa"
+				var newbank = $.extend({},$.mbank, {
+					a: "deepcopy"
 				});
-				console.log("b:" + $.mbank.a);
-			}
-
-			function dfun() {
-				//$.extend($.mbank,{a:"aaaa"});
-				console.log("b:" + $.mbank.b);
+				console.log("deepcopya:" + newbank.a);
+				
+// 				$.extend($.mbank, {
+// 					a: "aaaa"
+// 				});
+// 				console.log("b:" + $.mbank.a);
 			}
 
 			function cfun() {
@@ -872,9 +873,13 @@
 				$.mbank.b = "222"
 				console.log("c:" + $.mbank.a);
 				console.log("b:" + $.mbank.b);
-				$.mbank.b = undefined;
+				//$.mbank.b = undefined;
 			}
 
+			function dfun() {
+				//$.extend($.mbank,{a:"aaaa"});
+				console.log("b:" + $.mbank.b);
+			}
 			afun();
 			bfun();
 			cfun();
@@ -1057,7 +1062,7 @@
 			var num = new Number("3.4556645445E7");
 			//var num1 = new Number("1.2345e-800");
 			console.log(convertNUM("3.4556645445E7"));
-			//alert(convertNUM("3.3333333333333335e+21"));
+			//console.log(convertNUM("3.3333333333333335e+21"));
 			
 			var regExp = new RegExp('^((\\d+.?\\d+)(e){1}([+-]\\d+))$', 'ig');
 			//regExp = new RegExp('^((\\d+.?\\d+)(e+){1})', 'ig');
@@ -1068,13 +1073,13 @@
 				n = new Number('3.33e+5');
 				n = new Number(1234566677567.567);
 				n = n.toLocaleString();
-				alert(n);
+				console.log(n);
 			console.log("num: "+convertNUM("1.2345e-8"));
 			console.log("num2: "+convertNUM(1.2345e-8));
 			console.log("num3: "+convertNUM(1.2344999999999999e-8));
-			alert("a:"+convertNUM(1234566677567.567));
+			console.log("a:"+convertNUM(1234566677567.567));
 			var num1 = new Number("0.0000000000000000000000001");
-			//alert(num);
+			//console.log(num);
 			//console.log(num);
 			//console.log(num1);
 
