@@ -8,7 +8,7 @@
 
 	<body>
 	</body>
-	<script type="text/javascript" src="js/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script>
 		var obj = {
 			init: null,
@@ -74,6 +74,10 @@
 		var o2 = new Obj2();
 		console.log(o2.a); //[]
 		console.log(typeof o2.fn); //function
+		
+		var s = "{a:'123123123123123123',b:123}";
+		var s1 = "{a:123123123123123123,b:123}";
+		console.log(eval('('+s+')'));
 	</script>
 
 </html>

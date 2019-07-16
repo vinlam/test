@@ -22,11 +22,33 @@
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer&qterm"></script>
 		<title>地图展示</title>
 		<script async src="http://c.cnzz.com/core.php"></script>
+		<script type="text/javascript" src="coordtrans.js"></script>
 		<script type="text/javascript">
 			var ip = "";
 			$(function() {
 				//getIpAddress();
 				getlatlng();
+
+				var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function(r) {
+					if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+						console.log('您的位置：' + r.point.lng + ',' + r.point.lat);
+						alert('您的位置：' + r.point.lng + ',' + r.point.lat);
+						var gcj02tobd09 = coordtransform.gcj02tobd09(r.point.lng,r.point.lat);
+						console.log(gcj02tobd09);
+//						map.setCenter(new BMap.Point(r.point.x, r.point.y));
+//						var marker = new BMap.Marker(new BMap.Point(r.point.x, r.point.y)); // 创建标注
+						map.setCenter(new BMap.Point(gcj02tobd09[0], gcj02tobd09[1]));
+						//lat: 23.1200491
+						//lng: 113.30764968
+						//var marker = new BMap.Marker(new BMap.Point(gcj02tobd09[0], gcj02tobd09[1])); // 创建标注
+						var marker = new BMap.Marker(new BMap.Point(113.30764968, 23.1200491)); // 创建标注
+						map.addOverlay(marker); // 将标注添加到地图中
+						marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+					} else {
+						alert('failed' + this.getStatus());
+					}
+				});
 			});
 
 			function getIpAddress() {
@@ -37,42 +59,43 @@
 					dataType: "jsonp",
 					success: function(o) {
 						ip = o.ip;
+						console.log(ip)
 						getlatlng();
 					}
 				});
 			}
 
 			function getlatlng() {
-				ip = "117.136.79.50";
+				//ip = "117.136.79.50";
 				//var url = "http://api.map.baidu.com/highacciploc/api?v=2.0&qcip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&qterm=pc&coord=bd09ll&callback_type=jsonp";
 				var url = "";
 				//url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=GCJ02";
-				url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=WGS84";
+				//url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=WGS84";
 				url = "http://api.map.baidu.com/location/ip?ip=" + ip + "&ak=WH1r6gyQnp9Q3sSqemqhZUer&coor=bd09ll";
 				//coor = BD09ll：百度经纬度坐标，在国测局坐标基础之上二次加密而来
 				//coor = GCJ02：国测局02坐标，在原始GPS坐标基础上，按照国家测绘行业统一要求，加密后的坐标
-//				{  
-//				    address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息  
-//				    content:    #结构信息  
-//				    {  
-//				        address: "北京市",    #简要地址信息  
-//				        address_detail:    #结构化地址信息  
-//				        {  
-//				            city: "北京市",    #城市  
-//				            city_code: 131,    #百度城市代码  
-//				            district: "",    #区县  
-//				            province: "北京市",    #省份  
-//				            street: "",    #街道  
-//				            street_number: ""    #门牌号  
-//				        },  
-//				        point:    #当前城市中心点  
-//				        {  
-//				            x: "116.39564504",    #当前城市中心点经度
-//				            y: "39.92998578"    #当前城市中心点纬度
-//				        }  
-//				    },  
-//				    status: 0    #结果状态返回码  
-//				}
+				//				{  
+				//				    address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息  
+				//				    content:    #结构信息  
+				//				    {  
+				//				        address: "北京市",    #简要地址信息  
+				//				        address_detail:    #结构化地址信息  
+				//				        {  
+				//				            city: "北京市",    #城市  
+				//				            city_code: 131,    #百度城市代码  
+				//				            district: "",    #区县  
+				//				            province: "北京市",    #省份  
+				//				            street: "",    #街道  
+				//				            street_number: ""    #门牌号  
+				//				        },  
+				//				        point:    #当前城市中心点  
+				//				        {  
+				//				            x: "116.39564504",    #当前城市中心点经度
+				//				            y: "39.92998578"    #当前城市中心点纬度
+				//				        }  
+				//				    },  
+				//				    status: 0    #结果状态返回码  
+				//				}
 				$.ajax({
 					type: 'POST',
 					url: url,
@@ -80,12 +103,13 @@
 					success: function(o) {
 						console.log(o);
 						//alert(o.content.location.lng + "," + o.content.location.lat);
-						alert(o.content.point.x + "," + o.content.point.y);
+						//alert(o.content.point.x + "," + o.content.point.y);
 						//map.setCenter(new BMap.Point(o.content.location.lng, o.content.location.lat));
-						map.setCenter(new BMap.Point(o.content.point.x,o.content.point.y));
-						var marker = new BMap.Marker(new BMap.Point(o.content.point.x,o.content.point.y)); // 创建标注
+						map.setCenter(new BMap.Point(o.content.point.x, o.content.point.y));
+						var marker = new BMap.Marker(new BMap.Point(o.content.point.x, o.content.point.y)); // 创建标注
+						
 						map.addOverlay(marker); // 将标注添加到地图中
-						marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 					}
 				});
 			}

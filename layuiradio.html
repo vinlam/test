@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>layui.form小例子</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+	</head>
+
+	<body>
+		<form class="layui-form">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">单选框</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sex" value="1" title="男">
+					
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">单选框</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sex" value="2" title="女">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">单选框</label>
+				<div class="layui-input-block">
+					<input type="radio" name="lock" value="0" title="开">
+					<input type="radio" name="lock" value="1" title="关">
+				</div>
+			</div>
+			
+			<!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+		</form>
+		<script src="js/layui/layui.all.js"></script>
+		<script>
+			layui.use('form', function() {
+				var form = layui.form,$ = layui.jquery;
+				$("input[name=sex][value=1]").attr("checked", 1 == 1 ? true : false);
+         		$("input[name=sex][value=2]").attr("checked", 1 == 2 ? true : false);
+				$("input[name=lock][value=0]").attr("checked", 0 == 0 ? true : false);
+         		$("input[name=lock][value=1]").attr("checked", 0 == 1 ? true : false);
+				//各种基于事件的操作，下面会有进一步介绍
+				form.render();
+			});
+		</script>
+	</body>
+
+</html>

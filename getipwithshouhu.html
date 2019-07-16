@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="ipdiv"></div>
+	</body>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script type="text/javascript">  
+	document.querySelector("#ipdiv").innerText = returnCitySN["cip"]+','+returnCitySN["cname"];
+    console.log(returnCitySN["cip"]+','+returnCitySN["cname"])  
+</script>
+</html>
