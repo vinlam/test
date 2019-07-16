@@ -1,0 +1,138 @@
+{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "title": "类别",
+            "name": "category",
+            "type": "checbox",
+            "data": [
+                {
+                    "value": "123",
+                    "name": "儿童",
+                    "checked": "true"
+                },
+                {
+                    "value": "124",
+                    "name": "生活",
+                    "checked": "true"
+                },
+                {
+                    "value": "125",
+                    "name": "居家",
+                    "checked": "false"
+                }
+            ]
+        },
+        {
+            "title": "价格",
+            "name": "price",
+            "type": "radio",
+            "data": [
+                {
+                    "value": "126",
+                    "name": "100~200",
+                    "disabled": "true"
+                },
+                {
+                    "value": "127",
+                    "name": "200~500"
+                },
+                {
+                    "value": "128",
+                    "name": "500~100"
+                }
+            ]
+        },
+        {
+            "title": "城市",
+            "name": "city",
+            "type": "radio",
+            "data": [
+                {
+                    "value": "129",
+                    "name": "武汉"
+                },
+                {
+                    "value": "130",
+                    "name": "宜昌"
+                },
+                {
+                    "value": "131",
+                    "name": "黄冈"
+                },
+                {
+                    "value": "132",
+                    "name": "咸宁"
+                }
+            ]
+        },
+        {
+            "title": "耗时",
+            "name": "day",
+            "type": "checbox",
+            "data": [
+                {
+                    "value": "133",
+                    "name": "半天"
+                },
+                {
+                    "value": "134",
+                    "name": "1天"
+                },
+                {
+                    "value": "135",
+                    "name": "2天"
+                },
+                {
+                    "value": "136",
+                    "name": "3天"
+                },
+                {
+                    "value": "137",
+                    "name": "一周"
+                },
+                {
+                    "value": "138",
+                    "name": "半月"
+                },
+                {
+                    "value": "139",
+                    "name": "一月"
+                },
+                {
+                    "value": "140",
+                    "name": "两个月"
+                },
+                {
+                    "value": "141",
+                    "name": "三个月"
+                },
+                {
+                    "value": "142",
+                    "name": "半年"
+                },
+                {
+                    "value": "143",
+                    "name": "一年"
+                },
+                {
+                    "value": "144",
+                    "name": "两年"
+                },
+                {
+                    "value": "145",
+                    "name": "三年"
+                },
+                {
+                    "value": "146",
+                    "name": "四年"
+                },
+                {
+                    "value": "147",
+                    "name": "五年"
+                }
+            ]
+        }
+    ]
+}
