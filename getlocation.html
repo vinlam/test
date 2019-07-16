@@ -34,22 +34,45 @@
 					if(this.getStatus() == BMAP_STATUS_SUCCESS) {
 						console.log('您的位置：' + r.point.lng + ',' + r.point.lat);
 						alert('您的位置：' + r.point.lng + ',' + r.point.lat);
-						var gcj02tobd09 = coordtransform.gcj02tobd09(r.point.lng,r.point.lat);
+						var ggPoint = new BMap.Point(r.point.lng, r.point.lat);
+						var gcj02tobd09 = coordtransform.gcj02tobd09(r.point.lng, r.point.lat);
 						console.log(gcj02tobd09);
-//						map.setCenter(new BMap.Point(r.point.x, r.point.y));
-//						var marker = new BMap.Marker(new BMap.Point(r.point.x, r.point.y)); // 创建标注
+						map.setCenter(new BMap.Point(r.point.x, r.point.y));
+						var marker = new BMap.Marker(new BMap.Point(r.point.x, r.point.y)); // 创建标注
 						map.setCenter(new BMap.Point(gcj02tobd09[0], gcj02tobd09[1]));
-						//lat: 23.1200491
-						//lng: 113.30764968
+						//113.314124169937, 23.126087358275132
+						//拖拽后中心x位置:113.35752
+						//拖拽后中心y位置:23.124567
 						//var marker = new BMap.Marker(new BMap.Point(gcj02tobd09[0], gcj02tobd09[1])); // 创建标注
-						var marker = new BMap.Marker(new BMap.Point(113.30764968, 23.1200491)); // 创建标注
-						map.addOverlay(marker); // 将标注添加到地图中
-						marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+//						var marker = new BMap.Marker(new BMap.Point(113.35752, 23.124567)); // 创建标注
+//						map.addOverlay(marker); // 将标注添加到地图中
+//						marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						var convertor = new BMap.Convertor();
+						var pointArr = [];
+						pointArr.push(ggPoint);
+						convertor.translate(pointArr, 1, 5, translateCallback)
 					} else {
 						alert('failed' + this.getStatus());
 					}
 				});
 			});
+
+			//坐标转换完之后的回调函数
+			translateCallback = function(data) {
+				if(data.status === 0) {
+					var marker = new BMap.Marker(data.points[0]); // 创建标注
+					map.addOverlay(marker); // 将标注添加到地图中
+					marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+					//			var marker = new BMap.Marker(data.points[0]);
+					//			bm.addOverlay(marker);
+					//			var label = new BMap.Label("转换后的百度坐标（正确）", {
+					//				offset: new BMap.Size(20, -10)
+					//			});
+					//			marker.setLabel(label); //添加百度label
+					map.setCenter(data.points[0]);
+				}
+			}
 
 			function getIpAddress() {
 				$.ajax({
@@ -107,7 +130,7 @@
 						//map.setCenter(new BMap.Point(o.content.location.lng, o.content.location.lat));
 						map.setCenter(new BMap.Point(o.content.point.x, o.content.point.y));
 						var marker = new BMap.Marker(new BMap.Point(o.content.point.x, o.content.point.y)); // 创建标注
-						
+
 						map.addOverlay(marker); // 将标注添加到地图中
 						//marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 					}

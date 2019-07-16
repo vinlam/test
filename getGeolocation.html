@@ -6,7 +6,8 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.cookie.js"></script>
 		<!--前提要引入百度API：--> 
-		<script src="http://api.map.baidu.com/api?v=2.0&callback=loadMapSucc&ak=WH1r6gyQnp9Q3sSqemqhZUer" type="text/javascript"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WH1r6gyQnp9Q3sSqemqhZUer"></script>
+		
 	</head>
 
 	<body>
@@ -135,10 +136,10 @@
 		};
 
 		//2.获取客户端IP方法
-		var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_=' + Math.random();
-		$.getJSON(url, function(data) {
-			alert(data.Ip);
-		});
+//		var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_=' + Math.random();
+//		$.getJSON(url, function(data) {
+//			alert(data.Ip);
+//		});
 	</script>
 
 </html>
