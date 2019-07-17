@@ -5,8 +5,20 @@
 		<title>axios</title>
 	</head>
 	<body>
+		<input type="button" id="getbtn" value="getTest" />
 	</body>
+	<script src="js/axios.js"></script>
 	<script>
-		
+		var g = document.querySelector("#getbtn");
+		g.addEventListener('click', gettest);
+
+		function gettest() {
+			axios.get('http://cors-test.appspot.com/test').then(function(response) {
+				alert(JSON.stringify(response.data));
+				alert('response headers:\n\n' + JSON.stringify(response.headers));
+			}, function(err) {
+				console.log(err)
+			});
+		}
 	</script>
 </html>
