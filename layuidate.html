@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>laydate</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+		<style>
+		</style>
+	</head>
+	<body>
+		<form class="layui-form">
+			<div id="laydatediv" class="layui-input-inline">
+				<input type="text" class="layui-input" id="dateinp">
+				<i class="layui-icon layui-icon-date" style="position: absolute;top:8px;right: 8px;"></i>
+				<!-- <i class="layui-icon layui-icon-search" style="position: absolute;top:8px;right: 8px;"></i> -->
+			</div>
+		</form>
+	</body>
+	<script src="js/layui/layui.all.js"></script>
+	<script>
+		layui.use('form', function() {
+			var form = layui.form,
+				$ = layui.jquery,
+				laydate = layui.laydate;
+			laydate.render({
+				elem: '#dateinp', //制定元素
+				type: 'date',
+				//range:true,//开启左右面板
+				min: '1900-01-1', //
+				max: '2099-12-31', //规定时间期限
+				eventElem:'.layui-icon-date',
+				trigger: 'click', //定义鼠标悬停时弹出控件
+				//show: true, //默认显示
+				//showBottom:false,//不显示底部
+				//position: 'absolute',
+				//btns:['clear','now'],//工具按钮 默认值['clear', 'now', 'confirm']
+				theme: '#393D49', //主题颜色
+				calendar: true, //是否显示公历节日
+				mark: {
+					'2017-9-21': '发布' //自定义标注重要日子
+				},
+				done: function(value, date) { //value, date, endDate点击日期、清空、现在、确定均会触发。回调返回三个参数，分别代表：生成的值、日期时间对象、结束的日期时间对象
+					console.log(value);
+					console.log(date);
+				}
+			});
+
+			$('.layui-icon-date').off("click").on("click",function() {
+				//console.log(this);
+				$('#dateinp').trigger('click');
+				
+			});
+			
+			$('#dateinp').off("click").on("click",function() {
+				//console.log(this.value);
+				alert(9)
+			});
+			//form.render();
+		})
+	</script>
+</html>

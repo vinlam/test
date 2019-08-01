@@ -124,9 +124,10 @@
 			expires.setMinutes(expires.getMinutes() + 1); // Create a date 5 minutes from now
 
 			// The path parameter is needed to make this cookie valid across the whole page
-			$.cookie('login_id', 'cafed00d', {
+			$.cookie('login_id', '/bepay/?p=order|createorder', {
 				expires: expires,
-				path: '/'
+				path: '/',
+				domain:'.vinlam.com'
 			});
 
 			var toLocal = function(date) {
