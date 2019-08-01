@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>window open</title>
+	</head>
+
+	<body>
+		<div id="rdiv">
+		</div>
+		<div >
+			<input type="button" value="open" id="open" onclick="go()" />
+		</div>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+		
+		function init() {
+			var s = Math.random() * 100;
+			$("#rdiv").text(s);
+		}
+
+		function go() {
+//			var form = document.createElement('form');
+//			form.action = 'ul.html';
+//			form.target = '_blank';
+//
+//			form.method = 'POST';
+//
+//			document.body.appendChild(form);
+//			form.submit();
+			var tempwindow=window.open('_blank');//打开一个窗口，然后用
+
+			tempwindow.location='http://127.0.0.1:8020/test/ul.html';//使这个窗口跳转到百度，这样就会呈现弹出百度窗口的效果了。
+			
+			setTimeout(function(){
+				window.location.href = window.location.href;
+			},300);
+			
+			//init();
+		}
+		//
+		init();
+	</script>
+
+</html>
