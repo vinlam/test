@@ -5,44 +5,37 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<style>
-			* {
-				margin: 0;
-				padding: 0;
+			body {
+				font-family: sans-serif;
+				font-size: 0.9em;
 			}
-			
+
 			table {
-				/*设置相邻单元格的边框间的距离*/
-				border-spacing: 0;
-				/*表格设置合并边框模型*/
 				border-collapse: collapse;
-				text-align: center;
+				border-bottom: 1px solid #ddd;
 			}
-			/*关键设置 tbody出现滚动条*/
-			
-			table tbody {
+
+			thead {
+				background-color: #333;
+				color: #fff;
+			}
+
+			thead,
+			tbody {
 				display: block;
-				height: 80px;
-				overflow-y: scroll;
 			}
-			
-			table thead,
-			tbody tr {
-				display: table;
-				width: 100%;
-				table-layout: fixed;
+
+			th,
+			td {
+				padding: 8px 10px;
+				border: 1px solid #ddd;
+				width: 117px;
+				box-sizing: border-box;
 			}
-			td{
-				width:218px;
-			}
-			/*关键设置：滚动条默认宽度是16px 将thead的宽度减16px*/
-			
-			/*table thead {
-				width: calc( 100% - 1em)
-			}*/
-			
-			table thead th {
-				background: #ccc;
-				width: 218px;
+
+			tbody {
+				height: 160px;
+				overflow-y: scroll
 			}
 		</style>
 		<script>
@@ -433,7 +426,6 @@
 
 		</div>
 		<div id="tablediv">
-			<!-- <table id="datatable"></table> -->
 		</div>
 		<label class="lab">test</label>
 	</body>
@@ -483,8 +475,8 @@
 				var atname = attrname.val();
 				datachange();
 			})
-			
-			
+
+
 			$("#datadiv").on("click", ".addlab", function() {
 				//alert($(this).text());
 				var target = $(this);
@@ -496,7 +488,7 @@
 					target.parent().find(".attr").append(html);
 				}
 			})
-			
+
 			$("#datadiv").on("click", ".dellab", function() {
 				var target = $(this);
 				if (target.parent().parent().find(".attrvalue").length == 1) {
@@ -506,8 +498,6 @@
 				}
 				datachange();
 			})
-			
-			
 
 			function valcompare(target, cls) {
 				//var cls = target.get
@@ -523,37 +513,55 @@
 					})
 				}
 			}
-			
+
 			function datachange() {
 				//console.log($(target));
 				var dataarr = [];
+				var namearr = [];
 				var arrtnameList = $(".attrname");
 				var namelen = arrtnameList.length;
 				// var attrname = $("")
-				for(var i=0;i<namelen;i++){
+				for (var i = 0; i < namelen; i++) {
 					var attrvalList = $(arrtnameList[i]).parent().find(".attrvalue");
 					var attrname = $(arrtnameList[i]).val();
 					var vallen = attrvalList.length;
 					var valarr = [];
-					
-					for(var j=0;j<vallen;j++){
+					for (var j = 0; j < vallen; j++) {
 						var valcheck = $(attrvalList[j]).find(".selectval");
 						var attrval = $(valcheck).parent().find(".attrval");
 						//console.log($(valcheck).prop("checked"));
-						if($(valcheck).prop("checked") == true){
+						if ($(valcheck).prop("checked") == true) {
 							//console.log(attrval.val());
 							valarr.push(attrval.val());
 						}
 					}
-					if(valarr.length > 0){
+					if (valarr.length > 0) {
 						dataarr.push(valarr);
+						namearr.push(attrname);
 					}
-					
+
 				}
 				console.log(dataarr);
-				console.log(concatArr(dataarr));
-				rendertable([],concatArr(dataarr))
+				if(namearr.length > 0){
+					rendertable(namearr, concatArr(dataarr));
+				}
+				
 			}
+
+			$("#datadiv").on("change", ".attrname", function() {
+				//alert($(this).text());
+				var target = $(this);
+				valchange(target);
+				valcompare(target, ".attrname");
+				//datachange();
+			})
+
+			$("#datadiv").on("change", ".attrval", function() {
+				//alert($(this).text());
+				var target = $(this);
+				valchange(target);
+				valcompare(target, ".attrval");
+			})
 
 			function valchange(target) {
 				//var target = $(this);
@@ -563,43 +571,43 @@
 
 				if (target.val() == "" || target.val().length == 0) {
 					//alert("属性值不能为空");
-					if(target.hasClass(".attrval")){
+					if (target.hasClass(".attrval")) {
 						target.next().val("");
 						target.prev().prop("checked", false);
 						//return;
-					}else{
+					} else {
 						target.val("");
 						target.parent().find(".selectval").prop("checked", false);
 					}
 				}
 				datachange();
 			}
-			
-			function rendertable(data,vallist){
-				var html = '<table class="example-table"><thead><tr>';
-				for(var i = 0;i < data.length;i++){
-					html+='<th>'+data[i]+'</th>';
+
+			function rendertable(namearr, vallist) {
+				var html = '<table class=""><thead><tr>';
+				var namelen = namearr.length;
+				for (var i = 0; i < namelen; i++) {
+					html += '<th>' + namearr[i] + '</th>';
 				}
-				html+='</thead><tbody>';
-				len = vallist.length;
-				for(var j = 0;j < len;j++){
-					html +='<tr>';
-					if(vallist[j] == 1 ){
-						html +='<td>'+vallist[j]+'</td>';
-					}else{
+				html += '</thead><tbody>';
+				var len = vallist.length;
+				for (var j = 0; j < len; j++) {
+					html += '<tr>';
+					if (vallist[j] == 1) {
+						html += '<td>' + vallist[j] + '</td>';
+					} else {
 						var childlen = vallist[j].length;
-						for(var k = 0;k < childlen;k++){
-							html +='<td>'+vallist[j][k]+'</td>';
+						for (var k = 0; k < childlen; k++) {
+							html += '<td>' + vallist[j][k] + '</td>';
 						}
 					}
-					
-					html +='</tr>';
+
+					html += '</tr>';
 				}
-				
-				html+='</tbody>';
+
+				html += '</tbody>';
 				$("#tablediv").html(html);
 			}
-
 
 			$(".lab").off("click").on("click", function() {
 				alert($(this).text());
