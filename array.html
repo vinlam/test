@@ -4,6 +4,47 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			table {
+				/*设置相邻单元格的边框间的距离*/
+				border-spacing: 0;
+				/*表格设置合并边框模型*/
+				border-collapse: collapse;
+				text-align: center;
+			}
+			/*关键设置 tbody出现滚动条*/
+			
+			table tbody {
+				display: block;
+				height: 80px;
+				overflow-y: scroll;
+			}
+			
+			table thead,
+			tbody tr {
+				display: table;
+				width: 100%;
+				table-layout: fixed;
+			}
+			td{
+				width:218px;
+			}
+			/*关键设置：滚动条默认宽度是16px 将thead的宽度减16px*/
+			
+			/*table thead {
+				width: calc( 100% - 1em)
+			}*/
+			
+			table thead th {
+				background: #ccc;
+				width: 218px;
+			}
+		</style>
 		<script>
 			//一.升序排列
 			var theArray1 = [2, 3, 5, 1, 15, 8, 12, 11, 7];
@@ -29,16 +70,16 @@
 			document.writeln(arrA);
 			*/
 			function desc(x, y) {
-				if(x > y)
+				if (x > y)
 					return -1;
-				if(x < y)
+				if (x < y)
 					return 1;
 			}
 
 			function asc(x, y) {
-				if(x > y)
+				if (x > y)
 					return 1;
-				if(x < y)
+				if (x < y)
 					return -1;
 			}
 
@@ -55,9 +96,9 @@
 
 			var arrA = [6, 2, 4, 3, 5, 1];
 			arrA.sort(function(x, y) {
-				if(x % 2 == 0)
+				if (x % 2 == 0)
 					return 11;
-				if(x % 2 != 0)
+				if (x % 2 != 0)
 					return -1;
 			});
 			document.writeln(arrA);
@@ -91,15 +132,15 @@
 			//ss = ""
 			var ks = ss.split(";");
 			tt = [];
-			for(var i = 0, l = ks.length; i < l; i++) {
+			for (var i = 0, l = ks.length; i < l; i++) {
 				var nn = ks[i].split(":");
 				tt.push(nn[0]);
 			}
 			console.log(tt.toString());
 			var nna = [];
-			for(var j = 0, leng = tt.length; j < leng; j++) {
-				for(var i = 0, len = ta.length; i < len; i++) {
-					if(tt[j] == ta[i]['name']) {
+			for (var j = 0, leng = tt.length; j < leng; j++) {
+				for (var i = 0, len = ta.length; i < len; i++) {
+					if (tt[j] == ta[i]['name']) {
 						var id = ta[i]['name'];
 						var val = ta[i]['value'];
 						console.log("id:" + id + "-- val:" + val)
@@ -136,39 +177,23 @@
 				['d'],
 				['e']
 			]
-//			a,1,c,d,e
-//			a,2,c,d,e
-//			b,1,c,d,e
-//			b,2,c,d,e
+			//			a,1,c,d,e
+			//			a,2,c,d,e
+			//			b,1,c,d,e
+			//			b,2,c,d,e
 			var getCombination = function(arr) {
 				var resultArry = [];
 				arr.forEach(function(arrItem) {
-					if(resultArry.length === 0) {
+					if (resultArry.length === 0) {
 						resultArry = arrItem;
 					} else {
 						var emptyArray = [];
-//						resultArry.forEach(function(item) {
-//							arrItem.forEach(function(value) {
-//								//emptyArray.push([...item, value]);
-//								//emptyArray.push(item.push(value));
-//								emptyArray.push(item.concat(value));
-//							})
-//						})
-						resultArry.forEach(function(i) {
-//							console.log(i);
-//							console.log(typeof(i));
-							var newitem = [];
-							newitem.push(i)
-							//console.log(newitem);
+						resultArry.forEach(function(item) {
 							arrItem.forEach(function(value) {
-								//emptyArray.push([...item, value]);
+								emptyArray.push([...item, value]);
 								//emptyArray.push(item.push(value));
-								newitem.push(value);
-								//emptyArray.push(newitem);
-								//console.log(newitem);
-								emptyArray.push(i.concat(value));
-							});
-							//emptyArray.push(newitem);
+								//emptyArray.push(item.concat(value));
+							})
 						})
 						resultArry = emptyArray;
 					}
@@ -176,6 +201,30 @@
 				return resultArry;
 			}
 			console.log(getCombination(textArr));
+
+
+			function concatArr(arr) {
+				var sarr = [
+					[]
+				];
+				var result = [];
+				arr.forEach(function(value, i) {
+					var tarr = [];
+					sarr.forEach(function(value, j) {
+						arr[i].forEach(function(value, k) {
+							tarr.push(sarr[j].concat(arr[i][k]));
+						});
+					});
+					sarr = tarr;
+				});
+				sarr.forEach(function(value, i) {
+					result.push(sarr[i]);
+				})
+
+				return result;
+			}
+
+			console.log(concatArr(textArr));
 
 			var arr1 = ['a', 'b'];
 			var arr2 = ['a', 'c', 'd'];
@@ -186,7 +235,7 @@
 				//不要直接使用var arr = arr1，这样arr只是arr1的一个引用，两者的修改会互相影响  
 				var arr = arr1.concat();
 				//或者使用slice()复制，var arr = arr1.slice(0)  
-				for(var i = 0; i < arr2.length; i++) {
+				for (var i = 0; i < arr2.length; i++) {
 					arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;
 				}
 				return arr;
@@ -194,18 +243,18 @@
 
 			//合并多个数组，去重  
 			var concat = function(arr1, arr2, arr3) {
-				if(arguments.length <= 1) {
+				if (arguments.length <= 1) {
 					return false;
 				}
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
-					for(var i = 0; i < arr2.length; i++) {
+					for (var i = 0; i < arr2.length; i++) {
 						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;
 					}
 					return arr;
 				}
 				var result = concat_(arr1, arr2);
-				for(var i = 2; i < arguments.length; i++) {
+				for (var i = 2; i < arguments.length; i++) {
 					result = concat_(result, arguments[i]);
 				}
 				return result;
@@ -217,18 +266,18 @@
 			var arr3 = [6, 0, 7, 90, 2];
 
 			var concat = function(arr1, arr2, arr3) {
-				if(arguments.length <= 1) {
+				if (arguments.length <= 1) {
 					return false;
 				}
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
-					for(var i = 0; i < arr2.length; i++) {
+					for (var i = 0; i < arr2.length; i++) {
 						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;
 					}
 					return arr;
 				}
 				var result = concat_(arr1, arr2);
-				for(var i = 2; i < arguments.length; i++) {
+				for (var i = 2; i < arguments.length; i++) {
 					result = concat_(result, arguments[i]);
 				}
 				//排序  
@@ -239,23 +288,24 @@
 			}
 			console.log(concat(arr1, arr2, arr3));
 
-			function combination(arr) { 
+			function combination(arr) {
 				var sarr = [
 					[]
-				]; 
-				var result = []; 
-				for(var i = 0; i < arr.length; i++) {  
-					var tarr = [];  
-					for(var j = 0; j < sarr.length; j++) {   
-						for(var k = 0; k < arr[i].length; k++) {    
-							tarr.push(sarr[j].concat(arr[i][k]));   
-						}  
-					}  
-					sarr = tarr; 
-				} 
-				for(var m = 0; m < sarr.length; m++) {  
-					result.push(sarr[m].join('.')); 
-				} 
+				];
+				var result = [];
+				for (var i = 0; i < arr.length; i++) {
+					var tarr = [];
+					for (var j = 0; j < sarr.length; j++) {
+						for (var k = 0; k < arr[i].length; k++) {
+							tarr.push(sarr[j].concat(arr[i][k]));
+						}
+					}
+					sarr = tarr;
+				}
+				for (var m = 0; m < sarr.length; m++) {
+					//result.push(sarr[m].join('.')); 
+					result.push(sarr[m]);
+				}
 				return result;
 			}
 			var garr = [
@@ -263,6 +313,13 @@
 				["1", "2"],
 				["c", "d"]
 			];
+			garr = [
+				['a', 'b'],
+				['1', '2'],
+				['c'],
+				['d'],
+				['e']
+			]
 			var result = combination(garr);
 			console.log(result);
 
@@ -333,7 +390,7 @@
 				}
 			];
 			var middle = [];
-			console.log(buildingArr(left,right,middle));
+			console.log(buildingArr(left, right, middle));
 			/**
 			 * 关联性数组
 			 * @param arrLeft 一级数据集
@@ -341,7 +398,7 @@
 			 * @param tempArr 临时数组
 			 **/
 			function buildingArr(arrLeft, arrRight, tempArr) {
-				tempArr = arrLeft.map(function(item){
+				tempArr = arrLeft.map(function(item) {
 					var temp = item;
 					item["value"] = buildingArrTwo({
 						leftId: item["lid"],
@@ -361,8 +418,8 @@
 				var leftId = obj["leftId"];
 				//获取子级数组
 				var rightArr = obj["rightArr"];
-				for(var i = 0, j = rightArr.length; i < j; i++) {
-					if(rightArr[i]["rid"] === leftId) {
+				for (var i = 0, j = rightArr.length; i < j; i++) {
+					if (rightArr[i]["rid"] === leftId) {
 						return rightArr[i];
 					}
 				}
@@ -371,6 +428,186 @@
 	</head>
 
 	<body>
-	</body>
+		<button id="btn">添加</button>
+		<div id="datadiv">
 
+		</div>
+		<div id="tablediv">
+			<!-- <table id="datatable"></table> -->
+		</div>
+		<label class="lab">test</label>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<!-- <script src="js/jquery.min.js"></script> -->
+	<script>
+		$(function() {
+			$("#btn").off("click").on("click", function() {
+				var html =
+					'<div><div class="attr"><input class="attrname" type="text" placeholder="name">:<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div></div><span class="addlab">最多添加10项</span></div>';
+				$("#datadiv").append(html);
+				// $("#selectval").off("change").on("change", function() {
+				// 	console.log($(this).prop("checked"))
+				// })
+			})
+
+			function myTrim(value) {
+				return value.replace(/^\s+|\s+$/gm, '');
+			}
+
+			function myFunction() {
+				var str = myTrim("        Runoob        ");
+				alert(str);
+			}
+
+			$("#datadiv").on("change", ".selectval", function() {
+				//alert($(this).text());
+				var target = $(this);
+				//console.log(target.prop("checked"));
+				var attrname = target.parent().parent().find(".attrname");
+				var attrval = target.next();
+				if (myTrim(attrname.val()) == "" || attrname.val().length == 0) {
+					alert("属性名不能为空");
+					attrname.val("");
+					target.prop("checked", false);
+					return;
+				}
+
+				if (myTrim(attrval.val()) == "" || attrval.val().length == 0) {
+					alert("属性值不能为空");
+					attrval.val("");
+					target.prop("checked", false);
+					return;
+				}
+
+				var atval = attrval.val();
+				var atname = attrname.val();
+				datachange();
+			})
+			
+			
+			$("#datadiv").on("click", ".addlab", function() {
+				//alert($(this).text());
+				var target = $(this);
+				//console.log(target);
+				html =
+					'<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div></div>';
+				console.log(target.parent().find(".attrvalue").length);
+				if (target.parent().find(".attrvalue").length < 10) {
+					target.parent().find(".attr").append(html);
+				}
+			})
+			
+			$("#datadiv").on("click", ".dellab", function() {
+				var target = $(this);
+				if (target.parent().parent().find(".attrvalue").length == 1) {
+					target.parent().parent().parent().remove();
+				} else {
+					target.parent().remove();
+				}
+				datachange();
+			})
+			
+			
+
+			function valcompare(target, cls) {
+				//var cls = target.get
+				var targetlist = $(cls).not($(target));
+				if (targetlist.length > 0) {
+					targetlist.each(function(i) {
+						//console.log(targetlist[i].value);
+						if (target.val() != "" && targetlist[i].value == target.val()) {
+							alert("已存在相同值，请重新输入！");
+							target.val("");
+							return;
+						}
+					})
+				}
+			}
+			
+			function datachange() {
+				//console.log($(target));
+				var dataarr = [];
+				var arrtnameList = $(".attrname");
+				var namelen = arrtnameList.length;
+				// var attrname = $("")
+				for(var i=0;i<namelen;i++){
+					var attrvalList = $(arrtnameList[i]).parent().find(".attrvalue");
+					var attrname = $(arrtnameList[i]).val();
+					var vallen = attrvalList.length;
+					var valarr = [];
+					
+					for(var j=0;j<vallen;j++){
+						var valcheck = $(attrvalList[j]).find(".selectval");
+						var attrval = $(valcheck).parent().find(".attrval");
+						//console.log($(valcheck).prop("checked"));
+						if($(valcheck).prop("checked") == true){
+							//console.log(attrval.val());
+							valarr.push(attrval.val());
+						}
+					}
+					if(valarr.length > 0){
+						dataarr.push(valarr);
+					}
+					
+				}
+				console.log(dataarr);
+				console.log(concatArr(dataarr));
+				rendertable([],concatArr(dataarr))
+			}
+
+			function valchange(target) {
+				//var target = $(this);
+				//console.log(target.val());
+
+				target.val(myTrim(target.val()));
+
+				if (target.val() == "" || target.val().length == 0) {
+					//alert("属性值不能为空");
+					if(target.hasClass(".attrval")){
+						target.next().val("");
+						target.prev().prop("checked", false);
+						//return;
+					}else{
+						target.val("");
+						target.parent().find(".selectval").prop("checked", false);
+					}
+				}
+				datachange();
+			}
+			
+			function rendertable(data,vallist){
+				var html = '<table class="example-table"><thead><tr>';
+				for(var i = 0;i < data.length;i++){
+					html+='<th>'+data[i]+'</th>';
+				}
+				html+='</thead><tbody>';
+				len = vallist.length;
+				for(var j = 0;j < len;j++){
+					html +='<tr>';
+					if(vallist[j] == 1 ){
+						html +='<td>'+vallist[j]+'</td>';
+					}else{
+						var childlen = vallist[j].length;
+						for(var k = 0;k < childlen;k++){
+							html +='<td>'+vallist[j][k]+'</td>';
+						}
+					}
+					
+					html +='</tr>';
+				}
+				
+				html+='</tbody>';
+				$("#tablediv").html(html);
+			}
+
+
+			$(".lab").off("click").on("click", function() {
+				alert($(this).text());
+			})
+
+			$("#datadiv").on("input propertychange", "input", function() {
+				//console.log($(this).val())
+			});
+		})
+	</script>
 </html>

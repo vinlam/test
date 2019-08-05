@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>utils tool</title>
 		<link rel="stylesheet" href="jquery.range.css" />
 		<script src="js/jquery.min.js"></script>
 		<script src="jquery.range.js"></script>
@@ -857,15 +857,15 @@
 			}
 
 			function bfun() {
-				var newbank = $.extend({},$.mbank, {
+				var newbank = $.extend({}, $.mbank, {
 					a: "deepcopy"
 				});
 				console.log("deepcopya:" + newbank.a);
-				
-// 				$.extend($.mbank, {
-// 					a: "aaaa"
-// 				});
-// 				console.log("b:" + $.mbank.a);
+
+				// 				$.extend($.mbank, {
+				// 					a: "aaaa"
+				// 				});
+				// 				console.log("b:" + $.mbank.a);
 			}
 
 			function cfun() {
@@ -898,12 +898,12 @@
 			var r1, r2, m;
 			try {
 				r1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				r1 = 0;
 			}
 			try {
 				r2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				r2 = 0;
 			}
 			m = Math.pow(10, Math.max(r1, r2));
@@ -916,34 +916,34 @@
 			var r1, r2, m;
 			try {
 				r1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				r1 = 0;
 			}
 			try {
 				r2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				r2 = 0;
 			}
 			m = Math.pow(10, Math.max(r1, r2));
 			n = (r1 >= r2) ? r1 : r2;
-			return(Math.round(num1 * m - num2 * m) / m).toFixed(n);
+			return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
 		}
 		// 两数相除  
 		function accDiv(num1, num2) {
 			var t1, t2, r1, r2;
 			try {
 				t1 = num1.toString().split('.')[1].length;
-			} catch(e) {
+			} catch (e) {
 				t1 = 0;
 			}
 			try {
 				t2 = num2.toString().split(".")[1].length;
-			} catch(e) {
+			} catch (e) {
 				t2 = 0;
 			}
 			r1 = Number(num1.toString().replace(".", ""));
 			r2 = Number(num2.toString().replace(".", ""));
-			return(r1 / r2) * Math.pow(10, t2 - t1);
+			return (r1 / r2) * Math.pow(10, t2 - t1);
 		}
 
 		function accMul(num1, num2) {
@@ -952,10 +952,10 @@
 				s2 = num2.toString();
 			try {
 				m += s1.split(".")[1].length
-			} catch(e) {};
+			} catch (e) {};
 			try {
 				m += s2.split(".")[1].length
-			} catch(e) {};
+			} catch (e) {};
 			return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
 		}
 
@@ -973,18 +973,18 @@
 				var index = 0,
 					isDeep = false,
 					obj, copy, destination, source, i
-				if(isBoolean(arguments[0])) {
+				if (isBoolean(arguments[0])) {
 					index = 1
 					isDeep = arguments[0]
 				}
-				for(i = arguments.length - 1; i > index; i--) {
+				for (i = arguments.length - 1; i > index; i--) {
 					destination = arguments[i - 1]
 					source = arguments[i]
-					if(isObject(source) || isArray(source)) {
+					if (isObject(source) || isArray(source)) {
 						console.log(source)
-						for(var property in source) {
+						for (var property in source) {
 							obj = source[property]
-							if(isDeep && (isObject(obj) || isArray(obj))) {
+							if (isDeep && (isObject(obj) || isArray(obj))) {
 								copy = isObject(obj) ? {} : []
 								var extended = extend(isDeep, copy, obj)
 								destination[property] = extended
@@ -1023,18 +1023,18 @@
 		}
 
 		function addClass(obj, cls) {
-			if(!this.hasClass(obj, cls)) obj.className += " " + cls;
+			if (!this.hasClass(obj, cls)) obj.className += " " + cls;
 		}
 
 		function removeClass(obj, cls) {
-			if(hasClass(obj, cls)) {
+			if (hasClass(obj, cls)) {
 				var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
 				obj.className = obj.className.replace(reg, ' ');
 			}
 		}
 
 		function toggleClass(obj, cls) {
-			if(hasClass(obj, cls)) {
+			if (hasClass(obj, cls)) {
 				removeClass(obj, cls);
 			} else {
 				addClass(obj, cls);
@@ -1063,21 +1063,21 @@
 			//var num1 = new Number("1.2345e-800");
 			console.log(convertNUM("3.4556645445E7"));
 			//console.log(convertNUM("3.3333333333333335e+21"));
-			
+
 			var regExp = new RegExp('^((\\d+.?\\d+)(e){1}([+-]\\d+))$', 'ig');
 			//regExp = new RegExp('^((\\d+.?\\d+)(e+){1})', 'ig');
-				var result = regExp.exec("3.3333333333333335e+21");
-				console.log(result);
-				console.log(parseInt(result[4]));
-				var n = new Number(3.3333333333333335e+21);
-				n = new Number('3.33e+5');
-				n = new Number(1234566677567.567);
-				n = n.toLocaleString();
-				console.log(n);
-			console.log("num: "+convertNUM("1.2345e-8"));
-			console.log("num2: "+convertNUM(1.2345e-8));
-			console.log("num3: "+convertNUM(1.2344999999999999e-8));
-			console.log("a:"+convertNUM(1234566677567.567));
+			var result = regExp.exec("3.3333333333333335e+21");
+			console.log(result);
+			console.log(parseInt(result[4]));
+			var n = new Number(3.3333333333333335e+21);
+			n = new Number('3.33e+5');
+			n = new Number(1234566677567.567);
+			n = n.toLocaleString();
+			console.log(n);
+			console.log("num: " + convertNUM("1.2345e-8"));
+			console.log("num2: " + convertNUM(1.2345e-8));
+			console.log("num3: " + convertNUM(1.2344999999999999e-8));
+			console.log("a:" + convertNUM(1234566677567.567));
 			var num1 = new Number("0.0000000000000000000000001");
 			//console.log(num);
 			//console.log(num);
@@ -1118,18 +1118,18 @@
 			var tempValue = val;
 			var tempValueStr = new String(tempValue);
 			var res = "";
-			if((tempValueStr.indexOf('E') != -1) || (tempValueStr.indexOf('e') != -1)) {
+			if ((tempValueStr.indexOf('E') != -1) || (tempValueStr.indexOf('e') != -1)) {
 				console.log(tempValueStr + '是科学计数法表示!');
 				var regExp = new RegExp('^((\\d+.?\\d+)(E|e){1}(\\d+))$', 'ig');
 				var result = regExp.exec(tempValue);
 				var resultValue = "";
 				var power = "";
-				if(result != null) {
+				if (result != null) {
 					resultValue = result[2];
 					power = result[3];
 					result = regExp.exec(tempValueStr);
-					if(resultValue != "") {
-						if(power != "") {
+					if (resultValue != "") {
+						if (power != "") {
 							var powVer = Math.pow(10, power);
 							console.log("10的" + power + "次方[" + powVer + "]");
 							resultValue = resultValue * powVer;
@@ -1141,16 +1141,16 @@
 					var re = reg.exec(tempValue);
 					resultValue = re[2];
 					power = re[4];
-					if(resultValue != "") {
-						if(power != "") {
+					if (resultValue != "") {
+						if (power != "") {
 							var zero = "";
-							for(var i = 1; i < power; i++) {
+							for (var i = 1; i < power; i++) {
 								zero += "0";
 							}
 							var powVer = Math.pow(10, power);
 							console.log("10的" + power + "次方[" + powVer + "]");
 							var arr = resultValue.split(".");
-							if(arr[0] == "0") {
+							if (arr[0] == "0") {
 								resultValue = arr[0] + "." + zero + arr[1];
 							} else {
 								resultValue = 0 + "." + zero + arr[0] + arr[1];
@@ -1162,8 +1162,8 @@
 					}
 				}
 
-			}else{
-				res = ""+tempValueStr
+			} else {
+				res = "" + tempValueStr
 			}
 			return res;
 		}
@@ -1179,7 +1179,7 @@
 		var bt1 = new Date().getTime();
 		console.log("gettime:" + bt1);
 		var ar = [1, 2, 3, 4, 5];
-		for(var i = 0, item; item = ar[i++];) {
+		for (var i = 0, item; item = ar[i++];) {
 			console.log("item==:" + item);
 		}
 		//		for(var i in arra){
@@ -1290,7 +1290,7 @@
 
 		var str1 = 'abc';
 		var str2 = 'a';
-		if(~str1.indexOf(str2)) {
+		if (~str1.indexOf(str2)) {
 			console.log('有' + str2) //有a
 		} else {
 			console.log('无' + str2)
@@ -1327,7 +1327,7 @@
 			'10': 2,
 			'12': 3,
 			'15': 4
-		}[val] || 0);
+		} [val] || 0);
 
 		//val 成长值。
 
@@ -1339,7 +1339,7 @@
 		//例：
 
 		var num = 3;
-		if(num & 1) {
+		if (num & 1) {
 			console.log("num是奇数"); //num是奇数
 		} else {
 			console.log("num是偶数");
@@ -1399,7 +1399,7 @@
 
 		var str1 = 'abc';
 		var str2 = 'a';
-		if(!str1.indexOf(str2)) {
+		if (!str1.indexOf(str2)) {
 			console.log('是开头')
 		} else {
 			console.log('不是开头')
@@ -1425,6 +1425,38 @@
 			//例：
 
 			!!'text' //true
+
+
+		///全角空格为12288，半角空格为32 
+		///其他字符半角(33-126)与全角(65281-65374)的对应关系是：均相差65248 
+		//半角转换为全角函数 
+		console.log("."+ToDBC("."));//.．
+		console.log("！"+ToCDB("！"));//！!
+		
+		function ToDBC(txtstring) {
+			var tmp = "";
+			for (var i = 0; i < txtstring.length; i++) {
+				if (txtstring.charCodeAt(i) == 32) {
+					tmp = tmp + String.fromCharCode(12288);
+				}
+				if (txtstring.charCodeAt(i) < 127) {
+					tmp = tmp + String.fromCharCode(txtstring.charCodeAt(i) + 65248);
+				}
+			}
+			return tmp;
+		}
+		//全角转换为半角函数 
+		function ToCDB(str) {
+			var tmp = "";
+			for (var i = 0; i < str.length; i++) {
+				if (str.charCodeAt(i) > 65248 && str.charCodeAt(i) < 65375) {
+					tmp += String.fromCharCode(str.charCodeAt(i) - 65248);
+				} else {
+					tmp += String.fromCharCode(str.charCodeAt(i));
+				}
+			}
+			return tmp
+		}
 	</script>
 
 </html>

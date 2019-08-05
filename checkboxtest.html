@@ -1,0 +1,217 @@
+<!DOCTYPE html">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>调研表</title>
+		<style type="text/css">
+			< !-- body {
+				margin-left: 0px;
+				margin-top: 0px;
+			}
+
+			.STYLE1 {
+				color: #000000;
+				font-size: 12px;
+				font-weight: normal;
+			}
+
+			.STYLE2 {
+				color: #000000;
+				font-size: 14px;
+				font-weight: bold;
+			}
+
+			.STYLE3 {
+				color: #000000;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			body,
+			td,
+			th {
+				font-size: 12px;
+			}
+
+			.STYLE4 {
+				color: #FF0000
+			}
+
+			.STYLE5 {
+				color: #FF0000;
+				font-weight: bold;
+				font-size: 18px;
+			}
+
+			-->
+		</style>
+		<script type="text/javascript">
+			//isMuti为是否可以多选 checkname为当前的控件调用时给this就行了 hidden为把值放到哪里个隐藏表单域,为隐藏表单域的id
+			function checkboxvalue(isMuti, checkname, hidden) {
+				var groups = document.getElementsByTagName("input");
+				var namegroups = new Array();
+				var index = 0;
+				for (i = 0; i < groups.length; i++) {
+					if (groups[i].type == "checkbox" && groups[i].name == checkname.name) {
+						namegroups[index] = groups[i];
+						index++;
+					}
+				}
+				//判断是多选
+				if (isMuti) {
+					var vals = new Array();
+					valindex = 0;
+					for (g = 0; g < namegroups.length; g++) {
+						if (namegroups[g].checked) {
+							vals[valindex] = namegroups[g].id.replace(checkname.name, "");
+							valindex++;
+						}
+					}
+					document.getElementById(hidden).value = vals.join(","); //设置值格式为1,2,3,4,5
+					alert(document.getElementById(hidden).value);
+				} else {
+					var radioval = "";
+					//单选
+					for (g = 0; g < namegroups.length; g++) {
+						if (namegroups[g].id != checkname.id) {
+							namegroups[g].checked = false;
+						} else {
+							document.getElementById(hidden).value = namegroups[g].id.replace(checkname.name, ""); //设置值
+							alert(document.getElementById(hidden).value);
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<th scope="col"><img src="images/banner.jpg" width="750" height="113" /></th>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="750" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<th height="30" bgcolor="#FEECBC" scope="col"><span class="STYLE5">产 品 体 验 调 查 表</span></th>
+						</tr>
+					</table>
+					<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FF7171">
+						<tr>
+							<th width="670" bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="136" rowspan="2" bgcolor="#FFDFDD" scope="col"><span class="STYLE2">您的年龄</span></th>
+										<th width="110" height="30" bgcolor="#FFEBE6" scope="col"><span class="STYLE3">20岁以下</span></th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">20-30岁</th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">30-40岁 </th>
+										<th width="94" bgcolor="#FFEBE6" scope="col">40-50岁 </th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">50岁以上 </th>
+									</tr>
+									<tr>
+										<td height="25" bgcolor="#FFFFFF"><input id="age1" type="checkbox" name="age" οnclick="checkboxvalue(false , this , 'agehidden')" />
+											<input id="agehidden" type="hidden" name="agehidden" value="" />
+										</td>
+										<td bgcolor="#FFFFFF"><input id="age2" type="checkbox" name="age" οnclick="checkboxvalue(false , this , 'agehidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="age3" type="checkbox" name="age" οnclick="checkboxvalue(false , this , 'agehidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="age4" type="checkbox" name="age" οnclick="checkboxvalue(false , this , 'agehidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="age5" type="checkbox" name="age" οnclick="checkboxvalue(false , this , 'agehidden')" /></td>
+									</tr>
+								</table>
+							</th>
+							<th width="80" rowspan="5" bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="100%" height="286" bgcolor="#FFFFFF" scope="col"><span class="STYLE1">备注： <br />
+												请在符合您情况的选项下面打<strong>√</strong>。存在的问题和建议请用文字进行详细说明<strong>。</strong></span></th>
+									</tr>
+								</table>
+							</th>
+						</tr>
+						<tr>
+							<th width="670" bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="137" rowspan="2" bgcolor="#FFDFDD" scope="col"><span class="STYLE2">您的学历</span></th>
+										<th width="108" height="30" bgcolor="#FFEBE6" scope="col">高中</th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">大专</th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">本科 </th>
+										<th width="96" bgcolor="#FFEBE6" scope="col">硕士</th>
+										<th width="105" bgcolor="#FFEBE6" scope="col">博士以上 </th>
+									</tr>
+									<tr>
+										<td height="25" bgcolor="#FFFFFF"><input id="education1" type="checkbox" name="education" οnclick="checkboxvalue(false , this , 'educationhidden')" />
+											<input id="educationhidden" type="hidden" name="educationhidden" value="" />
+										</td>
+										<td bgcolor="#FFFFFF"><input id="education2" type="checkbox" name="education" οnclick="checkboxvalue(false , this , 'educationhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="education3" type="checkbox" name="education" οnclick="checkboxvalue(false , this , 'educationhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="education4" type="checkbox" name="education" οnclick="checkboxvalue(false , this , 'educationhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="education5" type="checkbox" name="education" οnclick="checkboxvalue(false , this , 'educationhidden')" /></td>
+									</tr>
+								</table>
+							</th>
+						</tr>
+						<tr>
+							<th bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="137" rowspan="2" bgcolor="#FFDFDD" scope="col"><span class="STYLE2">您常用的产品功能</span></th>
+										<th width="108" height="30" bgcolor="#FFEBE6" scope="col">时间控制</th>
+										<th width="106" bgcolor="#FFEBE6" scope="col">远程管理</th>
+										<th width="105" bgcolor="#FFEBE6" scope="col">双屏互动</th>
+										<th width="97" bgcolor="#FFEBE6" scope="col">内容控制</th>
+										<th width="105" bgcolor="#FFEBE6" scope="col">上网记录查询</th>
+									</tr>
+									<tr>
+										<td height="25" bgcolor="#FFFFFF"><input id="fun1" type="checkbox" name="fun" οnclick="checkboxvalue(true , this , 'funhidden')" />
+											<input id="funhidden" type="hidden" name="funhidden" value="" />
+										</td>
+										<td bgcolor="#FFFFFF"><input id="fun2" type="checkbox" name="fun" οnclick="checkboxvalue(true , this , 'funhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="fun3" type="checkbox" name="fun" οnclick="checkboxvalue(true , this , 'funhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="fun4" type="checkbox" name="fun" οnclick="checkboxvalue(true , this , 'funhidden')" /></td>
+										<td bgcolor="#FFFFFF"><input id="fun5" type="checkbox" name="fun" οnclick="checkboxvalue(true , this , 'funhidden')" /></td>
+									</tr>
+								</table>
+							</th>
+						</tr>
+						<tr>
+							<th bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="130" height="50" bgcolor="#FFDFDD" scope="col"><span class="STYLE2">产品BUG（包括页面、功能等等）历</span></th>
+										<th width="519" colspan="5" bgcolor="#FFFFFF" scope="col">&nbsp;</th>
+									</tr>
+
+								</table>
+							</th>
+						</tr>
+						<tr>
+							<th bgcolor="#FFFFFF" scope="col">
+								<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FF7171">
+									<tr>
+										<th width="129" height="50" bgcolor="#FFDFDD" scope="col"><span class="STYLE2">存在的问题及建议</span></th>
+										<th width="520" colspan="5" bgcolor="#FFFFFF" scope="col">&nbsp;</th>
+									</tr>
+								</table>
+							</th>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<th height="40" class="STYLE1 STYLE4" scope="col">备注：参与调查并详细真实完成调查表的用户将有机会获得精美礼品一份。</th>
+			</tr>
+		</table>
+		<table width="750" border="0" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<th height="40" class="STYLE1 STYLE4" scope="col"><img src="images/tj.jpg" width="137" height="52" /></th>
+			</tr>
+		</table>
+	</body>
+</html>

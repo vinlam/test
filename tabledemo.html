@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Scrollable table </title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 0.9em;
+        }
+        table {
+            border-collapse: collapse;
+            border-bottom: 1px solid #ddd;
+        }
+        thead {
+            background-color: #333;
+            color: #fff;
+        }
+        thead,tbody {
+            display: block;
+        }
+        th,td {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            width: 117px;
+            box-sizing: border-box;
+        }
+        tbody {
+            height: 160px;
+            overflow-y: scroll
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="example-table">
+        <thead>
+            <tr>
+                <th> Header 1 </th>
+                <th> Header 2 </th>
+                <th> Header 3 </th>
+                <th> Header 4 </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> Row 1- Col 1 </td>
+                <td> Row 1- Col 2 </td>
+                <td> Row 1- Col 3 </td>
+                <td> Row 1- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 2- Col 1 </td>
+                <td> Row 2- Col 2 </td>
+                <td> Row 2- Col 3 </td>
+                <td> Row 2- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 3- Col 1 </td>
+                <td> Row 3- Col 2 </td>
+                <td> Row 3- Col 3 </td>
+                <td> Row 3- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 4- Col 1 </td>
+                <td> Row 4- Col 2 </td>
+                <td> Row 4- Col 3 </td>
+                <td> Row 4- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 5- Col 1 </td>
+                <td> Row 5- Col 2 </td>
+                <td> Row 5- Col 3 </td>
+                <td> Row 5- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 6- Col 1 </td>
+                <td> Row 6- Col 2 </td>
+                <td> Row 6- Col 3 </td>
+                <td> Row 6- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 7- Col 1 </td>
+                <td> Row 7- Col 2 </td>
+                <td> Row 7- Col 3 </td>
+                <td> Row 7- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 8- Col 1 </td>
+                <td> Row 8- Col 2 </td>
+                <td> Row 8- Col 3 </td>
+                <td> Row 8- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 9- Col 1 </td>
+                <td> Row 9- Col 2 </td>
+                <td> Row 9- Col 3 </td>
+                <td> Row 9- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 10- Col 1 </td>
+                <td> Row 10- Col 2 </td>
+                <td> Row 10- Col 3 </td>
+                <td> Row 10- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 11- Col 1 </td>
+                <td> Row 11- Col 2 </td>
+                <td> Row 11- Col 3 </td>
+                <td> Row 11- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 12- Col 1 </td>
+                <td> Row 12- Col 2 </td>
+                <td> Row 12- Col 3 </td>
+                <td> Row 12- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 13- Col 1 </td>
+                <td> Row 13- Col 2 </td>
+                <td> Row 13- Col 3 </td>
+                <td> Row 13- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 14- Col 1 </td>
+                <td> Row 14- Col 2 </td>
+                <td> Row 14- Col 3 </td>
+                <td> Row 14- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 15- Col 1 </td>
+                <td> Row 15- Col 2 </td>
+                <td> Row 15- Col 3 </td>
+                <td> Row 15- Col 4 </td>
+            </tr>
+            <tr>
+                <td> Row 16- Col 1 </td>
+                <td> Row 16- Col 2 </td>
+                <td> Row 16- Col 3 </td>
+                <td> Row 16- Col 4 </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/common/jquery.slimscroll.min.js"></script>
+    <script>
+        $('.example-table tbody').slimscroll({
+            height: '160px',
+            alwaysVisible: true,
+            color: '#333'
+        })
+    </script>
+</body>
+
+</html>

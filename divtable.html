@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>div+CSSForTable2</title>
+
+		<style>
+			.table {
+				/*此元素会作为块级表格来显示（类似 <table>），表格前后带有换行符。*/
+				display: table;
+				/*border-collapse:collapse;*/
+				border-collapse: separate;
+				border: 1px solid #ccc;
+			}
+
+			.table-caption {
+				/*此元素会作为一个表格标题显示（类似 <caption>）*/
+				display: table-caption;
+				margin: 0;
+				font-size: 16px;
+			}
+
+			.table-header-group {
+				/*此元素会作为一个或多个行的分组来显示（类似 <thead>）。*/
+				display: table-header-group;
+				background: #eee;
+				font-weight: bold;
+			}
+
+			.table-row-group {
+				/*此元素会作为一个或多个行的分组来显示（类似 <tbody>）。*/
+				display: table-row-group;
+			}
+
+			.table-footer-group {
+				/*此元素会作为一个或多个行的分组来显示（类似 <tfoot>）。*/
+				display: table-footer-group;
+			}
+
+			ul {
+				list-style: none;
+			}
+
+			.table-row {
+				/*此元素会作为一个表格行显示（类似 <tr>）。*/
+				display: table-row;
+			}
+
+			.table-cell {
+				/*此元素会作为一个表格单元格显示（类似 <td> 和 <th>）*/
+				display: table-cell;
+				padding: 0 5px;
+				border: 1px solid #ccc;
+			}
+
+			.table-row-group .table-row:hover,
+			.table-footer-group .table-row:hover {
+				background: #f6f6f6;
+				color: green;
+				font-weight: bold;
+			}
+
+			.table-column-group {
+				/*此元素会作为一个或多个列的分组来显示（类似 <colgroup>）。*/
+				display: table-column-group;
+			}
+
+			.table-column {
+				/*此元素会作为一个单元格列显示（类似 <col>）*/
+				display: table-column;
+				width: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="table">
+			<h2 class="table-caption">花名册：</h2>
+			<!--此行代码用于，控制列的样式。-->
+			<div class="table-column-group">
+				<div class="table-column"></div>
+				<div class="table-column"></div>
+				<div class="table-column"></div>
+			</div>
+			<!--如果不写上一个div, 也可以把样式写在以下div里。 -->
+			<div class="table-header-group">
+				<ul class="table-row">
+					<li class="table-cell">序号</li>
+					<li class="table-cell">姓名</li>
+					<li class="table-cell">年龄</li>
+				</ul>
+			</div>
+			<div class="table-row-group">
+				<ul class="table-row">
+					<li class="table-cell">1</li>
+					<li class="table-cell">John</li>
+					<li class="table-cell">19</li>
+				</ul>
+				<ul class="table-row">
+					<li class="table-cell">2</li>
+					<li class="table-cell">Mark</li>
+					<li class="table-cell">21</li>
+				</ul>
+				<ul class="table-row">
+					<li class="table-cell">3</li>
+					<li class="table-cell">Kate</li>
+					<li class="table-cell">26</li>
+				</ul>
+				<ul class="table-row">
+					<li class="table-cell">1</li>
+					<li class="table-cell">John</li>
+					<li class="table-cell">19</li>
+				</ul>
+				<ul class="table-row">
+					<li class="table-cell">2</li>
+					<li class="table-cell">Mark</li>
+					<li class="table-cell">21</li>
+				</ul>
+				<ul class="table-row">
+					<li class="table-cell">3</li>
+					<li class="table-cell">Kate</li>
+					<li class="table-cell">26</li>
+				</ul>
+			</div>
+			<div class="table-footer-group">
+				<ul class="table-row">
+					<li class="table-cell">footer</li>
+					<li class="table-cell">footer</li>
+					<li class="table-cell">footer</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
