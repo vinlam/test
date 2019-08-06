@@ -314,7 +314,7 @@
 				['e']
 			]
 			var result = combination(garr);
-			console.log(result);
+			//console.log(result);
 
 			var left = [{
 					name: 'A',
@@ -484,10 +484,10 @@
 				html =
 					'<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div>';
 				console.log(target.parent().find(".attrvalue").length);
-				//if (target.parent().find(".attrvalue").length < 10) {
+				if (target.parent().find(".attrvalue").length < 10) {
 					target.parent().find(".attr").append(html);
 					console.log(html);
-				//}
+				}
 			})
 
 			$("#datadiv").on("click", ".dellab", function() {
@@ -502,17 +502,33 @@
 
 			function valcompare(target, cls) {
 				//var cls = target.get
-				var targetlist = $(cls).not($(target));
-				if (targetlist.length > 0) {
-					targetlist.each(function(i) {
-						//console.log(targetlist[i].value);
-						if (target.val() != "" && targetlist[i].value == target.val()) {
-							alert("已存在相同值，请重新输入！");
-							target.val("");
-							return;
-						}
-					})
+				
+				if(cls == ".attrname"){
+					var targetlist = $(cls).not($(target));
+					if (targetlist.length > 0) {
+						targetlist.each(function(i) {
+							//console.log(targetlist[i].value);
+							if (target.val() != "" && targetlist[i].value == target.val()) {
+								alert("已存在相同值，请重新输入！");
+								target.val("");
+								return;
+							}
+						})
+					}
+				}else{
+					var targetlist = $(target).parent().parent().find(cls).not($(target));
+					if (targetlist.length > 0) {
+						targetlist.each(function(i) {
+							//console.log(targetlist[i].value);
+							if (target.val() != "" && targetlist[i].value == target.val()) {
+								alert("已存在相同值，请重新输入！");
+								target.val("");
+								return;
+							}
+						})
+					}
 				}
+				
 			}
 
 			function datachange() {
@@ -542,8 +558,10 @@
 					}
 
 				}
-				console.log(dataarr);
+				//console.log(dataarr);
 				if(namearr.length > 0){
+					namearr.push("数量");
+					namearr.push("价格");
 					rendertable(namearr, createdata(dataarr));
 				}else{
 					$("#tablediv").children().remove();
@@ -605,8 +623,48 @@
 				}
 				datachange();
 			}
+			
+			var oldvallist = [[]];
 
 			function rendertable(namearr, vallist) {
+				var quantityarr = [];
+				var pricearr = [];
+								
+				if($(".quantity") != null && $(".quantity").length > 0){
+					var quantitylist = $(".quantity");
+					var pricelist = $(".price");
+					var quantitylen = quantitylist.length;
+					for(var i = 0; i < quantitylen;i ++){
+						quantityarr.push($(quantitylist[i]).val());
+						pricearr.push($(pricelist[i]).val());
+					}
+					console.log(quantityarr);
+				}
+				
+				if(quantityarr.length > 0 && quantityarr.length !=vallist.length && oldvallist.length > 0){
+					if(oldvallist.length > vallist.length){
+						var olen = oldvallist.length;
+						var vlen = vallist.length;
+						for(var i = 0;i < vlen;i++){
+							for(var j = 0;j < olen;j++){
+								if(eval(''+oldvallist[j] != vallist[i]){
+									console.log(j);
+								}
+							}
+						}
+					}else{
+						var olen = oldvallist.length;
+						var vlen = vallist.length;
+						for(var i = 0;i < olen;i++){
+							for(var j = 0;j < vlen;j++){
+								if(oldvallist[j] != vallist[i]){
+									console.log(j);
+								}
+							}
+						}
+					}
+				}
+				
 				var html = '<table class=""><thead><tr>';
 				var namelen = namearr.length;
 				for (var i = 0; i < namelen; i++) {
@@ -617,19 +675,40 @@
 				for (var j = 0; j < len; j++) {
 					html += '<tr>';
 					if (vallist[j] == 1) {
-						html += '<td>' + vallist[j] + '</td>';
+						html += '<td>' + vallist[j] + '</td><td><input class="quantity" style="width: 100%;" type="text"></td><td><input class="price" style="width: 100%;" type="text"></td>';
 					} else {
 						var childlen = vallist[j].length;
 						for (var k = 0; k < childlen; k++) {
 							html += '<td>' + vallist[j][k] + '</td>';
 						}
+						html += '<td><input class="quantity" style="width: 100%;" type="text"></td><td><input class="price" style="width: 100%;" type="text"></td>';
 					}
 
 					html += '</tr>';
 				}
 
 				html += '</tbody>';
+				//console.log(html);
 				$("#tablediv").html(html);
+				oldvallist = clone(vallist);
+				console.log(oldvallist);
+			}
+			
+			function clone(obj) {
+				var temp = null;
+				if(obj instanceof Array) {
+					temp = obj.concat();
+				} else if(obj instanceof Function) {
+					//函数是共享的是无所谓的，js也没有什么办法可以在定义后再修改函数内容
+					temp = obj;
+				} else {
+					temp = new Object();
+					for(var item in obj) {
+						var val = obj[item];
+						temp[item] = typeof val == 'object' ? clone(val) : val; //这里也没有判断是否为函数，因为对于函数，我们将它和一般值一样处理
+					}
+				}
+				return temp;
 			}
 
 			$(".lab").off("click").on("click", function() {
