@@ -174,26 +174,26 @@
 			//			a,2,c,d,e
 			//			b,1,c,d,e
 			//			b,2,c,d,e
-//			var getCombination = function(arr) {
-//				var resultArry = [];
-//				arr.forEach(function(arrItem) {
-//					if (resultArry.length === 0) {
-//						resultArry = arrItem;
-//					} else {
-//						var emptyArray = [];
-//						resultArry.forEach(function(item) {
-//							arrItem.forEach(function(value) {
-//								emptyArray.push([...item, value]);//ie不支持
-//								//emptyArray.push(item.push(value));
-//								//emptyArray.push(item.concat(value));
-//							})
-//						})
-//						resultArry = emptyArray;
-//					}
-//				});
-//				return resultArry;
-//			}
-//			console.log(getCombination(textArr));
+			//			var getCombination = function(arr) {
+			//				var resultArry = [];
+			//				arr.forEach(function(arrItem) {
+			//					if (resultArry.length === 0) {
+			//						resultArry = arrItem;
+			//					} else {
+			//						var emptyArray = [];
+			//						resultArry.forEach(function(item) {
+			//							arrItem.forEach(function(value) {
+			//								emptyArray.push([...item, value]);//ie不支持
+			//								//emptyArray.push(item.push(value));
+			//								//emptyArray.push(item.concat(value));
+			//							})
+			//						})
+			//						resultArry = emptyArray;
+			//					}
+			//				});
+			//				return resultArry;
+			//			}
+			//			console.log(getCombination(textArr));
 
 
 			function concatArr(arr) {
@@ -229,7 +229,7 @@
 				var arr = arr1.concat();
 				//或者使用slice()复制，var arr = arr1.slice(0)  
 				for (var i = 0; i < arr2.length; i++) {
-					arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;//indexOf ie8 <=以下不支持
+					arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 				}
 				return arr;
 			}
@@ -242,7 +242,7 @@
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
 					for (var i = 0; i < arr2.length; i++) {
-						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;//indexOf ie8 <=以下不支持
+						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 					}
 					return arr;
 				}
@@ -265,7 +265,7 @@
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
 					for (var i = 0; i < arr2.length; i++) {
-						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0;//indexOf ie8 <=以下不支持
+						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 					}
 					return arr;
 				}
@@ -502,8 +502,8 @@
 
 			function valcompare(target, cls) {
 				//var cls = target.get
-				
-				if(cls == ".attrname"){
+
+				if (cls == ".attrname") {
 					var targetlist = $(cls).not($(target));
 					if (targetlist.length > 0) {
 						targetlist.each(function(i) {
@@ -515,7 +515,7 @@
 							}
 						})
 					}
-				}else{
+				} else {
 					var targetlist = $(target).parent().parent().find(cls).not($(target));
 					if (targetlist.length > 0) {
 						targetlist.each(function(i) {
@@ -528,7 +528,6 @@
 						})
 					}
 				}
-				
 			}
 
 			function datachange() {
@@ -559,16 +558,16 @@
 
 				}
 				//console.log(dataarr);
-				if(namearr.length > 0){
+				if (namearr.length > 0) {
 					namearr.push("数量");
 					namearr.push("价格");
 					rendertable(namearr, createdata(dataarr));
-				}else{
+				} else {
 					$("#tablediv").children().remove();
 				}
 			}
-			
-			function createdata(arr){
+
+			function createdata(arr) {
 				var sarr = [
 					[]
 				];
@@ -623,93 +622,101 @@
 				}
 				datachange();
 			}
-			
-			var oldvallist = [[]];
+
+			var oldvallist = [
+				[]
+			];
 
 			function rendertable(namearr, vallist) {
 				var quantityarr = [];
 				var pricearr = [];
-								
-				if($(".quantity") != null && $(".quantity").length > 0){
+
+				if ($(".quantity") != null && $(".quantity").length > 0) {
 					var quantitylist = $(".quantity");
 					var pricelist = $(".price");
 					var quantitylen = quantitylist.length;
-					for(var i = 0; i < quantitylen;i ++){
+					for (var i = 0; i < quantitylen; i++) {
 						quantityarr.push($(quantitylist[i]).val());
 						pricearr.push($(pricelist[i]).val());
 					}
 					console.log(quantityarr);
+				} else {
+					quantityarr.push("");
+					pricearr.push("");
 				}
-				
-				if(quantityarr.length > 0 && quantityarr.length !=vallist.length && oldvallist.length > 0){
-					if(oldvallist.length > vallist.length){
+
+				if (quantityarr.length > 0 && quantityarr.length != vallist.length && oldvallist.length > 0) {
+					if (oldvallist.length > vallist.length) {
 						var olen = oldvallist.length;
 						var vlen = vallist.length;
 						var delarr = [];
 						var newquantityarr = [];
 						var newpricearr = [];
-						var dellen = [];
-						for(var i = 0;i < vlen;i++){
-							for(var j = 0;j < olen;j++){
+						for (var i = 0; i < vlen; i++) {
+							for (var j = 0; j < olen; j++) {
 								//console.log(oldvallist[j].join("")+"==="+ vallist[i].join(""));
-								if(oldvallist[j].join("") == vallist[i].join("")){
+								if (oldvallist[j].join("") == vallist[i].join("")) {
 									//console.log(j);
 									delarr.push(j);
 								}
 							}
 						}
-						dellen = delarr.length;
-						for(var k = 0;k< dellen; k++){
-							for(var l = 0;l < quantityarr.length ;l ++){
-								if(quantityarr[l] == quantityarr[delarr[k]]){
+						var dellen = delarr.length;
+						for (var k = 0; k < dellen; k++) {
+							for (var l = 0; l < quantityarr.length; l++) {
+								if (quantityarr[l] == quantityarr[delarr[k]]) {
 									newquantityarr.push(quantityarr[l]);
 									newpricearr.push(pricearr[l]);
 								}
 							}
 						}
 						
+						if(dellen == 0){
+							for (var n = 0; n < vallist.length; n++) {
+								newquantityarr.push("");
+								newpricearr.push("");
+							}
+						}
+
 						quantityarr = newquantityarr;
 						pricearr = newpricearr;
 						//console.log("del:"+newquantityarr);
-					}else{
+					} else {
 						var olen = oldvallist.length;
 						var vlen = vallist.length;
 						var newadd = vlen - olen;
-						
+
 						var delarr = [];
 						var newquantityarr = [];
 						var newpricearr = [];
 						var dellen = [];
-						
-//						for(var i = 0; i < vlen;i ++){
-//							quantityarr.push("");
-//							pricearr.push("");
-//						} 
-						for(var i = 0; i < vlen;i ++){
+
+						for (var i = 0; i < vlen; i++) {
 							newquantityarr.push("");
-						} 
+							newpricearr.push("");
+						}
 						//console.log("add:"+quantityarr);
 						// var ind = "";
 						var indexarr = [];
-						for(var i = 0;i < olen;i++){
-						 	for(var j = 0;j < vlen;j++){
-						 		//console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
-						 		if(oldvallist[i].join("") == vallist[j].join("")){
-						 			console.log(j);
-						 			indexarr.push(j);
-						 		}
-						 	}
+						for (var i = 0; i < olen; i++) {
+							for (var j = 0; j < vlen; j++) {
+								//console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
+								if (oldvallist[i].join("") == vallist[j].join("")) {
+									console.log(j);
+									indexarr.push(j);
+								}
+							}
 						}
-						
-						for(var k = 0 ;k < indexarr.length;k++){
-							newquantityarr.splice(indexarr[i],1,quantityarr[i]);
-							newpricearr.splice(indexarr[i],1,pricearr[i]);
+
+						for (var k = 0; k < indexarr.length; k++) {
+							newquantityarr.splice(indexarr[k], 1, quantityarr[k]);
+							newpricearr.splice(indexarr[k], 1, pricearr[k]);
 						}
 						quantityarr = newquantityarr;
 						pricearr = newpricearr;
 					}
 				}
-				
+
 				var htmstr = '<table class=""><thead><tr>';
 				var namelen = namearr.length;
 				for (var i = 0; i < namelen; i++) {
@@ -719,17 +726,19 @@
 				var len = vallist.length;
 				for (var j = 0; j < len; j++) {
 					htmstr += '<tr>';
-					if (vallist[j].length == 1) {
-						htmstr += '<td>' + vallist[j] + '</td><td><input class="quantity" style="width: 100%;" type="text" value="'+quantityarr[0]+'"></td><td><input class="price" style="width: 100%;" type="text" value="'+pricearr[0]+'"></td>';
-					} else {
-						var childlen = vallist[j].length;
-						for (var k = 0; k < childlen; k++) {
+
+					var childlen = vallist[j].length;
+					for (var k = 0; k < childlen; k++) {
+						if (vallist[j][k].length == 1) {
+							htmstr += '<td>' + vallist[j] + '</td><td><input class="quantity" style="width: 100%;" type="text" value="' +
+								quantityarr[0] + '"></td><td><input class="price" style="width: 100%;" type="text" value="' + pricearr[0] +
+								'"></td>';
+						} else {
 							htmstr += '<td>' + vallist[j][k] + '</td>';
 						}
-						
-						htmstr += '<td><input class="quantity" style="width: 100%;" type="text" value="'+quantityarr[j]+'"></td><td><input class="price" style="width: 100%;" type="text" value="'+pricearr[j]+'"></td>';
 					}
-
+					htmstr += '<td><input class="quantity" style="width: 100%;" type="text" value="' + quantityarr[j] +
+						'"></td><td><input class="price" style="width: 100%;" type="text" value="' + pricearr[j] + '"></td>';
 					htmstr += '</tr>';
 				}
 
@@ -739,17 +748,17 @@
 				oldvallist = clone(vallist);
 				console.log(oldvallist);
 			}
-			
+
 			function clone(obj) {
 				var temp = null;
-				if(obj instanceof Array) {
+				if (obj instanceof Array) {
 					temp = obj.concat();
-				} else if(obj instanceof Function) {
+				} else if (obj instanceof Function) {
 					//函数是共享的是无所谓的，js也没有什么办法可以在定义后再修改函数内容
 					temp = obj;
 				} else {
 					temp = new Object();
-					for(var item in obj) {
+					for (var item in obj) {
 						var val = obj[item];
 						temp[item] = typeof val == 'object' ? clone(val) : val; //这里也没有判断是否为函数，因为对于函数，我们将它和一般值一样处理
 					}
