@@ -651,9 +651,9 @@
 						var dellen = [];
 						for(var i = 0;i < vlen;i++){
 							for(var j = 0;j < olen;j++){
-								console.log(oldvallist[j].join("")+"==="+ vallist[i].join(""));
+								//console.log(oldvallist[j].join("")+"==="+ vallist[i].join(""));
 								if(oldvallist[j].join("") == vallist[i].join("")){
-									console.log(j);
+									//console.log(j);
 									delarr.push(j);
 								}
 							}
@@ -663,7 +663,7 @@
 							for(var l = 0;l < quantityarr.length ;l ++){
 								if(quantityarr[l] == quantityarr[delarr[k]]){
 									newquantityarr.push(quantityarr[l]);
-									newpricearr.push(newpricearr[l]);
+									newpricearr.push(pricearr[l]);
 								}
 							}
 						}
@@ -675,20 +675,38 @@
 						var olen = oldvallist.length;
 						var vlen = vallist.length;
 						var newadd = vlen - olen;
-						for(var i = 0; i < newadd;i ++){
-							quantityarr.push("");
-							pricearr.push("");
+						
+						var delarr = [];
+						var newquantityarr = [];
+						var newpricearr = [];
+						var dellen = [];
+						
+//						for(var i = 0; i < vlen;i ++){
+//							quantityarr.push("");
+//							pricearr.push("");
+//						} 
+						for(var i = 0; i < vlen;i ++){
+							newquantityarr.push("");
 						} 
 						//console.log("add:"+quantityarr);
 						// var ind = "";
-						// for(var i = 0;i < olen;i++){
-						// 	for(var j = 0;j < vlen;j++){
-						// 		console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
-						// 		if(oldvallist[i].join("") != vallist[j].join("")){
-						// 			console.log(j);
-						// 		}
-						// 	}
-						// }
+						var indexarr = [];
+						for(var i = 0;i < olen;i++){
+						 	for(var j = 0;j < vlen;j++){
+						 		//console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
+						 		if(oldvallist[i].join("") == vallist[j].join("")){
+						 			console.log(j);
+						 			indexarr.push();
+						 		}
+						 	}
+						}
+						
+						for(var k = 0 ;k < indexarr.length;k++){
+							newquantityarr.splice(indexarr[i],1,quantityarr[i]);
+							newpricearr.splice(indexarr[i],1,pricearr[i]);
+						}
+						quantityarr = newquantityarr;
+						pricearr = newpricearr;
 					}
 				}
 				
