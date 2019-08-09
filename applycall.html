@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>apply call demo</title>
+	</head>
+	<body>
+		<input type="button" id="btn" value="click"/>
+	</body>
+	<script>
+		console.log('---------------------------使用apply和call方法来设置函数上下文-----------');
+		//函数“处理”了参数，并将结果result变量放在任意一个作为该函数上下文的对象上。
+		function juggle() {
+			var result = 0;
+			for (var n = 0; n < arguments.length; n++) {
+				result += arguments[n];
+			}
+			this.result = result;
+		}
+
+		//这些对象的初始化为空，它们会作为测试对象
+		var ninja1 = {};
+		var ninja2 = {};
+
+		//使用apply方法向ninja1传递一个参数数组
+		juggle.apply(ninja1, [1, 2, 3, 4]);
+		//使用call方法向ninja2传递一个参数列表
+		juggle.call(ninja2, 5, 6, 7, 8);
+
+		//测试展现了传入juggle方法中的对象拥有了结果值
+		if (ninja1.result === 10) {
+			console.log('juggled via apply!');
+		}
+		if (ninja2.result === 26) {
+			console.log('juggled via call!');
+		}
+		
+		var btn = document.querySelector("#btn");
+		//btn.addEventListener("click",getval.call(this,"123"));//立即执行
+		//btn.addEventListener("click",getval.apply(this,["123"]));//立即执行
+		btn.addEventListener("click",getval.bind(this,"123"));//不会立即执行
+		
+		function getval(val){
+			console.log(val);
+			// console.log(event.currentTarget+"---"+val);
+		}
+	</script>
+</html>
