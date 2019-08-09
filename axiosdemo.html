@@ -6,11 +6,18 @@
 	</head>
 	<body>
 		<input type="button" id="getbtn" value="getTest" />
+		<input type="button" id="getdatabtn" value="getData" />
+		<input type="text" class="t" />
+		<input type="text" class="t" />
+		<input type="text" class="t" />
 	</body>
 	<script src="js/axios.js"></script>
 	<script>
 		var g = document.querySelector("#getbtn");
 		g.addEventListener('click', gettest);
+		
+		var gd = document.querySelector("#getdatabtn");
+		gd.addEventListener('click', getdatatest);
 
 		function gettest() {
 			axios.get('http://cors-test.appspot.com/test').then(function(response) {
@@ -19,6 +26,27 @@
 			}, function(err) {
 				console.log(err)
 			});
+		}
+
+		function getdatatest() {
+			axios.get('http://www.vinlam.com:8080/LogAspect/api/testGetAction?actionName=你好').then(function(response) {
+				alert(JSON.stringify(response.data));
+				alert('response headers:\n\n' + JSON.stringify(response.headers));
+			}, function(err) {
+				console.log(err)
+			});
+		}
+
+		function abc(key) {
+			console.log(key);
+		}
+		
+		//方法二：bind方法。bind和call/apply相似，通常用于改变函数的this的指向，不过和后二者不同，bind中不额外加()操作符，就不会立即函数。对于这个特性，也正是我们在这里所需要的
+		
+		//tip：bind是ES5中的方法，不兼容ie8。需要兼容的话MDN上有对应的polyfill。
+		var oInput = document.querySelectorAll(".t");
+		for (var i = 0; i < oInput.length; i++) {
+			oInput[i].addEventListener('focus', abc.bind(this, i));
 		}
 	</script>
 </html>
