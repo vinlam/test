@@ -42,13 +42,26 @@
 			
 			var tarr = ["a:1","a:1_2","a:1_2_3","a:1_2_3_4","a:1_2_3_5","a:1_10_11_12","a:1_10_11_13","a:1_10","a:1_10_11","a:1_2_6","a:1_2_7"];
 			//tarr = tarr.sort();
+			var tnode = [];
 			tarr.forEach(function(item,i){
 				var treenodestr = item.split(":")[1];
 				var treenodearr = treenodestr.split("_");
-				treenodearr.forEach(function(node){
-					//console.log(node);
-				})
+				
+				var len = treenodearr.length;
+				//for(var i = 0;i< len;i++){
+					var obj = {};
+					
+					if(len == 1){
+						obj.pid = 1;
+						obj.id = treenodearr[i];
+					}else{
+						obj.pid = treenodearr[len -2];
+						obj.id = treenodearr[len-1]
+					}
+					tnode.push(obj);
+				//}
 			})
+			console.log(tnode);
 			
 			//一.升序排列
 			var theArray1 = [2, 3, 5, 1, 15, 8, 12, 11, 7];
