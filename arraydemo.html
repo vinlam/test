@@ -157,8 +157,38 @@
 				}
 			}
 		}
-		var allarr = oldlist.concat(newlist);
 		
+	
+		function deteleObject(obj) {
+		    var uniques = [];
+		    var stringify = {};
+		    for (var i = 0; i < obj.length; i++) {
+		        var keys = Object.keys(obj[i]);
+		        //console.log(keys);
+//		        keys.sort(function(a, b) {
+//		        	console.log(Number(a) +'-'+ Number(b));
+//		            return (Number(a) - Number(b));
+//		        });
+		        //console.log(keys);
+		        var str = '';
+		        for (var j = 0; j < keys.length; j++) {
+		            str += JSON.stringify(keys[j]);
+		            //console.log([keys[j]]);
+		            str += JSON.stringify(obj[i][keys[j]]);
+		            //console.log(obj[i][keys[j]]);
+		        }
+		        if (!stringify.hasOwnProperty(str)) {
+		            uniques.push(obj[i]);
+		            stringify[str] = true;
+		        }
+		    }
+		    uniques = uniques;
+		    return uniques;
+		}
+		
+		var allarr = oldlist.concat(newlist);
+		//console.log(allarr[0]["gName"]);
+		console.log(deteleObject(allarr))
 		Array.prototype.unique4 = function() {
 				this.sort();
 				var re = [this[0]];
