@@ -165,10 +165,11 @@
 		    for (var i = 0; i < obj.length; i++) {
 		        var keys = Object.keys(obj[i]);
 		        //console.log(keys);
-//		        keys.sort(function(a, b) {
-//		        	console.log(Number(a) +'-'+ Number(b));
-//		            return (Number(a) - Number(b));
-//		        });
+		        //对数组进行升序排列，将函数作为参数传入
+		        keys.sort(function(a, b) {
+		        	//console.log(Number(a) +'-'+ Number(b));
+		            return (Number(a) - Number(b));//数组中两两比较，结果为正(a>b)，则互换位置,小的在前面(从索引0开始，分别和后面元素比较)
+		        });
 		        //console.log(keys);
 		        var str = '';
 		        for (var j = 0; j < keys.length; j++) {
