@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title></title>
 	</head>
+
 	<body>
 	</body>
 	<script src="js/common/jquery-1.12.4.js"></script>
@@ -34,10 +36,9 @@
 		arr2[1] = "bbb";
 		arr2[2] = "ccc";
 		arr2 = arr2.slice(0, 1);
-//		alert(arr2.length); //1
-//		alert(arr2[0]); //aaa
-//		alert(arr2[1]); //undefined
-
+		//		alert(arr2.length); //1
+		//		alert(arr2[0]); //aaa
+		//		alert(arr2[1]); //undefined
 
 		//shift：删除原数组第一项，并返回删除元素的值；如果数组为空则返回undefined 
 		var a = [1, 2, 3, 4, 5];
@@ -108,7 +109,7 @@
 		 * 把数组转换成特定符号分割的字符串
 		 */
 		function arrayToString(arr, separator) {
-			if (!separator) separator = ""; //separator为null则默认为空
+			if(!separator) separator = ""; //separator为null则默认为空
 			return arr.join(separator);
 		}
 
@@ -119,126 +120,302 @@
 			var str = arr.join("");
 			return str.indexOf(string);
 		}
-		
-		var barr = ["a","b","c"];
-		var barr2 = ["a","c","f"];
-		 barr = ["a","c","7"];
-		 barr2 = ["a","3","f"];
+
+		var barr = ["a", "b", "c"];
+		var barr2 = ["a", "c", "f"];
+		barr = ["a", "c", "7"];
+		barr2 = ["a", "3", "f"];
 		var obj = {
-			avalueAmount:"0",
-			bindId:"10007",
-			dPrice:0,
-			descripTion:null,
-			discount:0.33,
-			fid:null,
-			gCode:"ffgg",
-			gName:"ggg",
-			goodId:"6330",
-			goodsSpec:null,
-			goodsThumb:"http://img.mall.ccb.com/img/pic_no.png",
-			model:null,
-			oPrice:0
+			avalueAmount: "0",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
 		}
-		var obj2 = { avalueAmount:"1", bindId:"10001", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj3 = { avalueAmount:"2", bindId:"10002", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj4 = { avalueAmount:"3", bindId:"10003", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj5 = { avalueAmount:"4", bindId:"10004", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj6 = { avalueAmount:"0", bindId:"10007", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj22 = { avalueAmount:"10", bindId:"10007", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj33 = { avalueAmount:"20", bindId:"10007", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj44 = { avalueAmount:"0", bindId:"10007", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var obj55 = { avalueAmount:"0", bindId:"10007", dPrice:0, descripTion:null, discount:0.33, fid:null, gCode:"ffgg", gName:"ggg", goodId:"6330", goodsSpec:null, goodsThumb:"http://img.mall.ccb.com/img/pic_no.png", model:null, oPrice:0 }
-		var oldlist = [obj,obj2,obj3,obj4];
-		var newlist = [obj22,obj,obj33,obj44];
-		for(var i =0;i< oldlist.length;i++){
-			for(var j =0;j< newlist.length;j++){
-				if(oldlist[i] == newlist[j]){
+		var obj2 = {
+			avalueAmount: "1",
+			bindId: "10001",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj3 = {
+			avalueAmount: "2",
+			bindId: "10002",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj4 = {
+			avalueAmount: "3",
+			bindId: "10003",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj5 = {
+			avalueAmount: "4",
+			bindId: "10004",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj6 = {
+			avalueAmount: "0",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj22 = {
+			avalueAmount: "10",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj33 = {
+			avalueAmount: "20",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj44 = {
+			avalueAmount: "0",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var obj55 = {
+			avalueAmount: "0",
+			bindId: "10007",
+			dPrice: 0,
+			descripTion: null,
+			discount: 0.33,
+			fid: null,
+			gCode: "ffgg",
+			gName: "ggg",
+			goodId: "6330",
+			goodsSpec: null,
+			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
+			model: null,
+			oPrice: 0
+		}
+		var oldlist = [obj, obj2, obj3, obj4];
+		var newlist = [obj22, obj, obj33, obj44];
+		for(var i = 0; i < oldlist.length; i++) {
+			for(var j = 0; j < newlist.length; j++) {
+				if(oldlist[i] == newlist[j]) {
 					//console.log(oldlist[i]);
 				}
 			}
 		}
-		
-	
+
 		function deteleObject(obj) {
-		    var uniques = [];
-		    var stringify = {};
-		    for (var i = 0; i < obj.length; i++) {
-		        var keys = Object.keys(obj[i]);
-		        //console.log(keys);
-		        //对数组进行升序排列，将函数作为参数传入
-		        keys.sort(function(a, b) {
-		        	//console.log(Number(a) +'-'+ Number(b));
-		            return (Number(a) - Number(b));//数组中两两比较，结果为正(a>b)，则互换位置,小的在前面(从索引0开始，分别和后面元素比较)
-		        });
-		        //console.log(keys);
-		        var str = '';
-		        for (var j = 0; j < keys.length; j++) {
-		            str += JSON.stringify(keys[j]);
-		            //console.log([keys[j]]);
-		            str += JSON.stringify(obj[i][keys[j]]);
-		            //console.log(obj[i][keys[j]]);
-		        }
-		        if (!stringify.hasOwnProperty(str)) {
-		            uniques.push(obj[i]);
-		            stringify[str] = true;
-		        }
-		    }
-		    uniques = uniques;
-		    return uniques;
+			var uniques = [];
+			var stringify = {};
+			for(var i = 0; i < obj.length; i++) {
+				var keys = [];
+				//keys = Object.keys(obj[i]);//Object.keys ie8以下不兼容
+				
+				var ob = {};
+				ob = obj[i];
+				//var keyarr = [];
+				for(var itemkey in ob){
+					//console.log(i);
+					keys.push(itemkey);
+				}
+				//console.log(keys);
+				//对数组进行升序排列，将函数作为参数传入
+				keys.sort(function(a, b) {
+					//console.log(Number(a) +'-'+ Number(b));
+					return(Number(a) - Number(b)); //数组中两两比较，结果为正(a>b)，则互换位置,小的在前面(从索引0开始，分别和后面元素比较)
+				});
+				//console.log(keys);
+				var str = '';
+				for(var j = 0; j < keys.length; j++) {
+					str += JSON.stringify(keys[j]);
+					//console.log([keys[j]]);
+					//str += JSON.stringify(obj[i][keys[j]]);
+					str += JSON.stringify(ob[keys[j]]);
+					//console.log(obj[i][keys[j]]);
+				}
+				if(!stringify.hasOwnProperty(str)) {
+					//uniques.push(obj[i]);
+					uniques.push(ob);
+					stringify[str] = true;
+				}
+			}
+			uniques = uniques;
+			return uniques;
 		}
-		
+
+		var DEFAULT_VERSION = 8.0;
+		var ua = navigator.userAgent.toLowerCase();
+		var isIE = ua.indexOf("msie") > -1;
+		var safariVersion;
+
+		if(isIE) {
+			safariVersion = ua.match(/msie ([\d.]+)/)[1];
+		}
+
+		if(safariVersion <= DEFAULT_VERSION) {   
+			//alert('系统检测到您正在使用ie8以下内核的浏览器，不能实现完美体验，请更换或升级浏览器访问！')
+			if(!Object.keys) { 
+				Object.keys = (function() {  
+					var hasOwnProperty = Object.prototype.hasOwnProperty,
+						    hasDontEnumBug = !({
+							toString: null
+						}).propertyIsEnumerable('toString'),
+						    dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+						    dontEnumsLength = dontEnums.length;
+
+					  
+					return function(obj) {   
+						if(typeof obj !== 'object' && typeof obj !== 'function' || obj === null) {
+							throw new TypeError('Object.keys called on non-object');
+						}   
+						var result = [];   
+						for(var prop in obj) {    
+							if(hasOwnProperty.call(obj, prop)) result.push(prop);   
+						}   
+						if(hasDontEnumBug) {    
+							for(var i = 0; i < dontEnumsLength; i++) {     
+								if(hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);    
+							}   
+						}   
+						return result;  
+					} 
+				})()
+			};
+		};
+
 		var allarr = oldlist.concat(newlist);
 		//console.log(allarr[0]["gName"]);
 		console.log(deteleObject(allarr))
 		Array.prototype.unique4 = function() {
-				this.sort();
-				var re = [this[0]];
-				for(var i = 1; i < this.length; i++) {
-					if(this[i] !== re[re.length - 1]) {
-						re.push(this[i]);
-					}
+			this.sort();
+			var re = [this[0]];
+			for(var i = 1; i < this.length; i++) {
+				if(this[i] !== re[re.length - 1]) {
+					re.push(this[i]);
 				}
-				return re;
+			}
+			return re;
 		}
 		allarr.unique4();
 		//console.log(allarr);
 		var list = []
-		for(var i =0;i< allarr.length;i++){
-			list.push(JSON.stringify(allarr[i]));	
+		for(var i = 0; i < allarr.length; i++) {
+			list.push(JSON.stringify(allarr[i]));//JSON ie7以下不兼容
 		}
 		var n = [];
-		for(var i =0;i< oldlist.length;i++){
-			n.push(JSON.stringify(oldlist[i]));	
+		for(var i = 0; i < oldlist.length; i++) {
+			n.push(JSON.stringify(oldlist[i]));
 		}
 		var m = [];
-		for(var i =0;i< newlist.length;i++){
-			m.push(JSON.stringify(newlist[i]));	
+		for(var i = 0; i < newlist.length; i++) {
+			m.push(JSON.stringify(newlist[i]));
 		}
-		
-		var b = [1,2,3,2,3,234,345];
+
+		var b = [1, 2, 3, 2, 3, 234, 345];
 		b = ['{"avalueAmount":"0","bindId":"10007","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"0","bindId":"10007","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"0","bindId":"10007","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"1","bindId":"10001","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"10","bindId":"10007","dPrice":0,"….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"2","bindId":"10002","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"20","bindId":"10007","dPrice":0,"….ccb.com/img/pic_no.png","model":null,"oPrice":0}', '{"avalueAmount":"3","bindId":"10003","dPrice":0,"d….ccb.com/img/pic_no.png","model":null,"oPrice":0}']
 		//console.log(b.unique4());
 		//console.log(list.sort());
-//		list.unique4();
-//		console.log(list);
-//		list = list.sort();
-////		for(var i = 0 i< list.length;i++){
-////			if(list[i] == list[i])
-////		}
+		//		list.unique4();
+		//		console.log(list);
+		//		list = list.sort();
+		////		for(var i = 0 i< list.length;i++){
+		////			if(list[i] == list[i])
+		////		}
 		var newarr = [];
 		//for(var i=0;i<barr.length;i++){
-			//newarr.push(barr[i]);
-			for(var j=0;j<n.length;j++){
-//				if(barr.indexOf(barr2[j]) < 0){
-//					newarr.push(barr2[j]);
-//				}
-				if($.inArray(m[j],n) < 0){
-					newarr.push(m[j]);
-				}
+		//newarr.push(barr[i]);
+		for(var j = 0; j < n.length; j++) {
+			//				if(barr.indexOf(barr2[j]) < 0){
+			//					newarr.push(barr2[j]);
+			//				}
+			if($.inArray(m[j], n) < 0) {
+				newarr.push(m[j]);
 			}
+		}
 		//}
 		console.log(newarr);
 		console.log(n.concat(newarr));
-		
 	</script>
+
 </html>
