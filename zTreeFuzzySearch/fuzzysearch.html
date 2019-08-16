@@ -1,0 +1,124 @@
+<!-- fuzzysearch.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/metro.css" />
+<style type="text/css">
+ul.ztree {
+	margin-top: 10px;
+	border: 1px solid #617775;
+	width: 600px;
+	height: 450px;
+	overflow-y: scroll;
+	overflow-x: auto;
+}
+div.zTreeDemoBackground {
+	width: 600px;
+	height: 450px;
+	text-align: left;
+}
+
+span.search_highlight {
+	color: whitesmoke;
+	background-color: darkred; 	
+}
+</style>
+<!-- 定义了一些模拟数据的js文件dataset.js -->
+<script type="text/javascript" src="js/dataset.js"></script>
+<!-- 引入jquery  -->
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<!-- 引入ztree插件 -->
+<script type="text/javascript" src="js/jquery.ztree.all.min.js"></script>
+<!-- 引入ztree插件扩展功能 -->
+<script type="text/javascript" src="js/jquery.ztree.exhide.min.js"></script>
+<!-- 引入自定义方法 -->
+<script type="text/javascript" src="js/fuzzysearch.js"></script>
+</head>
+<body>
+	<div style="width: 600px">
+		<input id="keyword" type="search" placeHolder="搜索关键字"/>
+	</div>
+	<div class="content_wrap">
+		<div class="zTreeDemoBackground left">
+			<ul id="book" class="ztree"></ul>
+		</div>
+	</div>
+	<br />
+	<div><small>*参照亚马逊中文网图书板块的结构创建了模拟数据</small></div>
+	<script type="text/javascript">
+			
+	//ztree配置
+	var setting = {
+			check: {
+				enable: true//checkbox
+			},
+			view: {
+				nameIsHTML: true, //允许name支持html				
+				selectedMulti: false
+			},
+			edit: {
+				enable: false,
+				editNameSelectAll: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+	};
+	
+	$(document).ready(function(){
+		//从服务器读取数据并初始化树形图
+		//loadDataFromServer(urlStr);  
+		//本例直接从模拟数据dataset.js读取
+		loadDataFromLocal();//从本地dataset.js文件读取模拟数据并初始化树形图
+	});
+
+	/**
+	 * 通过ajax方法从服务器获取数据并初始化树形图
+	 */
+	function loadDataFromServer(urlStr){
+		 $.ajax({                 
+			type: "get",                 
+			dataType: "json",
+			url: urlStr,  //服务请求地址 
+			success: function(data) {
+				initThisZtree(data);//传入数据,初始化ztree
+				fuzzySearch('book','#keyword',null,true); //初始化模糊搜索方法
+			}     
+		});   
+	}
+	
+	/**
+	 * 从本地js/dataset.js文件读取模拟数据并初始化树形图
+	 */
+	function loadDataFromLocal(){
+		//此处的树节点数据mockData是在本地js/dataSet.js中预先定义的模拟数据
+		for(var i = 1001;i<5000;i++){
+			var newObj = {pId:""};
+			newObj.name="其他"+i;
+			newObj.id = i;
+			mockData.push(newObj);
+		}
+		initThisZtree(mockData);//传入数据,初始化ztree
+		// zTreeId ztree对象的id,不需要#
+ 		// searchField 输入框选择器
+        // isHighLight 是否高亮,默认高亮,传入false禁用
+        // isExpand 是否展开,默认合拢,传入true展开
+		fuzzySearch('book','#keyword',null,true); //初始化模糊搜索方法
+	}
+	
+	/**
+	 * 初始化ztree
+	 * 
+	 * @param {Object} data
+	 */
+	function initThisZtree(data){
+		//初始化ztree三个参数分别是(jQuery对象,ztree设置,树节点数据)
+		var treeObj = $.fn.zTree.init($("#book"), setting, data); 
+		treeObj.expandAll(true);
+	}
+	</script>
+</body>
+</html>
