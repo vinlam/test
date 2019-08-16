@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>样式</title>
+	</head>
+	<body>
+		<div class="cl">
+			<ul class="cl">
+				<li class="cl">classelement</li>
+				<li class="cl">the same class</li>
+				<li class="cl">classelement</li>
+				<li class="cl">classelement
+				<ul class="cl">
+					<li class="cl">1</li>
+					<li class="cl">4</li>
+					<li class="cl">3</li>
+					<li class="cl">4</li>
+				</ul>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+		$(document).ready(function(){
+			var listel = $(".cl");
+			//console.log(listel[0].tagName);
+			var len = listel.length;
+			for(var i = 0;i < len;i++){
+				console.log(listel[i].tagName);
+			}
+		})
+	</script>
+</html>
