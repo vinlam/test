@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>输入控制</title>
+	</head>
+
+	<body>
+		<form id="form" name="f" method="get" action="http://127.0.0.1:8020/test/iframepost.html" class="fm">
+			<input id="kw" name="wd" value="input ie enter hre">
+		</form>
+		<input type="text" name="nsrsbh" maxlength="20" size="30" tabindex="1" οnkeyup="inputNumberOnly(this)">
+		<input onkeyup='check(this)' />
+	</body>
+	<script>
+		function check(obj) {
+			var sreg = /^-+.*/g;
+			var zero = /^0[1-9]+\.*\d*/g;
+			var val = obj.value;
+			var plus = '';
+			if(sreg.test(val)) {
+				val = val.replace(/-+/g, '');
+				plus = '-';
+			}
+			val = val.replace(/\s+/g, '');
+			if(/^\.+.*$/.test(val)) {
+				val = '';
+			}
+			val = val.replace(/[^\d\.]/, '');
+			val = val.replace(/(^\d+\.{1})(\d*).*/g, '$1$2');
+			val = val.replace(/(^\d+\.\d{3})\d*/g, '$1');
+			val = val.replace(/^[0]*(0{1})([1-9]*)(.*)/g, '$1$2$3');
+			if(zero.test(val)) {
+				val = val.replace(/0([1-9]+)(.*)$/, '$1$2');
+			}
+
+			obj.value = plus + val;
+		}
+		document.getElementById("kw").onkeydown = function(e) {
+			var e = e || event;
+			if(e.keyCode == 13) {　　
+				//				setTimeout(function() {
+				//					//alert("自己的逻辑");
+				//					window.location.href = window.location.href + '?s=werwer'
+				//				}, 0);
+				e.preventDefault ? e.preventDefault() : (e.returnValue = false); //解决ie enter
+				test();
+			}
+		}
+
+		function test() {
+			window.location.href = document.getElementById("form").getAttribute("action") + "?s=123";
+		}
+
+		function getCursorPos(obj) { 
+			obj.focus(); 
+			var currentRange = document.selection.createRange(); 
+			var workRange = currentRange.duplicate(); 
+			obj.select(); 
+			var allRange = document.selection.createRange(); 
+			var pos = 0; 
+			while(workRange.compareEndPoints("StartToStart", allRange) > 0)  { 
+				workRange.moveStart("character", -1); 
+				pos++; 
+			} 
+			currentRange.select(); 
+			return pos;
+		}
+		/*
+		定位光标
+		*/
+		function setCursorPos(obj, pos) { 
+			var rng = obj.createTextRange(); 
+			rng.moveStart('character', pos); 
+			rng.collapse(true); 
+			rng.select();
+		}
+
+		/*
+		替换后定位光标在原处,可以这样调用οnkeyup=replaceAndSetPos(this,/[^/d]/g,'');
+		*/
+		function replaceAndSetPos(obj, pattern, text) { 
+			if(event.shiftKey || event.altKey || event.ctrlKey || event.keyCode == 16 || event.keyCode == 17 || event.keyCode == 18 || (event.shiftKey && event.keyCode == 36))   return; 
+			var pos = getCursorPos(obj); //保存原始光标位置
+			var temp = obj.value; //保存原始值
+			obj.value = temp.replace(pattern, text); //替换掉非法值
+			pos = pos - (temp.length - obj.value.length); //当前光标位置
+			setCursorPos(obj, pos); //设置光标
+		}
+
+		//这里是对增强后的函数的调用,这里只能输入数字,如果输入其他字符将被过滤掉
+		function inputNumberOnly(text) {  
+			console.log(text);
+			replaceAndSetPos(text, /[^/d]/g, '');  
+		}
+	</script>
+
+</html>
