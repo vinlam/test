@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ajax graphql demo</title>
+	</head>
+	<body>
+	</body>
+	<script src="../js/common/jquery-1.12.4.js"></script>
+	<script>
+		var test = JSON.stringify('{hello}');
+		 test = JSON.stringify({"query":"{hello}","variables":null});
+		$.ajax({
+			method: "POST",
+			//url: "http://localhost:4000/graphql/query?" + test,
+			url: "http://localhost:4000/graphql/query",
+			data:test,
+			contentType: "application/json",
+			crossDomain: true,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Credentials': true
+			},
+			success: function(data) {
+				console.log('data', data);
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		});
+	</script>
+</html>
