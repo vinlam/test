@@ -7,17 +7,23 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/html5validates.js"></script>
 		<script language="javascript">
-			function t(){
+			function t() {
 				var a = "8+";
 				var b = "8-";
 				var c = "8*";
 				var d = "8//";
 				var reg = /\+|\-|\*|\//;
 				var aa = "2.";
-				
+
 				var cerCodeReg = /^[A-Za-z0-9]+$/;
-				var s = {"a":1235,"b":{"c":"aaadf","d":23444}};
-				alert(s.b.c);
+				var s = {
+					"a": 1235,
+					"b": {
+						"c": "aaadf",
+						"d": 23444
+					}
+				};
+				console.log(s.b.c);
 				var ss = "A1231";
 				console.log(cerCodeReg.test(ss));
 				/*var ar = aa.split(".");
@@ -31,6 +37,7 @@
 				//alert(reg.test(a));
 			}
 			t();
+
 			function test(target) {
 				/*var pattern = /^([0-9.]+)$/;
 				//var str = prompt("Enter the test string","");
@@ -46,7 +53,7 @@
 				target.value = (target.value.match(/^([0-9.]+)$/))
 			}
 			$(document).ready(function() {
-				
+
 				$("#pt").removeAttr("disabled");
 				//alert(9);
 				//$("#pt").attr("disabled",false); 
@@ -54,10 +61,10 @@
 				$("#pt").on("click", function() {
 					$("#pt").attr("disabled", "disabled")
 				})
-				
-				$.getJSON("manifest.json",function(data){
-					alert(JSON.stringify(data))
-//					var s = JSON.stringify(data);
+
+				$.getJSON("manifest.json", function(data) {
+					console.log(JSON.stringify(data))
+					//					var s = JSON.stringify(data);
 					var s = '"name": "3"';
 					var pattern = /\s/g;
 					console.log(pattern.test(s));
@@ -69,23 +76,23 @@
 				var elements = document.getElementsByClassName("required");
 				$.each(elements, function(i) {
 					var elemen = elements[i];
-					if (elemen.tagName == "INPUT") {
+					if(elemen.tagName == "INPUT") {
 						//alert(elemen.getAttribute("type").match(/text|email|tel/));
-						if (elemen.getAttribute("type").match(/text|email|tel|password/)) {
-							if (elemen.value == "") {
-								alert('"' + elemen.getAttribute("tip") + '"' + " 为必填项。");
+						if(elemen.getAttribute("type").match(/text|email|tel|password/)) {
+							if(elemen.value == "") {
+								console.log('"' + elemen.getAttribute("tip") + '"' + " 为必填项。");
 								return false;
 							}
-						} else if (elemen.getAttribute("type").match(/radio|checkbox/)) {
+						} else if(elemen.getAttribute("type").match(/radio|checkbox/)) {
 							//alert(elemen.checked);
-							if (!elemen.checked) {
-								alert('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
+							if(!elemen.checked) {
+								console.log('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
 								return false;
 							}
 						}
-					} else if (elemen.tagName == "A") { //此处为下拉选项
-						if (elemen.getAttribute("value") == "") {
-							alert('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
+					} else if(elemen.tagName == "A") { //此处为下拉选项
+						if(elemen.getAttribute("value") == "") {
+							console.log('"' + elemen.getAttribute("tip") + '"' + " 为必选项。");
 							return false;
 						}
 					}
@@ -106,12 +113,58 @@
 
 			function valid() {
 				$("#validdiv").html5Validate(function() {
-					alert("全部通过！");
+					console.log("全部通过！");
 					//this.submit();	
 				}, {
 					// novalidate: false	
 				});
 			}
+
+			//下面的例子用来获取url的两个参数，并返回urlRewrite之前的真实Url
+			var reg = new RegExp("(http://www.qidian.com/BookReader/)(\\d+),(\\d+).aspx", "gmi");
+			var url = "http://www.qidian.com/BookReader/1017141,20361055.aspx";
+
+			//方式一,最简单常用的方式
+			var rep = url.replace(reg, "$1ShowBook.aspx?bookId=$2&chapterId=$3");
+			console.log(rep);
+
+			//方式二 ,采用固定参数的回调函数
+			var rep2 = url.replace(reg, function(m, p1, p2, p3) {
+				return p1 + "ShowBook.aspx?bookId=" + p3 + "&chapterId=" + p3
+			});
+			console.log(rep2);
+
+			//方式三，采用非固定参数的回调函数
+			var rep3 = url.replace(reg, function() {
+				var args = arguments;
+				return args[1] + "ShowBook.aspx?bookId=" + args[2] + "&chapterId=" + args[3];
+			});
+			console.log(rep3);
+
+			//方法四
+			//方式四和方法三很类似, 除了返回替换后的字符串外，还可以单独获取参数
+			var bookId;
+			var chapterId;
+
+			function capText() {
+				var args = arguments;
+				bookId = args[2];
+				chapterId = args[3];
+				return args[1] + "ShowBook.aspx?bookId=" + args[2] + "&chapterId=" + args[3];
+			}
+
+			var rep4 = url.replace(reg, capText);
+			console.log(rep4);
+			console.log(bookId);
+			console.log(chapterId);
+
+			//使用test方法获取分组
+			var reg3 = new RegExp("(http://www.qidian.com/BookReader/)(\\d+),(\\d+).aspx", "gmi");
+			reg3.test("http://www.qidian.com/BookReader/1017141,20361055.aspx");
+			//获取三个分组
+			console.log(RegExp.$1);
+			console.log(RegExp.$2);
+			console.log(RegExp.$3);
 		</script>
 	</head>
 
