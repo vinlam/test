@@ -91,12 +91,12 @@
 		//		}).catch((error) => {
 		//			console.log(error)
 		//		})
-				var c = null;
-				var t = setTimeout(function(){
-					c = 5;
-					console.log("setTimeout"+c);
-					clearTimeout(t);
-				},5000);
+		var c = null;
+		var t = setTimeout(function() {
+			c = 5;
+			console.log("setTimeout" + c);
+			clearTimeout(t);
+		}, 5000);
 		//		
 		//		var cpn = new Promise((resolve, reject) => {
 		//			var interval = null;
@@ -131,10 +131,34 @@
 		}).catch(function(error) {
 			console.log(error)
 		})
+		
+		
+		var pro = new Promise(function(resolve, reject) {
+			var interval = null;
+			interval = setInterval(function() {
+				if(c == 5) {
+					clearInterval(interval);
+					console.log(c);
+					//resolve(c);
+					reject();
+				}
+			}, 1000);
+		});
+
+		pro.then(function(result) {
+			console.log(" res:" + result)
+		});
+		pro.catch(function(e) {
+			console.log(e)
+		})
+
 
 		var deferred = $.Deferred();
 		setTimeout(function() {
-			deferred.resolveWith($('h2'),[{a:"123",b:"abc"}]);
+			deferred.resolveWith($('h2'), [{
+				a: "123",
+				b: "abc"
+			}]);
 			//deferred.resolve("ok");
 			//deferred.resolve();
 			//or:
@@ -144,10 +168,44 @@
 
 		deferred.done(function(res) {
 			this.css('background-color', 'green');
-      		alert('Done: ' + JSON.stringify(res));
+			alert('Done: ' + JSON.stringify(res));
 		}).fail(function(err) {
 			alert('Fail: ' + err);
 		})
+
+		function say() {
+			return new Promise(function(resolve, reject) {
+				setTimeout(function() {
+					let age = 26
+					resolve(`hello, joel。今年我 ${age} 岁`);
+				}, 1000);
+			});
+		}
+
+		async function demo() {
+			const v = await say(); // 输出：hello, joel。今年我 26 岁  等待这个say 的异步，如果成功把回调 resole 函数的参数作为结果
+			console.log(v);
+		}
+		demo();
+
+		function sing() {
+			return new Promise(function(resolve, reject) {
+				setTimeout(function() {
+					resolve(`来一首好听的歌吧~~~`);
+				}, 1000);
+			});
+		}
+		async function demo2() {
+			try {
+				const v = await say();
+				const s = await sing();
+				console.log(v); // 输出：hello, joel。今年我 26 岁
+				console.log(s) // 来一首好听的歌吧~~~
+			} catch(e) {
+				console.log(e)
+			}
+		}
+		demo2();
 	</script>
 
 </html>

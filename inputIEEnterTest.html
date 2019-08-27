@@ -15,6 +15,10 @@
 	</body>
 	<script>
 		function check(obj) {
+			console.log(this.event.keyCode);
+			if(this.event.keyCode == 37){
+				return;
+			}
 			var sreg = /^-+.*/g;
 			var zero = /^0[1-9]+\.*\d*/g;
 			var val = obj.value;
