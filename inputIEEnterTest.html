@@ -33,6 +33,8 @@
 			val = val.replace(/^[0]*(0{1})([1-9]*)(.*)/g, '$1$2$3');
 			if(zero.test(val)) {
 				val = val.replace(/0([1-9]+)(.*)$/, '$1$2');
+			}else{
+				//val = "";
 			}
 
 			obj.value = plus + val;
