@@ -948,7 +948,10 @@
 
 			function afun() {
 				$.mbank.a = "11111";
+				$.mb = $.mbank;
+				$.mb.a = "mba";
 				console.log("a:" + $.mbank.a);
+				console.log("mb:" + $.mb.a);
 			}
 
 			function bfun() {
