@@ -14,6 +14,7 @@
 			用户名：<input type="text" name="username" value="test" />
 		</form>
 		<div id="d" class="dd" onload="alert(888)">asdfasdfasd</div>
+		<input type="button" id="btn" value="提交"></input>
 	</body>
 	<script>
 		console.log("-------------" + document.referrer);
@@ -32,6 +33,11 @@
 		if(self != top) {
 			console.log('在iframe中 top');
 		}
+		
+		document.getElementById("btn").addEventListener("click",function(){
+			window.location.href = "a.html";
+		})
+		
 	</script>
 
 </html>

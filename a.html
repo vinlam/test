@@ -32,9 +32,12 @@
 		}
 		var a = new DemoFunction();
 		a.init();
-		$("#ttd").load("tt.html #tdiv");
+		//$("#ttd").load("tt.html #tdiv");
+		$("#ttd").load("tt.html",function(){
+			fun();
+		});
 		//$("#tdiv").load();
-		//fun();
+		
 		
 	</script>
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ObjectTag</title>
+		<style>
+			.videoBox {
+				position: relative;
+				/*给表格的td设置绝对定位属性*/
+			}
+			
+			.videoDiv {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 5px;
+				top: 0;
+				z-index: 1100;
+				/*给覆盖在视频上面的div设置相对属性，其中z-index一定要比视频的z-index数值高*/
+			}
+			
+			.object {
+				position: relative;
+				left: 0;
+				top: 0;
+				z-index: 10;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!--<div class="wrap2-item-video1">
+			<divstyle="color:#fff;font-size:12px;position:absolute;background:green;width:50px;height:50px;top:0;left:0;z-index:9;">
+				放大/缩小
+			</div>
+<object classid="mov_bbb.mp4" codebase="" standby="Waiting..." id="playOcx" width="150" height="150" name="playOcx" align="center">
+                <param name="filename" value="mov_bbb.mp4">
+                <param name="autostart" value="true|false"/>	
+				<param name="allowfullscreen" value="true|false"/>
+				<param name="wmode" value="transparent"/>
+            </object>
+			<iframe src="about:blank" frameborder="0" marginwidth="0" marginheight="0" style="background:red;position:relative;visibility:inherit; top:0px;left:0px;width:100px;height:100px;z-index:-1;filter='progid:DXImageTransfrom.Microsoft.Alpha(style=0,opacity=0);'"></iframe>
+
+			 12
+		</div>-->
+		<div class="videoDiv" onclick="clickme()">
+			<iframe src="blankpage.html" allowtransparency="true" frameborder="0" marginheight="0" marginwidth="0" style="position:relative; visibility:inherit; top:0px;left:0px;height:100%;width:100%; z-Index:99999; filter='progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)';">
+            
+			</iframe>
+		</div>
+		<div class="object" style="background-color:#f00;" onclick="clickme()">
+			<iframe src="ObjectVideo.html" style="border: 20px solid #008000;border-radius: 20px !important;" allowtransparency="true" frameborder="0" marginheight="0" marginwidth="0" style="position:relative; visibility:inherit; top:0px;left:0px;height:100%;width:100%; z-Index:1;">
+            
+			</iframe>
+			<!--<video id="video" width="600" height="360" preload="">
+					<source src="mov_bbb.mp4" type="video/mp4">
+				</video>-->
+		</div>
+		<!--<object id="player00" name="player00" classid="mov_bbb.mp4" selected="true" displaying="true" style="width: 50%;height: 590px;margin: auto">
+        <param name="filename" value="mov_bbb.mp4">
+                <param name="autostart" value="true|false"/>	
+				<param name="allowfullscreen" value="true|false"/>
+				<param name="wmode" value="transparent"/>               
+		</object>-->
+	</body>
+	<!--<script>
+		function fullScreen(a) {
+			//alert(a);
+		}
+		/**
+		 *错误的方式：不传参数，会弹出undefined，会直接执行fullScreen函数，这段代码相当于如下两行：
+		 *var temp=fullScreen();　
+		 *document.getElementById("objectid").onclick=temp;
+		 */
+		document.getElementById("playOcx").onclick = fullScreen();
+		/**
+		 *错误的方式：传参数时，会弹出1，会直接执行fullScreen函数，这段代码相当于如下两行：
+		 *var temp=fullScreen(1);　
+		 *document.getElementById("objectid").onclick=temp;
+		 */
+		document.getElementById("playOcx").onclick = fullScreen(1);
+		/**
+		 *正确的方式，此时会弹出event对象,但由于object元素不支持事件所以并不响应
+		 */
+		document.getElementById("playOcx").onclick = fullScreen;
+		//结论：在通过对象的属性注册事件函数的时候，表达式的右值必须为一个函数名字即不带括号，并且不可手动传递参数（浏览器会将event对象自动传入或window.event），
+		//从表达式本身出发我们也能发现，表达式为一个赋值表达式，‘=’的右值是一个指向函数的地址，
+		//当只写函数名字的时候，此时右值的函数名字相当于一个指针，指向函数体所在的内存地址，等到事件发生时就会调用并执行相应的函数。
+		//但是当加了括号后，会首先计算右边的函数体，而函数体执行必然会返回一个值（显示的return返回值或undefined），这个值则会作为右值赋值给onclick等类似的属性。
+	</script>-->
+
+</html>

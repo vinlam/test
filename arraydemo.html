@@ -15,6 +15,29 @@
 		arr[0] = "aaa";
 		arr[1] = "bbb";
 		arr[2] = "ccc";
+		var aarr = new Array();
+		aarr["0"] = "aaa";
+		aarr["1"] = "bbb";
+		aarr["2"] = "ccc";
+		aarr["10"] = "10";
+		var barr = new Array();
+		barr["0"] = "a";
+		barr["1"] = "b";
+		barr["2"] = "c";
+		barr["10"] = "c10";
+		var carr = new Array();
+		carr["0"] = aarr;
+		carr["1"] = barr;
+		console.log(carr);
+		console.log(carr[1][10]);
+		
+		var obj = {
+			0:{0:"abc",1:"a",2:"c",3:"asdf",10:"aaa"},
+			1:{0:"abc",1:"a",2:"c",3:"asdf",10:"hhh"}
+		}
+		console.log(obj);
+		var a = 0,b=1;
+		console.log(obj[a][b]);
 		//alert(arr.length);//3
 		arr.pop();
 		//alert(arr.length);//2
