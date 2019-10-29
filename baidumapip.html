@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+			
+			#allmap {
+				width: 100%;
+				height: 500px;
+			}
+			
+			p {
+				margin-left: 5px;
+				font-size: 14px;
+			}
+		</style>
+	
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RGl7YqMPBt1TWm4zNnFNO6wFkZleF2D0"></script>
+	
+		<title>百度ip</title>
+	</head>
+
+	<body>
+	
+		<div id="allmap"></div>
+	</body>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<!--<script src="http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip="+returnCitySN["cip"]+"&coor=bd09ll"></script>-->
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		var ip = returnCitySN["cip"];
+//		http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip=183.129.210.50&coor=bd09ll
+		$.ajax({
+			type: "get",
+			data: {},
+//			url: "http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip="+ip+"&coor=bd09ll",
+			url: "http://api.map.baidu.com/location/ip?v=2.0&ak=RGl7YqMPBt1TWm4zNnFNO6wFkZleF2D0&ip="+ip+"&coor=bd09ll",
+//			url: "http://ip.taobao.com/service/getIpInfo.php?ip=183.129.210.50",
+			dataType: 'json',
+			async: false,
+			success: function(res) {
+				alert(JSON.stringify(res));
+			},
+			error: function(xhrs) {
+				alert(JSON.stringify(xhrs));
+			}
+		});
+	</script>
+
+</html>
