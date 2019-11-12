@@ -1,4 +1,5 @@
 <html>
+
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -21,36 +22,60 @@
 				font-size: 14px;
 			}
 		</style>
-	
-		<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=RGl7YqMPBt1TWm4zNnFNO6wFkZleF2D0"></script>
-	
+
 		<title>百度ip</title>
 	</head>
 
 	<body>
-	
+
 		<div id="allmap"></div>
 	</body>
 	<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<script src="http://ip.taobao.com/service/getIpInfo.php?ip=183.129.210.50"></script>
 	<script src="js/common/jquery-1.12.4.js"></script>
 	<script type="text/javascript">
-		var ip = returnCitySN["cip"];
-//		http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip=183.129.210.50&coor=bd09ll
+		//var ip = returnCitySN["cip"];
+		var ip = "183.129.210.50"; //杭州
+		// ip = 117.136.79.251;//广州
+		//{  
+		//  address: "CN|北京|北京|None|CHINANET|1|None",    #详细地址信息  
+		//  content:    #结构信息  
+		//  {  
+		//      address: "北京市",    #简要地址信息  
+		//      address_detail:    #结构化地址信息  
+		//      {  
+		//          city: "北京市",    #城市  
+		//          city_code: 131,    #百度城市代码  
+		//          district: "",    #区县  
+		//          province: "北京市",    #省份  
+		//          street: "",    #街道  
+		//          street_number: ""    #门牌号  
+		//      },  
+		//      point:    #当前城市中心点  
+		//      {  
+		//          x: "116.39564504",    #当前城市中心点经度
+		//          y: "39.92998578"    #当前城市中心点纬度
+		//      }  
+		//  },  
+		//  status: 0    #结果状态返回码  
+		//}
+		//		http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip=183.129.210.50&coor=bd09ll
 		$.ajax({
-			type: "get",
-			data: {},
-//			url: "http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip="+ip+"&coor=bd09ll",
-			url: "https://api.map.baidu.com/location/ip?v=2.0&ak=RGl7YqMPBt1TWm4zNnFNO6wFkZleF2D0&ip="+ip+"&coor=bd09ll",
-//			url: "http://ip.taobao.com/service/getIpInfo.php?ip=183.129.210.50",
-			dataType: 'json',
-			async: false,
-			success: function(res) {
-				alert(JSON.stringify(res));
-			},
-			error: function(xhrs) {
-				alert(JSON.stringify(xhrs));
+				type: "get",
+				data: {},
+				url: "http://api.map.baidu.com/location/ip?v=2.0&ak=Ff72OypnReCylnDvy0OBuEHLRRumZGX8&ip=" + ip + "&coor=bd09ll", //url: "https://api.map.baidu.com/location/ip?v=2.0&ak=RGl7YqMPBt1TWm4zNnFNO6wFkZleF2D0&ip="+ip+"&coor=bd09ll",
+				//			url: "http://ip.taobao.com/service/getIpInfo.php?ip=183.129.210.50",
+				dataType: 'json',
+				async: false,
+				success: function(res) {
+					alert(JSON.stringify(res));
+				},
+				error: function(xhrs) {
+					alert(JSON.stringify(xhrs));
+				}
 			}
-		});
+
+		);
 	</script>
 
 </html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>layui.form小例子</title>
+		<link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+		<!--<style>
+			.layui-carousel-arrow{
+				behavior: url(PIE.htc);
+			}
+			
+			.layui-carousel-ind li{
+				border-radius: 50%;
+				behavior: url(PIE.htc);
+			}
+		</style>-->
+	</head>
+
+	<body>
+		<div class="weadmin-body">
+        <blockquote class="layui-elem-quote">
+          <h2>轮播图<span class="layui-badge-dot layui-bg-orange"></span></h2>
+        </blockquote>
+        <blockquote class="layui-elem-quote">
+            <button class="layui-btn">查看消息<span class="layui-badge layui-bg-gray">2</span></button>
+        </blockquote>
+    </div>
+
+    <div class="layui-carousel" id="test1" lay-filter="test1" style="text-align: center;margin: 0 auto;border: green solid 1px;">
+        <div carousel-item="">
+            <div><img src="img/album-af.jpg"></div>
+            <div><img src="img/album-ag.jpg"></div>
+            <div><img src="img/album-bb.jpg"></div>
+            <div><img src="img/album-bk.jpg"></div>
+            <div><img src="img/album-hc.jpg"></div>
+        </div>
+    </div>
+    <!-- 条目中可以是任意内容，如：<img src=""> -->
+    	<script src="js/layui/layui.all.js"></script>
+        <!--<script type="text/javascript" src="js/layui/layui.js" charset="utf-8"></script>-->
+        <script type="text/javascript">
+            layui.use('carousel', function(){
+                var carousel = layui.carousel;
+                //建造实例
+                carousel.render({
+                    elem: '#test1'
+                    ,width: '600px'
+                    ,height: '440px'
+                    ,interval: 2000 //每2秒，自动轮播
+                    ,arrow: 'always'
+                });
+
+                //监听轮播切换事件
+                carousel.on('change(test1)', function(obj){ //test1来源于对应HTML容器的 lay-filter="test1" 属性值
+                    console.log(obj.index); //当前条目的索引
+                    console.log(obj.prevIndex); //上一个条目的索引
+                    console.log(obj.item); //当前条目的元素对象
+                });
+
+            });
+        </script>
+		
+	</body>
+
+</html>
