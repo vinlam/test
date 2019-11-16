@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="showdiv">
+			<input type="text" id="txt" />
+		</div>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+		var s = '&mdash;';
+		var htmlstr = '<input type="text" id="res" attrvalue="'+s+'"  value="'+s+'"/>';
+		var sp = document.createElement ("div");
+		sp.innerHTML = s;
+		console.log(sp.innerText);
+		sp = null;
+		document.querySelector("#txt").value = s;
+		$("#showdiv").append(htmlstr);
+		
+		console.log($("#res").attr('attrvalue'));
+		console.log(encodeURI($("#res").attr('attrvalue')));
+	</script>
+</html>
