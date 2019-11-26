@@ -5,7 +5,21 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="auther" content="fq" />
 		<title>监听输入框值的即时变化 onpropertychange oninput</title>
+		
+	</head>
+
+	<body>
+		<div id="adddiv"></div>
+		直接写在页面中的示例：
+		<input type="text" name="textfield" oninput="document.getElementById('webtest').innerHTML=this.value;" onchange="alert(999);" onpropertychange="document.getElementById('webtest').innerHTML=this.value;" />
+		<div>您输入的值为：<span id="webtest">还未输入</span></div>
+		<div>您输入的值为1：<span id="webtest1">还未输入</span></div>
+		<br /><br /><br /><br /><br /> 写在JS中的示例：
+		<input type="text" name="textfield" id="mytext" />
+		<div>您输入的值为：<span id="test">还未输入</span></div>
+		<script src="js/common/jquery-1.12.4.js"></script>
 		<script type="text/javascript">
+			immediately();
 			function immediately() {
 				var element = document.getElementById("mytext");
 				if("\v" == "v") {
@@ -28,18 +42,9 @@
 					//};
 				}
 			}
-		</script>
-	</head>
-
-	<body>
-		直接写在页面中的示例：
-		<input type="text" name="textfield" oninput="document.getElementById('webtest').innerHTML=this.value;" onpropertychange="document.getElementById('webtest').innerHTML=this.value;" />
-		<div>您输入的值为：<span id="webtest">还未输入</span></div>
-		<br /><br /><br /><br /><br /> 写在JS中的示例：
-		<input type="text" name="textfield" id="mytext" />
-		<div>您输入的值为：<span id="test">还未输入</span></div>
-		<script type="text/javascript">
-			immediately();
+			
+			var htmlstr = '<input type="text" name="textfield" oninput="document.getElementById(\'webtest\').innerHTML=this.value;" onchange="alert(888);" onpropertychange="document.getElementById(\'webtest1\').innerHTML=this.value;" />';
+			$("#adddiv").append(htmlstr);
 		</script>
 	</body>
 

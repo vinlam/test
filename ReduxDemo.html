@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Make-Redux</title>
+	</head>
+
+	<body>
+		<div id="app">
+			<div id="title"></div>
+			<div id="content"></div>
+		</div>
+		<script>
+			// 应用的状态
+			const appState = {
+				title: {
+					text: '这是一段标题',
+					color: 'Red'
+				},
+				content: {
+					text: '这是一段内容',
+					color: 'blue'
+				}
+			};
+
+			// 渲染函数
+			function renderApp(appState) {
+				renderTitle(appState.title);
+				renderContent(appState.content);
+			}
+
+			function renderTitle(title) {
+				const titleDOM = document.getElementById('title');
+				titleDOM.innerHTML = title.text;
+				titleDOM.style.color = title.color;
+			}
+
+			function renderContent(content) {
+				const contentDOM = document.getElementById('content');
+				contentDOM.innerHTML = content.text;
+				contentDOM.style.color = content.color;
+			}
+
+			// 渲染数据到页面上
+			renderApp(appState);
+		</script>
+	</body>
+
+</html>

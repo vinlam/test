@@ -28,24 +28,43 @@
 		//a(123);
 
 		a(); //若执行注释a(123)函数，默认最后一个会覆盖前面,此处则执行var a =function a()，输出 var function
-		
-		function test(p=123,n='jack',callback){
-			
+
+		function test(p = 123, callback, n = 'jack') {
+			console.log(arguments);
 			console.log(p);
-			if(n){
+			if(n) {
 				console.log(n);
 			}
-			if(typeof(callback)==='function')
+			if(typeof(callback) === 'function')
 				return callback(n);
 		}
-		
-		test(1,{},function(){
-			console.log("param:"+arguments)
+
+		test(1, function() {
+			console.log("param:" + arguments)
+		}, {});
+		test('abc', function() {
+			console.log("param:" + arguments)
 		});
-		
+
+		function t(type, param = {}, succcallback, errorcallback, flag = false) {
+			//console.log(arguments);
+			console.log(param);
+			if(arguments != null) {
+				var len = arguments.length;
+				for(var i = 0; i < len; i++) {
+					console.log(typeof(arguments[i]));
+				}
+			}
+		}
+
+		t("get", [1, 2], succ);
+
+		function succ() {
+
+		}
 		var obj = {
 			a: function(arg) {
-				console.log("Object function()" + arg);
+				console.log("Object function():" + arg);
 			},
 			b: function() {
 				console.log("a:function()");
@@ -66,29 +85,64 @@
 		})();
 
 		(function() {
-			console.log(t?t:""); //1            
+			console.log(t ? t : ""); //1            
 		})();
 
 		var fun = function() {
 			console.log(t); //1
 		}
 		fun();
-		
+
 		var b;
-		if(b != null && typeof(b) != undefined && b != ''){
+		if(b != null && typeof(b) != undefined && b != '') {
 			console.log(b);
-		    //a有内容才执行的代码  
-		}else{
-			console.log("-----------"+b);
+			//a有内容才执行的代码  
+		} else {
+			console.log("-----------" + b);
 		}
 		console.log(!!b);
 		//实际上我们只需要写一个判断表达：
-		if(!!b){
-		    //a有内容才执行的代码... 
-		    console.log(b);
-		}else{
-			console.log("==========="+b);
+		if(!!b) {
+			//a有内容才执行的代码... 
+			console.log(b);
+		} else {
+			console.log("===========" + b);
 		}
+
+		//构造函数
+		function People() {
+			this.hobby = 'eat';
+		}
+		People.prototype.showHooby = function() {};
+
+		//继承
+		function Coder() {
+			this.love = function method() {
+				return 'coder‘s love is codeing';
+			};
+		}
+		Coder.prototype = new People;
+		Coder.prototype.constructor = Coder;
+
+		//实例
+		var c = new Coder();
+		c.age = '24';
+		//打印出实例
+		console.dir(c)
+		
+		var Bank = function(){};
+		function Bank(){
+			this.method = 'post';
+			this.params = {};
+			this.succfun = function(){};
+			this.errfun= function(){};
+			this.loadingflag = true;
+		}
+		Bank.prototype.apiSend = function(){
+			console.log(this);
+		}
+		var bank = new Bank();
+		bank.apiSend();
 	</script>
 
 </html>
