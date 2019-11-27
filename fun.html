@@ -9,7 +9,7 @@
 	<body>
 	</body>
 	<script>
-		"use strict";
+		//"use strict";
 
 		function a() {
 			console.log("hello");
@@ -93,6 +93,28 @@
 		}
 		fun();
 
+
+		var tt =(function tf(){
+			function t1(){
+				console.log(arguments);
+				return 123;
+				
+			}
+			return t1;
+		})()
+		
+		tt.call(this,'ag');
+		
+		var ttt =(function ff(){
+			//此处若用"use strict";模式，则会报Uncaught ReferenceError: f is not defined
+			myfun= function t1(){
+				console.log(arguments);
+				return 123;
+				
+			}
+		})()
+		
+		console.log(myfun());
 		var b;
 		if(b != null && typeof(b) != undefined && b != '') {
 			console.log(b);
@@ -143,6 +165,11 @@
 		}
 		var bank = new Bank();
 		bank.apiSend();
+		//bank = null;
+		//c = null;
+		MYF = {};
+		MYF.va = myfun();
+		console.log(MYF);
 	</script>
 
 </html>
