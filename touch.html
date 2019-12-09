@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+		<title>禁止页面放大</title>
+	</head>
+
+	<body>
+		<div><input type="button" id="btn" value="click"/></div>
+	</body>
+	<script>
+		//禁止双指放大
+		document.documentElement.addEventListener('touchstart', function(event) {
+			if(event.touches.length > 1) {
+				alert("finger resize")
+				event.preventDefault();
+			}
+		}, false);
+
+		//禁止双击放大
+		var lastTouchEnd = 0;
+		document.documentElement.addEventListener('touchend', function(event) {
+			var now = Date.now();
+			if(now - lastTouchEnd <= 300) {
+				//alert("double click")
+				event.preventDefault();
+			}
+			lastTouchEnd = now;
+		}, false);
+	</script>
+
+</html>

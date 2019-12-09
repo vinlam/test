@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body {
+				font-family: sans-serif;
+				font-size: 0.9em;
+			}
+
+			table {
+				border-collapse: collapse;
+				border-bottom: 1px solid #ddd;
+			}
+
+			thead {
+				background-color: #333;
+				color: #fff;
+			}
+
+			thead,
+			tbody {
+				display: block;
+			}
+
+			th,
+			td {
+				padding: 8px 10px;
+				border: 1px solid #ddd;
+				width: 117px;
+				box-sizing: border-box;
+			}
+
+			tbody {
+				height: 160px;
+				overflow-y: scroll
+			}
+		</style>
+	</head>
+
+	<body>
+		<button id="btn">添加</button>
+		<div id="datadiv">
+
+		</div>
+		<div id="tablediv">
+		</div>
+		<label class="lab">test</label>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<!-- <script src="js/jquery.min.js"></script> -->
+	<script>
+		$(function() {
+			$("#btn").off("click").on("click", function() {
+				var htmstr =
+					'<div><div class="attr"><input class="attrname" type="text" placeholder="name">:<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div></div><span class="addlab">最多添加10项</span></div>';
+				$("#datadiv").append(htmstr);
+				// $("#selectval").off("change").on("change", function() {
+				// 	console.log($(this).prop("checked"))
+				// })
+			})
+
+			function myTrim(value) {
+				return value.replace(/^\s+|\s+$/gm, '');
+			}
+
+			function myFunction() {
+				var str = myTrim("        Runoob        ");
+				alert(str);
+			}
+
+			$("#datadiv").on("change", ".selectval", function() {
+				//alert($(this).text());
+				var target = $(this);
+				//console.log(target.prop("checked"));
+				var attrname = target.parent().parent().find(".attrname");
+				var attrval = target.next();
+				if (myTrim(attrname.val()) == "" || attrname.val().length == 0) {
+					alert("属性名不能为空");
+					attrname.val("");
+					target.prop("checked", false);
+					return;
+				}
+
+				if (myTrim(attrval.val()) == "" || attrval.val().length == 0) {
+					alert("属性值不能为空");
+					attrval.val("");
+					target.prop("checked", false);
+					return;
+				}
+
+				var atval = attrval.val();
+				var atname = attrname.val();
+				datachange();
+			})
+
+
+			$("#datadiv").on("click", ".addlab", function() {
+				//alert($(this).text());
+				var target = $(this);
+				//console.log(target);
+				var htmstr =
+					'<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div>';
+				//console.log(target.parent().find(".attrvalue").length);
+				if (target.parent().find(".attrvalue").length < 10) {
+					target.parent().find(".attr").append(htmstr);
+					//console.log(htmstr);
+				}
+			})
+
+			$("#datadiv").on("click", ".dellab", function() {
+				var target = $(this);
+				if (target.parent().parent().find(".attrvalue").length == 1) {
+					target.parent().parent().parent().remove();
+				} else {
+					target.parent().remove();
+				}
+				datachange();
+			})
+
+			function valcompare(target, cls) {
+				//var cls = target.get
+
+				if (cls == ".attrname") {
+					var targetlist = $(cls).not($(target));
+					if (targetlist.length > 0) {
+						targetlist.each(function(i) {
+							//console.log(targetlist[i].value);
+							if (target.val() != "" && targetlist[i].value == target.val()) {
+								alert("已存在相同值，请重新输入！");
+								target.val("");
+								return;
+							}
+						})
+					}
+				} else {
+					var targetlist = $(target).parent().parent().find(cls).not($(target));
+					if (targetlist.length > 0) {
+						targetlist.each(function(i) {
+							//console.log(targetlist[i].value);
+							if (target.val() != "" && targetlist[i].value == target.val()) {
+								alert("已存在相同值，请重新输入！");
+								target.val("");
+								return;
+							}
+						})
+					}
+				}
+			}
+
+			function datachange() {
+				//console.log($(target));
+				var dataarr = [];
+				var namearr = [];
+				var arrtnameList = $(".attrname");
+				var namelen = arrtnameList.length;
+				// var attrname = $("")
+				for (var i = 0; i < namelen; i++) {
+					var attrvalList = $(arrtnameList[i]).parent().find(".attrvalue");
+					var attrname = $(arrtnameList[i]).val();
+					var vallen = attrvalList.length;
+					var valarr = [];
+					for (var j = 0; j < vallen; j++) {
+						var valcheck = $(attrvalList[j]).find(".selectval");
+						var attrval = $(valcheck).parent().find(".attrval");
+						//console.log($(valcheck).prop("checked"));
+						if ($(valcheck).prop("checked") == true) {
+							//console.log(attrval.val());
+							valarr.push(attrval.val());
+						}
+					}
+					if (valarr.length > 0) {
+						dataarr.push(valarr);
+						namearr.push(attrname);
+					}
+
+				}
+				//console.log(dataarr);
+				if (namearr.length > 0) {
+					namearr.push("数量");
+					namearr.push("价格");
+					rendertable(namearr, createdata(dataarr));
+				} else {
+					$("#tablediv").children().remove();
+				}
+			}
+
+			function createdata(arr) {
+				var sarr = [
+					[]
+				];
+				var result = [];
+				for (var i = 0; i < arr.length; i++) {
+					var tarr = [];
+					for (var j = 0; j < sarr.length; j++) {
+						for (var k = 0; k < arr[i].length; k++) {
+							tarr.push(sarr[j].concat(arr[i][k]));
+						}
+					}
+					sarr = tarr;
+				}
+				for (var m = 0; m < sarr.length; m++) {
+					//result.push(sarr[m].join('.')); 
+					result.push(sarr[m]);
+				}
+				return result;
+			}
+
+			$("#datadiv").on("change", ".attrname", function() {
+				//alert($(this).text());
+				var target = $(this);
+				valchange(target);
+				valcompare(target, ".attrname");
+				//datachange();
+			})
+
+			$("#datadiv").on("change", ".attrval", function() {
+				//alert($(this).text());
+				var target = $(this);
+				valchange(target);
+				valcompare(target, ".attrval");
+			})
+
+			function valchange(target) {
+				//var target = $(this);
+				//console.log(target.val());
+
+				target.val(myTrim(target.val()));
+
+				if (target.val() == "" || target.val().length == 0) {
+					//alert("属性值不能为空");
+					if (target.hasClass(".attrval")) {
+						target.next().val("");
+						target.prev().prop("checked", false);
+						//return;
+					} else {
+						target.val("");
+						target.parent().find(".selectval").prop("checked", false);
+					}
+				}
+				datachange();
+			}
+
+			var oldvallist = [
+				[]
+			];
+
+			function rendertable(namearr, vallist) {
+				var quantityarr = [];
+				var pricearr = [];
+
+				if ($(".quantity") != null && $(".quantity").length > 0) {
+					var quantitylist = $(".quantity");
+					var pricelist = $(".price");
+					var quantitylen = quantitylist.length;
+					for (var i = 0; i < quantitylen; i++) {
+						quantityarr.push($(quantitylist[i]).val());
+						pricearr.push($(pricelist[i]).val());
+					}
+					console.log(quantityarr);
+				} else {
+					quantityarr.push("");
+					pricearr.push("");
+				}
+
+				if (quantityarr.length > 0 && quantityarr.length != vallist.length && oldvallist.length > 0) {
+					if (oldvallist.length > vallist.length) {
+						var olen = oldvallist.length;
+						var vlen = vallist.length;
+						var delarr = [];
+						var newquantityarr = [];
+						var newpricearr = [];
+						for (var i = 0; i < vlen; i++) {
+							for (var j = 0; j < olen; j++) {
+								//console.log(oldvallist[j].join("")+"==="+ vallist[i].join(""));
+								if (oldvallist[j].join("") == vallist[i].join("")) {
+									//console.log(j);
+									delarr.push(j);
+								}
+							}
+						}
+						var dellen = delarr.length;
+						for (var k = 0; k < dellen; k++) {
+							for (var l = 0; l < quantityarr.length; l++) {
+								if (quantityarr[l] == quantityarr[delarr[k]]) {
+									newquantityarr.push(quantityarr[l]);
+									newpricearr.push(pricearr[l]);
+								}
+							}
+						}
+						
+						if(dellen == 0){
+							for (var n = 0; n < vallist.length; n++) {
+								newquantityarr.push("");
+								newpricearr.push("");
+							}
+						}
+
+						quantityarr = newquantityarr;
+						pricearr = newpricearr;
+						//console.log("del:"+newquantityarr);
+					} else {
+						var olen = oldvallist.length;
+						var vlen = vallist.length;
+						var newadd = vlen - olen;
+
+						var delarr = [];
+						var newquantityarr = [];
+						var newpricearr = [];
+						var dellen = [];
+
+						for (var i = 0; i < vlen; i++) {
+							newquantityarr.push("");
+							newpricearr.push("");
+						}
+						//console.log("add:"+quantityarr);
+						// var ind = "";
+						var indexarr = [];
+						for (var i = 0; i < olen; i++) {
+							for (var j = 0; j < vlen; j++) {
+								//console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
+								if (oldvallist[i].join("") == vallist[j].join("")) {
+									console.log(j);
+									indexarr.push(j);
+								}
+							}
+						}
+
+						for (var k = 0; k < indexarr.length; k++) {
+							newquantityarr.splice(indexarr[k], 1, quantityarr[k]);
+							newpricearr.splice(indexarr[k], 1, pricearr[k]);
+						}
+						quantityarr = newquantityarr;
+						pricearr = newpricearr;
+					}
+				}
+
+				var htmstr = '<table class=""><thead><tr>';
+				var namelen = namearr.length;
+				for (var i = 0; i < namelen; i++) {
+					htmstr += '<th>' + namearr[i] + '</th>';
+				}
+				htmstr += '</thead><tbody>';
+				var len = vallist.length;
+				for (var j = 0; j < len; j++) {
+					htmstr += '<tr>';
+
+					var childlen = vallist[j].length;
+					for (var k = 0; k < childlen; k++) {
+						if (vallist[j][k].length == 1) {
+							htmstr += '<td>' + vallist[j] + '</td><td><input class="quantity" style="width: 100%;" type="text" value="' +
+								quantityarr[0] + '"></td><td><input class="price" style="width: 100%;" type="text" value="' + pricearr[0] +
+								'"></td>';
+						} else {
+							htmstr += '<td>' + vallist[j][k] + '</td>';
+						}
+					}
+					htmstr += '<td><input class="quantity" style="width: 100%;" type="text" value="' + quantityarr[j] +
+						'"></td><td><input class="price" style="width: 100%;" type="text" value="' + pricearr[j] + '"></td>';
+					htmstr += '</tr>';
+				}
+
+				htmstr += '</tbody>';
+				//console.log(htmstr);
+				$("#tablediv").html(htmstr);
+				oldvallist = clone(vallist);
+				console.log(oldvallist);
+			}
+
+			function clone(obj) {
+				var temp = null;
+				if (obj instanceof Array) {
+					temp = obj.concat();
+				} else if (obj instanceof Function) {
+					//函数是共享的是无所谓的，js也没有什么办法可以在定义后再修改函数内容
+					temp = obj;
+				} else {
+					temp = new Object();
+					for (var item in obj) {
+						var val = obj[item];
+						temp[item] = typeof val == 'object' ? clone(val) : val; //这里也没有判断是否为函数，因为对于函数，我们将它和一般值一样处理
+					}
+				}
+				return temp;
+			}
+
+			$(".lab").off("click").on("click", function() {
+				alert($(this).text());
+			})
+
+			$("#datadiv").on("input propertychange", "input", function() {
+				//console.log($(this).val())
+			});
+		})
+	</script>
+</html>

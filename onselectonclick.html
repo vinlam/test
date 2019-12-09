@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>select click</title>
+	</head>
+	<body>
+		<div>
+			<a href="https://item.jd.com/100002380994.html" id="gonow">select and click</a>
+		</div>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+//		$("#gonow").select(function(){
+//			console.log($(this).text());
+//		})
+//		
+//		$("#gonow").keyup(function(e){
+//			console.log("keyup:"+$(this).text());
+//			e.stopPropagation();
+//			e.preventDefault();
+//			return false;
+//		})
+		$("#gonow").off("click").on("click",function(){
+			
+			console.log("click:"+$(this).text());
+			//$(this).attr("href","http://www.baidu.com");
+		})
+	</script>
+</html>
