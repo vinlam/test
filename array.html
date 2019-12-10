@@ -9,22 +9,22 @@
 				font-family: sans-serif;
 				font-size: 0.9em;
 			}
-
+			
 			table {
 				border-collapse: collapse;
 				border-bottom: 1px solid #ddd;
 			}
-
+			
 			thead {
 				background-color: #333;
 				color: #fff;
 			}
-
+			
 			thead,
 			tbody {
 				display: block;
 			}
-
+			
 			th,
 			td {
 				padding: 8px 10px;
@@ -32,37 +32,63 @@
 				width: 117px;
 				box-sizing: border-box;
 			}
-
+			
 			tbody {
 				height: 160px;
 				overflow-y: scroll
 			}
 		</style>
 		<script>
-			
-			var tarr = ["a:1","a:1_2","a:1_2_3","a:1_2_3_4","a:1_2_3_5","a:1_10_11_12","a:1_10_11_13","a:1_10","a:1_10_11","a:1_2_6","a:1_2_7"];
+			var arr = new Array('1', '2', '3');
+			if(!Array.indexOf) {
+				Array.prototype.indexOf = function(obj) {
+					for(var i = 0; i < this.length; i++) {
+						if(this[i] == obj) {
+							return i;
+						}
+					}
+					return -1;
+				}
+			}
+			var index = arr.indexOf('1'); //为index赋值为0
+
+			Array.prototype.contains = function(obj) {
+				var i = this.length;
+				while(i--) {
+					if(this[i] === obj) {
+						return true;
+					}
+				}
+				return false;
+			}
+			//使用方法：
+			[1, 2, 3].contains(2); //返回true
+			[1, 2, 3].contains('2'); //返回false
+			————————————————
+
+			var tarr = ["a:1", "a:1_2", "a:1_2_3", "a:1_2_3_4", "a:1_2_3_5", "a:1_10_11_12", "a:1_10_11_13", "a:1_10", "a:1_10_11", "a:1_2_6", "a:1_2_7"];
 			//tarr = tarr.sort();
 			var tnode = [];
-			tarr.forEach(function(item,i){
+			tarr.forEach(function(item, i) {
 				var treenodestr = item.split(":")[1];
 				var treenodearr = treenodestr.split("_");
-				
+
 				var len = treenodearr.length;
 				//for(var i = 0;i< len;i++){
-					var obj = {};
-					
-					if(len == 1){
-						obj.pid = 1;
-						obj.id = treenodearr[i];
-					}else{
-						obj.pid = treenodearr[len -2];
-						obj.id = treenodearr[len-1]
-					}
-					tnode.push(obj);
+				var obj = {};
+
+				if(len == 1) {
+					obj.pid = 1;
+					obj.id = treenodearr[i];
+				} else {
+					obj.pid = treenodearr[len - 2];
+					obj.id = treenodearr[len - 1]
+				}
+				tnode.push(obj);
 				//}
 			})
 			console.log(tnode);
-			
+
 			//一.升序排列
 			var theArray1 = [2, 3, 5, 1, 15, 8, 12, 11, 7];
 			//console.log("aaa:" + theArray1.sort());
@@ -87,16 +113,16 @@
 			document.writeln(arrA);
 			*/
 			function desc(x, y) {
-				if (x > y)
+				if(x > y)
 					return -1;
-				if (x < y)
+				if(x < y)
 					return 1;
 			}
 
 			function asc(x, y) {
-				if (x > y)
+				if(x > y)
 					return 1;
-				if (x < y)
+				if(x < y)
 					return -1;
 			}
 
@@ -113,9 +139,9 @@
 
 			var arrA = [6, 2, 4, 3, 5, 1];
 			arrA.sort(function(x, y) {
-				if (x % 2 == 0)
+				if(x % 2 == 0)
 					return 11;
-				if (x % 2 != 0)
+				if(x % 2 != 0)
 					return -1;
 			});
 			document.writeln(arrA);
@@ -149,15 +175,15 @@
 			//ss = ""
 			var ks = ss.split(";");
 			tt = [];
-			for (var i = 0, l = ks.length; i < l; i++) {
+			for(var i = 0, l = ks.length; i < l; i++) {
 				var nn = ks[i].split(":");
 				tt.push(nn[0]);
 			}
 			//console.log(tt.toString());
 			var nna = [];
-			for (var j = 0, leng = tt.length; j < leng; j++) {
-				for (var i = 0, len = ta.length; i < len; i++) {
-					if (tt[j] == ta[i]['name']) {
+			for(var j = 0, leng = tt.length; j < leng; j++) {
+				for(var i = 0, len = ta.length; i < len; i++) {
+					if(tt[j] == ta[i]['name']) {
 						var id = ta[i]['name'];
 						var val = ta[i]['value'];
 						//console.log("id:" + id + "-- val:" + val)
@@ -219,7 +245,6 @@
 			//			}
 			//			console.log(getCombination(textArr));
 
-
 			function concatArr(arr) {
 				var sarr = [
 					[]
@@ -252,7 +277,7 @@
 				//不要直接使用var arr = arr1，这样arr只是arr1的一个引用，两者的修改会互相影响  
 				var arr = arr1.concat();
 				//或者使用slice()复制，var arr = arr1.slice(0)  
-				for (var i = 0; i < arr2.length; i++) {
+				for(var i = 0; i < arr2.length; i++) {
 					arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 				}
 				return arr;
@@ -260,18 +285,18 @@
 
 			//合并多个数组，去重  
 			var concat = function(arr1, arr2, arr3) {
-				if (arguments.length <= 1) {
+				if(arguments.length <= 1) {
 					return false;
 				}
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
-					for (var i = 0; i < arr2.length; i++) {
+					for(var i = 0; i < arr2.length; i++) {
 						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 					}
 					return arr;
 				}
 				var result = concat_(arr1, arr2);
-				for (var i = 2; i < arguments.length; i++) {
+				for(var i = 2; i < arguments.length; i++) {
 					result = concat_(result, arguments[i]);
 				}
 				return result;
@@ -283,18 +308,18 @@
 			var arr3 = [6, 0, 7, 90, 2];
 
 			var concat = function(arr1, arr2, arr3) {
-				if (arguments.length <= 1) {
+				if(arguments.length <= 1) {
 					return false;
 				}
 				var concat_ = function(arr1, arr2) {
 					var arr = arr1.concat();
-					for (var i = 0; i < arr2.length; i++) {
+					for(var i = 0; i < arr2.length; i++) {
 						arr.indexOf(arr2[i]) === -1 ? arr.push(arr2[i]) : 0; //indexOf ie8 <=以下不支持
 					}
 					return arr;
 				}
 				var result = concat_(arr1, arr2);
-				for (var i = 2; i < arguments.length; i++) {
+				for(var i = 2; i < arguments.length; i++) {
 					result = concat_(result, arguments[i]);
 				}
 				//排序  
@@ -310,16 +335,16 @@
 					[]
 				];
 				var result = [];
-				for (var i = 0; i < arr.length; i++) {
+				for(var i = 0; i < arr.length; i++) {
 					var tarr = [];
-					for (var j = 0; j < sarr.length; j++) {
-						for (var k = 0; k < arr[i].length; k++) {
+					for(var j = 0; j < sarr.length; j++) {
+						for(var k = 0; k < arr[i].length; k++) {
 							tarr.push(sarr[j].concat(arr[i][k]));
 						}
 					}
 					sarr = tarr;
 				}
-				for (var m = 0; m < sarr.length; m++) {
+				for(var m = 0; m < sarr.length; m++) {
 					//result.push(sarr[m].join('.')); 
 					result.push(sarr[m]);
 				}
@@ -435,8 +460,8 @@
 				var leftId = obj["leftId"];
 				//获取子级数组
 				var rightArr = obj["rightArr"];
-				for (var i = 0, j = rightArr.length; i < j; i++) {
-					if (rightArr[i]["rid"] === leftId) {
+				for(var i = 0, j = rightArr.length; i < j; i++) {
+					if(rightArr[i]["rid"] === leftId) {
 						return rightArr[i];
 					}
 				}
@@ -481,14 +506,14 @@
 				//console.log(target.prop("checked"));
 				var attrname = target.parent().parent().find(".attrname");
 				var attrval = target.next();
-				if (myTrim(attrname.val()) == "" || attrname.val().length == 0) {
+				if(myTrim(attrname.val()) == "" || attrname.val().length == 0) {
 					alert("属性名不能为空");
 					attrname.val("");
 					target.prop("checked", false);
 					return;
 				}
 
-				if (myTrim(attrval.val()) == "" || attrval.val().length == 0) {
+				if(myTrim(attrval.val()) == "" || attrval.val().length == 0) {
 					alert("属性值不能为空");
 					attrval.val("");
 					target.prop("checked", false);
@@ -500,7 +525,6 @@
 				datachange();
 			})
 
-
 			$("#datadiv").on("click", ".addlab", function() {
 				//alert($(this).text());
 				var target = $(this);
@@ -508,7 +532,7 @@
 				var htmstr =
 					'<div class="attrvalue" style="display:inline-block;"><input class="selectval" type="checkbox"><input class="attrval" type="text" placeholder="value"> <span class="dellab">删除</span> </div>';
 				//console.log(target.parent().find(".attrvalue").length);
-				if (target.parent().find(".attrvalue").length < 10) {
+				if(target.parent().find(".attrvalue").length < 10) {
 					target.parent().find(".attr").append(htmstr);
 					//console.log(htmstr);
 				}
@@ -516,7 +540,7 @@
 
 			$("#datadiv").on("click", ".dellab", function() {
 				var target = $(this);
-				if (target.parent().parent().find(".attrvalue").length == 1) {
+				if(target.parent().parent().find(".attrvalue").length == 1) {
 					target.parent().parent().parent().remove();
 				} else {
 					target.parent().remove();
@@ -527,12 +551,12 @@
 			function valcompare(target, cls) {
 				//var cls = target.get
 
-				if (cls == ".attrname") {
+				if(cls == ".attrname") {
 					var targetlist = $(cls).not($(target));
-					if (targetlist.length > 0) {
+					if(targetlist.length > 0) {
 						targetlist.each(function(i) {
 							//console.log(targetlist[i].value);
-							if (target.val() != "" && targetlist[i].value == target.val()) {
+							if(target.val() != "" && targetlist[i].value == target.val()) {
 								alert("已存在相同值，请重新输入！");
 								target.val("");
 								return;
@@ -541,10 +565,10 @@
 					}
 				} else {
 					var targetlist = $(target).parent().parent().find(cls).not($(target));
-					if (targetlist.length > 0) {
+					if(targetlist.length > 0) {
 						targetlist.each(function(i) {
 							//console.log(targetlist[i].value);
-							if (target.val() != "" && targetlist[i].value == target.val()) {
+							if(target.val() != "" && targetlist[i].value == target.val()) {
 								alert("已存在相同值，请重新输入！");
 								target.val("");
 								return;
@@ -561,28 +585,28 @@
 				var arrtnameList = $(".attrname");
 				var namelen = arrtnameList.length;
 				// var attrname = $("")
-				for (var i = 0; i < namelen; i++) {
+				for(var i = 0; i < namelen; i++) {
 					var attrvalList = $(arrtnameList[i]).parent().find(".attrvalue");
 					var attrname = $(arrtnameList[i]).val();
 					var vallen = attrvalList.length;
 					var valarr = [];
-					for (var j = 0; j < vallen; j++) {
+					for(var j = 0; j < vallen; j++) {
 						var valcheck = $(attrvalList[j]).find(".selectval");
 						var attrval = $(valcheck).parent().find(".attrval");
 						//console.log($(valcheck).prop("checked"));
-						if ($(valcheck).prop("checked") == true) {
+						if($(valcheck).prop("checked") == true) {
 							//console.log(attrval.val());
 							valarr.push(attrval.val());
 						}
 					}
-					if (valarr.length > 0) {
+					if(valarr.length > 0) {
 						dataarr.push(valarr);
 						namearr.push(attrname);
 					}
 
 				}
 				//console.log(dataarr);
-				if (namearr.length > 0) {
+				if(namearr.length > 0) {
 					namearr.push("数量");
 					namearr.push("价格");
 					rendertable(namearr, createdata(dataarr));
@@ -596,16 +620,16 @@
 					[]
 				];
 				var result = [];
-				for (var i = 0; i < arr.length; i++) {
+				for(var i = 0; i < arr.length; i++) {
 					var tarr = [];
-					for (var j = 0; j < sarr.length; j++) {
-						for (var k = 0; k < arr[i].length; k++) {
+					for(var j = 0; j < sarr.length; j++) {
+						for(var k = 0; k < arr[i].length; k++) {
 							tarr.push(sarr[j].concat(arr[i][k]));
 						}
 					}
 					sarr = tarr;
 				}
-				for (var m = 0; m < sarr.length; m++) {
+				for(var m = 0; m < sarr.length; m++) {
 					//result.push(sarr[m].join('.')); 
 					result.push(sarr[m]);
 				}
@@ -633,9 +657,9 @@
 
 				target.val(myTrim(target.val()));
 
-				if (target.val() == "" || target.val().length == 0) {
+				if(target.val() == "" || target.val().length == 0) {
 					//alert("属性值不能为空");
-					if (target.hasClass(".attrval")) {
+					if(target.hasClass(".attrval")) {
 						target.next().val("");
 						target.prev().prop("checked", false);
 						//return;
@@ -655,11 +679,11 @@
 				var quantityarr = [];
 				var pricearr = [];
 
-				if ($(".quantity") != null && $(".quantity").length > 0) {
+				if($(".quantity") != null && $(".quantity").length > 0) {
 					var quantitylist = $(".quantity");
 					var pricelist = $(".price");
 					var quantitylen = quantitylist.length;
-					for (var i = 0; i < quantitylen; i++) {
+					for(var i = 0; i < quantitylen; i++) {
 						quantityarr.push($(quantitylist[i]).val());
 						pricearr.push($(pricelist[i]).val());
 					}
@@ -669,34 +693,34 @@
 					pricearr.push("");
 				}
 
-				if (quantityarr.length > 0 && quantityarr.length != vallist.length && oldvallist.length > 0) {
-					if (oldvallist.length > vallist.length) {
+				if(quantityarr.length > 0 && quantityarr.length != vallist.length && oldvallist.length > 0) {
+					if(oldvallist.length > vallist.length) {
 						var olen = oldvallist.length;
 						var vlen = vallist.length;
 						var delarr = [];
 						var newquantityarr = [];
 						var newpricearr = [];
-						for (var i = 0; i < vlen; i++) {
-							for (var j = 0; j < olen; j++) {
+						for(var i = 0; i < vlen; i++) {
+							for(var j = 0; j < olen; j++) {
 								//console.log(oldvallist[j].join("")+"==="+ vallist[i].join(""));
-								if (oldvallist[j].join("") == vallist[i].join("")) {
+								if(oldvallist[j].join("") == vallist[i].join("")) {
 									//console.log(j);
 									delarr.push(j);
 								}
 							}
 						}
 						var dellen = delarr.length;
-						for (var k = 0; k < dellen; k++) {
-							for (var l = 0; l < quantityarr.length; l++) {
-								if (quantityarr[l] == quantityarr[delarr[k]]) {
+						for(var k = 0; k < dellen; k++) {
+							for(var l = 0; l < quantityarr.length; l++) {
+								if(quantityarr[l] == quantityarr[delarr[k]]) {
 									newquantityarr.push(quantityarr[l]);
 									newpricearr.push(pricearr[l]);
 								}
 							}
 						}
-						
-						if(dellen == 0){
-							for (var n = 0; n < vallist.length; n++) {
+
+						if(dellen == 0) {
+							for(var n = 0; n < vallist.length; n++) {
 								newquantityarr.push("");
 								newpricearr.push("");
 							}
@@ -715,24 +739,24 @@
 						var newpricearr = [];
 						var dellen = [];
 
-						for (var i = 0; i < vlen; i++) {
+						for(var i = 0; i < vlen; i++) {
 							newquantityarr.push("");
 							newpricearr.push("");
 						}
 						//console.log("add:"+quantityarr);
 						// var ind = "";
 						var indexarr = [];
-						for (var i = 0; i < olen; i++) {
-							for (var j = 0; j < vlen; j++) {
+						for(var i = 0; i < olen; i++) {
+							for(var j = 0; j < vlen; j++) {
 								//console.log(oldvallist[i].join("")+"==="+ vallist[j].join(""));
-								if (oldvallist[i].join("") == vallist[j].join("")) {
+								if(oldvallist[i].join("") == vallist[j].join("")) {
 									console.log(j);
 									indexarr.push(j);
 								}
 							}
 						}
 
-						for (var k = 0; k < indexarr.length; k++) {
+						for(var k = 0; k < indexarr.length; k++) {
 							newquantityarr.splice(indexarr[k], 1, quantityarr[k]);
 							newpricearr.splice(indexarr[k], 1, pricearr[k]);
 						}
@@ -743,17 +767,17 @@
 
 				var htmstr = '<table class=""><thead><tr>';
 				var namelen = namearr.length;
-				for (var i = 0; i < namelen; i++) {
+				for(var i = 0; i < namelen; i++) {
 					htmstr += '<th>' + namearr[i] + '</th>';
 				}
 				htmstr += '</thead><tbody>';
 				var len = vallist.length;
-				for (var j = 0; j < len; j++) {
+				for(var j = 0; j < len; j++) {
 					htmstr += '<tr>';
 
 					var childlen = vallist[j].length;
-					for (var k = 0; k < childlen; k++) {
-						if (vallist[j][k].length == 1) {
+					for(var k = 0; k < childlen; k++) {
+						if(vallist[j][k].length == 1) {
 							htmstr += '<td>' + vallist[j] + '</td><td><input class="quantity" style="width: 100%;" type="text" value="' +
 								quantityarr[0] + '"></td><td><input class="price" style="width: 100%;" type="text" value="' + pricearr[0] +
 								'"></td>';
@@ -775,14 +799,14 @@
 
 			function clone(obj) {
 				var temp = null;
-				if (obj instanceof Array) {
+				if(obj instanceof Array) {
 					temp = obj.concat();
-				} else if (obj instanceof Function) {
+				} else if(obj instanceof Function) {
 					//函数是共享的是无所谓的，js也没有什么办法可以在定义后再修改函数内容
 					temp = obj;
 				} else {
 					temp = new Object();
-					for (var item in obj) {
+					for(var item in obj) {
 						var val = obj[item];
 						temp[item] = typeof val == 'object' ? clone(val) : val; //这里也没有判断是否为函数，因为对于函数，我们将它和一般值一样处理
 					}
@@ -797,6 +821,11 @@
 			$("#datadiv").on("input propertychange", "input", function() {
 				//console.log($(this).val())
 			});
+
+			var arrhaselement = ["index", "produce", "sell"];
+			alert($.inArray("produce", arrhaselement));
+
 		})
 	</script>
+
 </html>
