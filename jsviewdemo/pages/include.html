@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<script id="peopleTemplate" type="text/x-jsrender">
+  <div>
+    {{:name}} lives in {{include tmpl="#addressTemplate"/}}
+  </div>
+</script>
+
+<script id="addressTemplate" type="text/x-jsrender">
+    <b>{{>address.city}}</b>
+</script>
+
+<div id="peopleList"></div>
+
+<script>
+	var people = [
+	  {
+	    "name": "Josh",
+	    "address": {
+	      "city": "Shanghai"
+	    }
+	  },
+	  {
+	    "name": "WangSheng",
+	    "address": {
+	      "city": "GuiYang"
+	    }
+	  }
+	];
+	
+	var html = $("#peopleTemplate").render(people);
+	
+	$("#peopleList").html(html);
+</script>
+
+</body>
+</html>

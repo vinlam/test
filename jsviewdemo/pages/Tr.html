@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>jquery JsRender动态新增tr</title>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+				margin: 0 auto;
+				font-size: 15px;
+			}
+			
+			#infoDiv {
+				margin-top: 10px;
+				width: 900px;
+				border-top: 1px solid #79B2F1;
+				border-bottom: none;
+			}
+			
+			#infoDiv table {
+				margin-top: 10px;
+			}
+			
+			#infoDiv table td {
+				padding: 4px 6px;
+				text-align: left;
+			}
+			
+			#submitDiv {
+				width: 100px;
+			}
+			
+			#submitDiv span {
+				color: #fff;
+				background: #89D900;
+				height: 25px;
+				width: 100px;
+				display: block;
+				line-height: 25px;
+				font-weight: bold;
+				text-align: center;
+				margin: 0 auto;
+			}
+			
+			#submitDiv a {
+				text-decoration: none;
+			}
+			
+			#disDiv {
+				margin-top: 10px;
+				width: 900px;
+			}
+			
+			#disDiv table {
+				margin-top: 10px;
+				border-collapse: collapse;
+				margin-bottom: 10px;
+			}
+			
+			#disDiv table thead {
+				height: 30px;
+				line-height: 30px;
+				background: #F4F4F4;
+			}
+			
+			#infoDetail td {
+				text-align: center;
+				padding: 4px 6px;
+				border-bottom: 1px solid #e6e6e6;
+			}
+			
+			#infoDetail td a {
+				text-decoration: none;
+			}
+			
+			.fixWidth {
+				width: 110px;
+			}
+			
+			#resultDiv {
+				margin-top: 10px;
+				width: 900px;
+				border: 1px solid #E6E6E6;
+				padding: 10px;
+				display: none;
+			}
+			
+			.hide {
+				display: none;
+			}
+		</style>
+		<script type="text/javascript" src="../jquery/jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="../js/jsrender.js"></script>
+		<script>
+			$.views.converters(
+				"addTr",
+				function(var1) {
+					var result = '';
+					var len = parseInt(var1);
+					for(var i = 1; i < len; i++) {
+						result += '<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>';
+					}
+					return result;
+				});
+			/* 删除当前行 */
+			function delRow(obj, num) {
+				if(num == 1) {
+					$(obj).parent().parent().remove();
+				} else if(num > 1) {
+					var o = $(obj).parent().parent();
+					var ary = new Array();
+					for(var i = 0; i < num; i++) {
+						ary[i] = o;
+						o = o.next("tr");
+					}
+					for(var i = 0; i < num; i++) {
+						ary[i].remove();
+					}
+				}
+			}
+			/* select onchange事件 */
+			function onSelectChange(obj) {
+				var varSelect = $.trim($(obj).val());
+				if(varSelect == '') {
+					return false;
+				}
+				var subSelect = $(obj).parent().next().children("select");
+				var varHtml = '';
+				if(varSelect == 1) {
+					varHtml += '<option value="11">北京2</option><option value="12">北京3</option><option value="13">北京4</option>';
+				} else if(varSelect == 2) {
+					varHtml += '<option value="21">天津2</option><option value="22">天津3</option><option value="23">天津4</option>';
+				} else if(varSelect == 3) {
+					varHtml += '<option value="31">河北2</option><option value="32">河北3</option><option value="33">河北4</option>';
+				}
+				subSelect.html(varHtml);
+			}
+			/* 使用handlerbar模版生成html */
+			function generateHtml(varNumTmp) {
+				var varObj = {
+					varNum: "" + varNumTmp + ""
+				};
+				var html = $("#temp_hidden").render(varObj);
+				/* 如果使用textarea,则需要把html内容中的<>替换回来
+				html=html.replace(/&lt;/g,"<");
+				html=html.replace(/&gt;/g,">"); */
+				$("#infoDetail").append(html);
+			}
+			$(function() {
+				var varDate = new Date();
+				var varYear = varDate.getFullYear();
+				var varMon = varDate.getMonth() + 1;
+				var varDay = varDate.getDate();
+				if(varMon < 10) {
+					varMon = "0" + varMon;
+				}
+				$('#v_doneDate').val(varYear + "-" + varMon + "-" + varDay);
+				/* 按钮提交事件 */
+				$('#submitForm').on('click', function() {
+					$('#resultDiv').css("display", "none");
+					var varNumTmp = $.trim($('#v_num').val());
+					varNum = parseInt(varNumTmp);
+					if(isNaN(varNum) || varNum < 1) {
+						return false;
+					}
+					generateHtml(varNum);
+				});
+				$("#v_num").focus(function() {
+					$('#resultDiv').html('');
+					var varNum = $(this).val();
+					if(varNum == this.defaultValue) {
+						$(this).val("");
+					}
+				})
+				/* 失去焦点 */
+				$("#v_num").blur(function() {
+					$('#resultDiv').html('');
+					var varNum = $(this).val();
+					if(varNum == "") {
+						$(this).val(this.defaultValue);
+					} else {
+						varNum = parseInt(varNum);
+						if(isNaN(varNum) || varNum < 1) {
+							return false;
+						}
+						generateHtml(varNum);
+					}
+				})
+				$('#submitBtn').on(
+					'click',
+					function() {
+						var varInfo = "[{'v_id':'" + $.trim($("#v_id").val()) +
+							"','v_cname':'" + $.trim($("#v_cname").val()) +
+							"','v_pname':'" + $.trim($("#v_pname").val()) +
+							"','v_startDate':'" +
+							$.trim($("#v_startDate").val()) +
+							"','v_doneDate':'" +
+							$.trim($("#v_doneDate").val()) + "'}],";
+						varInfo += "[";
+						var infoDtl = $("#infoDetail");
+						var trAll = infoDtl.children("tr");
+						var trLen = trAll.length;
+						var varRegion = '';
+						var varCountry = '';
+						var varSaleName = '';
+						var varPrice = '';
+						var varSalePrice = '';
+						for(var i = 0; i < trLen; i++) {
+							var tdAll = $(trAll[i]).children("td");
+							var tdLen = tdAll.length;
+							if(tdLen > 3) {
+								varRegion = $.trim($(tdAll[1]).children("select")
+									.val());
+								varCountry = $.trim($(tdAll[2]).children("select")
+									.val());
+								varSaleName = $.trim($(tdAll[3]).children("input")
+									.val());
+								varPrice = $.trim($(tdAll[4]).children("input")
+									.val());
+								varSalePrice = $.trim($(tdAll[5]).children("input")
+									.val());
+							} else if(tdLen > 0 && tdLen <= 3) {
+								varSaleName = $.trim($(tdAll[0]).children("input")
+									.val());
+								varPrice = $.trim($(tdAll[1]).children("input")
+									.val());
+								varSalePrice = $.trim($(tdAll[2]).children("input")
+									.val());
+							}
+							varInfo += "{'varRegion':'" + varRegion +
+								"','varCountry':'" + varCountry +
+								"','varSaleName':'" + varSaleName +
+								"','varPrice':'" + varPrice +
+								"','varSalePrice':'" + varSalePrice + "'},";
+						}
+						varInfo = varInfo.substring(0, varInfo.length - 1);
+						varInfo += "]";
+						$('#resultDiv').css("display", "block");
+						$('#resultDiv').html(varInfo);
+					});
+			});
+		</script>
+	</head>
+
+	<body>
+		<form id="contentForm" method="post" action="">
+			<div id="infoDiv">
+				<table border="0" width="100%" cellpadding="0" cellspacing="1">
+					<tr>
+						<td><label for="v_id">流水编号：</label></td>
+						<td><input id="v_id" name="v_id" type="text" maxlength="50"></td>
+						<td><label for="v_cname">单位名称：</label></td>
+						<td><input id="v_cname" name="v_cname" type="text" maxlength="50"></td>
+						<td><label for="v_pname">用户姓名：</label></td>
+						<td><input id="v_pname" name="v_pname" type="text" maxlength="50"></td>
+					</tr>
+					<tr>
+						<td><label for="v_num">明细数量：</label></td>
+						<td><input id="v_num" name="v_num" type="text" value="请输入正整数"></td>
+						<td><label for="v_startDate">生效时间：</label></td>
+						<td><input id="v_startDate" name="v_startDate" type="text" class="Wdate" onfocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{\'2099-12-31\'}'})"></td>
+						<td><label for="v_doneDate">制作日期：</label></td>
+						<td><input id="v_doneDate" name="v_doneDate" type="text" class="Wdate" onfocus="WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{\'2099-12-31\'}'})"></td>
+					</tr>
+					<tr>
+						<td colspan="4"></td>
+						<td>
+							<div id="submitDiv">
+								<a id="submitForm" href="javascript:void(0);"> <span>新增明细列</span></a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="disDiv">
+				<table border="0" width="100%" cellpadding="0" cellspacing="1">
+					<colgroup>
+						<col width="10%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="15%">
+						<col width="15%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>操作</th>
+							<th>地市</th>
+							<th>县市</th>
+							<th>营销名称</th>
+							<th>原价</th>
+							<th>优惠价</th>
+						</tr>
+					</thead>
+					<tbody id="infoDetail">
+
+					</tbody>
+				</table>
+			</div>
+			<div id="submitDiv">
+				<a id="submitBtn" href="javascript:void(0);"> <span>提交</span></a>
+			</div>
+		</form>
+		<div id="resultDiv"></div>
+		<!-- 使用textarea也可以 -->
+		<!--<textarea id="temp_hidden" class="hide">-->
+		<!-- {{if varNum==1}}
+               <tr>
+           	     <td><a href="javascript:;" onclick="delRow(this,1)">删除</a></td>
+           	     <td><select onchange="onSelectChange(this);" class="fixWidth"><option value="">所有</option>
+           			   <option value="1">北京</option>
+           			   <option value="2">天津</option>
+           			   <option value="3">河北</option></select></td>
+           	       <td><select class="fixWidth"><option value="">所有</option></select></td>
+           	       <td><input type="text"></td>
+           	       <td><input type="text"></td>
+           	       <td><input type="text"></td>
+               </tr> 
+            {{else}}
+              <tr>
+           	     <td style="vertical-align: middle" rowspan="{{:varNum}}"><a href="javascript:;" onclick="delRow(this,{{:varNum}})">删除</a></td>
+           	     <td style="vertical-align: middle" rowspan="{{:varNum}}"><select onchange="onSelectChange(this);" class="fixWidth"><option value="">所有</option>
+           	     		<option value="1">北京</option>
+           	     		<option value="2">天津</option>
+           	     		<option value="3">河北</option></select></td>
+           	     <td style="vertical-align: middle" rowspan="{{:varNum}}"><select class="fixWidth"><option value="">所有</option></select></td>
+           	     <td><input type="text"></td>
+           	     <td><input type="text"></td>
+           	     <td><input type="text"></td>
+              </tr> 
+               {{addTr:varNum}}
+           {{/if}} -->
+		<!--</textarea>-->
+		<script id="temp_hidden" type="text/x-jsrender">
+			{{if varNum==1}}
+			<tr>
+				<td>
+					<a href="javascript:;" onclick="delRow(this,1)">删除</a>
+				</td>
+				<td>
+					<select onchange="onSelectChange(this);" class="fixWidth">
+						<option value="">所有</option>
+						<option value="1">北京</option>
+						<option value="2">天津</option>
+						<option value="3">河北</option>
+					</select>
+				</td>
+				<td>
+					<select class="fixWidth">
+						<option value="">所有</option>
+					</select>
+				</td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			{{else}}
+			<tr>
+				<td style="vertical-align: middle" rowspan="{{:varNum}}">
+					<a href="javascript:;" onclick="delRow(this,{{:varNum}})">删除</a>
+				</td>
+				<td style="vertical-align: middle" rowspan="{{:varNum}}">
+					<select onchange="onSelectChange(this);" class="fixWidth">
+						<option value="">所有</option>
+						<option value="1">北京</option>
+						<option value="2">天津</option>
+						<option value="3">河北</option>
+					</select>
+				</td>
+				<td style="vertical-align: middle" rowspan="{{:varNum}}">
+					<select class="fixWidth">
+						<option value="">所有</option>
+					</select>
+				</td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+				<td><input type="text"></td>
+			</tr>
+			{{addTr:varNum}} {{/if}}
+		</script>
+	</body>
+
+</html>

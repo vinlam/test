@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsviews.js"></script>
+</head>
+<body>
+<input type="button" id="btn" value="click" />
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+<div>
+  Edit: <input type="checkbox" data-link="editable"/>
+  <em>Name:</em> {^{:name}}
+  {^{if showNickname && nickname}}
+    (Goes by <em data-link="nickname"></em>)
+  {{/if}}
+  {^{if editable}}
+    <div>
+      <input data-link="name"/>
+      <input data-link="nickname"/>
+      <input id="nickname" value="{{>nickname}}"/>
+      <input id="nickname1" value="{{:nickname}}"/>
+      <input type="checkbox" data-link="showNickname"/>
+      <a href="http://{{:url}}">{{:url}}</a>
+    </div>
+  {{/if}}
+</div>
+
+</script>
+
+<script>
+var data = [
+  {
+    "name": "JoshWang",
+    "nickname": "DW",
+    "showNickname": true,
+    "url": "www.baidu.com"
+  },
+  {
+    "name": "Susan",
+    "nickname": "Sue",
+    "showNickname": false,
+    "url": "www.google.com"
+  }
+];
+
+var template = $.templates("#theTmpl");
+
+template.link("#result", data);
+var htmlstr = template.render(data);
+//$("#result").html(htmlstr);
+$(document).ready(function(){
+	$("#btn").off("click").on("click",function(){
+		data[0].name = "jack";
+		data[0].nickname = "jackson";
+//		template.link("#result", data);
+		
+//		var html = template.render(data);
+//		$("#result").append(html);
+	})
+})
+</script>
+
+</body>
+</html>

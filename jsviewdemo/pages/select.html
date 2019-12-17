@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<link href="http://www.jsviews.com/samples/resources/css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsviews.js"></script>
+	</head>
+
+	<body>
+
+		<table>
+			<tbody id="peopleList"></tbody>
+		</table>
+
+		<script id="peopleTmpl" type="text/x-jsrender">
+			<tr>
+				<td>
+					<button id="addBtn">Add</button>
+					<button id="removeBtn" data-link="disabled{:selectedID === '0'}">Remove</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<select data-link="selectedID" size="5">
+						<option value="0">Choose a person to edit</option>
+						{^{for people}}
+						<option data-link="{:name} value{:ID} selected{:ID === ~root.selectedID}"></option>
+						{{/for}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Name:<input data-link="{:selected().name:} disabled{:selectedID === '0'}" /></label>
+					<label>Nickname:<input data-link="{:selected().nickname:} disabled{:selectedID === '0'}" /></label>
+				</td>
+			</tr>
+			<tr>
+				<td class="center">
+					{^{for selected()}} {^{:name}} {^{if nickname}} ( {^{:nickname}} ) {{/if}} {{/for}}
+				</td>
+			</tr>
+		</script>
+
+		<script>
+			var myTemplate = $.templates("#peopleTmpl");
+
+			var people = [{
+					ID: "Ad0",
+					name: "JoshWang"
+				},
+				{
+					ID: "Ro0",
+					name: "WangSheng",
+					nickname: "Jack"
+				}
+			];
+
+			var counter = 1;
+
+			var app = {
+				people: people,
+				selectedID: people[1].ID,
+				selected: function() {
+					for(var i = 0; i < people.length; i++) {
+						if(people[i].ID === this.selectedID) {
+							return people[i];
+						}
+					}
+					return {};
+				}
+			};
+
+			app.selected.depends = "selectedID";
+
+			// Data-link details container to people, using the peopleTmpl template
+			myTemplate.link("#peopleList", app);
+
+			$("#addBtn").on("click", function() {
+				var newID = "new" + counter++;
+				$.observable(people).insert(people.length, {
+					ID: newID,
+					name: "name"
+				});
+				$.observable(app).setProperty("selectedID", newID);
+
+			})
+
+			$("#removeBtn").on("click", function() {
+				$.observable(people).remove($.inArray(app.selected(), people));
+				$.observable(app).setProperty("selectedID", "0");
+			})
+		</script>
+
+	</body>
+
+</html>

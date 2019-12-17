@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<p><em><h2>1: Output Tag {{:...}}</h2></em></p>
+<div id="result"></div>
+<div id="result2"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+	<p> {{:name}} </p>
+
+	<p>
+		{{:name}}: lives in <b>{{:address.city}}</b>.<br />
+
+		Here is <em>~root.address.city</em>: <b>{{:~root.address.city}}</b><br />
+
+		Here is <em>~#data.address.city</em>: <b>{{:#data.address.city}}</b>
+	</p>
+
+</script>
+
+
+<script id="theTmpl2" type="text/x-jsrender">
+	<b>{{:#index+1}}:</b>
+	{{:name}}: lives in <b>{{:address.city}}</b>.<br />
+
+</script>
+
+<script>
+
+var data1 = {
+	"name": "Josh",
+   	"address": {
+       "city": "Shanghai"
+   	}	
+}
+
+var data2 = [
+	{
+    	"name": "Josh",
+    	"address": {
+        "city": "Shanghai"
+    	}
+  },
+  {
+    	"name": "Wangsheng",
+    	"address": {
+        "city": "BiJie"
+    }
+  }
+];
+
+var htmlOutput = $("#theTmpl").render(data1);
+$("#result").html(htmlOutput);
+
+var template = $.templates("#theTmpl2");
+var htmlOutput2 = template.render(data2);
+
+$("#result2").html(htmlOutput2);
+
+</script>
+
+
+
+
+</body>
+</html>

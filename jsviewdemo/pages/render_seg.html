@@ -1,0 +1,15 @@
+{{for #data}}
+<h3>{{:name}}</h3>
+<ul>
+	{{for language ~parentName = name}}
+	<li>
+		 <!--{{!-- 使用for循环时，可以在后边添加参数，参数必须以~开头，多个参数用空格分隔 --}}
+         {{!-- 通过参数，我们缓存了父级的数据，在子循环中通过访问参数，就可以间接访问父级数据 --}}-->
+		{{:#parent.parent.data.name}} is learning {{:title}}<br/> {{for scores}}
+		{{: ~parentName}}
+		<a href="#">{{:score}}</a>
+		{{/for}}
+	</li>
+	{{/for}}
+</ul>
+{{/for}}

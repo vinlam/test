@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>两种自定义标签 views.tags和 views.helpers </title>
+	</head>
+
+	<body>
+		<p>不推荐使用 $.views.tags 这种自定义标签 建议使用$.views.helpers </p>
+
+		<div>
+			<p>views.tags</p>
+			<table>
+				<thead>
+					<tr>
+						<th width="50%">名称</th>
+						<th width="50%">单价</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+					<!-- 定义JsRender模版 -->
+					<script id="testTmpl" type="text/x-jsrender">
+						<tr>
+							<td>{{:name}}</td>
+							<td>
+								{{!-- isShow为自定义标签，price是传入的参数，status是附加属性 --}} {{isShow price age=0}} {{:price}} {{else price age=1}} -- {{/isShow}}
+							</td>
+						</tr>
+					</script>
+
+				</tbody>
+			</table>
+		</div>
+		<br/><br/>
+		<br/><br/>
+
+		<div id="div2">
+			<p>views.helpers</p>
+			<table>
+				<thead>
+					<tr>
+						<th width="50%">名称</th>
+						<th width="50%">单价</th>
+					</tr>
+				</thead>
+				<tbody id="list2">
+					<script id="testTmpl2" type="text/x-jsrender">
+						<tr>
+							<td>{{:name}}</td>
+							<td>
+								{{!-- 利用原生的if做分支跳转，利用helper做逻辑处理 --}} {{if ~isShow123(price)}} {{:price}} {{else}} -- {{/if}}
+							</td>
+						</tr>
+					</script>
+				</tbody>
+			</table>
+		</div>
+
+		<body>
+			<script src="../jquery/jquery-2.0.3.js"></script>
+			<script src="../js/jsrender.js"></script>
+
+			<script>
+				//数据源
+				var dataSrouce = [{
+					name: "苹果",
+					price: 108
+				}, {
+					name: "鸭梨",
+					price: 370
+				}, {
+					name: "桃子",
+					price: 99
+				}, {
+					name: "菠萝",
+					price: 371
+				}, {
+					name: "橘子",
+					price: 153
+				}];
+
+				//自定义标签 $.views.tags可以自定义标签，指定自定义标签的渲染规则。它可以给一段固定格式的html块起个名称，然后通过这个名称直接调用
+				$.views.tags({
+					"isShow": function(price) {
+						var temp = price + ''.split('');
+						//this.tagCtx.render(val)有点像指定参数的感觉。官方说是
+						if(this.tagCtx.props.age === 0) {
+							//判断价格是否为水仙花数，如果是，则显示，否则不显示
+							if(price == (Math.pow(parseInt(temp[0], 10), 3) + Math.pow(parseInt(temp[1], 10), 3) + Math.pow(parseInt(temp[2], 10), 3))) {
+								return "<p><em style='color: red'>" + this.tagCtxs[0].render() + "</em></p>";
+							} else {
+								return this.tagCtxs[1].render();
+							}
+						} else {
+							return "";
+						}
+
+					}
+				});
+
+				$.views.helpers({
+					"isShow123": function(price) {
+						var temp = price + ''.split('');
+						if(price == (Math.pow(parseInt(temp[0], 10), 3) + Math.pow(parseInt(temp[1], 10), 3) + Math.pow(parseInt(temp[2], 10), 3))) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+				});
+
+				//views.tags渲染数据
+				var html = $("#testTmpl").render(dataSrouce);
+				$("#list").append(html);
+
+				//vies.helpers渲染数据
+				var html2 = $("#testTmpl2").render(dataSrouce);
+				$("#list2").append(html2);
+			</script>
+
+		</body>
+
+</html>

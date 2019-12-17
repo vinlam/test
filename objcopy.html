@@ -8,6 +8,7 @@
 		<button id="btn">click</button>
 	</body>
 	<script src="js/jquery.min.js"></script>
+	<script src="b.js"></script>
 	<script>
 		var Chinese = {
 			nation: '中国'
@@ -132,6 +133,62 @@
 			//defaults -- {"validate":false,"limit":5,"name":"foo"}
 			//options -- {"validate":true,"name":"bar"}
 			//settings -- {"validate":true,"limit":5,"name":"bar"}
+
+			$.mbank.a = "adadf";
+			//$.mbank.b = "123";
+			console.log($.mbank.a);
+
+			function afun() {
+				$.mbank.a = "11111";
+				$.mb = $.mbank;
+				$.mb.a = "mba";//覆盖原有
+//				console.log("a:" + $.mbank.a);
+//				console.log("mb:" + $.mb.a);
+			}
+
+			function bfun() {
+				var newbank = $.extend({}, $.mbank, {
+					a: "deepcopy"
+				});
+				console.log("deepcopya:" + newbank.a);
+				var newbank1 = $.extend({}, $.mbank);
+				newbank1.a= "newbank1";
+				console.log("newbank1:" + JSON.stringify(newbank1));
+				newbank.send("get");
+				newbank1.send("post");
+				$.mbank.send("post");
+				console.log("old:" + JSON.stringify($.mbank));
+				console.log("newbank:" + JSON.stringify(newbank));
+
+				// 				$.extend($.mbank, {
+				// 					a: "aaaa"
+				// 				});
+				// 				console.log("b:" + $.mbank.a);
+			}
+
+			function cfun() {
+				//$.extend($.mbank,{a:"aaaa"});
+				$.mbank.b = "222"
+				console.log("c:" + $.mbank.a);
+				console.log("b:" + $.mbank.b);
+				//$.mbank.b = undefined;
+			}
+
+			function dfun() {
+				//$.extend($.mbank,{a:"aaaa"});
+				console.log("b:" + $.mbank.b);
+			}
+			afun();
+			bfun();
+			cfun();
+			dfun();
+
+			function tfun() {
+				console.log(arguments);
+			}
+
+			tfun();
+			tfun("sdfsdf")
 		})
 	</script>
 </html>

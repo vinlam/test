@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="../jquery/jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="../js/jsrender.js"></script>
+		<title>jsrender nest external demo</title>
+	</head>
+
+	<body>
+		<div id="studentList"></div>
+		<script type="text/javascript">
+			var temps = {};
+			var url = "studentTemp";
+			var students = [{
+					name: "张三",
+					language: [{
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "英",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "数",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}]
+				},
+				{
+					name: "李四",
+					language: [{
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}]
+				},
+				{
+					name: "王五",
+					language: [{
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}, {
+						title: "中",
+						scores: [{
+							score: 12
+						}, {
+							score: 13
+						}, {
+							score: 14
+						}]
+					}]
+				}
+			];
+			if(temps[url]) {
+				var tmpl = $.templates(temps[url]);
+				$("#studentList").html(tmpl.render(students));
+			} else {
+				$.ajax({
+					url: "render_seg.html", //这里是静态页的地址
+					type: "GET", //静态页用get方法，否则服务器会抛出405错误
+					success: function(data) {
+						temps[url] = data;
+						var tmpl = $.templates(temps[url]);
+						$("#studentList").html(tmpl.render(students));
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

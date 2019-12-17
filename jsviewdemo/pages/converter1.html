@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link href="../css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsrender.js"></script>
+	</head>
+
+	<body>
+
+		<div id="person"></div>
+
+		<script id="personTemplate" type="text/x-jsrender">
+			{{:name}}<br/> Upper case nickname: {{upper:nickname}}<br/> {{upper: "this will be upper case too"}}
+		</script>
+
+		<script>
+			$.views.converters("upper", function(val) {
+				return val.toUpperCase();
+			});
+
+			var person = {
+				name: "JoshWang",
+				nickname: "Jack"
+			};
+
+			var html = $("#personTemplate").render(person);
+
+			$("#person").html(html);
+		</script>
+
+	</body>
+
+</html>

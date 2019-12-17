@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<link href="../css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsrender.js"></script>
+	</head>
+	<title>用helper代替自定义标签 --- by 杨元</title>
+	<style>
+
+	</style>
+
+	<body>
+
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th width="50%">名称</th>
+						<th width="50%">单价</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+
+				</tbody>
+			</table>
+		</div>
+
+		<script src="jquery.min.js"></script>
+		<script src="jsviews.js"></script>
+
+		<!-- 定义JsRender模版 -->
+		<script id="testTmpl" type="text/x-jsrender">
+			<tr>
+				<td>{{:name}}</td>
+				<td>
+					{{!-- 利用原生的if做分支跳转，利用helper做逻辑处理 --}} {{if ~isShow(price)}} {{:price}} {{else}} -- {{/if}}
+				</td>
+			</tr>
+		</script>
+
+		<script>
+			//数据源
+			var dataSrouce = [{
+				name: "苹果",
+				price: 108
+			}, {
+				name: "鸭梨",
+				price: 370
+			}, {
+				name: "桃子",
+				price: 99
+			}, {
+				name: "菠萝",
+				price: 371
+			}, {
+				name: "橘子",
+				price: 153
+			}];
+
+			//Helper
+			$.views.helpers({
+				"isShow": function(price) {
+					var temp = price + ''.split('');
+					if(price == (Math.pow(parseInt(temp[0], 10), 3) + Math.pow(parseInt(temp[1], 10), 3) + Math.pow(parseInt(temp[2], 10), 3))) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			});
+
+			//渲染数据
+			var html = $("#testTmpl").render(dataSrouce);
+			$("#list").append(html);
+		</script>
+
+	</body>
+
+</html>

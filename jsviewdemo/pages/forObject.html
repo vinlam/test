@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../js/jquery-2.1.4.js"></script>
+    <!--<script src="../js/jsrender.js"></script>-->
+    <script src="../js/jsviews.js"></script>
+</head>
+<body>
+
+<script id="peopleTemplate" type="text/x-jsrender">
+  <div>
+    <!--{{:name}} lives in {{for address tmpl="#addressTemplate" /}}-->
+   {{for addr tmpl="#addressTemplate" /}}
+   {{include b tmpl="#addressTemplate3" /}}
+   <ul>
+   {{for b}}
+   <li>{{:#data}}</b></li>
+   {{/for}}
+   </ul>
+  </div>
+</script>
+
+<script id="addressTemplate" type="text/x-jsrender">
+    <b>{{>city}}</b>
+    <b>{{upper:city}}</b>
+</script>
+<script id="addressTemplate3" type="text/x-jsrender">
+    <ul>
+   {{for b}}
+   <li>{{:#data}}aaaa</b></li>
+   {{/for}}
+   </ul>
+</script>
+<script id="addressTemplate2" type="text/x-jsrender">
+   <ul>
+   {{for b}}
+   <li>{{:#data}}</b></li>
+   {{/for}}
+   </ul>
+</script>
+<script id="addressTemplate4" type="text/x-jsrender">
+   <ul>
+   {{for c}}
+   <!--<li>----{{upper:#data}}<a href="http://{{:#data}}"></a></b></li>-->
+   <li>----{{upper:#data}}<a data-link="href{:#data}"></a><img data-link="src{:#data}"  width="100" height="100"/></b></li>
+   <!--<li>{{:#data}}<img src="{{:#data}}"  width="100" height="100"/></li>-->
+   
+   {{/for}}
+   </ul>
+   
+</script>
+<script id="addressTemplate5" type="text/x-jsrender">
+   <ul>
+   {^{for productData}}
+   <li>
+   	{{:#index}}
+   <img data-link="src{:imgUrl} id{upper:#index}"  width="100" height="100"/></li>
+   
+   {{/for}}
+   </ul>
+</script>
+
+<div id="result"></div>
+
+<script>
+	var people = [
+	  {
+	    "name": "Josh",
+	    "address": {
+	      "city": "Shanghai"
+	    }
+	  },
+	  {
+	    "name": "Wangsheng",
+	    "address": {
+	      "city": "GuiYang"
+	    }
+	  }
+	];
+	$.views.converters({
+		upper:function(val) {
+				var s = ""+val;
+				return "id"+s.toUpperCase();
+			}
+		});
+	var app = [{"addr": {"city": "Shanghai"}},{"b":[1,"sdf2",3]},{"c":["asd","sdf2","../img/add.png"]},{"d":[{"imgUrl":"../img/add.png"},{"imgUrl":"../img/add.png"},{"imgUrl":"../img/add.png"}]}]
+//	var html = $("#peopleTemplate").render(people);
+//	var html = $("#peopleTemplate").render(app);
+	var html2 = $("#addressTemplate2").render(app[1]);
+	var html3 = $("#addressTemplate4").render(app[2]);
+	//var html4 = $("#addressTemplate5").render(app[3]);
+	
+	//$("#result").html(html);
+	//$("#result").append(html2);
+	//$("#result").append(html3);
+	//$("#result").append(html4);
+	
+	var myTemplate = $.templates("#addressTemplate5");
+			var app1 = {
+				productData: app[3]["d"]
+			};
+		myTemplate.link("#result", app1);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>嵌套循环使用参数访问父级数据</title>
+
+	</head>
+
+	<body>
+
+		<table border="1px">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>家庭成员</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+
+			</tbody>
+		</table>
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsviews.js"></script>
+		<script id="testTmpl" type="text/x-jsrender">
+			<tr>
+				<td>{{:#index + 1}}</td>
+				<td>{{:name}}</td>
+				<td>{{:age}}</td>
+				<td>
+					{{!-- 使用for循环时，可以在后边添加参数，参数必须以~开头，多个参数用空格分隔 --}} {{!-- 通过参数，我们缓存了父级的数据，在子循环中通过访问参数，就可以间接访问父级数据 --}} {{for family ~parentIndex=#index ~parentName=name ~parnetAge=age}}
+					<b>{{:~parentIndex + 1}}.{{:#index + 1}}</b> {{!-- #data相当于this --}} {{:~parentName}}的{{:#data}}{{:~parnetAge}} {{/for}}
+				</td>
+			</tr>
+		</script>
+
+		<script>
+			var dataSrouce = [{
+					name: "张三",
+					age: 3,
+					family: ["爸爸", "妈妈", "哥哥"]
+				},
+				{
+					name: "李四",
+					age: 4,
+					family: ["爷爷", "奶奶", "叔叔"]
+				}
+			];
+			$("#list").append($("#testTmpl").render(dataSrouce));
+		</script>
+	</body>
+
+</html>

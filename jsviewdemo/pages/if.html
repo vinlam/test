@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+<!--<h4>{{:title}}</h4>
+{{if members && members.length}}
+  <ul>
+    {{for members}}
+      	<li>{{:name}}
+      	{{if name == "JoshWang"}}
+      		aa
+      		<input value="{{:name}}"/>
+      	</li>
+      	{{else name == '123'}}
+      	  	123
+      		<input value="{{:name}}"/>
+      	</li>
+      	{{else}}
+      		bb
+      		<input value="{{:name}}"/>
+      	</li>
+      	{{/if}}
+      	
+    {{/for}}
+  </ul>
+{{else standby && standby.length}}
+  Standby only:
+  <ul>
+    {{for standby}}
+      <li>{{:name}}</li>
+    {{/for}}
+  </ul>
+{{else}}
+  No members!
+{{/if}}-->
+<!--{{if ~compareDateTS(ts)}}
+	{{:ts}}---------------true---------------;
+{{else}}
+  flag---------------false;
+{{/if}}-->
+{{if ~compareDate(ts) === "a"}}
+	{{:ts}}---------------a---------------;
+{{else}}
+  ---------------b-----------;
+{{/if}}
+</script>
+
+<script>
+var data = [
+  {
+  	"ts":new Date("2018-07-01").getTime(),
+    "title": "The A team",
+    "members": [
+      {
+        "name": "JoshWang"
+      },
+      {
+        "name": "Micheal Shi"
+      },
+      {
+        "name": 123
+      }
+    ],
+    "standby": [
+      {
+        "name": "Xavier"
+      }
+    ]
+  },
+  {
+  	"ts":new Date("2018-07-08").getTime(),
+    "title": "The B team",
+    "members": [],
+    "standby": [
+      {
+        "name": "Dunk"
+      },
+      {
+        "name": "Adriana"
+      },
+      {
+        "name": 123
+      }
+    ]
+  },
+  {
+  	"ts":new Date().getTime(),
+    "title": "The C team",
+    "standby": []
+  }
+];
+$.views.helpers({
+  compareDateTS: function (value) {
+  	var flag = true;
+  	var date = new Date();
+  	if(date.getTime() > value){
+  		flag = false;
+  	}
+  	return flag;
+	},
+	compareDate: function (value) {
+		var date = new Date();
+		if(date.getTime() > value){
+			return "a";
+		}
+		return "b";
+	}
+});
+//$.views.converters({
+//compareDateTS: function (value) {
+//	var flag = true;
+//	var date = new Date();
+//	if(date.getTime() > value){
+//		flag = false;
+//	}
+//	return flag;
+//},
+//compareDate: function (value) {
+//	var date = new Date();
+//	if(date.getTime() > value){
+//		return date.getTime();
+//	}
+//	return value;
+//}
+//});
+var template = $.templates("#theTmpl");
+
+var htmlOutput = template.render(data);
+
+$("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>

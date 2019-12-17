@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsviews.js"></script>
+</head>
+<body>
+
+<table><tbody id="peopleList"></tbody></table>
+
+<script id="peopleTmpl" type="text/x-jsrender">
+  <tr><td>
+    <button id="addBtn">Add</button>
+  </td></tr>
+  {^{for p}}
+    <tr><td>
+      {{:name}}
+    </td></tr>
+  {{/for}}
+</script>
+
+<script>
+	var myTemplate = $.templates("#peopleTmpl");
+	
+	var people = [
+	    {
+	      name: "JoshWang"
+	    },
+	    {
+	      name: "WangSheng"
+	    }
+	  ];
+	
+	var app = {
+	    p: people
+	  };
+	
+	var html = myTemplate.link("#peopleList", app);
+	
+	$("#addBtn").on("click", function(){
+	  $.observable(people).insert(people.length, {name: "newName"});
+	})
+</script>
+
+</body>
+</html>

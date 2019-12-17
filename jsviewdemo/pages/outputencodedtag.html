@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+{{:description}}<br/>
+{{>description}}
+</script>
+
+<script>
+	var data = {
+	  "description": "A <b>very nice</b> appartment"
+	};
+	
+	var template = $.templates("#theTmpl");
+	
+	var htmlOutput = template.render(data);
+	
+	$("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>

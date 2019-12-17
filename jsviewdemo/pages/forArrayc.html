@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+
+<b>{{:title}}</b>
+<ul>
+  {{for members}}
+      <li>{{:name}} lives {{:#index+1}}  in <b>{{:address.city}}</b></li>
+      
+      	{{for t}}<span>{{:#data}}</span><p>{{:test}}</p></br>{{/for}}
+      
+  {{/for}}
+</ul>
+</script>
+
+<script>
+var data = [{
+  "title": "The People:",
+  "members": [
+    {
+      "name": "JoshWang",
+      "address": {
+        "city": "ShangHai"
+      },
+      "t":["a","b","c",{"test":"adfasdf"}]
+    },
+    {
+      "name": "WangSheng",
+      "address": {
+        "city": "GuiYang"
+      },
+      "t":["e","f","g",{"test":"12333"}]
+    }
+  ]
+},
+{
+  "title": "The People1:",
+  "members": [
+    {
+      "name": "JoshWang1",
+      "address": {
+        "city": "ShangHai1"
+      },
+      "t":["a1","b2","c3",{"test":"fgdfge324234"}]
+    },
+    {
+      "name": "WangSheng1",
+      "address": {
+        "city": "GuiYang1"
+      },
+      "t":["e1","f1","g1",{"test":"www.jsviews.com"}]
+    }
+  ]
+}
+];
+
+var template = $.templates("#theTmpl");
+
+var htmlOutput = template.render(data);
+
+$("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>

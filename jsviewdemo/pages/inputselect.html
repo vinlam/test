@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>利用JsRender动态生成input</title>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+				margin: 0 auto;
+			}
+			
+			#contentDiv {
+				width: 800px;
+				margin: 0 auto;
+				border-bottom: 2px solid #e6e6e6;
+				padding: 0 0 10px 0;
+			}
+			
+			#titleDiv {
+				padding: 30px 0 5px 5px;
+				font: 500 18px "微软雅黑";
+			}
+			
+			#inputDiv {
+				border-top: 2px solid #e6e6e6;
+				vertical-align: middle;
+				padding: 5px 0 0 7px;
+			}
+			
+			#inputDiv table td {
+				padding: 2px 0;
+			}
+			
+			#inputDiv input {
+				width: 120px;
+			}
+			
+			#inputDiv span {
+				font-size: 14px;
+			}
+			
+			.fixClass {
+				width: 120px;
+				height: 22px;
+				line-height: 20px;
+			}
+			
+			#submitDiv {
+				padding: 20px 0 15px 0;
+				text-align: center;
+			}
+			
+			.spanClass {
+				color: #fff;
+				background: #89D900;
+				height: 25px;
+				width: 100px;
+				display: inline-block;
+				line-height: 25px;
+				font-weight: bold;
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.banClass {
+				padding: 0 20px 0 20px;
+			}
+		</style>
+		<script type="text/javascript" src="../jquery/jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="../js/jsrender.js"></script>
+		<script id="textTemp" type="text/x-jsrender">
+			<input type="text" id="{{:V_KEY}}" name="{{:V_KEY}}">
+		</script>
+		<script id="dateTemp" type="text/x-jsrender">
+			<input type="text" id="{{:V_KEY}}" name="{{:V_KEY}}" class="Wdate" onfocus="WdatePicker({{:V_DateFocus}})">
+		</script>
+		<script id="selectTemp" type="text/x-jsrender">
+			<select name="{{:V_KEY}}" id="{{:V_KEY}}" class="fixClass">
+				<option value="-1">所有</option>' {{for selectData}}'
+				<option value="{{:S_KEY}}">{{:S_VALUE}}</option>
+				{{/for}}
+			</select>
+		</script>
+		<script id="hiddenTemp" type="text/x-jsrender">
+			<input type="hidden" id="{{:V_KEY}}" name="{{:V_KEY}}" value="{{:V_VALUE}}" />
+		</script>
+		<script type="text/javascript">
+			function generateTableData(v_jsonData, v_form) {
+				var jsonData = v_jsonData.data;
+				var varTableHtml = '<table  cellpadding="0" cellspacing="0" border="0" width="100%">';
+				for(var i = 0, len = jsonData.length; i < len;) {
+					varTableHtml += "<tr>";
+					/* 注意不要越界 */
+					for(var j = 0; j < 3 && i < len; j++) {
+						var varType = jsonData[i].V_TYPE;
+						var varHtml = $('#' + varType + 'Temp').render(jsonData[i]);
+						if(varType != 'hidden') {
+							varTableHtml += "<td><label>" + jsonData[i].V_NAME +
+								"：</label></td><td>" + varHtml + "</td>";
+						} else {
+							varTableHtml += varHtml;
+						}
+						i++;
+					}
+					varTableHtml += "</tr>";
+				}
+				varTableHtml += "</table>";
+				$('#' + v_form).html(varTableHtml);
+			}
+			var jsonData = {
+				data: [{
+					V_TYPE: "date",
+					V_KEY: "begin_date",
+					V_NAME: "开始时间",
+					V_DateFocus: "{startDate:'%y',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,maxDate:'#F{$dp.$D(\\'end_date\\')}'}",
+				}, {
+					V_TYPE: "date",
+					V_KEY: "end_date",
+					V_NAME: "结束时间",
+					V_DateFocus: "{startDate:'%y',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true,maxDate:'#F{\\'2099-12-31\\'}',minDate:'#F{$dp.$D(\\'begin_date\\')}'}",
+				}, {
+					V_TYPE: "select",
+					V_KEY: "selectId",
+					V_NAME: "测试单选",
+					selectData: [{
+						S_KEY: "1",
+						S_VALUE: "测试"
+					}, {
+						S_KEY: "2",
+						S_VALUE: "测试2"
+					}, {
+						S_KEY: "3",
+						S_VALUE: "测试3"
+					}]
+				}, {
+					V_TYPE: "text",
+					V_KEY: "t_name",
+					V_NAME: "测试中文"
+				}, {
+					V_TYPE: "hidden",
+					V_KEY: "hiddenId",
+					V_VALUE: "123"
+				}]
+			};
+
+			function closeWin() {
+				var browserName = navigator.appName;
+				if(browserName == "Netscape") {
+					var opened = window.open('about:blank', '_self');
+					opened.opener = null;
+					opened.close();
+				} else if(browserName == "Microsoft Internet Explorer") {
+					window.opener = null;
+					window.open('', '_self');
+					window.close();
+				}
+			}
+			$(function() {
+				generateTableData(jsonData, "inputForm");
+				$('#sbtSpan').on('click', function() {
+					var varForm = $('#inputForm').serialize();
+					console.log(varForm);
+				});
+				$('#closeSpan').on('click', closeWin);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="contentDiv">
+			<div id="titleDiv">
+				<label>名称:JsRender动态生成Input</label>
+			</div>
+			<div id="inputDiv">
+				<form method="post" action="#" id="inputForm">
+
+				</form>
+			</div>
+			<div id="submitDiv">
+				<span class="spanClass" id="sbtSpan">提交</span> <span class="banClass" /> <span class="spanClass" id="closeSpan">关闭</span>
+			</div>
+		</div>
+	</body>
+
+</html>

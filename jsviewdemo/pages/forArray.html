@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+<b>{{:title}}</b>
+<ul>
+  {{for members}}
+      <li>{{:name}} lives in <b>{{:address.city}}</b></li>
+  {{/for}}
+</ul>
+</script>
+
+<script>
+var data = {
+  "title": "The People:",
+  "members": [
+    {
+      "name": "JoshWang",
+      "address": {
+        "city": "ShangHai"
+      }
+    },
+    {
+      "name": "WangSheng",
+      "address": {
+        "city": "GuiYang"
+      }
+    }
+  ]
+};
+
+var template = $.templates("#theTmpl");
+
+var htmlOutput = template.render(data);
+
+$("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>

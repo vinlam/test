@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- To run the current sample code in your own environment, copy this to an html page. -->
+
+<html>
+
+	<head>
+		<script src="../js/jquery-2.1.4.js"></script>
+		<script src="../js/jsviews.js"></script>
+	</head>
+
+	<body>
+
+		<style>
+			[contenteditable] {
+				border: 1px solid green;
+				padding: 5px;
+			}
+			
+			.block {
+				display: block;
+				margin-bottom: 10px
+			}
+			
+			.green {
+				color: green;
+			}
+		</style>
+
+		<div id="result"></div>
+
+		<script id="tmpl" type="text/x-jsrender">
+			<input data-link="name" class="block" />
+			<input data-link="{toBool:gender:toString}" type="text" />
+			<label class="block"><input data-link="{toBool:gender:toString}" type="checkbox" /> Male</label>
+
+			<div class="block" data-link="{radiogroup gender}">
+				<label><input value="male" type="radio" /> Male</label><br/>
+				<label><input data-link="gender" value="female" type="radio" /> Female</label>
+			</div>
+
+			<select data-link="gender" class="block">
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+
+			<textarea data-link="name" class="block"></textarea>
+
+			<div class="block">
+				<span data-link="name" contenteditable="true"></span>
+			</div>
+
+			<div class="block">
+				{^{textbox name label="Name:"/}}
+			</div>
+
+			<hr/>
+
+			<div class="green"><b>person:</b> {^{>name}} {^{>gender}}</div>
+		</script>
+
+		<script>
+			$.views.converters({
+					toString: function(val) {
+//						return val ? 'male' : 'female';
+						return val ? '男' : '女';
+					},
+					toBool: function(val) {
+						return val === 'male';
+					}
+				}
+
+			);
+			$.views.tags({
+					textbox: {
+						onBind: function() {
+							// Find input in contents
+							this.linkedElem = this.contents("input");
+						},
+						onUpdate: false, // No need to re-render whole tag, when content updates.
+						template: "<em>{{:~tag.tagCtx.props.label}}</em> <input/>"
+					}
+				}
+
+			);
+			var tmpl = $.templates("#tmpl");
+			var person = {
+				name: "Jo",
+				gender: "male"
+			}
+
+			;
+			tmpl.link("#result", person);
+		</script>
+
+	</body>
+
+</html>

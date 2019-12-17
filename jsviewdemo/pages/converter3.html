@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link href="../css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsviews.js"></script>
+	</head>
+
+	<body>
+
+		<table class="three">
+			<thead>
+				<tr>
+					<th>Data</th>
+					<th>DayOff</th>
+					<th>Choose day off</th>
+				</tr>
+			</thead>
+			<tbody id="linked"></tbody>
+		</table>
+		<div><em>To edit, enter part of the name, or the number, or click here:</em>
+			<button id="changeDay">Change day</button></div>
+
+		<script id="linkedTmpl" type="text/x-jsrender">
+			<tr>
+				<td data-link="dayOff"></td>
+				<td data-link="{intToDay:dayOff}"></td>
+				<td><input data-link="{intToDay:dayOff:dayToInt} title{:dayOff}" /></td>
+			</tr>
+		</script>
+
+		<script>
+			var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+				myWeek = {
+					dayOff: 1
+				};
+
+
+			// Observable property change
+			$("#changeDay").on("click", function() {
+				var dayOff = myWeek.dayOff;
+				$.observable(myWeek).setProperty("dayOff", dayOff < 6 ? dayOff + 1 : 0);
+			});
+
+			var myTmpl = $.templates("#linkedTmpl")
+
+			myTmpl.link("#linked", myWeek);
+			
+			$.views.converters({
+				dayToInt: function(val) {
+					var dayOff = parseInt(val);
+					if(isNaN(dayOff)) {
+						for(var i = 0; i < 7; i++) {
+							if(days[i].toLowerCase().slice(0, val.length) === val.toLowerCase()) {
+								dayOff = i;
+								break;
+							}
+						}
+					}
+					if(isNaN(dayOff)) {
+						dayOff = val;
+					} else {
+						this.linkCtx.elem.value = days[dayOff]; // Set the text box value to the Day Off name
+					}
+					return dayOff;
+				},
+				intToDay: function(val) {
+					return days[val] || val;
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

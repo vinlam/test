@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <link href="../css/samples.css" rel="stylesheet"/>
+    <script src="../jquery/jquery-2.0.3.js"></script>
+    <script src="../js/jsrender.js"></script>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script id="theTmpl" type="text/x-jsrender">
+<b>{{:title}}</b>
+{{for members}}
+  <div>{{:name}}</div>
+{{else}}
+  <div>No members!</div>
+{{/for}}
+
+</script>
+
+<script>
+var data = {
+  "title": "The A team",
+  "members": []
+};
+
+var template = $.templates("#theTmpl");
+
+var htmlOutput = template.render(data);
+
+$("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>

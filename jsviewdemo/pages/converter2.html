@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<link href="../css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsrender.js"></script>
+	</head>
+
+	<body>
+
+		<div id="person"></div>
+
+		<script id="personTemplate" type="text/x-jsrender">
+			<label>Normal:</label> {{full:first last}}<br/>
+			<label>Reverse:</label> {{full:first last format="reverse"}}<br/>
+		</script>
+
+		<script>
+			$.views.converters("full", function(first, last) {
+				var format = this.tagCtx.props.format;
+				return format === "reverse" ? last.toUpperCase() + " " + first : first + " " + last;
+			});
+
+			var person = {
+				first: "Josh",
+				last: "Wang"
+			};
+
+			var html = $("#personTemplate").render(person);
+
+			$("#person").html(html);
+		</script>
+
+	</body>
+
+</html>

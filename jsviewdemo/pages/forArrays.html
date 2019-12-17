@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<link href="../css/samples.css" rel="stylesheet" />
+		<script src="../jquery/jquery-2.0.3.js"></script>
+		<script src="../js/jsviews.js"></script>
+	</head>
+
+	<body>
+
+		<div id="resultd"></div>
+
+		<script id="theTmpl" type="text/x-jsrender">
+			{{props}} 
+				{{for prop}}
+					<b>{{:title}}</b>
+					<ul>---{{:members[0].name}} ----
+						{{for members}}
+							<li>{{:name}} lives {{:#index+1}} in <b>{{:address.city}}</b></li>
+							{{for t}}
+								<span>data:{{:#data}}</span>
+								<p>{{:test}}</p>
+							{{/for}} 
+						{{/for}}
+					</ul> 
+				{{/for}} 
+			{{/props}}
+		</script>
+		<table>
+			<tbody id="result"></tbody>
+		</table>
+
+		<script id="myTmpl" type="text/x-jsrender">
+			{^{props}}
+			<tr>
+				<td>{{:key}}</td>
+				<!--{{for prop ~parentKey=key}}-->
+				<td>
+					{{:~parentKey}}":"{{:orderAmount}}
+					{{for orderProductList ~amount = orderAmount}}
+						"p:"{{:productId}}"----"{{:~amount}}
+					{{/for}}
+				</td>
+				<!--{{/for}}-->
+			</tr>
+			{{/props}}
+		</script>
+		<!--<script id="myTmpl" type="text/x-jsrender">
+			{^{props}}
+			<tr>
+				<td>{{:key}}</td>
+				{{for prop ~parentKey=key}}
+					<td>{{:~parentKey}}"---"{{:}}</td>
+				{{/for}}
+			</tr>
+			{{/props}}
+		</script>-->
+		<script>
+			var data = {
+				"1": {
+					"title": "The People:",
+					"members": [{
+							"name": "JoshWang",
+							"address": {
+								"city": "ShangHai"
+							},
+							"t": ["a", "b", "c", {
+								"test": "adfasdf"
+							}]
+						},
+						{
+							"name": "WangSheng",
+							"address": {
+								"city": "GuiYang"
+							},
+							"t": ["e", "f", "g", {
+								"test": "12333"
+							}]
+						}
+					]
+				},
+				"2": {
+					"title": "The People1:",
+					"members": [{
+							"name": "JoshWang1",
+							"address": {
+								"city": "ShangHai1"
+							},
+							"t": ["a1", "b2", "c3", {
+								"test": "fgdfge324234"
+							}]
+						},
+						{
+							"name": "WangSheng1",
+							"address": {
+								"city": "GuiYang1"
+							},
+							"t": ["e1", "f1", "g1", {
+								"test": "www.jsviews.com"
+							}]
+						}
+					]
+				}
+			};
+
+			var template = $.templates("#theTmpl");
+			template.link("#resultd", data);
+			//var htmlOutput = template.render(data);
+			//
+			//$("#result").html(htmlOutput);
+
+			// For "http://stackoverflow.com/questions/18096069/how-to-display-with-jsrender-json-without-field-names"
+			var obj = {
+				content:[{
+					"orderAmount":4,
+					"orderProductList":[{
+						"productId":123123,
+						"price":10
+					}]
+				},{
+					"orderAmount":3,
+					"orderProductList":[{
+						"productId":11111,
+						"price":5
+					}]
+				}]
+			}
+			
+			
+			var data = {
+					"ID1": ["VALUE1", "VALUE2", "VALUE3"],
+					"ID2": ["VAL2-1", "VAL2-2", "VAL2-3"],
+					"0":{a:123,b:"aaa"}
+				},
+			myTmpl = $.templates("#myTmpl");
+			myTmpl.link("#result", obj);
+			//$("#result").html(
+			//	myTmpl.render(data)
+			//);
+		</script>
+
+	</body>
+
+</html>
