@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+		<title>css 滚动穿透</title>
+		<style type="text/css">
+			.modals button {
+				width: 100%;
+				margin: 0 auto;
+				height: auto;
+				line-height: 30px;
+				border: 1px solid #4185F3;
+				color: #fff;
+				font-size: 14px;
+				background: #4185F3;
+				margin: 0 auto
+			}
+			
+			.modals-body {
+				padding: 30px 15px;
+				font-size: 10px;
+				color: #666;
+				text-align: center;
+				background: #fff
+			}
+			
+			.sliders {
+				cursor: not-allowed;
+				display: block;
+				position: fixed;
+				overflow: hidden;
+				z-index: 103;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(20, 20, 20, .8)
+			}
+			
+			.modals {
+				overflow-y: auto;
+				max-height: 95%;
+				font-size: 16px;
+				z-index: 103;
+				border-radius: 5px;
+				background: #fff;
+				width: 50%;
+				color: #333;
+				display: block;
+				box-shadow: 0 0 3px rgba(0, 0, 0, .1);
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%)
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--一个未知宽高的弹出框，水平垂直居中-->
+		<p class="sliders"></p>
+		<p class="modals">
+			<p class="modals-body">
+				用户信息丢失，请先登录
+			</p>
+			<button class="btns">确定</button>
+		</p>
+		<!--end-->
+		<p class="list"></p>
+	</body>
+	<script src="js/common/jquery-1.12.4.js"></script>
+	<script>
+		for(var i = 0; i <= 30; i++) {
+			$(".list").append("<p>BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</p>");
+		}
+
+		//阻止防止滚动、缩放。
+		$(".sliders,.modals").on("touchmove", function(event) {
+			event.preventDefault();
+		});
+
+		$(".btns").on("click", function() {
+			$(".sliders,.modals").remove();
+		});
+	</script>
+</html>
