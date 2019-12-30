@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>节流</title>
+		<style>
+			div {
+				height: 5000px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>节流,节流,节流</div>
+		<script>
+			window.onload = function() {
+				window.addEventListener('scroll', throttleHandle(throttle), false); //监听绑定事件
+			}
+
+			//节流函数
+			function throttleHandle(fn) {
+				let timer = null,
+					booleanVal = true; // 声明一个变量标志做判断
+				return function() {
+					if(!booleanVal) {
+						return
+					} //如果事件正在执行，那么就返回，将布尔值改为false
+					booleanVal = false;
+					//事件未执行，创建事件
+					timer = setTimeout(function() {
+						fn.apply(this, arguments);
+						booleanVal = true; //事件执行完将布尔值改回
+					}, 300)
+				}
+			}
+
+			//执行函数
+			function throttle() {
+				var scrollNum = document.documentElement.scrollTop || document.body.scrollTop;
+				console.log(scrollNum);
+			}
+		</script>
+	</body>
+
+</html>
