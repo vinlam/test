@@ -13,17 +13,29 @@
 		<!--禁止缩放-->
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<!--禁止浏览器缓存-->
-		<meta http-equiv="expires" content="0">
+		<!--must-revalidate告诉浏览器、缓存服务器，本地副本过期前，可以使用本地副本；本地副本一旦过期，必须去源服务器进行有效性校验-->
+		<!--<meta http-equiv="cache-control" content="no-cache,no-store,must-revalidate">-->
+		<meta http-equiv="cache-control" content="max-age=7200">
+		<meta http-equiv="expires" content="7022">
 		<!--先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存-->
-		<meta http-equiv="pragma" content="no-cache">
+		<!--<meta http-equiv="pragma" content="no-cache">-->
 		<!--不允许缓存，每次都要去服务器上，下载完整的响应-->
-		<meta http-equiv="pragma" content="no-store">
-		<meta http-equiv="cache-control" content="no-cache">
+		<!--<meta http-equiv="pragma" content="no-store">-->
+		
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>meta demo</title>
 	</head>
 	<body>
+		<div>
+			<img src="img/tizen.png" />
+		</div>
 	</body>
 	<script src="js/common/jquery-2.1.4.js"></script>
+	<script>
+		function test(){
+			$("img").attr("src","img/album-ok.jpg");
+		}
+		test();
+	</script>
 </html>
