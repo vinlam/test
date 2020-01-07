@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>窗口高度</title>
+	</head>
+	<body>
+	</body>
+	<script>
+		// 1，获取屏幕的高度和宽度（屏幕分辨率）：
+		// window.screen.height
+		// window.screen.width
+		
+		// 2，获取屏幕工作区域的高度和宽度（去掉状态栏）：
+		// window.screen.availHeight
+		// window.screen.availWidth
+		
+		// 3，网页全文的高度和宽度：
+		// document.body.scrollHeight
+		// document.body.scrollWidth
+		
+		// 4，滚动条卷上去的高度和向右卷的宽度：
+		// document.body.scrollTop
+		// document.body.scrollLeft
+		
+		// 5，网页可见区域的高度和宽度（不加边线）：
+		// document.body.clientHeight
+		// document.body.clientWidth
+		
+		// 6，网页可见区域的高度和宽度（加边线）：
+		// document.body.offsetHeight
+		// document.body.offsetWidth
+		window.onload = function(){
+		    alert(window.screen.height + "--" +window.screen.availHeight + "=" +(window.screen.height - window.screen.availHeight));
+		}
+	</script>
+</html>
