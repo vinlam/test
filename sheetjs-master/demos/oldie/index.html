@@ -47,7 +47,7 @@ function doit(type, fn, dl) {
 
 <b>Editable Data Table:</b> (click a cell to edit it)
 </pre>
-<div id="container"></div>
+<div id="container" style="display: none;"></div>
 <script type="text/javascript">
 /* initial table */
 var aoa = [
@@ -56,7 +56,34 @@ var aoa = [
 	[1,        2,        3,      4],
 	["Click",  "to",     "edit", "cells"]
 ];
+
+var data = [];
+var title = ["序号","科目","分数"];
+var course = ["语文","数学","英语"];
+var score = [80,90,100];
+
+data.push(title);
+
+function RandomNumBoth(Min,Max){
+      var Range = Max - Min;
+      var Rand = Math.random();
+      var num = Min + Math.round(Rand * Range); //四舍五入
+      return num;
+}
+
+for(var i = 0;i< 100;i++){
+	var content = [];
+	content.push(i);
+	var rand = Math.floor( Math.random() * this.course.length );
+	// 随机从数组中取出某值（不会改变原数组）
+	var coursedata = this.course[rand];
+	content.push(coursedata);
+	content.push(RandomNumBoth(60,100));
+	data.push(content);
+}
+
 var ws = XLSX.utils.aoa_to_sheet(aoa);
+ws = XLSX.utils.aoa_to_sheet(data);
 var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
 document.getElementById("container").innerHTML = html_string;
 </script>

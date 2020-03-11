@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>base-64 编码的字符串</title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		var str = "RUNOOB";
+		var enc = window.btoa(str);//ie10 以上
+
+		var res = "编码字符串: " + enc;
+		console.log(res);
+		var dres = window.atob(enc);
+		console.log(dres);
+	</script>
+
+</html>
