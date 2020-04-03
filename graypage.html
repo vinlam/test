@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>css网页变灰</title>
+		<style type="text/css">
+			.demo {
+				color: red;
+			}
+			
+			body {
+				filter: grayscale(100%);
+				/*火狐*/
+				-webkit-filter: grayscale(100%);
+				/*chrome*/
+				filter: gray;
+				/*IE7-9*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="demo">周星星</h1>
+		<img src="http://image.zhangxinxu.com/image/blog/201208/2012-08-19_155221.jpg">
+		<img src="img/buenosaires.jpg" />
+
+	</body>
+	<script type="text/javascript" src="grayscale.js"></script>
+	<script type="text/javascript">
+		var navStr = navigator.userAgent.toLowerCase();
+		if(navStr.indexOf("msie 10.0") !== -1 || navStr.indexOf("rv:11.0") !== -1) { // 判断是IE10或者IE11
+			grayscale(document.body);
+		}
+	</script>
+
+</html>
