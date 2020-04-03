@@ -83,7 +83,12 @@
 
 		//阻止防止滚动、缩放。
 		$(".sliders,.modals").on("touchmove", function(event) {
-			event.preventDefault();
+			if(event && event.preventDefault) {
+				event.preventDefault();
+				event.stopPropagation();
+			} else {
+				window.event.returnValue = false; //注意加window
+			}
 		});
 
 		$(".btns").on("click", function() {

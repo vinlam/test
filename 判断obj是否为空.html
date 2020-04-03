@@ -31,6 +31,15 @@
 			function isObj(obj){
 				return Object.keys(obj).length === 0;
 			}
+			
+			function testarg(arg){
+				if(arg != null && arg.flag == true){
+					console.log(arg)
+				}
+				console.log("ok");
+			}
+			
+			testarg({"flag":true});
 		</script>
 	</head>
 

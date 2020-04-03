@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<script src="js/common/jquery-2.1.4.js" type="text/javascript"></script>
+		<script>
+			$(document).ready(function() {
+				//获取打印机列表 begin
+				$("#btn_getprintlist").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+					//$.post("http://127.0.0.1:12345/getprinterlist",
+					$.post("http://" + ip + ":" + port + "/getprinterlist", { //method:"Donald Duck",
+						//city:"Duckburg"
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							$("#PrinterS").empty();
+							if(obj.status == "ok") {
+								alert("获取成功");
+								//$("#PrinterS").append("<option value='"+obj.sites[1].name +"'>"+obj.sites[1].name +"</option>");
+								for(var o in obj.data) {
+									//alert(o); 
+									//alert(obj.data[o]); 
+									var printname = obj.data[o].name;
+									//alert(printname);
+									$("#PrinterS").append("<option value='" + printname + "'>" + printname + "</option>");
+								}
+							} else {
+								alert("获取失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//获取打印机列表 end
+				//打印测试报表 begin
+				$("#btn_printtest").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("test.grf"),
+						/*报表文件名 测试报表 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						//"ReportUrl": encodeURIComponent("http://localhost:9099/report/test.grf"),                  /*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/test.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"Preview": 0,
+						/*可选。是否预览，和主界面设置的效果一样 为空默认不预览,  0：不预览，1：预览(弹出导出的pdf,jpg等文件)。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Control": encodeURIComponent('[' ///*部件框，可选值：AsStaticBox ,AsMemoBox,AsRichTextBox,AsPictureBox (base64格式),AsBarcode*/
+							+
+							'{"type": "AsStaticBox", "name": "姓名","value": "高文杰","required": false},' + '{"type": "AsStaticBox", "name": "性别","value": "男","required": false},' + '{"type": "AsStaticBox", "name": "电话","value": "13165191728","required": false},' + '{"type": "AsBarcode", "name": "二维码","value": "5520002701774727","required": false},' + '{"type": "AsPictureBox", "name": "图片","value": "/9j/4AAQSkZJRgABgAooooA/9k=","required": false},' //base64格式
+							+
+							']'),
+						"Parameter": encodeURIComponent('[' ///*参数，type 默认为空即可,已经在报表端设置了 备用字段 
+							+
+							'{"type": "", "name": "单号","value": "5520002701774727","required": false},' + '{"type": "", "name": "日期","value": "2019-09-09 12:21:12","required": false},' + '{"type": "", "name": "year","value": "2018","required": false},' + ']'),
+						"Field": encodeURIComponent('[' ///*字段， type ftBlob (base64格式) ,ftString ftInteger ftBoolean, ftFloat, ftCurrency,ftDateTime,  size (ftString 设置为实际长度,其他的设置为0,例如 ftInteger ftBlob 等设置为0 )
+							+
+							'{"type": "ftString", "name": "快递单号","size": 255,"required": true},' + '{"type": "ftString", "name": "发件人","size": 255,"required": false},' + '{"type": "ftString", "name": "发件人电话","size": 255,"required": false},' + '{"type": "ftBlob", "name": "图像","size": 0,"required": false},' + ']'),
+						"Data": encodeURIComponent('[' ///*数据行 
+							+
+							'{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + '{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + '{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + '{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + '{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + '{"快递单号": "1234567890", "发件人": "山东易桥智能科技有限公司","发件人电话": "13165191728","图像": "/9j/4AAQSkZJRgABAQEAYABgAAAKKKKACiiigAooooA/9k="},' + ']')
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印测试报表 end
+				//打印条形码 begin
+				$("#btn_barcode").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					//$.post("http://127.0.0.1:12345/getprinterlist",
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("barcode.grf"),
+						/*报表文件名 条形码 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/barcode.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Field": encodeURIComponent('[' ///*字段， type ftBlob (base64格式) ,ftString ftInteger ftBoolean, ftFloat, ftCurrency,ftDateTime,  size (ftString 设置为实际长度,其他的设置为0,例如 ftInteger ftBlob 等设置为0 )
+							+
+							'{"type": "ftString", "name": "name","size": 255,"required": true},' + '{"type": "ftString", "name": "no","size": 255,"required": false},' + ']'),
+						"Data": encodeURIComponent('[' ///*数据行 
+							+
+							'{"name": "刘一", "no": "001"},' + '{"name": "陈二","no": "002"},' + '{"name": "张三","no": "003"},' + '{"name": "李四","no": "004"},' + '{"name": "王五","no": "005"},' + '{"name": "赵六","no": "006"},' + '{"name": "孙七","no": "007"},' + '{"name": "周八","no": "008"},' + '{"name": "吴九","no": "009"},' + '{"name": "郑十","no": "010"},' + ']')
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印条形码 end
+				//打印Pos小票 begin
+				$("#btn_pos").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("PosTicket.grf"),
+						/*报表文件名 POS小票 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/PosTicket.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Parameter": encodeURIComponent('[' ///*参数，type 默认为空即可,已经在报表端设置了 备用字段 
+							+
+							'{"type": "", "name": "title","value": "易桥餐厅消费小票","required": false},' + '{"type": "", "name": "SubTitle","value": "官方网站:http://www.yiqiao.net.cn","required": false},' + '{"type": "", "name": "deskname","value": "桌号:1001","required": false},' + '{"type": "", "name": "djh","value": "单据号:20191101000001","required": false},' + '{"type": "", "name": "czy","value": "操作员:高文杰","required": false},' + '{"type": "", "name": "starttime","value": "消费日期:2019-11-01","required": false},' + '{"type": "", "name": "tf","value": "","required": false},' + '{"type": "", "name": "ysje","value": "100.00","required": false},' + '{"type": "", "name": "yhje","value": "0.00","required": false},' + '{"type": "", "name": "sjje","value": "100.00","required": false},' + '{"type": "", "name": "kahao","value": "890001","required": false},' + ']'),
+						"Field": encodeURIComponent('[' ///*字段， type ftBlob (base64格式) ,ftString ftInteger ftBoolean, ftFloat, ftCurrency,ftDateTime,  size (ftString 设置为实际长度,其他的设置为0,例如 ftInteger ftBlob 等设置为0 )
+							+
+							'{"type": "ftString", "name": "shangpname","size": 255,"required": true},' + '{"type": "ftString", "name": "shuliang","size": 255,"required": false},' + '{"type": "ftString", "name": "je","size": 255,"required": false},' + ']'),
+						"Data": encodeURIComponent('[' ///*数据行 
+							+
+							'{"shangpname": "青椒肉丝", "shuliang": "1", "je": "14.50"},' + '{"shangpname": "清汤丸子", "shuliang": "1", "je": "20.90"},' + '{"shangpname": "土豆丝", "shuliang": "1", "je": "7.00"},' + '{"shangpname": "凉拌牛肉", "shuliang": "1", "je": "50.00"},' + '{"shangpname": "红烧茄子", "shuliang": "1", "je": "30.00"},' + '{"shangpname": "四喜丸子", "shuliang": "1", "je": "23.00"},' + '{"shangpname": "溜肥肠", "shuliang": "1", "je": "30.00"},' + '{"shangpname": "炒年糕", "shuliang": "1", "je": "33.00"},' + '{"shangpname": "烧鹅掌", "shuliang": "1", "je": "34.00"},' + '{"shangpname": "蚂蚁上树", "shuliang": "1", "je": "65.00"},' + ']')
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印Pos小票 end
+				//打印客户基本信息 begin
+				$("#btn_customer").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("customer.grf"),
+						/*报表文件名 客户基本信息 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/customer.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Field": encodeURIComponent('[' ///*字段， type ftBlob (base64格式) ,ftString ftInteger ftBoolean, ftFloat, ftCurrency,ftDateTime,  size (ftString 设置为实际长度,其他的设置为0,例如 ftInteger ftBlob 等设置为0 )
+							+
+							'{"type": "ftString", "name": "CustomerID","size": 255,"required": true},' + '{"type": "ftString", "name": "CompanyName","size": 255,"required": false},' + '{"type": "ftString", "name": "ContactName","size": 255,"required": false},' + '{"type": "ftString", "name": "ContactTitle","size": 255,"required": false},' + '{"type": "ftString", "name": "Address","size": 255,"required": false},' + '{"type": "ftString", "name": "City","size": 255,"required": false},' + '{"type": "ftString", "name": "Region","size": 255,"required": false},' + '{"type": "ftString", "name": "PostalCode","size": 255,"required": false},' + '{"type": "ftString", "name": "Country","size": 255,"required": false},' + '{"type": "ftString", "name": "Phone","size": 255,"required": false},' + '{"type": "ftString", "name": "Fax","size": 255,"required": false},' + ']'),
+						"Data": encodeURIComponent('[' ///*数据行 
+							+
+							'{"CustomerID": "SDYQKJ", "CompanyName": "易桥科技", "ContactName": "高文杰", "ContactTitle": "经理", "Address": "商动力大厦", "City": "济宁", "Region": "华东", "PostalCode": "272100", "Country": "中国", "Phone": "13165191728", "Fax": "0537-2345660"},' + '{"CustomerID": "CHOPS", "CompanyName": "浩天旅行社", "ContactName": "方先生", "ContactTitle": "经理", "Address": "白广路 314 号", "City": "天津", "Region": "华北", "PostalCode": "234254", "Country": "中国", "Phone": "(030) 30076545", "Fax": ""},' + '{"CustomerID": "SEVES", "CompanyName": "艾德高科技", "ContactName": "谢小姐", "ContactTitle": "经理", "Address": "起义路 231 号", "City": "天津", "Region": "华北", "PostalCode": "013072", "Country": "中国", "Phone": "(030) 55657717", "Fax": ""},' + ']')
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印客户基本信息 end
+				//打印支票 begin
+				$("#btn_cheque").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("bankcheque.grf"),
+						/*报表文件名 支票套打 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/bankcheque.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Parameter": encodeURIComponent('[' ///*参数，type 默认为空即可,已经在报表端设置了 备用字段 
+							+
+							'{"type": "", "name": "PayTo","value": "山东易桥智能科技有限公司","required": false},' //收款人
+							+
+							'{"type": "", "name": "Year","value": "2019","required": false},' //年
+							+
+							'{"type": "", "name": "Month","value": "8","required": false},' //月
+							+
+							'{"type": "", "name": "Day","value": "19:20191101000001","required": false},' //日
+							+
+							'{"type": "", "name": "Amount","value": "50000","required": false},' //金额
+							+
+							'{"type": "", "name": "Usage","value": "HttpPrinter技术服务费","required": false},' //用途
+							+
+							'{"type": "", "name": "Remark","value": "费用缴纳一次,永久技术支持","required": false},' //备注
+							+
+							']'),
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印支票 end
+				//打印快递单 begin
+				$("#btn_ExpressBill").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("ExpressBill.grf"),
+						/*报表文件名 快递单套打 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/ExpressBill.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Parameter": encodeURIComponent('[' ///*参数，type 默认为空即可,已经在报表端设置了 备用字段 
+							+
+							'{"type": "", "name": "EmployeeID","value": "","required": false},' + '{"type": "", "name": "LastName","value": "高","required": false},' + '{"type": "", "name": "FirstName","value": "文杰","required": false},' + '{"type": "", "name": "Title","value": "新浪中国有限公司","required": false},' + '{"type": "", "name": "Region","value": "北京","required": false},' + '{"type": "", "name": "City","value": "北京","required": false},' + '{"type": "", "name": "Country","value": "海淀","required": false},' + '{"type": "", "name": "Address","value": "学院路100号","required": false},' + '{"type": "", "name": "PostalCode","value": "100100","required": false},' + ']'),
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+
+				//打印快递单 end  
+				//打印员工档案 begin
+				$("#btn_employee").click(function() {
+					var ip = $("#ip").val();
+					var port = $("#port").val();
+					if(ip == "" || port == "") {
+						alert("ip,port不能为空");
+						return false;
+					}
+
+					var aBase64String = "/9j/4AAQSkZJRgABAQEACiiigAooooA/9k=";
+					$.post("http://" + ip + ":" + port + "/printreport", {
+						"ReportName": encodeURIComponent("employee.grf"),
+						/*报表文件名 员工档案 */
+						"ReportVersion": 1,
+						/*可选。报表版本, 为空则默认1  如果本地报表的版本过低 将从 ReportUrl 地址进行下载更新*/
+						"ReportUrl": encodeURIComponent("http://111.67.202.157:9099/report/employee.grf"),
+						/*可选。为空 将不更新本地报表 , 如果本地报表不存在可以从该地址自动下载*/
+						"Copies": 1,
+						/*可选。打印份数，支持指定打印份数。默认1份,如果为零,不打印,只返回报表生成的pdf,jpg等文件*/
+						"PrinterName": encodeURIComponent($("#PrinterS option:selected").text()),
+						/*可选。指定打印机，为空的话 使用默认打印机, 请在 控制面板 -> 设备和打印机 中查看您的打印机的名称 */
+						"PrintOffsetX": 0,
+						/*可选。打印右偏移，单位厘米。报表的水平方向上的偏移量，向右为正，向左为负。*/
+						"PrintOffsetY": 0,
+						/*可选。打印下偏移，单位厘米。 报表的垂直方向上的偏移量，向下为正，向上为负。*/
+						"token": encodeURIComponent("aa"),
+						/*可选。只要token值在列表中 方可打印*/
+						"Field": encodeURIComponent('[' ///*字段， type ftBlob (base64格式) ,ftString ftInteger ftBoolean, ftFloat, ftCurrency,ftDateTime,  size (ftString 设置为实际长度,其他的设置为0,例如 ftInteger ftBlob 等设置为0 )
+							+
+							'{"type": "ftString", "name": "Name","size": 255,"required": false},' //姓名
+							+
+							'{"type": "ftString", "name": "tel","size": 255,"required": false},' //电话
+							+
+							'{"type": "ftDateTime", "name": "BirthDate","size": 0,"required": false},' //出生日期
+							+
+							'{"type": "ftString", "name": "Address","size": 255,"required": false},' + '{"type": "ftBlob", "name": "photo2","size": 0,"required": false},' + ']'),
+						"Data": encodeURIComponent('[' ///*数据行 
+							+
+							'{"Name": "高文杰", "tel": "13165191728", "BirthDate": "1988-12-01", "Address": "东满大街12号", ' + '"photo2": "/9j/4AAQSkZJRgABAQEACiiigAooooA/9k="}, ' + '{"Name": "张三", "tel": "13165191728", "BirthDate": "1988-12-01", "Address": "北京市西门大街22号", ' + '"photo2": "/9j/4AAQSkZJRgABAQEACiiigAooooA/9k="}, ' + ']'),
+					}, function(data) {
+						data = decodeURIComponent(data);
+						//alert(data);
+						if(data == "") {
+							alert("连接HttpPrinter失败");
+						} else {
+							//alert(data);
+							var obj = JSON.parse(data);
+							//alert(obj.status);
+							if(obj.status == "ok") {
+								alert("打印成功");
+							} else {
+								alert("打印失败:" + obj.data);
+							}
+							//console.log(data);
+						}
+					});
+				});
+				//打印员工档案 end
+			});
+		</script>
+	</head>
+
+	<body>
+		IP: <input type="text" name="ip" id="ip" value="127.0.0.1" />
+		<br> port: <input type="text" name="port" id="port" value="12345" />
+		<br>
+		<select name="PrinterS" id="PrinterS"></select>
+		<button id="btn_getprintlist">获取打印机列表</button>
+		<br>
+		<button id="btn_printtest">打印测试报表</button>
+		<br>
+		<button id="btn_barcode">打印条形码</button>
+		<br>
+		<button id="btn_pos">Pos小票打印</button>
+		<br>
+		<button id="btn_customer">打印客户基本信息</button>
+		<br>
+		<button id="btn_cheque">打印支票</button>
+		<br>
+		<button id="btn_ExpressBill">打印快递单</button>
+		<br>
+		<button id="btn_employee">打印员工档案</button>
+		<br>
+	</body>
+
+</html>
