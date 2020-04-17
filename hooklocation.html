@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		function GetQueryString(name) {
+			//var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");//此方法若不用window.location.search.substr(1)而是字符窜且只有一个参数时会获取不到
+			//var reg = new RegExp("(|^/?|^&)" + name + "=([^&]*)(&|$)", "i");
+
+			var reg = new RegExp("(^|/?|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			//var r = "abc.html?id=123".match(reg);
+
+			if(r != null) return unescape(r[2]);
+			return null;
+		}
+		//		Object.defineProperty(window, "location", {
+		//			value: window.location,
+		//			writable: false
+		//		});
+		window.location.href = "http://www.baidu.com";
+		//var obj = {};
+		//obj = window.location;
+		//console.log(obj.href);
+		var flag = GetQueryString("flag");
+		alert(flag); //http://127.0.0.1:8020/test/hooklocation.html?flag=0
+		url = flag == 0 ? "https://www.jianshu.com/p/935e3ab00068" : window.location.href
+		alert(url);
+		Object.defineProperty(window.location, "href", {
+			value: url,
+			writable: true
+		});
+		console.log(window.location.href);
+	</script>
+
+</html>
