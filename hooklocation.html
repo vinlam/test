@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<a href="https://www.zhihu.com">go to</a>
 	</body>
 	<script>
 		function GetQueryString(name) {
@@ -24,19 +25,20 @@
 		//			value: window.location,
 		//			writable: false
 		//		});
-		window.location.href = "http://www.baidu.com";
+		//window.location.href = "https://www.baidu.com";
 		//var obj = {};
 		//obj = window.location;
 		//console.log(obj.href);
 		var flag = GetQueryString("flag");
-		alert(flag); //http://127.0.0.1:8020/test/hooklocation.html?flag=0
+		//alert(flag); 
+		//http://127.0.0.1:8020/test/hooklocation.html?flag=0
 		url = flag == 0 ? "https://www.jianshu.com/p/935e3ab00068" : window.location.href
-		alert(url);
+		//alert(url);
 		Object.defineProperty(window.location, "href", {
 			value: url,
 			writable: true
 		});
-		console.log(window.location.href);
+		//console.log(window.location.href);
 	</script>
 
 </html>
