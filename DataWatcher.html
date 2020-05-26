@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>wathc</title>
+	</head>
+
+	<body>
+		<script src="watcher.js"></script>
+		<script>
+			let wm = new watcher({
+				data: {
+					a: 0,
+					b: 'hello'
+				},
+				watch: {
+					a(newVal, oldVal) {
+						console.log(newVal, oldVal); // 111 0
+					}
+				}
+			})
+			wm.a = 111
+		</script>
+	</body>
+
+</html>　

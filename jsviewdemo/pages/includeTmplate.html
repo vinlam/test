@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<p>{{include tmpl=... /}} 标签用于组合模板(template composition) -----用于在一个模板中引入另一个模板，并用上下文的数据来渲染template。</p>
+		<!--<p>{{include tmpl=... /}} 标签用于组合模板(template composition) -----用于在一个模板中引入另一个模板，并用上下文的数据来渲染template。</p>-->
 
 		<script id="peopleTemplate" type="text/x-jsrender">
 			<div>
@@ -19,6 +19,7 @@
 
 		<script id="addressTemplate" type="text/x-jsrender">
 			<b>{{>address.city}}</b>
+			<b>{{:address.city}}</b>
 		</script>
 
 		<div id="peopleList"></div>
