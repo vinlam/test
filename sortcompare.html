@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>对象排序</title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+		var data = [{
+				name: 'Bob',
+				score: '95',
+				age: '18'
+			},
+			{
+				name: 'Amy',
+				score: '86',
+				age: '18'
+			},
+			{
+				name: 'Coco',
+				score: '36',
+				age: '18'
+			},
+			{
+				name: 'Mark',
+				score: '80',
+				age: '18'
+			},
+			{
+				name: 'Frank',
+				score: '40',
+				age: '18'
+			}
+		];
+
+		function compare(val1, val2) {
+			return val1.name.substr(0,1).toLowerCase() > val2.name.substr(0,1).toLowerCase();
+		};
+
+		console.log(data.sort(compare));
+
+		let data1 = [{
+				name: 'Bob',
+				score: '95',
+				age: '18'
+			},
+			{
+				name: 'Amy',
+				score: '86',
+				age: '18'
+			},
+			{
+				name: 'Coco',
+				score: '36',
+				age: '18'
+			},
+			{
+				name: 'Mark',
+				score: '80',
+				age: '18'
+			},
+			{
+				name: 'Frank',
+				score: '40',
+				age: '18'
+			}
+		];
+
+		compare1 = (val1, val2) => {
+			return val1.name.toLowerCase() > val2.name.toLowerCase();
+		};
+
+		console.log(data1.sort(compare1)); // 结果根据名字从 A-Z 顺序排列
+		
+		var citys = [{
+			cityName: '安康',
+			citySort: '安康ankang',
+			cityCode: '310000'
+		}, {
+			cityName: '安阳',
+			citySort: '安阳anyang',
+			cityCode: '330000'
+		}, {
+			cityName: '百安',
+			citySort: '百安康baiankang',
+			cityCode: '310000'
+		}, {
+			cityName: '北京',
+			citySort: '北京beijing',
+			cityCode: '110000'
+		}, {
+			cityName: '遵义',
+			citySort: '遵义zunyi',
+			cityCode: '310000'
+		}, {
+			cityName: '西安',
+			citySort: '西安xian',
+			cityCode: '310000'
+		}];
+		var citysItem = [];
+		var lettArr = [];
+		for(var i = 0; i < citys.length; i++) {
+			var letter = citys[i].citySort.replace(/[^a-zA-Z]/g, '').length > 0 ? citys[i].citySort.replace(/[^a-zA-Z]/g, '').substring(0, 1) : '';
+			if(lettArr.indexOf(letter) <= -1) {
+				lettArr.push(letter);
+			}
+		}
+		// ["a", "b", "z", "x"]
+		lettArr = lettArr.sort() // 排序
+		// ["a", "b", "x", "z"]
+		for(var i = 0; i < lettArr.length; i++) {
+			let tempCityObjArr = [];
+			let tempObj = {};
+			let letterTemp = lettArr[i];
+			tempObj.letter = letterTemp;
+			for(var j = 0; j < citys.length; j++) {
+				var letter = citys[j].citySort.replace(/[^a-zA-Z]/g, '').substring(0, 1);
+				if(letterTemp === letter) {
+					tempCityObjArr.push(citys[j]);
+				}
+			}
+			tempObj.cityList = tempCityObjArr;
+			citysItem.push(tempObj);
+		}
+		console.log(JSON.stringify(citysItem))
+	</script>
+
+</html>

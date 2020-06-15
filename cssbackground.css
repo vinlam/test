@@ -1,0 +1,11 @@
+.dome{
+         width: 300px;
+         height: 250px;
+         margin: 0 auto;
+         background: #cccccc url(img/tesla.jpg) no-repeat !important;
+         /*background: #cccccc url(img/album-af.jpg) no-repeat ;*/
+
+         /*background-position: 50% 50%;*/
+         /*background-size: 250px 250px;*/
+         background-size: 50% 100% !important;
+         }
