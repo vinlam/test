@@ -9,6 +9,47 @@
 	<body>
 	</body>
 	<script type="text/javascript">
+		var arr = new Array(6)
+		arr[0] = "George"
+		arr[1] = "John"
+		arr[2] = "Thomas"
+		arr[3] = "James"
+		arr[4] = "Adrew"
+		arr[5] = "Martin"
+
+		document.write(arr + "<br />");
+		document.write(arr.sort());
+
+		var obj = {
+			result: [{
+					id: 1,
+					name: '中国银行'
+				},
+				{
+					id: 3,
+					name: '北京银行'
+				},
+				{
+					id: 2,
+					name: '河北银行'
+				},
+				{
+					id: 10,
+					name: '保定银行'
+				},
+				{
+					id: 7,
+					name: '涞水银行'
+				}
+			]
+		};
+
+		function s(a, b) {
+			return a.id - b.id;
+		}
+		//obj.result.sort((a,b)=>a.id-b.id);
+		obj.result.sort(s);
+		console.log(obj);
 		var data = [{
 				name: 'Bob',
 				score: '95',
@@ -35,9 +76,18 @@
 				age: '18'
 			}
 		];
+		// 数字转换位字符
+		var code = String.fromCharCode(97);
+		// 字符转换为数字
+		var s = "a";
+		console.log(code);
+		console.log(s.charCodeAt(0));
 
 		function compare(val1, val2) {
-			return val1.name.substr(0,1).toLowerCase() > val2.name.substr(0,1).toLowerCase();
+			return(val1.name.substr(0, 1).toLowerCase()).charCodeAt(0) - val2.name.substr(0, 1).toLowerCase().charCodeAt(0);
+			//return (val1.name.substr(0,1).toLowerCase()) - val2.name.substr(0,1).toLowerCase();
+			//console.log(val1.score > val2.score)
+			//return val1.score - val2.score;
 		};
 
 		console.log(data.sort(compare));
@@ -74,7 +124,7 @@
 		};
 
 		console.log(data1.sort(compare1)); // 结果根据名字从 A-Z 顺序排列
-		
+
 		var citys = [{
 			cityName: '安康',
 			citySort: '安康ankang',
@@ -125,7 +175,20 @@
 			tempObj.cityList = tempCityObjArr;
 			citysItem.push(tempObj);
 		}
-		console.log(JSON.stringify(citysItem))
+		console.log(JSON.stringify(citysItem));
+
+		var obj = {
+			abe: 2,
+			cda: 1,
+			bcb: 3
+		};
+
+		var arr = Object.keys(obj).sort();
+		var result = {};
+		arr.map(m => {
+			result[m] = obj[m];
+		});
+		console.log(result);
 	</script>
 
 </html>
