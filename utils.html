@@ -9,6 +9,26 @@
 		<script src="jquery.range.js"></script>
 		<script src="b.js"></script>
 		<script>
+			var div = document.createElement("div");
+			//div.innerHTML = '&lt;div style="color:green"&gt;符号：&amp;amp;&lt;div&gt;';
+			div.innerHTML = '{&quot;currentTime&quot;:1400077615368,&quot;direction&quot;:0,&quot;id&quot;:1,&quot;latitude&quot;:29.5506,&quot;longitude&quot;:106.6466}';
+			var s = div.innerText;
+			var jsobj = {};
+			jsobj = JSON.parse(s);
+			console.log(s);
+			console.log("json parse:"+jsobj.currentTime);
+			
+			var ar = [1,5,3,2];
+			var myar = [{id:3},{id:5},{id:2},{id:4},{id:1}];
+			var nmyar = [];
+			for(var i=0;i<ar.length;i++){
+				for(var j=0;j<myar.length;j++){
+					if(myar[j].id == ar[i]){
+						nmyar.push(myar[j]);
+					}
+				}
+			}
+			console.log(nmyar);
 			//代码如下所示：
 			function convertCurrency(money) {
 				//汉字的数字
