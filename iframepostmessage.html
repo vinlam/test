@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Iframe父子窗口之间的跨域事件调用和传值</title>
+	</head>
+
+	<body>
+		<div id="parentPage">aaa</div>
+		<iframe src="child.html" frameborder="0" scrolling="no" id="childFrame"></iframe>
+	</body>
+	<script>
+		var iframe = document.getElementById("childFrame").contentWindow;
+		var msg = {
+			data: parentData,
+			action: childFunc,
+			callback: /*类似于上面的方法myEventIndex*/
+		}
+		var childDomain = "http://www.test.com";
+		iframe.postMessage(msg, childDomain);
+		window.addEventListener("message", function(obj) {
+			var data = obj.data;
+			var action = data.action;
+			var data = data.data;
+			parentFuncClass[action](data);
+		});
+
+		document.domain = "test.com";
+		setTimeout(function() {
+			//父页面获得子页面某元素的html内容
+			console.log(document.getElementById("childFrame").contentWindow.document.getElementById("sonPage").innerHTML);
+		}, 3000);
+	</script>
+
+</html>

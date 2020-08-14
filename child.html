@@ -10,6 +10,7 @@
 	</script>
 
 	<body>
+		<div id="sonPage">bbb</div>
 		<form name="myform">
 			用户名：<input type="text" name="username" value="test" />
 		</form>
@@ -33,11 +34,27 @@
 		if(self != top) {
 			console.log('在iframe中 top');
 		}
-		
-		document.getElementById("btn").addEventListener("click",function(){
+
+		document.getElementById("btn").addEventListener("click", function() {
 			window.location.href = "a.html";
 		})
-		
+		window.addEventListener("message", function(obj) {
+			var data = obj.data;
+			var action = data.action;
+			var data = data.data;
+			var callback = data.callback;
+			childFuncClass[action](data, function(result) {
+				var d = {
+					action: callback,
+					data: result
+				};
+				var parentDomain = "http://www.test.com";
+				window.parent.postMessage(d, parentDomain);
+			});
+		});
+		document.domain = "webkaka.com";
+		//子页面赋html内容给父页面某元素
+		window.parent.document.getElementById("parentPage").innerHTML = "123";
 	</script>
 
 </html>
