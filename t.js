@@ -1,3 +1,3 @@
-function fun(){
+function tfun(){
 	alert(99999);
 }

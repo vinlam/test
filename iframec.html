@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>c proxy page</title>
+	</head>
+	<body>
+	</body>
+	A域名下的页面 代理页面c.html：
+	<script>
+		function pseth() {　　　　　　　　　
+			var iObj = parent.parent.document.getElementById('frame_content');　　　　　　　　　
+			iObjH = parent.parent.frames["frame_content"].frames["iframeC"].location.hash;　　　　　　　　　
+			iObj.style.height = iObjH.split("#")[1] + "px";　　　　　　　
+		}　　　　　　　
+		pseth();
+	</script>
+</html>

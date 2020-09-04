@@ -7,8 +7,28 @@
 		<link rel="stylesheet" href="jquery.range.css" />
 		<script src="js/jquery.min.js"></script>
 		<script src="jquery.range.js"></script>
-		<script src="b.js"></script>
+		<script id="bs" src="b.js"></script>
 		<script>
+			$(document).ready(function(){
+				var scripts = document.getElementsByTagName("script");
+				for(var i=0;i<scripts.length;i++){
+					var script = scripts[i];
+					if(script.src.indexOf("b.js") > -1){
+						script.src = "t.js";
+						//$(script).remove();
+						$("#bs").remove();
+						//$("head").removeChild();
+						console.log(script.src);
+						var script= document.createElement('script');
+    						script.type= 'text/javascript';
+    						script.src= "t.js";
+    						script.id = "t";
+    						$("head").append(script);
+    						tfun();
+						
+					}
+				}
+			})
 			var div = document.createElement("div");
 			//div.innerHTML = '&lt;div style="color:green"&gt;符号：&amp;amp;&lt;div&gt;';
 			div.innerHTML = '{&quot;currentTime&quot;:1400077615368,&quot;direction&quot;:0,&quot;id&quot;:1,&quot;latitude&quot;:29.5506,&quot;longitude&quot;:106.6466}';
@@ -27,6 +47,10 @@
 						nmyar.push(myar[j]);
 					}
 				}
+			}
+			console.log("rand:"+rand(100000000,9999999999));
+			function rand(m,n){
+				return Math.floor(Math.random()* (n-m))+m;
 			}
 			console.log(nmyar);
 			//代码如下所示：

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		A域名下的页面，我们称之为主页面a，需要获取iframe（iframe为B域名下的页面，称之为页面b）的高度，这时候由于跨域无法直接获取到iframe的高度，需要通过一个代理页面c（c页面和主页面一定要放在同一个域名下A域名）。举例说明： 　 A域名下的页面 a.html：
+		<iframe id="frame_content" name="frame_content" scrolling="no" frameborder="no" width="100%" src="http://www.test.com:8888/iframeb.html?urlC=http://www.vinlam.com:8020/HBuilderProject/test"></iframe>
+	</body>
+	<script>
+		//a.html
+		var frame = document.getElementById('frame_content')
+		window.addEventListener('message', function(e) {
+			frame.style.height = e.data.height + 'px';
+			frame.style.width = e.data.width + 'px';
+			console.log(e.data);
+		})
+	</script>
+
+</html>

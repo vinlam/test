@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		B域名下的页面 b.html：
+		<iframe id="iframeC" name="iframeC" src="" width="0" height="0" style="display:none;"></iframe>
+		<script type="text/javascript">
+			//b.html
+			document.addEventListener('DOMContentLoaded', function() {
+				// 2，获取屏幕工作区域的高度和宽度（去掉状态栏）：
+				// window.screen.availHeight
+				// window.screen.availWidth
+
+				// 3，网页全文的高度和宽度：
+				// document.body.scrollHeight
+				// document.body.scrollWidth
+				var tbody = document.body
+				var width = tbody.clientWidth
+				var height = tbody.clientHeight
+				window.parent.postMessage({
+					height: height,
+					width: width
+				}, '*')
+			}, false)
+
+			function sethash() {　　　　　　　　
+				hashH = document.documentElement.scrollHeight;　　　　　　　　
+				urlC = GetQueryString("urlC") + "/iframec.html";　　　　　　　　
+				document.getElementById("iframeC").src = urlC + "#" + hashH;　　　　　　
+			}　　　　　　
+			window.onload = sethash;
+
+			//下面这个方法 是为了获取主页面的域名（ 如果主页面域名确定 可以忽略下面的方法， a页面 urlC = A + "/agent.html"）
+			function GetQueryString(name) {　　　　　　　　　
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");　　　　　　　　　
+				var r = window.location.search.substr(1).match(reg);　　　　　　　　　
+				if(r != null) return(r[2]);
+				return null;　　　　　　
+			}
+		</script>
+	</body>
+
+</html>
