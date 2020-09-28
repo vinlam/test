@@ -24,12 +24,13 @@
 						"name": "jack",
 						"password": "0000011111"
 					};
-
+					
 					xhr = $.ajax({
 						type: "post",
 						data: JSON.stringify(param),
-						url: "http://localhost:8080/LogAspect/api/postdata",
 						contentType: "application/json",
+						url: "http://www.test.com:8080/LogAspect/api/postdata",
+//						url: "http://localhost:8080/LogAspect/api/postdata",
 						dataType: 'json',
 						async: false,
 						success: function(res) {
