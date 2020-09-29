@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<style>
+			
+			.inf_con {
+				display: none
+			}
+			
+			.dis_block {
+				display: block
+			}
+		</style>
+		<script src="./js/common/jquery-1.12.4.js" type="text/javascript "></script>
+		<script>
+			var timeout;
+			$(document).ready(function() {
+				$(".radio >input").each(function(index){
+					var targe = $(this);
+					$(targe).off().on("click",function() {
+						var _targe = $(this);
+						//console.log($(_targe).prop("checked"));
+						
+						//$(".inf_box>.inf_con:eq(" + index + ")").addClass("dis_block").siblings().removeClass("dis_block");
+						$(".inf_con:eq(" + index + ")").addClass("dis_block").siblings().removeClass("dis_block");
+						//console.log($("input[type='radio']:checked").val());
+						console.log($(_targe).val());
+					});
+				});
+				$("#btn").off().on("click",function(){
+					console.log($("input[type='radio']:checked").val());
+					console.log($(".dis_block").text());
+					console.log($(".dis_block").html());
+				})
+			})
+		</script>
+
+	</head>
+
+	<body>
+		<div class="radio">
+			<input id="erd" type="radio" value="er" name="radio_btn" checked="checked"><label for="erd">企业</label>
+			<input id="prd" type="radio" value="pr" name="radio_btn"><label for="prd">个人</label>
+		</div>
+		<div class="inf_box">
+			<div class="inf_con dis_block">企业信息</div>
+			<div class="inf_con">个人信息</div>
+		</div>
+		<input id="btn" type="button" value="获取" />
+	</body>
+
+</html>
