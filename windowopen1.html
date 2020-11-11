@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<HEAD>
+		<TITLE>never-online 's Tech Blog In CSDN - JS & DHTML</TITLE>
+		<META content="MSHTML 6.00.2800.1400" name=GENERATOR>
+		<META http-equiv=Content-Type content="text/html; charset=utf-8">
+		<script type="text/javascript">
+			function addEvent(o, w, f) {
+				if(document.all) {
+					o.attachEvent('on' + w, f);
+				} else {
+					o.addEventListener(w, f, false);
+				}
+			}
+
+			function fnRunHtmlCode(obj) {
+				var wnd = window.open('https://www.baidu.com', "_blank","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=400, height=400")
+			};
+
+			function fnReadyToRunHTMLcode() {
+				insertRunHtmlBtn(document.getElementById("demo"));
+
+				function insertRunHtmlBtn(obj) {
+					var wrapper = document.createElement("DIV");
+					wrapper.style.margin = "10px 0 10px 0";
+					var runBtn = document.createElement("INPUT");
+					runBtn.type = "button";
+					runBtn.value = "Run HTML Code";
+					addEvent(runBtn, "click", function() {
+						fnRunHtmlCode(obj)
+					});
+					obj.parentNode.insertBefore(wrapper, obj.nextSibling);
+					wrapper.appendChild(runBtn);
+				} //} catch (ex) {}  
+			}
+			onload = fnReadyToRunHTMLcode;
+		</script>
+		<div class="postText"> <textarea class="code_textarea" id="demo">  </textarea> </div>
+		</body>
+
+</html>

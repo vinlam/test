@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>url里的gbk编码直接使用js的解码函数解码</title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		function urldecode(str, charset, callback) {
+			window._urlDecodeFn_ = callback;
+			var script = document.createElement('script');
+			script.id = '_urlDecodeFn_';
+			var src = 'data:text/javascript;charset=' + charset + ',_urlDecodeFn_("' + str + '");'
+			src += 'document.getElementById("_urlDecodeFn_").parentNode.removeChild(document.getElementById("_urlDecodeFn_"));';
+			script.src = src;
+			document.body.appendChild(script);
+		}
+		urldecode('%C3%C0%B0%D7%EC%EE%B0%DF%C3%E6%C4%A4%D4%F5%C3%B4%D7%F6&', 'gbk', function(d) {
+			console.log(d);
+		});
+		urldecode('%D6%D8%C7%EC%CE%D6%B2%D6%B9%A9%D3%A6%C1%B4%B9%DC%C0%ED%D3%D0%CF%DE%B9%AB%CB%BE', 'gbk', function(d) {
+			console.log(d);
+		});
+	</script>
+
+</html>
