@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<title>好友助力</title>
+		<link rel="stylesheet" type="text/css" href="../css/common/weui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../fonts/iconfont.css">
+		<style type="text/css">
+			.weui-navbar {
+			    position: fixed;
+			    padding: 0 0.42666rem;
+			    height: 2.3467rem;
+			    box-sizing: border-box;
+			    -webkit-box-sizing: border-box;
+			    display: flex;
+			    display: -webkit-flex;
+			    align-items: center;
+			    -webkit-align-items: center;
+			}
+			.light-navbar {
+			    color: #000000;
+			    background-color: #ffffff;
+			}
+			.weui-navbar .left, .weui-navbar .right {
+			    width: 2.6667rem;
+			}
+			.weui-navbar .right{
+				text-align: right;
+			}
+			.light-navbar a .iconfont {
+			    color: #101010;
+			}
+			.weui-navbar .center {
+			    font-size: 0.8533rem;
+			    flex: 1;
+			    -webkit-flex: 1;
+			    display: flex;
+			    display: -webkit-flex;
+			    align-items: center;
+			    -webkit-align-items: center;
+			    justify-content: center;
+			    -webkit-justify-content: center;
+			}
+			.main{
+			    margin-top: 2.3467rem;
+			}
+			html{
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+			body{
+				background:#8a46fe url(../image/bg_.png) 100% 100% no-repeat;
+				background-size: 100%;
+			}
+			*{
+				font-size: 0;
+			}
+			.fl{
+				float:left;
+			}
+			.fr{
+				float:right;
+			}
+			.red{
+				color: red;
+			}
+			.myHelp{
+				color: #fff;
+			    background: linear-gradient(to right, #3bd097 0%, #90e694 100%);
+			    padding: 0.26667rem;
+			    padding-right: 0.533334rem;
+			    border-radius: 0 0.8rem 0.8rem 0;
+			    font-size: 0.85333rem;
+			}
+			.helpTitle{
+				text-align: center;
+			    color: #fff;
+			    font-style: oblique;
+			    font-size: 1.333334rem;
+			}
+			.product{
+				position: relative;
+			}
+			.product_content{
+				position: absolute;
+				top:0;
+				left:0;
+				right: 0;
+				bottom: 0;
+			}
+			.product_img{
+				width: 7rem;
+			    margin: 0 auto;
+			    margin-top: 2.2rem;
+			}
+			.product_title{
+				font-size: 0.64rem;
+			    height: 1.9rem;
+			    width: 49%;
+			    margin: 0 auto;
+			    text-align: center;
+			    line-height: 0.8rem;
+			}
+			.product_value p,.product_value span{
+				font-size: 0.64rem;
+			}
+			.product_value{
+				text-align: center;
+				line-height: .8rem;
+				padding-top: .3rem;
+			}
+			.speed,.speed span{
+				font-size: 0.853333rem;
+				color: #fff;
+				text-align: center;
+			}
+			.speed span{
+				background: linear-gradient(to bottom,#a3fba9 0%,#36ac7d 100%);
+				margin: 0 0.05333rem;
+			    padding: 0 0.26666rem;
+			    border-radius: 0.10666rem;
+			}
+			.speed_t{
+				height:6rem;
+			}
+			.speed_uint{
+				padding:0 0.26666rem;
+				border-radius: 0.16rem;
+				background: #ff9f14;
+				color: #fff;
+				font-size: 0.64rem;
+				white-space:nowrap;
+				position: relative;
+    			left: -46%;
+			}
+			.speed_sign{
+				font-size: 0.64rem;
+				background: transparent;
+			    display: inline-block;
+			    border: 6px solid #ff9f14;
+			    border-right-color: transparent;
+			    border-bottom-color: transparent;
+			    border-left-color: transparent;
+			    position: relative;
+    			left: -0.32rem;
+			}
+			.speed_footer{
+				height: 1.4rem;
+			    width: 70%;
+			    margin: 0 auto;
+			}
+			.speed_footer div{
+				font-size: 0.64rem;
+				color: #fff;
+			}
+			.speed_footer span{
+				color:#f3f83a;
+				font-size: 0.64rem;
+			}
+			.speed_img{
+				width: 68%;
+			    height: 1.4rem;
+			    margin: 0 auto;
+			    position: relative;
+			    top: .4rem;
+			    border-radius: .4rem .6rem .6rem .4rem;
+			    overflow: hidden;
+			}
+			.speed_value{
+				width: 68%;
+			    height: 100%;
+			    margin: 0 auto;
+			    position: relative;
+			}
+			.speed_btn_c{
+				width:100%;
+				height: 6.8rem;
+			}
+			.speed_btn_c .btn_content{
+				width: 72%;height: 4.1rem;
+			    position: relative;
+			    top: .74rem;
+			    left: 2.6rem;
+			    text-align: center;
+			    box-sizing: border-box;
+			    padding-top:.8rem;
+			}
+			.speed_btn_f{
+				background: url(../image/btn_01.png) 100% 100% no-repeat;
+			    background-size: 100%;
+			    color: #fff;
+			    padding: 0.64rem 1.33333rem .8rem 1.33333rem;
+			    font-size: 0.74666rem;
+			    display: inline-block;
+			}
+			.speed_btn_m{
+				background: url(../image/btn_02.png) 100% 100% no-repeat;
+			    background-size: 100%;
+			    color: #a60a09;
+			    padding: 0.64rem 1.33333rem .8rem 1.33333rem;
+			    font-size: 0.74666rem;
+			    display: inline-block;
+			}
+			.group_friends{
+				width: 88%;
+			    height: 100%;
+			    position: relative;
+			    left: 1.06rem;
+			    box-sizing: border-box;
+			    padding: .5rem;
+			    overflow: auto;
+			}
+			.help_list_c,.help_list_c div,.help_list_c div p{
+				color:#fff;
+				font-size: 0.74666rem;
+			}
+			.help_list_c div{
+				margin: 0 .3rem;
+			}
+			.help_list_c div p span.help_value{
+				color:#f6ff00;
+				font-size: 0.74666rem;
+			}
+			.help_list_c{
+			    white-space:nowrap;
+			    overflow: auto;
+			    padding:0.2rem;
+			}
+			.help_list_c div p.help_name{
+				color:#eaf9f4;
+				font-size: 0.64rem;
+			}
+			.guize{
+				color:#fff;padding:1rem 1.06666rem;
+			}
+			.guize p{
+				font-size: 0.74666rem;
+			}
+			.guize_left{
+				background: url(../image/rule_i.png) 0% 100% no-repeat;
+				display: inline-block;width: 2.826666rem;height: 0.85333rem;vertical-align: initial;
+			}
+			.guize_right{
+				background: url(../image/rule_i.png) 100% 0% no-repeat;
+				display: inline-block;width: 2.826666rem;height: 0.85333rem;vertical-align:middle;
+			}
+			.shade_p{
+				width: 100%;height: 100%;position: fixed;background-color: rgba(0,0,0,0.7);z-index: 10000;
+				overflow: auto;
+				display: none;
+				top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			}
+			.panel_p{
+				width: 100%;height: 100%;position: fixed;background-color: rgba(0,0,0,0.7);z-index: 10000;
+				overflow: auto;
+				display: none;
+				top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			}
+			.shade_c{
+				width: 85%;
+			    height: 30.5rem;
+			    background:#8a46fe url(../image/bg_.png) 100% 100%;
+				background-size: 100%;
+			    margin-left: 7.5%;
+			    margin-top: 10%;
+			}
+			.share_title{
+				font-size: .64rem;
+			    width: 89%;
+			    margin: 0 auto;
+			    height: 1.6rem;
+			    border-radius: 1.06666rem;
+			    background: #fff;
+			    line-height: 1.6rem;
+			    color: #5b70f8;
+			}
+			.share_title span{font-size: .64rem;}
+			.content{
+				padding:0.53333rem;
+				padding-right:0;
+				position:relative;
+			}
+			.content_p{
+				position: absolute;
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			}
+			.shade-product_img{
+				width: 6rem;
+			    margin: 0 auto;
+			    margin-top:1.5rem;
+			}
+			.shade-product_title{
+				font-size: 0.64rem;
+			    height: 1.65rem;
+			    width: 49%;
+			    margin: 0 auto;
+			    text-align: center;
+			    line-height: 0.8rem;
+			}
+			.shade-product_value p,.shade-product_value span{
+				font-size: 0.64rem;
+			}
+			.shade-product_value{
+				text-align: center;
+				line-height: .8rem;
+				padding-top: .2rem;
+			}
+			.shade-speed,.shade-speed span{
+				font-size: 0.64rem;
+				color: #fff;
+				text-align: center;
+			}
+			.shade-speed span{
+				background: linear-gradient(to bottom,#a3fba9 0%,#36ac7d 100%);
+				margin: 0 0.05333rem;
+			    padding: 0 0.26666rem;
+			    border-radius: 0.10666rem;
+			}
+			.shade-speed_t{
+				height:6rem;
+			}
+			.shade-speed_footer{
+				height: 1.4rem;
+			    width: 70%;
+			    margin: 0 auto;
+			}
+			.shade-speed_footer div{
+				font-size: 0.64rem;
+				color: #fff;
+			}
+			.shade-speed_footer span{
+				color:#f3f83a;
+				font-size: 0.64rem;
+			}
+			.shade-speed_img{
+				width: 68%;
+			    height: 1.2rem;
+			    margin: 0 auto;
+			    position: relative;
+			    top: .31rem;
+			    border-radius: .4rem .6rem .6rem .4rem;
+			    overflow: hidden;
+			}
+			.shade-speed_value{
+				width: 68%;
+			    height: 100%;
+			    margin: 0 auto;
+			    position: relative;
+			}
+			.shade-speed_uint{
+				padding:0 0.26666rem;
+				border-radius: 0.16rem;
+				background: #ff9f14;
+				color: #fff;
+				font-size: 0.64rem;
+				white-space:nowrap;
+				position: relative;
+    			left: -46%;
+			}
+			.shade-speed_sign{
+				font-size: 0.64rem;
+				background: transparent;
+			    display: inline-block;
+			    border: 0.32rem solid #ff9f14;
+			    border-right-color: transparent;
+			    border-bottom-color: transparent;
+			    border-left-color: transparent;
+			    position: relative;
+    			left: -0.32rem;
+			}
+			.share_code{
+				padding-top:1.2rem;
+			}
+			.share_code>div{
+				width: 5rem;
+    			margin: auto;
+			}
+			.share_code>div>img{
+				width:100%;
+			}
+			.fit{
+				height: 2.4rem;
+			}
+			.panel_c{
+				width: 60%;height: 11.73333rem;background: #fff;margin-top: 50%;margin-left: 20%;border-radius: 0.53333rem;
+			}
+			.panel_btn_m{
+				background: url(../image/btn_02.png) 100% 100% no-repeat;
+			    background-size: 100%;
+			    color: #a60a09;
+			    padding: 0.64rem 1.33333rem .8rem 1.33333rem;
+			    font-size: 0.74666rem;
+			    display: inline-block;
+			}
+		</style>
+		<style type="text/css">
+			@media screen and (max-width: 320px) {
+				.fit{
+					height: 2.2rem;
+				}
+				.shade-product_title{
+					overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+				}
+			}
+			@media screen and (max-width: 320px) and (min-height: 568px) {
+				.fit{
+					height: 2.2rem;
+				}
+				.shade-product_title{
+					overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="weui-navbar light-navbar">
+			<div class="left">
+				<a href="javascript:;"><i class="iconfont icon-back"></i></a>
+			</div>
+			<div class="center">我的助力</div>
+			<div class="right">
+				<a href="javascript:;"><i class="iconfont icon-more"></i></a>
+			</div>
+		</div>
+		<div class="main">
+			<div>
+				<div style="padding-top:1.2rem;">
+					<span class="myHelp"><我的助力</span>
+				</div>
+				<div class="helpTitle">
+					呼朋唤友来助力
+				</div>
+			</div>
+			<div class="product">
+				<img src="../image/b01.png" style="width:100%;"/>
+				<div class="product_content">
+					<div class="product_img">
+						<img src="../image/pro01.png" style="width:100%;"/>
+					</div>
+					<div class="product_title">
+						华为 HUWEI P30 超感光柬卡三摄全面屏内指纹版手机
+					</div>
+					<div class="product_value">
+						<p>-价值-</p>
+						<p><span class="red">26666</span>积分</p>
+					</div>
+				</div>
+			</div>
+			<div class="product" style="background: linear-gradient(to bottom,#8a46fe 0%,#5f77f5 100%);">
+				<img src="../image/b02.png" style="width:100%;"/>
+				<div class="product_content">
+					<div class="speed">
+						还剩<span>0</span><span>0</span>时<span>0</span><span>3</span>分<span>4</span><span>5</span>秒
+					</div>
+					<div class="speed_t">
+						<div style="height: 2.4rem;">
+							<div class="speed_value">
+								<div style="position: absolute;bottom:0;left:80%;">
+									<div class="speed_uint">当前20000</div>
+						  			<div class="speed_sign"></div>
+								</div>
+							</div>
+						</div>
+						<div style="height: 2.2rem;">
+							<div class="speed_img">
+								<div style="position: absolute;right:100%;width:100%;height:100%;border-radius: .4rem .6rem .6rem .4rem;">
+									<img src="../image/speed.png" style="width:100%;height:100%;border-radius: .4rem .6rem .6rem .4rem;position: absolute;left:80%;" alt="" />	
+								</div>
+							</div>
+						</div>
+						<div class="speed_footer">
+						  	<div class="fl">已助力<span>2200</span></div>
+							<div class="fr">目标<span>0</span></div>
+						</div>
+					</div>
+					<div class="speed_btn_c">
+						<div class="btn_content">
+							<a href="#" class="speed_btn_f">帮好友助力</a>
+							<a href="javascript:;" class="speed_btn_m">我也要发起助力</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="product" style="background: linear-gradient(to bottom,#5f77f5 0%,#1fabae 100%);">
+				<img src="../image/b04.png" style="width:100%;"/>
+				<div class="product_content">
+					<div style="height: 4rem;"></div>
+					<div style="height:8.4rem">
+						<div class="group_friends">
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+							<div class="help_list_c">
+								<div class="fl">
+									<p class="help_name">西**啊</p>
+									<p>2020.09.02 23:00:00</p>
+								</div>
+								<div class="fr">
+									<p>助力 <span class="help_value">35</span>积分</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="guize" style="background: linear-gradient(to bottom,#1fabae 0%,#14bca3 100%);">
+				<div style="text-align: center;font-size: 18px;">
+					<i class="guize_left"></i>
+					活动规则
+					<i class="guize_right"></i>
+				</div>
+				<p>1、活动规则活动规则;</p>
+				<p>2、活动规则活动规则活动规则活动规则活动规则活动规则;</p>
+				<p>3、活动规则活动规则活动规则;</p>
+				<p>4、活动规则活动规则活动规则活动规则活动规则;</p>
+			</div>
+		</div>
+		<div class="shade_p">
+			<div class="shade_c">
+				<div style="padding-top:20px;">
+					<div class="share_title">
+						<span>“我发现一件好货，帮我砍到0积分免费拿吧！”</span>
+					</div>
+				</div>
+				<div class="content">
+					<img src="../image/bg_hb.png" style="width:100%;"/>
+					<div class="content_p">
+						<div class="shade-product_img">
+							<img src="../image/pro01.png" style="width:100%;"/>
+						</div>
+						<div class="shade-product_title">
+							华为 HUWEI P30 超感光柬卡三摄全面屏内指纹版手机
+						</div>
+						<div style="height: 2.48rem;">
+							<div class="shade-product_value">
+								<p>-价值-</p>
+								<p><span class="red">26666</span>积分</p>
+							</div>
+						</div>
+						<div class="shade-speed">
+							还剩<span>0</span><span>0</span>时<span>0</span><span>3</span>分<span>4</span><span>5</span>秒
+						</div>
+						<div class="shade-speed_t">
+							<div class="fit">
+								<div class="shade-speed_value">
+									<div style="position: absolute;bottom:0;left:80%;">
+										<div class="shade-speed_uint">当前20000</div>
+							  			<div class="shade-speed_sign"></div>
+									</div>
+								</div>
+							</div>
+							<div style="height: 1.8rem;">
+								<div class="shade-speed_img">
+									<div style="position: absolute;right:100%;width:100%;height:100%;border-radius: .4rem .6rem .6rem .4rem;">
+										<img src="../image/speed.png" style="width:100%;height:100%;border-radius: .4rem .6rem .6rem .4rem;position: absolute;left:80%;" alt="" />	
+									</div>
+								</div>
+							</div>
+							<div class="shade-speed_footer">
+							  	<div class="fl">已助力<span>2200</span></div>
+								<div class="fr">目标<span>0</span></div>
+							</div>
+							<div class="share_code">
+								<div>
+									<img src="../image/code.png" alt="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="margin-top:10px;color:#fff;text-align: center;font-size: 14px;">
+				长按保存图片邀请好友来助力
+			</div>
+		</div>
+		<div class="panel_p">
+			<div class="panel_c">
+				<div style="text-align: center;padding-top:1.6rem;">
+					<img src="../image/c.png" style="width:2.66666rem;"/>
+					<br>
+					<p style="font-weight: 550;">助力成功</p>
+					<p style="font-size: 0.64rem;">成功助力好友<span class="red" style="font-size: 0.64rem;">2000</span></p>
+				</div>
+				<div style="text-align: center;margin-top: 1.066666rem;">
+					<a href="#" class="panel_btn_m" style="margin-right: 0;">我也要发起助力</a>
+				</div>
+			</div>
+    		<div style="text-align: center;margin-top: 1.066666rem;">
+    			<a href="javascript:close();"><img src="../image/gb.png" style="width:1.066666rem;"/></a>
+    		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/common/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="../js/common/jquery-weui.min.js"></script>
+	<script>
+	    // 三个步骤:
+	    // 1.获取html的宽,
+	    let htmlwidth=document.documentElement.clientWidth || document.body.clientWidth;//有些浏览器documentElement获取不到,那就使用后面的body
+	    
+	    // 2.htmlDom
+	    let htmlDom=document.getElementsByTagName("html")[0]
+	
+	    //3.设置根元素样式
+	    htmlDom.style.fontSize=htmlwidth/20+'px';//记住这个20是等份的意思,这样每一份是16px,即1rem=16px;
+	    
+	</script>
+	<script type="text/javascript">
+		var top1 = 0
+		$(".speed_btn_m").off("click").on("click",function(){
+			$(".shade_p").show();
+			stopBodyScroll(true);
+		});
+		
+		$(".myHelp").off("click").on("click",function(){
+			window.location.href="myHelp.html"
+		});
+		$(".speed_btn_f").off("click").on("click",function(){
+			$(".panel_p").show();
+			stopBodyScroll(true);
+		});
+		
+		function close(){
+			$(".panel_p").hide();
+			stopBodyScroll(false);
+		}
+		
+		
+		function stopBodyScroll (isFixed) {
+	        var bodyEl = document.body
+	        if (isFixed) {
+	            //top1 = window.scrollY
+	            bodyEl.style.position = 'fixed'
+	            bodyEl.style.top = -top1 + 'px'
+	            bodyEl.style.left = -top1 + 'px'
+	            bodyEl.style.right = -top1 + 'px'
+	        } else {
+	            bodyEl.style.position = ''
+	            bodyEl.style.top = ''
+	            bodyEl.style.left = ''
+	            bodyEl.style.right = ''
+	            window.scrollTo(0, top1) // 回到原先的top
+	        }
+		}
+		
+	</script>
+</html>
