@@ -15,7 +15,7 @@
 		var msg = {
 			data: parentData,
 			action: childFunc,
-			callback: /*类似于上面的方法myEventIndex*/
+			callback: okFun/*类似于上面的方法myEventIndex*/
 		}
 		var childDomain = "http://www.test.com";
 		iframe.postMessage(msg, childDomain);
@@ -25,7 +25,11 @@
 			var data = data.data;
 			parentFuncClass[action](data);
 		});
-
+		
+		function okFun(msg){
+			alert(msg);
+		}
+		
 		document.domain = "test.com";
 		setTimeout(function() {
 			//父页面获得子页面某元素的html内容

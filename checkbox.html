@@ -14,8 +14,12 @@
 					$("input[name = 'checkbox']").removeAttr("checked"); //取消全选  
 				})
 				$("#btn3").click(function() {
-						$("input[name='checkbox']:even").attr("checked", 'true'); //选中所有奇数  
-						//$("input[name='checkbox']:odd").attr("checked",true); alert(8);
+						$("input[name='checkbox']:even").attr("checked", true); //选中所有奇数  
+						$("input[name='checkbox']:odd").attr("checked",false); //alert(8);
+					})
+				$("#btn4").click(function() {
+						$("input[name='checkbox']:even").attr("checked", false); //选中所有奇数  
+						$("input[name='checkbox']:odd").attr("checked",true); //选中所有偶数
 					})
 					//选中索引为偶数
 					//$("input[name='checkbox']:even").attr("checked",true);
