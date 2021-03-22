@@ -43,7 +43,7 @@
 			function GetQueryString(name) {
 				//var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");//此方法若不用window.location.search.substr(1)而是字符窜且只有一个参数时会获取不到
 			    //var reg = new RegExp("(|^/?|^&)" + name + "=([^&]*)(&|$)", "i");
-			    
+			    //注意动态name会有DOS攻击的可能，name过长导致执行超时
 			    var reg = new RegExp("(^|/?|&)" + name + "=([^&]*)(&|$)", "i");
 			    var r = window.location.search.substr(1).match(reg);
 			    //var r = "abc.html?id=123".match(reg);
