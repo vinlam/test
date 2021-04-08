@@ -159,8 +159,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj2 = {
@@ -174,8 +173,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj3 = {
@@ -189,8 +187,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj4 = {
@@ -204,8 +201,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj5 = {
@@ -219,8 +215,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj6 = {
@@ -234,8 +229,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj22 = {
@@ -249,8 +243,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj33 = {
@@ -264,8 +257,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj44 = {
@@ -279,8 +271,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var obj55 = {
@@ -294,8 +285,7 @@
 			gName: "ggg",
 			goodId: "6330",
 			goodsSpec: null,
-			goodsThumb: "http://img.mall.ccb.com/img/pic_no.png",
-			model: null,
+			goodsThumb: " odel: null,
 			oPrice: 0
 		}
 		var oldlist = [obj, obj2, obj3, obj4];
@@ -356,33 +346,33 @@
 			safariVersion = ua.match(/msie ([\d.]+)/)[1];
 		}
 
-		if(safariVersion <= DEFAULT_VERSION) {   
+		if(safariVersion <= DEFAULT_VERSION) {   
 			//alert('系统检测到您正在使用ie8以下内核的浏览器，不能实现完美体验，请更换或升级浏览器访问！')
-			if(!Object.keys) { 
-				Object.keys = (function() {  
+			if(!Object.keys) { 
+				Object.keys = (function() {  
 					var hasOwnProperty = Object.prototype.hasOwnProperty,
-						    hasDontEnumBug = !({
+						    hasDontEnumBug = !({
 							toString: null
 						}).propertyIsEnumerable('toString'),
-						    dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
-						    dontEnumsLength = dontEnums.length;
+						    dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+						    dontEnumsLength = dontEnums.length;
 
-					  
-					return function(obj) {   
+					  
+					return function(obj) {   
 						if(typeof obj !== 'object' && typeof obj !== 'function' || obj === null) {
 							throw new TypeError('Object.keys called on non-object');
-						}   
-						var result = [];   
-						for(var prop in obj) {    
-							if(hasOwnProperty.call(obj, prop)) result.push(prop);   
-						}   
-						if(hasDontEnumBug) {    
-							for(var i = 0; i < dontEnumsLength; i++) {     
-								if(hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);    
-							}   
-						}   
-						return result;  
-					} 
+						}   
+						var result = [];   
+						for(var prop in obj) {    
+							if(hasOwnProperty.call(obj, prop)) result.push(prop);   
+						}   
+						if(hasDontEnumBug) {    
+							for(var i = 0; i < dontEnumsLength; i++) {     
+								if(hasOwnProperty.call(obj, dontEnums[i])) result.push(dontEnums[i]);    
+							}   
+						}   
+						return result;  
+					} 
 				})()
 			};
 		};
