@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+
+		<title>动画效果</title>
+
+		<!--此处填写代码-->
+
+		<style type="text/css">
+			text {
+				cursor: pointer;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<svg id="svgs" width="320" height="200" xmlns="http://www.w3.org/2000/svg">
+
+			<text font-family="microsoft yahei" font-size="40" y="60" x="100">慕
+
+        <!--此处填写代码-->
+
+        <animate attributeName="font-size" form="40" to="100" begin="0s" dur="3s" />
+
+        <animate attributeName="rotate" form="0deg" to="720deg" begin="0s" dur="3s" />
+
+    </text>
+
+		</svg>
+
+		<script>
+			//此处填写代码
+			window.onload = function() {
+				var text = document.getElementsByTagName('text')[0];
+				var svg = document.getElementsByTagName('svg')[0];
+				var svgs = document.getElementById('svgs');
+				var moveStop = 1;
+				text.onclick = function() {
+					console.log(1) if(moveStop == 1) {
+						moveStop == 0;
+						svg.pauseAnimates();
+					}
+					else {
+						moveStop == 1;
+						svgs.unpauseAnimates();
+					}
+				}
+			}
+		</script>
+
+	</body>
+
+</html>
